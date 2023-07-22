@@ -24,11 +24,10 @@
                 <div class="mb-3">
                     <input type="password" class="form-control text-size" id="pwd" placeholder="Nhập password" name="pswd" required>
                 </div>
-                
+
                 <div >
-                    <div class="btn-login">
-                        <a type="submit" id="submit" href="<c:url value="/registers" /> class="btn Sbtn-bg btn-submit text-size">Đăng nhập</a>
-                    </div>
+
+                    <a type="submit" id="submit" href="<c:url value="/signUp" /> class="btn Sbtn-bg btn-submit text-size">Đăng nhập</a>
                     <hr  width="100%" size="3px" align="center" color="#9C9C9C" />
                     <div class="btn-submit">
                         <p>Sinh viên chưa có tài khoản <a href="#" class=" text-center text-sign-in">Đăng ký</a></p>

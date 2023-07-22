@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:url value="/registers" var="action" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container  " >
     <div class="row ">
         <div class=" margin-auto form-login  shadow-lg ">
@@ -15,18 +15,18 @@
 
             <form >
                 <div class="mb-3 mt-3">
-                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+                    <input type="email" class="form-control text-size" id="email" placeholder="Enter email" name="email" required>
                 </div>
                 <div class="mb-3">
-                    <input type="password" class="form-control" id="pwd" placeholder="Nhập mật khẩu" name="pswd" required>
+                    <input type="password" class="form-control text-size" id="pwd" placeholder="Nhập mật khẩu" name="pswd" required>
                 </div>
                 <div class="mb-3">
-                    <input type="password" class="form-control" id="pwd" placeholder="Nhập lại mật khẩu" name="pswd" required>
+                    <input type="password" class="form-control text-size" id="pwd" placeholder="Nhập lại mật khẩu" name="pswd" required>
                 </div>
 
 
                 <div >
-                    <button type="submit" class="btn btn-primary btn-submit margin-auto">Đăng nhập</button>
+                    <a type="submit" id="submit" href="<c:url value="/signUp" /> class="btn Sbtn-bg btn-submit text-size" >Đăng nhập</a>
 
                 </div>
                
