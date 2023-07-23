@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="container  " >
     <div class="row ">
         <div class=" margin-auto form-login  shadow-lg ">
@@ -26,7 +27,7 @@
 
 
                 <div >
-                    <a type="submit" id="submit" href="<c:url value="/signUp" /> class="btn Sbtn-bg btn-submit text-size" >Đăng nhập</a>
+                    <a type="submit" id="submit" href="<c:url value="/" />" class="btn Sbtn-bg btn-submit text-size" >Đăng Ký</a>
 
                 </div>
                

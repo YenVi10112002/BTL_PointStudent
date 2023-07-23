@@ -14,7 +14,7 @@
             </div>
             <select class="form-control text-size" id="form-usertype" name="form-usertype" onchange="do_testvaitro(this.value)">
                 <c:forEach items="${loaitaikhoan}" var="l">
-                    <option class="text-dropdow text-size" value="svcq">${l.tenloai}</option>
+                    <option class="text-dropdow text-size" value="${l.idloaitaikhoan}">${l.tenloai}</option>
                 </c:forEach>				
             </select>
             <form >
@@ -27,7 +27,7 @@
 
                 <div >
 
-                    <a type="submit" id="submit" href="<c:url value="/signUp" /> class="btn Sbtn-bg btn-submit text-size">Đăng nhập</a>
+                    <a type="submit" id="submit" href="<c:url value="/signup" />" class="btn Sbtn-bg btn-submit text-size">Đăng nhập</a>
                     <hr  width="100%" size="3px" align="center" color="#9C9C9C" />
                     <div class="btn-submit">
                         <p>Sinh viên chưa có tài khoản <a href="#" class=" text-center text-sign-in">Đăng ký</a></p>

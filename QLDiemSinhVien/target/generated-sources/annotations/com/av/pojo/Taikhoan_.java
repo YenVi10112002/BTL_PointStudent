@@ -11,7 +11,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-07-23T01:00:23")
+@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-07-23T01:23:58")
 @StaticMetamodel(Taikhoan.class)
 public class Taikhoan_ { 
 
