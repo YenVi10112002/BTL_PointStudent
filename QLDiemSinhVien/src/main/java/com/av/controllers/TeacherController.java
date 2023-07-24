@@ -4,24 +4,17 @@
  */
 package com.av.controllers;
 
-import com.av.pojo.Taikhoan;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
  * @author FPTSHOP
  */
 @Controller
-public class SignUpController {
-    
-    @GetMapping("/signup")
-    public String signUp(Model model){
-        model.addAttribute("account", new Taikhoan());
-        return "signup";
+public class TeacherController {
+    @GetMapping("/teacher")
+    public String teacher(){
+        return "teacher";
     }
-    
 }

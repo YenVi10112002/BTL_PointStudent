@@ -27,10 +27,10 @@
 
                 <div >
 
-                    <a type="submit" id="submit" href="<c:url value="/signup" />" class="btn Sbtn-bg btn-submit text-size">Đăng nhập</a>
+                    <a type="submit" id="submit" href="<c:url value ="/teacher" />"  class="btn Sbtn-bg btn-submit text-size">Đăng nhập</a>
                     <hr  width="100%" size="3px" align="center" color="#9C9C9C" />
                     <div class="btn-submit">
-                        <p>Sinh viên chưa có tài khoản <a href="#" class=" text-center text-sign-in">Đăng ký</a></p>
+                        <p>Sinh viên chưa có tài khoản <a href="<c:url value="/signup" />" class=" text-center text-sign-in">Đăng ký</a></p>
                     </div>
                 </div>
                 <div>

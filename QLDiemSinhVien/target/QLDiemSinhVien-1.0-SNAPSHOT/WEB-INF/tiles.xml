@@ -22,4 +22,9 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content"
                        value="/WEB-INF/pages/signup.jsp" />
     </definition>
+    <definition name="teacher" extends="baseLayout">
+        <put-attribute name="title" value="Giảng viên" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/teacher.jsp" />
+    </definition>
 </tiles-definitions>
