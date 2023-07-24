@@ -16,6 +16,7 @@ D:\LTJava\BTLJava\QLDiemSinhVien\src\main\java\com\av\configs\DispatcherServletI
 D:\LTJava\BTLJava\QLDiemSinhVien\src\main\java\com\av\configs\HibernateConfig.java
 D:\LTJava\BTLJava\QLDiemSinhVien\src\main\java\com\av\configs\TilesConfig.java
 D:\LTJava\BTLJava\QLDiemSinhVien\src\main\java\com\av\controllers\IndexController.java
+D:\LTJava\BTLJava\QLDiemSinhVien\src\main\java\com\av\controllers\TeacherController.java
 D:\LTJava\BTLJava\QLDiemSinhVien\src\main\java\com\av\controllers\SignUpController.java
 D:\LTJava\BTLJava\QLDiemSinhVien\src\main\java\com\av\pojo\Loaitaikhoan.java
 D:\LTJava\BTLJava\QLDiemSinhVien\src\main\java\com\av\pojo\DiemPK.java

@@ -13,6 +13,7 @@ com\av\pojo\Cauhoidiendang.class
 com\av\configs\HibernateConfig.class
 com\av\pojo\Giangvien_.class
 com\av\pojo\Traloidiendan_.class
+com\av\controllers\TeacherController.class
 com\av\controllers\IndexController.class
 com\av\pojo\Taikhoan.class
 com\av\pojo\DiemPK_.class

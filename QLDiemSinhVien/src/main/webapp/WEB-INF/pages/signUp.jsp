@@ -27,8 +27,17 @@
                     <input type="password" class="form-control text-size" id="cfpw" placeholder="Nhập lại mật khẩu" name="cfpw" />
                     <label for="cfpw">Nhập lại mật khẩu</label>
                 </div>
+                <div class="form-floating">
+                    <form:select class="form-select form-control text-size" path="chucVu" id="cate" name="cate">
+                        <c:forEach items="${loaitaikhoan}" var="l">
+                            <option class="text-size" value="${l.idloaitaikhoan}">${l.tenloai}</option>
+                        </c:forEach>
+                    </form:select>
+                    <label for="cate" class="form-label">Chức vụ</label>
+                </div>    
+
                 <div >
-                    <a type="submit" id="submit" href="<c:url value="/" />" class="btn Sbtn-bg btn-submit text-size" >Đăng Ký</a>
+                    <button type="submit" id="submit" class="btn Sbtn-bg btn-submit text-size" >Đăng Ký</button>
                 </div>    
             </form:form>
         </div>
