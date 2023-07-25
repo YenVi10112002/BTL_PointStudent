@@ -14,19 +14,19 @@
     <div class="info-user-text-reply">
         <div class="info-user-texts">
             <span class="info-user-text">Họ Tên:</span>
-            <span class="info-user-text2">Phạm Hoàng Ân</span>
+            <span class="info-user-text2">${sinhvien.hoTen}</span>
         </div >
         <div class="info-user-texts">
             <span class="info-user-text">Email</span>
-            <span class="info-user-text2">cua24032002@ou.edu.vn</span>
+            <span class="info-user-text2">${sinhvien.email}</span>
         </div>
         <div class="info-user-texts">
             <span class="info-user-text">Địa Chỉ</span>
-            <span class="info-user-text2">200/14 Gò Dầu, Tân Quý, Tân Phú</span>
+            <span class="info-user-text2">${sinhvien.diaChi}</span>
         </div>
         <div class="info-user-texts">
             <span class="info-user-text">Số Điện Thoại</span>
-            <span class="info-user-text2">0397769522</span>
+            <span class="info-user-text2">${sinhvien.soDienThoai}</span>
         </div>
         <div class="info-user-texts">
             <span class="info-user-text">Khóa Học</span>
@@ -34,7 +34,7 @@
         </div>
         <div class="info-user-texts">
             <span class="info-user-text">Hệ Đào Tạo</span>
-            <span class="info-user-text2">Chất Lượng Cao</span>
+            <span class="info-user-text2">${sinhvien.heDaoTao}</span>
         </div>
         <div class="info-user-texts">
             <span class="info-user-text">Lớp Học</span>

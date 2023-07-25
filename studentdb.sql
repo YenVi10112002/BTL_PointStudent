@@ -29,7 +29,7 @@ CREATE TABLE `cauhoidiendang` (
   PRIMARY KEY (`idCauHoiDienDan`),
   KEY `idTaiKhoan_idx` (`idTaiKhoan`),
   CONSTRAINT `idTaiKhoan` FOREIGN KEY (`idTaiKhoan`) REFERENCES `taikhoan` (`idTaiKhoan`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `cauhoidiendang` (
 
 LOCK TABLES `cauhoidiendang` WRITE;
 /*!40000 ALTER TABLE `cauhoidiendang` DISABLE KEYS */;
-INSERT INTO `cauhoidiendang` VALUES (1,'Ngày 20/10 có lễ khia giảng kh ạ ??',9);
+INSERT INTO `cauhoidiendang` VALUES (1,'Bạn nghĩ những phẩm chất nào là quan trọng nhất để một nhân viên IT có thể thăng tiến?',9),(2,'Bạn có thể kể cho tôi về một lần mà công việc không theo ý muốn của bạn?',9),(3,'Bạn nghĩ các tiến bộ khoa học, công nghệ sẽ tác động đến công việc của bạn như thế nào?',9),(4,'Dự án IT gần đây nhất là bạn thực hiện là gì? Bạn đóng vai trò như thế nào trong dự án đó?',9);
 /*!40000 ALTER TABLE `cauhoidiendang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +247,7 @@ CREATE TABLE `sinhvien` (
 
 LOCK TABLES `sinhvien` WRITE;
 /*!40000 ALTER TABLE `sinhvien` DISABLE KEYS */;
-INSERT INTO `sinhvien` VALUES (1,'Phạm Hàng Ân','Trưc tiếp','2002-03-24','200/14 Gò Dầu',1,'0397769522',1,'an1234@ou.edu.vn',NULL),(2,'Trần Yến Vi','Trực tiếp','2002-04-07','30 Cộng Hòa',0,'0393771859',2,'vi1324@ou.edu.vn',NULL),(3,'Nguyễn Kim Sương','Trực tiếp','2003-03-14','41 Tân Thới Nhất',0,'0930895147',1,'suong243@ou.edu.vn',NULL),(4,'Nguyễn Thanh Thuyền','Trực tiếp','2002-06-15','66 Phan Văn Trị',1,'0134711246',2,'thuyenbd12@ou.edu.vn',NULL);
+INSERT INTO `sinhvien` VALUES (1,'Phạm Hàng Ân','Trưc tiếp','2002-03-24','200/14 Gò Dầu',1,'0397769522',1,'an1234@ou.edu.vn',9),(2,'Trần Yến Vi','Trực tiếp','2002-04-07','30 Cộng Hòa',0,'0393771859',2,'vi1324@ou.edu.vn',NULL),(3,'Nguyễn Kim Sương','Trực tiếp','2003-03-14','41 Tân Thới Nhất',0,'0930895147',1,'suong243@ou.edu.vn',NULL),(4,'Nguyễn Thanh Thuyền','Trực tiếp','2002-06-15','66 Phan Văn Trị',1,'0134711246',2,'thuyenbd12@ou.edu.vn',NULL);
 /*!40000 ALTER TABLE `sinhvien` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,4 +318,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-21 14:56:58
+-- Dump completed on 2023-07-26  3:39:08

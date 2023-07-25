@@ -4,17 +4,43 @@
  */
 package com.av.controllers;
 
+import java.util.Map;
+import com.av.service.CauHoiService;
+import com.av.service.ListSinhVienService;
+import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
  * @author Admin
  */
 @Controller
+@ControllerAdvice
+@PropertySource("classpath:configs.properties")
 public class DienDangStudentController {
-    @GetMapping("/diendan")
-    public String diendan(){
+    @Autowired
+    private ListSinhVienService sinhvienService;
+    @Autowired
+    private CauHoiService cauhoiServite;
+    @Autowired
+    private Environment env;
+    
+    @ModelAttribute
+    public void comonAttr(Model model) {
+        model.addAttribute("cauhoi", this.cauhoiServite.getCauhoidiendangs());
+        model.addAttribute("listsinhvien", this.sinhvienService.getSinhviens());
+    }
+    
+    
+    @RequestMapping("/diendan")
+    public String diendan(Model model, @RequestParam Map<String, String> params){
         return "diendansinhvien";
     }
 }

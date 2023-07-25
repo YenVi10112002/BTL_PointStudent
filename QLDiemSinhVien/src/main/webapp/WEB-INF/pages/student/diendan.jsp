@@ -12,33 +12,24 @@
 <div class="content-diendan">
     <h3 style="font-weight: bold;margin: 20px 15px 40px 15px;">Diễn Đàng Trao Đổi</h3>
     <a href="#" class="text-contend-link add-contend-question">Thêm Chủ Đề</a>
-    <div class="content-question">
-        <h5><i class="fa-solid fa-user icon-padding"></i>Phạm Hoàng Ân</h5>
-        <p class="content-question-day"><i class="fa-solid fa-calendar-days icon-padding"></i>Ngày 25, tháng 7, năm 2023, 7:57AM</p>
-        <p class="content-question-noidung">A dropdown menu is a toggleable menu that allows the user to choose one value from a predefined list:</p>
-        <a href="#" class ="text-contend-link"><i class="fa-solid fa-comment-dots icon-padding"></i>Xem Câu Trả Lời</a>
-        <a href="#" class ="text-contend-link reply-text-link"><i class="fa-solid fa-reply icon-padding"></i>Trả Lời</a>
+    <c:forEach items="${cauhoi}" var="ch">
+        <div class="content-question">
+            <c:forEach items="${listsinhvien}" var="sv">
+                <c:if test="${sv.idTaiKhoan == ch.idTaiKhoan}">
+                    <h5><i class="fa-solid fa-user icon-padding"></i>${sv.hoTen}</h5>
+                    </c:if>
+                </c:forEach>
 
-    </div>
-    <div class="content-question">
-        <h5><i class="fa-solid fa-user icon-padding"></i>Phạm Hoàng Ân</h5>
-        <p class="content-question-day"><i class="fa-solid fa-calendar-days icon-padding"></i>Ngày 25, tháng 7, năm 2023, 7:57AM</p>
-        <p class="content-question-noidung">A dropdown menu is a toggleable menu that allows the user to choose one value from a predefined list:</p>
-        <a href="#" class ="text-contend-link"><i class="fa-solid fa-comment-dots icon-padding"></i>Xem Câu Trả Lời</a>
-        <a href="#" class ="text-contend-link reply-text-link"><i class="fa-solid fa-reply icon-padding"></i>Trả Lời</a>
+            <p class="content-question-day"><i class="fa-solid fa-calendar-days icon-padding"></i>Ngày 25, tháng 7, năm 2023, 7:57AM</p>
+            <p class="content-question-noidung">${ch.noiDungCauHoi}</p>
+            <a href="#" class ="text-contend-link"><i class="fa-solid fa-comment-dots icon-padding"></i>Xem Câu Trả Lời</a>
+            <a href="#" class ="text-contend-link reply-text-link"><i class="fa-solid fa-reply icon-padding"></i>Trả Lời</a>
 
-    </div>
-    <div class="content-question">
-        <h5><i class="fa-solid fa-user icon-padding"></i>Phạm Hoàng Ân</h5>
-        <p class="content-question-day"><i class="fa-solid fa-calendar-days icon-padding"></i>Ngày 25, tháng 7, năm 2023, 7:57AM</p>
-        <p class="content-question-noidung">A dropdown menu is a toggleable menu that allows the user to choose one value from a predefined list:</p>
-        <a href="#" class ="text-contend-link"><i class="fa-solid fa-comment-dots icon-padding"></i>Xem Câu Trả Lời</a>
-        <a href="#" class ="text-contend-link reply-text-link"><i class="fa-solid fa-reply icon-padding"></i>Trả Lời</a>
+        </div>
+    </c:forEach>
 
-    </div>
 </div>
 <style>
-    <!-- comment -->
     .add-contend-question{
         position: absolute;
         left: 80%;
@@ -53,6 +44,7 @@
     }
     .content-question-day{
         margin-left: 20px;
+
         color: #525d69;
     }
     .reply-text-link{
@@ -68,7 +60,7 @@
     .content-question{
         border: 0.5px solid gray;
         padding: 25px;
-        margin: 20px 0px;
+        margin: 40px 0px;
         border-radius: 10px;
         -moz-box-shadow: -3px -3px 5px 0px #666;
         -webkit-box-shadow: -3px -3px 5px 0px #666;
@@ -76,7 +68,7 @@
 
     }
     .content-diendan{
-        margin: 30px 60px;
+        margin: 40px 60px;
     }
     .nav-menu{
         height: 60px;

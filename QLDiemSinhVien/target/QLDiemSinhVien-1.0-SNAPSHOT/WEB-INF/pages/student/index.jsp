@@ -13,7 +13,7 @@
     <h4 style="font-weight: bold;">Tổng quan</h4>
     <h6 style="font-size: 13px; color: darkgrey;">Tổng Hợp Nhanh Các Thông Tin </h6>
     <div class="container mt-3">
-        <h2 class="name-text">Phạm Hoàng Ân</h2>
+        <h2 class="name-text"> ${sinhvien.hoTen}</h2>
         <p class="text-header-tong">Tổng Hợp Điểm & Xếp Loại Học Tập</p>            
         <table class="table">
             <thead>
