@@ -19,7 +19,7 @@
     <body>
         <tiles:insertAttribute name="header" />
         <div class="container">
-            <tiles:insertAttribute name="content" />
+            <tiles:insertAttribute name="content"/>
         </div>
         <tiles:insertAttribute name="footer"/>
     </body>
@@ -101,7 +101,6 @@
         .text-sign-in{
             text-decoration: none;
         }
-
 
     </style>
 </html>
