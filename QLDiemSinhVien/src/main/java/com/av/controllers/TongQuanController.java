@@ -35,8 +35,8 @@ public class TongQuanController {
     public void comonAttr(Model model) {
         model.addAttribute("sinhvien", this.tongquanService.getSinhvien(1));
     }
-    @RequestMapping("/tongquan")
+    @RequestMapping("/sinhvien")
     public String tongquan(Model model, @RequestParam Map<String, String> params){
-        return "tongquan";
+        return "sinhvien";
     }
 }

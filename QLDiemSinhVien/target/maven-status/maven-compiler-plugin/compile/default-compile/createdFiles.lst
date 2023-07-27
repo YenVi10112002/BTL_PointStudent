@@ -1,20 +1,22 @@
 com\av\pojo\Sinhvien.class
 com\av\pojo\Diem_.class
 com\av\configs\WebAppContextConfig.class
+com\av\configs\AppConfig.class
 com\av\pojo\Monhoc_.class
 com\av\controllers\SignUpController.class
 com\av\repository\CauHoiRepository.class
 com\av\pojo\Giangvien_.class
 com\av\repository\impl\ListSinhVienRepositoryImpl.class
 com\av\pojo\Giaovu.class
+com\av\configs\CustomSuccessHandler.class
 com\av\controllers\ThayDoiMatKhauController.class
 com\av\controllers\ThongTinStudentController.class
-com\av\pojo\Loaitaikhoan.class
 com\av\pojo\Traloidiendan.class
 com\av\service\impl\ListSinhVienServiceImpl.class
 com\av\pojo\Diem.class
 com\av\pojo\Cauhoidiendang_.class
 com\av\controllers\TongQuanController.class
+com\av\configs\SecurityWebApplicationInitializer.class
 com\av\configs\DispatcherServletInit.class
 com\av\pojo\Giaovu_.class
 com\av\pojo\Taikhoan_.class
@@ -44,7 +46,7 @@ com\av\pojo\Taikhoan.class
 com\av\pojo\DiemPK_.class
 com\av\service\impl\CauHoiServiceImpl.class
 com\av\repository\impl\SignUpRepositoryImpl.class
-com\av\pojo\Loaitaikhoan_.class
+com\av\configs\SpringSecurityConfig.class
 com\av\configs\TilesConfig.class
 com\av\repository\SignUpRepository.class
 com\av\service\impl\SignUpServiceImpl.class
@@ -52,4 +54,3 @@ com\av\repository\ListSinhVienRepository.class
 com\av\service\impl\SinhVienServiceImpl.class
 com\av\service\CauHoiService.class
 com\av\pojo\Monhoc.class
-com\av\formatter\CategoryFormatter.class

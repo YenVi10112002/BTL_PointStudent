@@ -11,6 +11,5 @@ import com.av.pojo.Taikhoan;
  * @author FPTSHOP
  */
 public interface SignUpRepository {
-    boolean addOrUpdateAcount(Taikhoan t);
-    
+    boolean addAcount(Taikhoan t);
 }

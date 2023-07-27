@@ -12,9 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -56,7 +56,7 @@ public class Giaovu implements Serializable {
     @Column(name = "soDienThoai")
     private String soDienThoai;
     @JoinColumn(name = "idTaiKhoan", referencedColumnName = "idTaiKhoan")
-    @ManyToOne
+    @OneToOne
     private Taikhoan idTaiKhoan;
 
     public Giaovu() {

@@ -33,7 +33,7 @@ public class ThongTinStudentController {
     public void comonAttr(Model model) {
         model.addAttribute("sinhvien", this.tongquanService.getSinhvien(1));
     }
-    @GetMapping("/thongtin")
+    @GetMapping("/sinhvien/thongtin")
     public String thongtin(Model model, @RequestParam Map<String, String> params){
         return "thongtintaikhoan";
     }

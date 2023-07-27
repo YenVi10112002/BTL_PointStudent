@@ -30,13 +30,13 @@ public class IndexController {
     @Autowired
     private Environment env;
 
-    @ModelAttribute
-    public void comonAttr(Model model) {
-        model.addAttribute("loaitaikhoan", this.loginService.getLoaitaikhoans());
-    }
+//    @ModelAttribute
+//    public void comonAttr(Model model) {
+//        model.addAttribute("loaitaikhoan", this.loginService.getLoaitaikhoans());
+//    }
 
     @RequestMapping("/")
-    public String index(Model model, @RequestParam Map<String, String> params) {
+    public String index() {
         return "index";
     }
 }

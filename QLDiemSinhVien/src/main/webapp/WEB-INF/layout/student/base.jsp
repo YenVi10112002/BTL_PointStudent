@@ -4,6 +4,7 @@
     Author     : FPTSHOP
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html>
@@ -35,7 +36,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
                                     <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>
-                                    <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-right-to-bracket icon-padding"></i>Đăng Xuất</a></li>
+                                    <li><a class="dropdown-item dark-color" href="<c:url value="/logout" />"<i class="fa-solid fa-right-to-bracket icon-padding"></i>Đăng Xuất</a></li>
 
                                 </ul>
                             </li>

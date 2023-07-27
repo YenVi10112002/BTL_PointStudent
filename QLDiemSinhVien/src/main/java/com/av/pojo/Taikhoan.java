@@ -13,12 +13,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,10 +35,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Taikhoan.findAll", query = "SELECT t FROM Taikhoan t"),
     @NamedQuery(name = "Taikhoan.findByIdTaiKhoan", query = "SELECT t FROM Taikhoan t WHERE t.idTaiKhoan = :idTaiKhoan"),
     @NamedQuery(name = "Taikhoan.findByTenTaiKhoan", query = "SELECT t FROM Taikhoan t WHERE t.tenTaiKhoan = :tenTaiKhoan"),
-    @NamedQuery(name = "Taikhoan.findByMatKhau", query = "SELECT t FROM Taikhoan t WHERE t.matKhau = :matKhau")})
+    @NamedQuery(name = "Taikhoan.findByMatKhau", query = "SELECT t FROM Taikhoan t WHERE t.matKhau = :matKhau"),
+    @NamedQuery(name = "Taikhoan.findByChucVu", query = "SELECT t FROM Taikhoan t WHERE t.chucVu = :chucVu")})
 public class Taikhoan implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String SV = "ROLE_SV";
+    public static final String GV = "ROLE_GV";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -51,22 +54,26 @@ public class Taikhoan implements Serializable {
     private String tenTaiKhoan;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "MatKhau")
     private String matKhau;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "ChucVu")
+    private String chucVu;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTaiKhoan")
     private Set<Traloidiendan> traloidiendanSet;
-    @JoinColumn(name = "ChucVu", referencedColumnName = "idloaitaikhoan")
-    @ManyToOne(optional = false)
-    private Loaitaikhoan chucVu;
-    @OneToMany(mappedBy = "idTaiKhoan")
-    private Set<Giaovu> giaovuSet;
-    @OneToMany(mappedBy = "idTaiKhoan")
-    private Set<Sinhvien> sinhvienSet;
+    @OneToOne(mappedBy = "idTaiKhoan")
+    private Giaovu giaovu;
+    @OneToOne(mappedBy = "idTaiKhoan")
+    private Sinhvien sinhvien;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTaiKhoan")
     private Set<Cauhoidiendang> cauhoidiendangSet;
-    @OneToMany(mappedBy = "idTaiKhoan")
-    private Set<Giangvien> giangvienSet;
+    @OneToOne(mappedBy = "idTaiKhoan")
+    private Giangvien giangvien;
+    @Transient
+    private String xacNhanMk;
 
     public Taikhoan() {
     }
@@ -75,10 +82,11 @@ public class Taikhoan implements Serializable {
         this.idTaiKhoan = idTaiKhoan;
     }
 
-    public Taikhoan(Integer idTaiKhoan, String tenTaiKhoan, String matKhau) {
+    public Taikhoan(Integer idTaiKhoan, String tenTaiKhoan, String matKhau, String chucVu) {
         this.idTaiKhoan = idTaiKhoan;
         this.tenTaiKhoan = tenTaiKhoan;
         this.matKhau = matKhau;
+        this.chucVu = chucVu;
     }
 
     public Integer getIdTaiKhoan() {
@@ -105,6 +113,14 @@ public class Taikhoan implements Serializable {
         this.matKhau = matKhau;
     }
 
+    public String getChucVu() {
+        return chucVu;
+    }
+
+    public void setChucVu(String chucVu) {
+        this.chucVu = chucVu;
+    }
+
     @XmlTransient
     public Set<Traloidiendan> getTraloidiendanSet() {
         return traloidiendanSet;
@@ -114,30 +130,20 @@ public class Taikhoan implements Serializable {
         this.traloidiendanSet = traloidiendanSet;
     }
 
-    public Loaitaikhoan getChucVu() {
-        return chucVu;
+    public Giaovu getGiaovu() {
+        return giaovu;
     }
 
-    public void setChucVu(Loaitaikhoan chucVu) {
-        this.chucVu = chucVu;
+    public void setGiaovu(Giaovu giaovu) {
+        this.giaovu = giaovu;
     }
 
-    @XmlTransient
-    public Set<Giaovu> getGiaovuSet() {
-        return giaovuSet;
+    public Sinhvien getSinhvien() {
+        return sinhvien;
     }
 
-    public void setGiaovuSet(Set<Giaovu> giaovuSet) {
-        this.giaovuSet = giaovuSet;
-    }
-
-    @XmlTransient
-    public Set<Sinhvien> getSinhvienSet() {
-        return sinhvienSet;
-    }
-
-    public void setSinhvienSet(Set<Sinhvien> sinhvienSet) {
-        this.sinhvienSet = sinhvienSet;
+    public void setSinhvien(Sinhvien sinhvien) {
+        this.sinhvien = sinhvien;
     }
 
     @XmlTransient
@@ -149,13 +155,12 @@ public class Taikhoan implements Serializable {
         this.cauhoidiendangSet = cauhoidiendangSet;
     }
 
-    @XmlTransient
-    public Set<Giangvien> getGiangvienSet() {
-        return giangvienSet;
+    public Giangvien getGiangvien() {
+        return giangvien;
     }
 
-    public void setGiangvienSet(Set<Giangvien> giangvienSet) {
-        this.giangvienSet = giangvienSet;
+    public void setGiangvien(Giangvien giangvien) {
+        this.giangvien = giangvien;
     }
 
     @Override
@@ -181,6 +186,20 @@ public class Taikhoan implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Taikhoan[ idTaiKhoan=" + idTaiKhoan + " ]";
+    }
+
+    /**
+     * @return the xacNhanMk
+     */
+    public String getXacNhanMk() {
+        return xacNhanMk;
+    }
+
+    /**
+     * @param xacNhanMk the xacNhanMk to set
+     */
+    public void setXacNhanMk(String xacNhanMk) {
+        this.xacNhanMk = xacNhanMk;
     }
     
 }

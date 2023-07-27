@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class ThayDoiMatKhauController {
-    @GetMapping("/thaydoimatkhau")
+    @GetMapping("/sinhvien/thaydoimatkhau")
     public String thaydoimatkhau(){
         return "thaydoimatkhau";
     }

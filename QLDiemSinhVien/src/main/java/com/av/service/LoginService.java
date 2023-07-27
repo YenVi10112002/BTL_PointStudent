@@ -4,13 +4,14 @@
  */
 package com.av.service;
 
-import com.av.pojo.Loaitaikhoan;
+import com.av.pojo.Taikhoan;
 import java.util.List;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  *
  * @author FPTSHOP
  */
-public interface LoginService {
-    List<Loaitaikhoan> getLoaitaikhoans();
+public interface LoginService extends UserDetailsService{
+    List<Taikhoan> getTaikhoans(String tenTK);
 }

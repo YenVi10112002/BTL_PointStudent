@@ -16,29 +16,25 @@
             <c:url value="/signup" var="action"/>
             <form:form modelAttribute="account" method="post" action="${action}">
                 <div class="form-floating mb-3 mt-3">
-                    <form:input type="text" class="form-control text-size" path="tenTaiKhoan" id="email" placeholder="Email" name="email" />
-                    <label for="email">Email</label>
+                    <form:input type="text" class="form-control text-size" path="tenTaiKhoan" id="username" placeholder="Email" name="username" />
+                    <label for="username">Email</label>
                 </div>
                 <div class="form-floating mb-3 mt-3">
-                    <form:input type="password" class="form-control text-size" path="matKhau" id="pw" placeholder="Mật khẩu" name="pw" />
-                    <label for="pw">Mật khẩu</label>
+                    <form:input type="password" class="form-control text-size" path="matKhau" id="password" placeholder="Mật khẩu" name="password" />
+                    <label for="password">Mật khẩu</label>
                 </div>
                 <div class="form-floating mb-3 mt-3">
-                    <input type="password" class="form-control text-size" id="cfpw" placeholder="Nhập lại mật khẩu" name="cfpw" />
+                    <form:input type="password" class="form-control text-size" path="xacNhanMk" id="cfpw" placeholder="Nhập lại mật khẩu" name="cfpw" />
                     <label for="cfpw">Nhập lại mật khẩu</label>
                 </div>
                 <div class="form-floating">
-                    <form:select class="form-select form-control text-size" path="chucVu" id="cate" name="cate">
-                        <c:forEach items="${loaitaikhoan}" var="l">
-                            <option class="text-size" value="${l.idloaitaikhoan}">${l.tenloai}</option>
-                        </c:forEach>
-                    </form:select>
-                    <label for="cate" class="form-label">Chức vụ</label>
-                </div>    
-
-                <div >
                     <button type="submit" id="submit" class="btn Sbtn-bg btn-submit text-size" >Đăng Ký</button>
-                </div>    
+                </div>
+                    <c:if test="${errMsg != null}">
+                        <div class="alert alert-danger text-size mt-3 ">
+                            ${errMsg};
+                        </div>
+                    </c:if>
             </form:form>
         </div>
     </div>

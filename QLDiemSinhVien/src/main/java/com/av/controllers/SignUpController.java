@@ -21,21 +21,29 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class SignUpController {
-    
+
     @Autowired
     private SignUpService signUpService;
-    
+
     @GetMapping("/signup")
-    public String signUp(Model model){
+    public String signUp(Model model) {
         model.addAttribute("account", new Taikhoan());
         return "signup";
     }
     
     @PostMapping("/signup")
-    public String add(@ModelAttribute(value= "account") Taikhoan t){
-        if(this.signUpService.addOrUpdateAcount(t) == true)
-            return "redirect:/";
+    public String add(Model model,@ModelAttribute(value= "account") Taikhoan t){
+        String errMsg ="";
+        if(t.getMatKhau().equals(t.getXacNhanMk()))
+        {
+            if(this.signUpService.addAcount(t) == true)
+                return "redirect:/";
+            else
+                errMsg = "Đã có lỗi!";
+        }else
+            errMsg = "Tên tài khoản hoặc mật khẩu không đúng!!!";
         
+        model.addAttribute("errMsg", errMsg);
         return "signup";
     }
     

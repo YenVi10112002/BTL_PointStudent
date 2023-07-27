@@ -4,30 +4,38 @@
     Author     : FPTSHOP
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <div class="container">
     <div class="row ">
         <div class=" form-login  shadow-lg ">
+            <c:if test="${param.error != null}">
+                <div class="alert alert-danger text-size">
+                    Da xay ra loi!
+                </div>
+            </c:if>
+            <c:if test="${param.accessDenied != null}">
+                <div class="alert alert-danger text-size">
+                    Bạn không có quyền truy cập!!!!
+                </div>
+            </c:if>
             <div class="text-center " >
                 <h4 class="text-login">Đăng nhập</h4>
             </div>
-            <select class="form-control text-size" id="form-usertype" name="form-usertype" onchange="do_testvaitro(this.value)">
-                <c:forEach items="${loaitaikhoan}" var="l">
-                    <option class="text-dropdow text-size" value="${l.idloaitaikhoan}">${l.tenloai}</option>
-                </c:forEach>				
-            </select>
-            <form >
+            <c:url value="/" var="action" />
+            <form method="post"  action="${action}">
                 <div class="mb-3 mt-3">
-                    <input type="email" class="form-control text-size" id="email" placeholder="Nhập email" name="email" required>
+                    <input type="text" class="form-control text-size" id="username" placeholder="Nhập email" name="username" required/>
                 </div>
                 <div class="mb-3">
-                    <input type="password" class="form-control text-size" id="pwd" placeholder="Nhập password" name="pswd" required>
+                    <input type="password" class="form-control text-size" id="password" placeholder="Nhập password" name="password" required/>
                 </div>
 
                 <div >
-
-                    <a type="submit" id="submit" href="<c:url value ="/teacher" />"  class="btn Sbtn-bg btn-submit text-size">Đăng nhập</a>
+                  
+                    <input type="submit" class="btn btn-bg btn-submit text-size" value="Đăng Nhập"/>
+                 
                     <hr  width="100%" size="3px" align="center" color="#9C9C9C" />
                     <div class="btn-submit">
                         <p>Sinh viên chưa có tài khoản <a href="<c:url value="/signup" />" class=" text-center text-sign-in">Đăng ký</a></p>
@@ -43,5 +51,6 @@
         </div>
     </div>
 </div>
+                    
 
 

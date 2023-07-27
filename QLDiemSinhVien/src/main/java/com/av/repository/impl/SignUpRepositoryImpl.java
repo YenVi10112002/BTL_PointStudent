@@ -4,8 +4,13 @@
  */
 package com.av.repository.impl;
 
+import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.repository.SignUpRepository;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +30,19 @@ public class SignUpRepositoryImpl implements SignUpRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public boolean addOrUpdateAcount(Taikhoan t) {
+    public boolean addAcount(Taikhoan t) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
             if (t.getIdTaiKhoan() == null) {
                 s.save(t);
             }
-            else
-                s.update(t);
             return true;
         } catch (HibernateException ex) {
-            ex.printStackTrace();
-            return false;
+            System.err.println(ex.getMessage());
+            
         }
+        return false;
 
     }
 
-}
+}  

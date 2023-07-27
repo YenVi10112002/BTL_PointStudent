@@ -5,7 +5,6 @@
 package com.av.repository.impl;
 
 import com.av.pojo.Cauhoidiendang;
-import com.av.pojo.Loaitaikhoan;
 import com.av.repository.CauHoiRepository;
 import java.util.List;
 import javax.persistence.Query;

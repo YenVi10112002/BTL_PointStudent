@@ -4,7 +4,6 @@
  */
 package com.av.configs;
 
-import com.av.formatter.CategoryFormatter;
 import java.text.SimpleDateFormat;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -37,10 +36,10 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         configurer.enable();
     }
 
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addFormatter(new CategoryFormatter());
-    }
+//    @Override
+//    public void addFormatters(FormatterRegistry registry) {
+//        registry.addFormatter(new CategoryFormatter());
+//    }
     
     
 //    @Bean

@@ -39,7 +39,7 @@ public class DienDangStudentController {
     }
     
     
-    @RequestMapping("/diendan")
+    @RequestMapping("/sinhvien/diendan")
     public String diendan(Model model, @RequestParam Map<String, String> params){
         return "diendansinhvien";
     }

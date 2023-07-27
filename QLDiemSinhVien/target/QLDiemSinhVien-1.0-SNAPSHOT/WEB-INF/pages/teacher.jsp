@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authorize access="hasRole('ROLE_GV')">
 <div class="p-5 bg-primary text-white text-center">
     <h1>My First Bootstrap 5 Page</h1>
     <p>Resize this responsive page to see the effect!</p>
@@ -49,6 +51,7 @@
         </div>
     </div>
 </div>
+</sec:authorize>
 
 
 

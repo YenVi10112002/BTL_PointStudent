@@ -92,6 +92,7 @@ CREATE TABLE `giangvien` (
   `soDienThoai` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `idTaiKhoan` int DEFAULT NULL,
   PRIMARY KEY (`idGiangVien`),
+  UNIQUE KEY `idTaiKhoan_UNIQUE` (`idTaiKhoan`),
   KEY `id_idx` (`idTaiKhoan`),
   CONSTRAINT `id` FOREIGN KEY (`idTaiKhoan`) REFERENCES `taikhoan` (`idTaiKhoan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
@@ -121,6 +122,7 @@ CREATE TABLE `giaovu` (
   `soDienThoai` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `idTaiKhoan` int DEFAULT NULL,
   PRIMARY KEY (`idGiaoVu`),
+  UNIQUE KEY `idTaiKhoan_UNIQUE` (`idTaiKhoan`),
   KEY `id_idx` (`idTaiKhoan`),
   CONSTRAINT `idTaiKhoanGiaoVu` FOREIGN KEY (`idTaiKhoan`) REFERENCES `taikhoan` (`idTaiKhoan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
@@ -134,30 +136,6 @@ LOCK TABLES `giaovu` WRITE;
 /*!40000 ALTER TABLE `giaovu` DISABLE KEYS */;
 INSERT INTO `giaovu` VALUES (1,'Trần Văn An',1,'0356712246',6),(2,'Nguyễn Kim Tuyền',0,'0487568123',7),(3,'Phạm Văn Thanh',1,'0761457345',8);
 /*!40000 ALTER TABLE `giaovu` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `loaitaikhoan`
---
-
-DROP TABLE IF EXISTS `loaitaikhoan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `loaitaikhoan` (
-  `idloaitaikhoan` int NOT NULL,
-  `tenloai` varchar(45) NOT NULL,
-  PRIMARY KEY (`idloaitaikhoan`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `loaitaikhoan`
---
-
-LOCK TABLES `loaitaikhoan` WRITE;
-/*!40000 ALTER TABLE `loaitaikhoan` DISABLE KEYS */;
-INSERT INTO `loaitaikhoan` VALUES (1,'Giáo Vụ'),(2,'Giảng Viên'),(3,'Sinh Viên');
-/*!40000 ALTER TABLE `loaitaikhoan` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -233,12 +211,13 @@ CREATE TABLE `sinhvien` (
   `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `idTaiKhoan` int DEFAULT NULL,
   PRIMARY KEY (`idSinhVien`),
+  UNIQUE KEY `idTaiKhoan_UNIQUE` (`idTaiKhoan`),
   KEY `idLopHoc_idx` (`maLop`),
   KEY `idTaiKhoan_idx` (`idTaiKhoan`),
   KEY `idTaiKhoanSinhVien_idx` (`idTaiKhoan`),
   CONSTRAINT `idLopHoc` FOREIGN KEY (`maLop`) REFERENCES `lophoc` (`idLopHoc`),
   CONSTRAINT `idTaiKhoanSinhVien` FOREIGN KEY (`idTaiKhoan`) REFERENCES `taikhoan` (`idTaiKhoan`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +226,7 @@ CREATE TABLE `sinhvien` (
 
 LOCK TABLES `sinhvien` WRITE;
 /*!40000 ALTER TABLE `sinhvien` DISABLE KEYS */;
-INSERT INTO `sinhvien` VALUES (1,'Phạm Hàng Ân','Trưc tiếp','2002-03-24','200/14 Gò Dầu',1,'0397769522',1,'an1234@ou.edu.vn',9),(2,'Trần Yến Vi','Trực tiếp','2002-04-07','30 Cộng Hòa',0,'0393771859',2,'vi1324@ou.edu.vn',NULL),(3,'Nguyễn Kim Sương','Trực tiếp','2003-03-14','41 Tân Thới Nhất',0,'0930895147',1,'suong243@ou.edu.vn',NULL),(4,'Nguyễn Thanh Thuyền','Trực tiếp','2002-06-15','66 Phan Văn Trị',1,'0134711246',2,'thuyenbd12@ou.edu.vn',NULL);
+INSERT INTO `sinhvien` VALUES (1,'Phạm Hàng Ân','Trưc tiếp','2002-03-24','200/14 Gò Dầu',1,'0397769522',1,'an1234@ou.edu.vn',9),(2,'Trần Yến Vi','Trực tiếp','2002-04-07','30 Cộng Hòa',0,'0393771859',2,'vi1324@ou.edu.vn',10),(3,'Nguyễn Kim Sương','Trực tiếp','2003-03-14','41 Tân Thới Nhất',0,'0930895147',1,'suong243@ou.edu.vn',11),(4,'Nguyễn Thanh Thuyền','Trực tiếp','2002-06-15','66 Phan Văn Trị',1,'0134711246',2,'thuyenbd12@ou.edu.vn',12),(5,'Nguyễn Thị Thanh','Trực tiếp','2002-05-05','HoocMôn',1,'0986543254',1,'my@ou.edu.vn',13),(6,'Phan Thảo','Trực tiếp','2002-04-28','Đồng Nai',1,'0654789123',2,'thao@ou.edu.vn',NULL);
 /*!40000 ALTER TABLE `sinhvien` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,12 +240,10 @@ DROP TABLE IF EXISTS `taikhoan`;
 CREATE TABLE `taikhoan` (
   `idTaiKhoan` int NOT NULL AUTO_INCREMENT,
   `TenTaiKhoan` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `MatKhau` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `ChucVu` int NOT NULL,
-  PRIMARY KEY (`idTaiKhoan`),
-  KEY `machucvu_idx` (`ChucVu`),
-  CONSTRAINT `loaitaikhoan` FOREIGN KEY (`ChucVu`) REFERENCES `loaitaikhoan` (`idloaitaikhoan`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+  `MatKhau` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `ChucVu` varchar(50) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  PRIMARY KEY (`idTaiKhoan`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +252,7 @@ CREATE TABLE `taikhoan` (
 
 LOCK TABLES `taikhoan` WRITE;
 /*!40000 ALTER TABLE `taikhoan` DISABLE KEYS */;
-INSERT INTO `taikhoan` VALUES (3,'huuthanh','123456',2),(4,'phuongtrang','123456',2),(5,'ducvien','123456',2),(6,'vanan','123456',1),(7,'kimtuyen','123456',1),(8,'vanthanh','123456',1),(9,'hoangan','123456',3),(10,'yenvi','123456',3);
+INSERT INTO `taikhoan` VALUES (3,'huuthanh','$2a$12$X2AYg0p1yN26Rb6tZkOxy.A7jeHQB3QrHCmV2wCWchGbIZ8noSHhu','ROLE_GV'),(4,'phuongtrang','$2a$12$ozLhhEC.oG4WX1rvlMq8Ye7Uz/XXrOIUUrkMJvlxmWiXc8Z1wqCym','ROLE_GV'),(5,'ducvien','$2a$12$gXShsCJGhFlOvoc1bo8MSuRQeg7DwLkGpMqqvYcUvlmfyG9/TDreu','ROLE_GV'),(6,'vanan','$2a$12$i4zdEUlM8hFivEfebiKohu48RZaaJN4K2/NgEWeD740XBswHCep0u','ROLE_GVU'),(7,'kimtuyen','$2a$12$vTtcPHbAkpbyVo8xVLaIKu1hVnliW6Sxmg7Xs0oh9Ab3kBfKT57my','ROLE_GVU'),(8,'vanthanh','$2a$12$I7zWTMDg8luaH4j6pBAY0ug/9/IcxdXQuXOuCpx4i85sbjHwdCboa','ROLE_GVU'),(9,'hoangan@ou.edu.vn','$2a$12$rSt08iChMsNtWY6poU00EuhR0a71qmmmLHPjee9aZ5Fcx.J5CeQA.','ROLE_SV'),(10,'yenvi@ou.edu.vn','$2a$12$ZZtS0hP3Q.qzeMtj/LJfv.q6OeoTe/.C5VyXLJV9W2hYTYEqUNv/a','ROLE_SV'),(11,'thuyen@ou.edu.vn','$2a$12$1YO21OiZkbvjxVzUu/1ZieLB0HbCwvGXLmi8xFF1oI/DIJkoEcvuG','ROLE_SV'),(12,'thanh@ou.edu.vn','$2a$12$wBakR25WbOAIo26jA//zOO9CKdInirPV1jap3SvLQFNXYVfve.Z4e','ROLE_SV'),(13,'my@ou.edu.vn','$2a$10$DrKHoOXuII1oaiAsb4rPg.TE7UY.ULWQlle2bSs13VU4EIMKBLJDu','ROLE_SV'),(14,'','$2a$10$COCGq7qHhR1/3UI0ENsWCuRrFIQsCjPF9TGPFQKPBc6XgFS2ldBlG','ROLE_SV'),(15,'','$2a$10$ho6WQAWVgzIT9424vXeN6OpEdrXrZNTJiSoAdvzUZtgeWmm3GgC2a','ROLE_SV');
 /*!40000 ALTER TABLE `taikhoan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,4 +295,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-26  3:39:08
+-- Dump completed on 2023-07-27 21:06:43

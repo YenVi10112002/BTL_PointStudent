@@ -4,7 +4,8 @@
  */
 package com.av.repository;
 
-import com.av.pojo.Loaitaikhoan;
+
+import com.av.pojo.Taikhoan;
 import java.util.List;
 
 /**
@@ -12,6 +13,7 @@ import java.util.List;
  * @author FPTSHOP
  */
 public interface LoginRepository {
-    List<Loaitaikhoan> getLoaitaikhoans();
+//    List<Loaitaikhoan> getLoaitaikhoans();
+    List<Taikhoan> getTaikhoans(String tenTK);
     
 }
