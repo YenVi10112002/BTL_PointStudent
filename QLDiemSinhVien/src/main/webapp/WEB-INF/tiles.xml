@@ -12,6 +12,15 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="footer"
                        value="/WEB-INF/layout/footer.jsp" />
     </definition>
+    <definition name="baseLayoutTeacher"
+                template="/WEB-INF/layout/teacher/base.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header"
+                       value="/WEB-INF/layout/teacher/header.jsp" />
+        <put-attribute name="content" value="" />
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/teacher/footer.jsp" />
+    </definition>
     
     <definition name="baseLayoutStudent"
                 template="/WEB-INF/layout/student/base.jsp">
@@ -66,5 +75,16 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Thay Đổi Mật Khẩu" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/student/thaydoimatkhau.jsp" />
+    </definition>
+    
+    <definition name="giaovien" extends="baseLayoutTeacher">
+        <put-attribute name="title" value="Giáo Viên" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/teacher/index.jsp" />
+    </definition>
+    <definition name="nhapdiem" extends="baseLayoutTeacher">
+        <put-attribute name="title" value="Nhập Điểm" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/teacher/nhapdiem.jsp" />
     </definition>
 </tiles-definitions>

@@ -34,9 +34,9 @@
                                 <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
                                     Phạm Hoàng Ân</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
-                                    <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>
-                                    <li><a class="dropdown-item dark-color" href="<c:url value="/logout" />"<i class="fa-solid fa-right-to-bracket icon-padding"></i>Đăng Xuất</a></li>
+                                    <li><a class="dropdown-item dark-color " href="<c:url value="/sinhvien/thongtin" />"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
+                                    <li><a class="dropdown-item dark-color" href="<c:url value="/sinhvien/thaydoimatkhau" />"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>
+                                    <li><a class="dropdown-item dark-color" href="<c:url value="/logout" />"><i class="fa-solid fa-right-to-bracket icon-padding"></i>Đăng Xuất</a></li>
 
                                 </ul>
                             </li>

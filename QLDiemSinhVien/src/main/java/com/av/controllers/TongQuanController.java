@@ -37,6 +37,9 @@ public class TongQuanController {
     }
     @RequestMapping("/sinhvien")
     public String tongquan(Model model, @RequestParam Map<String, String> params){
+        model.addAttribute("DSDiem", this.tongquanService.DiemByMonHoc());
+        model.addAttribute("hocky",this.tongquanService.getHocKy());
+         model.addAttribute("diemtrungbinh",this.tongquanService.getDiemTrungBinh(1));
         return "sinhvien";
     }
 }

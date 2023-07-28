@@ -4,7 +4,9 @@
  */
 package com.av.repository;
 
+import com.av.pojo.Diem;
 import com.av.pojo.Sinhvien;
+import java.util.List;
 
 /**
  *
@@ -12,4 +14,9 @@ import com.av.pojo.Sinhvien;
  */
 public interface SinhVienRepository {
     Sinhvien getSinhVien(int sinhvienId);
+    
+    int getHocKy();
+    
+    double getDiemTrungBinh(int sinhvienId);
+    List<Diem> DiemByMonHoc(); 
 }

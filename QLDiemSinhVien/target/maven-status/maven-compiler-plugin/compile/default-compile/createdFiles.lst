@@ -51,6 +51,7 @@ com\av\configs\TilesConfig.class
 com\av\repository\SignUpRepository.class
 com\av\service\impl\SignUpServiceImpl.class
 com\av\repository\ListSinhVienRepository.class
+com\av\controllers\NhapDiemController.class
 com\av\service\impl\SinhVienServiceImpl.class
 com\av\service\CauHoiService.class
 com\av\pojo\Monhoc.class

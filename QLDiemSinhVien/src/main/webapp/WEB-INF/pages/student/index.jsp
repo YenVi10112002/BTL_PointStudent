@@ -27,7 +27,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>9.0</td>
+                    <td>${diemtrungbinh}</td>
                     <td>3.5</td>
                     <td>Giỏi</td>
                 </tr>
