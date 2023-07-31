@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface LoginRepository {
 //    List<Loaitaikhoan> getLoaitaikhoans();
-    List<Taikhoan> getTaikhoans(String tenTK);
+//    List<Taikhoan> getTaikhoans(String tenTK);
+    Taikhoan getUserByUsername(String username);
     
 }

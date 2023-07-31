@@ -8,13 +8,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
-
 <div class="point">
     <h4 style="font-weight: bold;">Tổng quan</h4>
     <h6 style="font-size: 13px; color: darkgrey;">Tổng Hợp Nhanh Các Thông Tin </h6>
     <div class="container mt-3">
         <c:if test="${pageContext.request.userPrincipal.name != null}">
-            <h2 class="name-text"> ${pageContext.request.userPrincipal.name}</h2>
+            <c:forEach items="${sinhvien}" var="sv">
+                <h2 class="name-text"> ${sv.hoTen}</h2>
+            </c:forEach>
+            
         </c:if>
         <p class="text-header-tong">Tổng Hợp Điểm & Xếp Loại Học Tập</p>            
         <table class="table">
@@ -47,6 +49,7 @@
                 </tr>
             </thead>
             <tbody >
+               
                 <tr >
                     <td >1</td>
                     <td>9.0</td>

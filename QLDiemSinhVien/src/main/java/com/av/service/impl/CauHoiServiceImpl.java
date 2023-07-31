@@ -8,6 +8,7 @@ import com.av.pojo.Cauhoidiendang;
 import com.av.repository.CauHoiRepository;
 import com.av.service.CauHoiService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,10 @@ public class CauHoiServiceImpl implements CauHoiService{
     @Override
     public List<Cauhoidiendang> getCauhoidiendangs() {
         return loRepository.getCauhoidiendangs();
+    }
+
+    @Override
+    public Cauhoidiendang getCauHoi(Map<String, String> params) {
+        return loRepository.getCauHoi(params);
     }
 }

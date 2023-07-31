@@ -25,26 +25,32 @@ import javax.persistence.criteria.Root;
  */
 @Repository
 @Transactional
-public class LoginRepositoryImpl implements LoginRepository{
+public class LoginRepositoryImpl implements LoginRepository {
 
     @Autowired
     private LocalSessionFactoryBean Factory;
-    
+
+//    @Override
+//    public List<Taikhoan> getTaikhoans(String tenTK) {
+//        Session s = this.Factory.getObject().getCurrentSession();
+//        CriteriaBuilder builder = s.getCriteriaBuilder();
+//        CriteriaQuery<Taikhoan> query = builder.createQuery(Taikhoan.class);
+//        Root root = query.from(Taikhoan.class);
+//        query = query.select(root);
+//        
+//        if(!tenTK.isEmpty()){
+//            Predicate p = builder.equal(root.get("tenTaiKhoan").as(String.class), tenTK.trim());
+//            query = query.where(p);
+//        }
+//        
+//        Query q = s.createQuery(query);
+//        return q.getResultList();
+//    }
     @Override
-    public List<Taikhoan> getTaikhoans(String tenTK) {
+    public Taikhoan getUserByUsername(String username) {
         Session s = this.Factory.getObject().getCurrentSession();
-        CriteriaBuilder builder = s.getCriteriaBuilder();
-        CriteriaQuery<Taikhoan> query = builder.createQuery(Taikhoan.class);
-        Root root = query.from(Taikhoan.class);
-        query = query.select(root);
-        
-        if(!tenTK.isEmpty()){
-            Predicate p = builder.equal(root.get("tenTaiKhoan").as(String.class), tenTK.trim());
-            query = query.where(p);
-        }
-        
-        Query q = s.createQuery(query);
-        return q.getResultList();
+        Query q = s.createQuery("From Taikhoan Where tenTaiKhoan=:un");
+        q.setParameter("un", username);
+        return (Taikhoan) q.getSingleResult();
     }
-    
 }

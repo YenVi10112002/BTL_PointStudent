@@ -6,17 +6,18 @@ package com.av.repository;
 
 import com.av.pojo.Diem;
 import com.av.pojo.Sinhvien;
+import com.av.pojo.Traloidiendan;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Admin
  */
 public interface SinhVienRepository {
-    Sinhvien getSinhVien(int sinhvienId);
+    List<Sinhvien> getSinhVien(int idTaiKhoan);
     
     int getHocKy();
     
-    double getDiemTrungBinh(int sinhvienId);
-    List<Diem> DiemByMonHoc(); 
+    List<Traloidiendan> getTraLoi(Map<String, String> params);
 }

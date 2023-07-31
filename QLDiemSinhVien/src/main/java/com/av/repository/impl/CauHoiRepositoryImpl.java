@@ -5,9 +5,16 @@
 package com.av.repository.impl;
 
 import com.av.pojo.Cauhoidiendang;
+import com.av.pojo.Giangvien;
+import com.av.pojo.Sinhvien;
 import com.av.repository.CauHoiRepository;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -30,4 +37,22 @@ public class CauHoiRepositoryImpl implements CauHoiRepository{
         
         return q.getResultList();
     }  
+
+    @Override
+    public Cauhoidiendang getCauHoi(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if (params != null) {
+            String cateId = params.get("cauhoiId");
+            if (cateId != null) {
+               Query q = s.createQuery("From Cauhoidiendang WHERE idCauHoiDienDan =:idCauHoi"); 
+               q.setParameter("idCauHoi", Integer.parseInt(cateId));
+               Cauhoidiendang cauhoi =(Cauhoidiendang) q.getSingleResult();
+               return cauhoi;
+            }
+        }
+        return null;
+        
+    }
+
+ 
 }

@@ -7,6 +7,7 @@ package com.av.controllers;
 import java.util.Map;
 import com.av.service.CauHoiService;
 import com.av.service.ListSinhVienService;
+import com.av.service.SinhVienService;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -30,17 +31,23 @@ public class DienDangStudentController {
     @Autowired
     private CauHoiService cauhoiServite;
     @Autowired
+    private SinhVienService tongquanService;
+    @Autowired
     private Environment env;
     
     @ModelAttribute
     public void comonAttr(Model model) {
-        model.addAttribute("cauhoi", this.cauhoiServite.getCauhoidiendangs());
+        model.addAttribute("dscauhoi", this.cauhoiServite.getCauhoidiendangs());
         model.addAttribute("listsinhvien", this.sinhvienService.getSinhviens());
+        
     }
     
     
     @RequestMapping("/sinhvien/diendan")
     public String diendan(Model model, @RequestParam Map<String, String> params){
+        
+        model.addAttribute("traloi", this.tongquanService.getTraloi(params));
+        model.addAttribute("cauhoi", this.cauhoiServite.getCauHoi(params));
         return "diendansinhvien";
     }
 }

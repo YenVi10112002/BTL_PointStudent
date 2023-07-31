@@ -4,6 +4,7 @@
  */
 package com.av.controllers;
 
+import com.av.service.DiemService;
 import com.av.service.SinhVienService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class XemDiemStudentController {
     @Autowired
     private SinhVienService tongquanService;
     @Autowired
+    private DiemService diemService;
+    @Autowired
     private Environment env;
 
     @ModelAttribute
@@ -36,7 +39,7 @@ public class XemDiemStudentController {
     
     @GetMapping("/sinhvien/xemdiem")
     public String xemdiem(Model model, @RequestParam Map<String, String> params){
-         model.addAttribute("diemtrungbinh",this.tongquanService.getDiemTrungBinh(1));
+         model.addAttribute("diemtrungbinh",this.diemService.getDiemTrungBinh(1));
         return "xemdiemsinhvien";
     }
 }

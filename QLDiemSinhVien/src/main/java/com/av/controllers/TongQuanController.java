@@ -4,6 +4,8 @@
  */
 package com.av.controllers;
 
+import com.av.service.DiemService;
+import com.av.service.LoginService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.av.service.SinhVienService;
+import org.springframework.security.core.Authentication;
 
 /**
  *
@@ -26,20 +29,26 @@ import com.av.service.SinhVienService;
 @PropertySource("classpath:configs.properties")
 
 public class TongQuanController {
+    
     @Autowired
     private SinhVienService tongquanService;
+    @Autowired
+    private DiemService diemService;
+    @Autowired
+    private LoginService loService;
     @Autowired
     private Environment env;
     
     @ModelAttribute
-    public void comonAttr(Model model) {
-        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(1));
+    public void comonAttr(Model model, Authentication authentication) {
+       
     }
+    
     @RequestMapping("/sinhvien")
-    public String tongquan(Model model, @RequestParam Map<String, String> params){
-        model.addAttribute("DSDiem", this.tongquanService.DiemByMonHoc());
-        model.addAttribute("hocky",this.tongquanService.getHocKy());
-         model.addAttribute("diemtrungbinh",this.tongquanService.getDiemTrungBinh(1));
+    public String tongquan(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
+        model.addAttribute("hocky", this.tongquanService.getHocKy());
+        model.addAttribute("diemtrungbinh", this.diemService.getDiemTrungBinh(1));
+        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
         return "sinhvien";
     }
 }

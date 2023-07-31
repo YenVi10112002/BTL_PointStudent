@@ -5,15 +5,18 @@ com\av\configs\AppConfig.class
 com\av\pojo\Monhoc_.class
 com\av\controllers\SignUpController.class
 com\av\repository\CauHoiRepository.class
+com\av\repository\impl\DiemRepositoryImpl.class
 com\av\pojo\Giangvien_.class
 com\av\repository\impl\ListSinhVienRepositoryImpl.class
 com\av\pojo\Giaovu.class
 com\av\configs\CustomSuccessHandler.class
 com\av\controllers\ThayDoiMatKhauController.class
 com\av\controllers\ThongTinStudentController.class
+com\av\service\impl\DiemServiceImpl.class
 com\av\pojo\Traloidiendan.class
 com\av\service\impl\ListSinhVienServiceImpl.class
 com\av\pojo\Diem.class
+com\av\repository\DiemRepository.class
 com\av\pojo\Cauhoidiendang_.class
 com\av\controllers\TongQuanController.class
 com\av\configs\SecurityWebApplicationInitializer.class
@@ -37,6 +40,7 @@ com\av\service\impl\LoginServiceImpl.class
 com\av\service\LoginService.class
 com\av\pojo\Sinhvien_.class
 com\av\pojo\Cauhoidiendang.class
+com\av\service\DiemService.class
 com\av\configs\HibernateConfig.class
 com\av\repository\impl\CauHoiRepositoryImpl.class
 com\av\pojo\Traloidiendan_.class

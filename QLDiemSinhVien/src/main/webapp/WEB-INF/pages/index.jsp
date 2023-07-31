@@ -33,7 +33,6 @@
                 </div>
 
                 <div >
-                  
                     <input type="submit" class="btn btn-bg btn-submit text-size" value="Đăng Nhập"/>
                  
                     <hr  width="100%" size="3px" align="center" color="#9C9C9C" />

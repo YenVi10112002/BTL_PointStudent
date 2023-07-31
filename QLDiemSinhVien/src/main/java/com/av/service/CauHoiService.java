@@ -6,6 +6,7 @@ package com.av.service;
 
 import com.av.pojo.Cauhoidiendang;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -13,4 +14,5 @@ import java.util.List;
  */
 public interface CauHoiService {
     List<Cauhoidiendang> getCauhoidiendangs();
+    Cauhoidiendang getCauHoi(Map<String, String> params);
 }

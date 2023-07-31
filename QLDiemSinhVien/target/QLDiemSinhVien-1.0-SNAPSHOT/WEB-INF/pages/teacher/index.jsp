@@ -110,14 +110,12 @@
         width: 100%;
         overflow: hidden;
         border-radius: 10px;
-
     }
 
     .items-monhoc-giaovien {
         width: 28%;
         float: left;
         margin: 15px;
-
         box-sizing: border-box;
     }
 
