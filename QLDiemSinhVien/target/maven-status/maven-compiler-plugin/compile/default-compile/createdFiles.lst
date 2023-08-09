@@ -14,6 +14,7 @@ com\av\controllers\ThayDoiMatKhauController.class
 com\av\controllers\ThongTinStudentController.class
 com\av\service\impl\DiemServiceImpl.class
 com\av\pojo\Traloidiendan.class
+com\av\formatter\TaiKhoanFormatter.class
 com\av\service\impl\ListSinhVienServiceImpl.class
 com\av\pojo\Diem.class
 com\av\repository\DiemRepository.class
@@ -59,3 +60,4 @@ com\av\controllers\NhapDiemController.class
 com\av\service\impl\SinhVienServiceImpl.class
 com\av\service\CauHoiService.class
 com\av\pojo\Monhoc.class
+com\av\formatter\CauHoiFormatter.class

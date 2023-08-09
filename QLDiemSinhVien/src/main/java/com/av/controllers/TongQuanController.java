@@ -4,6 +4,7 @@
  */
 package com.av.controllers;
 
+import com.av.pojo.Sinhvien;
 import com.av.service.DiemService;
 import com.av.service.LoginService;
 import java.util.Map;
@@ -29,7 +30,7 @@ import org.springframework.security.core.Authentication;
 @PropertySource("classpath:configs.properties")
 
 public class TongQuanController {
-    
+
     @Autowired
     private SinhVienService tongquanService;
     @Autowired
@@ -38,17 +39,19 @@ public class TongQuanController {
     private LoginService loService;
     @Autowired
     private Environment env;
-    
+
     @ModelAttribute
     public void comonAttr(Model model, Authentication authentication) {
-       
+        
     }
-    
+
     @RequestMapping("/sinhvien")
     public String tongquan(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
         model.addAttribute("hocky", this.tongquanService.getHocKy());
         model.addAttribute("diemtrungbinh", this.diemService.getDiemTrungBinh(1));
+        model.addAttribute("diemtrungbinhhe", this.diemService.getDiemTrungBinhHe(1));
         model.addAttribute("sinhvien", this.tongquanService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
+
         return "sinhvien";
     }
 }

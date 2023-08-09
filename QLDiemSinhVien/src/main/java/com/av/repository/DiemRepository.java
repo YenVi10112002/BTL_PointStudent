@@ -4,7 +4,9 @@
  */
 package com.av.repository;
 
+import com.av.pojo.Traloidiendan;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -12,4 +14,7 @@ import java.util.List;
  */
 public interface DiemRepository {
         double getDiemTrungBinh(int sinhvienId);
+        double getDiemTrungBinhHe(int sinhvienId);
+
+        
 }

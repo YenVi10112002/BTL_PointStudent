@@ -12,11 +12,8 @@
     <h4 style="font-weight: bold;">Tổng quan</h4>
     <h6 style="font-size: 13px; color: darkgrey;">Tổng Hợp Nhanh Các Thông Tin </h6>
     <div class="container mt-3">
-        <c:if test="${pageContext.request.userPrincipal.name != null}">
-            <c:forEach items="${sinhvien}" var="sv">
-                <h2 class="name-text"> ${sv.hoTen}</h2>
-            </c:forEach>
-            
+        <c:if test="${pageContext.request.userPrincipal.name != null}">    
+              <h2 class="name-text"> ${sinhvien.hoTen}</h2>            
         </c:if>
         <p class="text-header-tong">Tổng Hợp Điểm & Xếp Loại Học Tập</p>            
         <table class="table">
@@ -30,7 +27,7 @@
             <tbody>
                 <tr>
                     <td>${diemtrungbinh}</td>
-                    <td>3.5</td>
+                    <td>${diemtrungbinhhe}</td>
                     <td>Giỏi</td>
                 </tr>
             </tbody>
@@ -49,12 +46,7 @@
                 </tr>
             </thead>
             <tbody >
-               
-                <tr >
-                    <td >1</td>
-                    <td>9.0</td>
-                    <td>3.5</td>
-                </tr>
+                
                 <tr>
                     <td>2</td>
                     <td>8.5</td>

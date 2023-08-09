@@ -5,6 +5,7 @@
 package com.av.controllers;
 
 import com.av.pojo.Sinhvien;
+import com.av.service.LoginService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.av.service.SinhVienService;
+import org.springframework.security.core.Authentication;
 
 /**
  *
@@ -28,13 +30,13 @@ public class ThongTinStudentController {
     @Autowired
     private SinhVienService tongquanService;
     @Autowired
+    private LoginService loService;
+    @Autowired
     private Environment env;
-    @ModelAttribute
-    public void comonAttr(Model model) {
-        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(1));
-    }
+
     @GetMapping("/sinhvien/thongtin")
-    public String thongtin(Model model, @RequestParam Map<String, String> params){
+    public String thongtin(Model model, @RequestParam Map<String, String> params, Authentication authentication){
+        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
         return "thongtintaikhoan";
     }
 }

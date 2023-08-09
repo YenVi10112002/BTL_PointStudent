@@ -5,6 +5,7 @@
 package com.av.repository;
 
 import com.av.pojo.Cauhoidiendang;
+import com.av.pojo.Traloidiendan;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,10 @@ import java.util.Map;
  * @author Admin
  */
 public interface CauHoiRepository {
-    List<Cauhoidiendang> getCauhoidiendangs();
-    Cauhoidiendang getCauHoi(Map<String, String> params);
+
+    Object getCauHoi(Map<String, String> params);
+    boolean addOrUpdateTraloi(Traloidiendan p);
+    boolean addOrUpdateCauHoi(Cauhoidiendang p);
+    List<Object> getCauHoiDienDan();
+    List<Object> getTraLoi(Map<String, String> params);
 }

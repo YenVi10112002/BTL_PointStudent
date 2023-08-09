@@ -24,4 +24,9 @@ public class DiemServiceImpl implements DiemService {
     public double getDiemTrungBinh(int sinhvienId){
         return diemRepository.getDiemTrungBinh(sinhvienId);
     }
+    @Override
+    public double getDiemTrungBinhHe(int sinhvienId){
+        return diemRepository.getDiemTrungBinhHe(sinhvienId);
+    }
+
 }

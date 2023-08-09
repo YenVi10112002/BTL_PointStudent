@@ -6,11 +6,15 @@ package com.av.repository.impl;
 
 import com.av.pojo.Diem;
 import com.av.pojo.Monhoc;
+import com.av.pojo.Sinhvien;
 import com.av.repository.DiemRepository;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Collections;
 import java.util.List;
+
 import java.util.Locale;
+
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
@@ -55,5 +59,31 @@ public class DiemRepositoryImpl implements DiemRepository{
         }
 
     }
+
+    @Override
+    public double getDiemTrungBinhHe(int sinhvienId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT AVG(diemTrungBinh) FROM Diem Where idSinhVien = :sinhvienId");
+        q.setParameter("sinhvienId", sinhvienId);
+        DecimalFormat decimalFormat = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
+        try {
+            Double averageValue = (Double) q.getSingleResult();
+            if (averageValue != null) {
+                averageValue = averageValue*0.4;
+                averageValue = Double.valueOf(decimalFormat.format(averageValue));
+            } else {
+                averageValue = 0.0;
+            }
+            return averageValue;
+        } catch (NoResultException e) {
+            return 0.0; // Không tìm thấy sinh viên với ID tương ứng
+        } catch (NonUniqueResultException e) {
+            // Xử lý nếu có nhiều hơn một kết quả trả về (nếu ID không duy nhất)
+            return 0.0;
+        }
+    }
+
+    
+    
     
 }

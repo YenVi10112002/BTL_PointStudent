@@ -5,6 +5,7 @@
 package com.av.service.impl;
 
 import com.av.pojo.Cauhoidiendang;
+import com.av.pojo.Traloidiendan;
 import com.av.repository.CauHoiRepository;
 import com.av.service.CauHoiService;
 import java.util.List;
@@ -21,13 +22,29 @@ public class CauHoiServiceImpl implements CauHoiService{
     @Autowired
     private CauHoiRepository loRepository;
 
+
     @Override
-    public List<Cauhoidiendang> getCauhoidiendangs() {
-        return loRepository.getCauhoidiendangs();
+    public Object getCauHoi(Map<String, String> params) {
+        return loRepository.getCauHoi(params);
     }
 
     @Override
-    public Cauhoidiendang getCauHoi(Map<String, String> params) {
-        return loRepository.getCauHoi(params);
+    public boolean addOrUpdateTraloi(Traloidiendan p) {
+       return loRepository.addOrUpdateTraloi(p);
     }
+
+    @Override
+    public List<Object> getCauHoiDienDan() {
+        return loRepository.getCauHoiDienDan();
+    }
+    @Override
+    public List<Object> getTraloi(Map<String, String> params) {
+        return loRepository.getTraLoi(params);
+    }
+
+    @Override
+    public boolean addOrUpdateCauHoi(Cauhoidiendang p) {
+        return loRepository.addOrUpdateCauHoi(p);
+    }
+
 }

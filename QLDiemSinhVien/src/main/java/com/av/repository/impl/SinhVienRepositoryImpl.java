@@ -6,6 +6,7 @@ package com.av.repository.impl;
 
 import com.av.pojo.Diem;
 import com.av.pojo.Sinhvien;
+import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -17,11 +18,8 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.av.repository.SinhVienRepository;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -42,28 +40,25 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Sinhvien> getSinhVien(int idTaiKhoan) {
+    public Sinhvien getSinhVien(int idTaiKhoan) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
-        
-        Root root = q.from(Sinhvien.class);
+
+        Root<Sinhvien> root = q.from(Sinhvien.class);
         q.select(root);
         List<Predicate> predicates = new ArrayList<>();
-        
+
         predicates.add(b.equal(root.get("idTaiKhoan"), idTaiKhoan));
-        q.where(predicates.toArray(Predicate[]::new));
+        q.where(predicates.toArray(new Predicate[0]));
         Query query = session.createQuery(q);
-        return query.getResultList();
-//        try {
-//            Sinhvien sinhvien = (Sinhvien) q.getSingleResult();
-//            return sinhvien;
-//        } catch (NoResultException e) {
-//            return null; // Không tìm thấy sinh viên với ID tương ứng
-//        } catch (NonUniqueResultException e) {
-//            // Xử lý nếu có nhiều hơn một kết quả trả về (nếu ID không duy nhất)
-//            return null;
-//        }
+        try {
+            return (Sinhvien) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -74,30 +69,28 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         return maxValue;
     }
 
-    
-
-
     @Override
-    public List<Traloidiendan> getTraLoi(Map<String, String> params) {
-        Session session = this.factory.getObject().getCurrentSession();
-
+    public Taikhoan getTaiKhoan(int idTaiKhoan) {
+                Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Traloidiendan> q = b.createQuery(Traloidiendan.class);
-        Root root = q.from(Traloidiendan.class);
+        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
+
+        Root<Taikhoan> root = q.from(Taikhoan.class);
         q.select(root);
+        List<Predicate> predicates = new ArrayList<>();
 
-        if (params != null) {
-            List<Predicate> predicates = new ArrayList<>();
-            String cateId = params.get("cauhoiId");
-            if (cateId != null) {
-                predicates.add(b.equal(root.get("idCauHoiDienDan"), Integer.parseInt(cateId)));
-            }
-            q.where(predicates.toArray(Predicate[]::new));
-        }
-        q.orderBy(b.desc(root.get("idTraLoiDienDan")));
-
+        predicates.add(b.equal(root.get("idTaiKhoan"), idTaiKhoan));
+        q.where(predicates.toArray(new Predicate[0]));
         Query query = session.createQuery(q);
-        return query.getResultList();
+        try {
+            return (Taikhoan) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
     }
+
+    
 
 }

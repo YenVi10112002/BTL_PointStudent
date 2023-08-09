@@ -4,8 +4,8 @@
  */
 package com.av.repository;
 
-import com.av.pojo.Diem;
 import com.av.pojo.Sinhvien;
+import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +15,10 @@ import java.util.Map;
  * @author Admin
  */
 public interface SinhVienRepository {
-    List<Sinhvien> getSinhVien(int idTaiKhoan);
+    Sinhvien getSinhVien(int idTaiKhoan);
     
     int getHocKy();
+    Taikhoan getTaiKhoan(int idTaiKhoan);
     
-    List<Traloidiendan> getTraLoi(Map<String, String> params);
+    
 }

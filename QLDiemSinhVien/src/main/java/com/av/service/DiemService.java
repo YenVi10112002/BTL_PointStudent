@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface DiemService {
     double getDiemTrungBinh(int sinhvienId);
+    double getDiemTrungBinhHe(int sinhvienId);
+
 }
