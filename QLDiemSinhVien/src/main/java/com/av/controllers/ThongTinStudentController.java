@@ -23,7 +23,7 @@ import org.springframework.security.core.Authentication;
  *
  * @author Admin
  */
-@ControllerAdvice
+
 @PropertySource("classpath:configs.properties")
 @Controller
 public class ThongTinStudentController {

@@ -21,6 +21,7 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -80,6 +81,21 @@ public class DiemRepositoryImpl implements DiemRepository{
         } catch (NonUniqueResultException e) {
             // Xử lý nếu có nhiều hơn một kết quả trả về (nếu ID không duy nhất)
             return 0.0;
+        }
+    }
+
+    @Override
+    public boolean addDiem(Diem d) {
+        Session s = this.factory.getObject().getCurrentSession();        
+        try {
+            if(d.getIdDiem() == null){
+            s.save(d);
+            }else
+                s.update(d);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
         }
     }
 

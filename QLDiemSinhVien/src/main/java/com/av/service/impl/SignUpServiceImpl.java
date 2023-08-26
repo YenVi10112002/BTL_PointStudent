@@ -7,6 +7,7 @@ package com.av.service.impl;
 import com.av.pojo.Taikhoan;
 import com.av.repository.SignUpRepository;
 import com.av.service.SignUpService;
+import java.util.List;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -32,5 +33,19 @@ public class SignUpServiceImpl implements SignUpService{
         t.setChucVu(Taikhoan.SV);
         return signUpRepo.addAcount(t);
     }
+
+    @Override
+    public boolean addAcountGV(Taikhoan t) {
+        String pass = t.getMatKhau();
+        t.setMatKhau(this.passwordEncoder.encode(pass));
+        t.setChucVu(Taikhoan.GV);
+        return signUpRepo.addAcountGV(t);
+    }
+
+    @Override
+    public List<Taikhoan> getTaiKhoan() {
+        return this.signUpRepo.getTaiKhoan();
+    }
+    
     
 }

@@ -6,6 +6,10 @@ package com.av.configs;
 
 
 import com.av.formatter.CauHoiFormatter;
+import com.av.formatter.GiangVienFormatter;
+import com.av.formatter.LopHocFormatter;
+import com.av.formatter.MonHocFormatter;
+import com.av.formatter.SinhVienFormatter;
 import com.av.formatter.TaiKhoanFormatter;
 import java.text.SimpleDateFormat;
 import org.springframework.context.annotation.Bean;
@@ -13,8 +17,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
@@ -43,6 +49,22 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new CauHoiFormatter());
         registry.addFormatter(new TaiKhoanFormatter());
+        registry.addFormatter(new LopHocFormatter());
+        registry.addFormatter(new GiangVienFormatter());
+        registry.addFormatter(new MonHocFormatter());
+        registry.addFormatter(new SinhVienFormatter());
+    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
+    }
+    
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver
+                = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+        return resolver;
     }
     
     
@@ -58,6 +80,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Bean
     public SimpleDateFormat simpleDateFormat(){
-        return new SimpleDateFormat("yyyy-MM-dd");
+        return new SimpleDateFormat("dd/MM/yyyy");
     }
 }

@@ -5,6 +5,7 @@
 package com.av.repository;
 
 import com.av.pojo.Taikhoan;
+import java.util.List;
 
 /**
  *
@@ -12,4 +13,11 @@ import com.av.pojo.Taikhoan;
  */
 public interface SignUpRepository {
     boolean addAcount(Taikhoan t);
+    boolean addAcountGV(Taikhoan t);
+    List<Taikhoan> getTaiKhoan();
+
+    
+    
+    
 }
+

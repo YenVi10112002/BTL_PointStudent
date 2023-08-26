@@ -10,6 +10,7 @@ import com.av.repository.CauHoiRepository;
 import com.av.repository.ListSinhVienRepository;
 import com.av.service.ListSinhVienService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class ListSinhVienServiceImpl implements ListSinhVienService{
     private ListSinhVienRepository loRepository;
 
     @Override
-    public List<Sinhvien> getSinhviens() {
-        return loRepository.getSinhviens();
+    public List<Sinhvien> getSinhviens(Map<String, String> params) {
+        return loRepository.getSinhviens(params);
     }
 }

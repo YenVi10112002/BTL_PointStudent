@@ -41,7 +41,7 @@ public class SignUpController {
             else
                 errMsg = "Đã có lỗi!";
         }else
-            errMsg = "Tên tài khoản hoặc mật khẩu không đúng!!!";
+            errMsg = "Mật khẩu không Khớp!!!";
         
         model.addAttribute("errMsg", errMsg);
         return "signup";

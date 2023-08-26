@@ -1,20 +1,19 @@
 package com.av.pojo;
 
-import com.av.pojo.DiemPK;
 import com.av.pojo.Monhoc;
 import com.av.pojo.Sinhvien;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-08-08T00:25:17")
+@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-08-26T08:03:58")
 @StaticMetamodel(Diem.class)
 public class Diem_ { 
 
-    public static volatile SingularAttribute<Diem, Monhoc> monhoc;
-    public static volatile SingularAttribute<Diem, DiemPK> diemPK;
+    public static volatile SingularAttribute<Diem, Monhoc> idMonHoc;
     public static volatile SingularAttribute<Diem, Short> trangThai;
-    public static volatile SingularAttribute<Diem, Sinhvien> sinhvien;
+    public static volatile SingularAttribute<Diem, Integer> idDiem;
+    public static volatile SingularAttribute<Diem, Sinhvien> idSinhVien;
     public static volatile SingularAttribute<Diem, Double> diemTrungBinh;
     public static volatile SingularAttribute<Diem, String> xepLoai;
     public static volatile SingularAttribute<Diem, Double> diemCuoiKy;

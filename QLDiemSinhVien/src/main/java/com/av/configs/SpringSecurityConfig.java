@@ -4,8 +4,10 @@
  */
 package com.av.configs;
 
+import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -64,5 +66,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/giaovu/**").access("hasRole('ROLE_GVU')");
         http.csrf().disable();
     }
+    public SimpleDateFormat simpleDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
+    }
 
+    @Bean
+    public CustomDateEditor customDateEditor() {
+        return new CustomDateEditor(simpleDateFormat(), true);
+    }
 }

@@ -4,10 +4,11 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
+import javax.ejb.TransactionManagement;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Monhoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -69,13 +72,14 @@ public class Monhoc implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "phongHoc")
     private String phongHoc;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "idGiangVien")
+    @JsonIgnore
     private String idGiangVien;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monhoc")
+    @JsonIgnore
+    @OneToMany(mappedBy = "idMonHoc")
     private Set<Diem> diemSet;
+    
 
     public Monhoc() {
     }
@@ -84,14 +88,13 @@ public class Monhoc implements Serializable {
         this.idMonHoc = idMonHoc;
     }
 
-    public Monhoc(Integer idMonHoc, String tenMonHoc, String hinhThucThi, int soTinChi, int hocKy, String phongHoc, String idGiangVien) {
+    public Monhoc(Integer idMonHoc, String tenMonHoc, String hinhThucThi, int soTinChi, int hocKy, String phongHoc) {
         this.idMonHoc = idMonHoc;
         this.tenMonHoc = tenMonHoc;
         this.hinhThucThi = hinhThucThi;
         this.soTinChi = soTinChi;
         this.hocKy = hocKy;
         this.phongHoc = phongHoc;
-        this.idGiangVien = idGiangVien;
     }
 
     public Integer getIdMonHoc() {
@@ -183,5 +186,6 @@ public class Monhoc implements Serializable {
     public String toString() {
         return "com.av.pojo.Monhoc[ idMonHoc=" + idMonHoc + " ]";
     }
+
     
 }

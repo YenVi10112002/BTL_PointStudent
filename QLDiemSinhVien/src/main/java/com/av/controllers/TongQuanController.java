@@ -26,9 +26,7 @@ import org.springframework.security.core.Authentication;
  * @author Admin
  */
 @Controller
-@ControllerAdvice
 @PropertySource("classpath:configs.properties")
-
 public class TongQuanController {
 
     @Autowired
@@ -48,8 +46,6 @@ public class TongQuanController {
     @RequestMapping("/sinhvien")
     public String tongquan(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
         model.addAttribute("hocky", this.tongquanService.getHocKy());
-        model.addAttribute("diemtrungbinh", this.diemService.getDiemTrungBinh(1));
-        model.addAttribute("diemtrungbinhhe", this.diemService.getDiemTrungBinhHe(1));
         model.addAttribute("sinhvien", this.tongquanService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
 
         return "sinhvien";

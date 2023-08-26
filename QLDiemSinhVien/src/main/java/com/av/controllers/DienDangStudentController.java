@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Admin
  */
 @Controller
-@ControllerAdvice
 @PropertySource("classpath:configs.properties")
 public class DienDangStudentController {
 
@@ -45,8 +44,7 @@ public class DienDangStudentController {
 
     @ModelAttribute
     public void comonAttr(Model model) {
-        model.addAttribute("dscauhoi", this.cauhoiServite.getCauHoiDienDan());
-        model.addAttribute("listsinhvien", this.sinhvienService.getSinhviens());
+        
         model.addAttribute("traloidiendan", new Traloidiendan());
         model.addAttribute("cauhoidiendan", new Cauhoidiendang());
 

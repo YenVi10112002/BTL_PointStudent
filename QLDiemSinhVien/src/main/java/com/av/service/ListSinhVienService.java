@@ -6,11 +6,12 @@ package com.av.service;
 
 import com.av.pojo.Sinhvien;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Admin
  */
 public interface ListSinhVienService {
-    List<Sinhvien> getSinhviens();
+    List<Sinhvien> getSinhviens(Map<String, String> params);
 }

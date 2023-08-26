@@ -6,12 +6,13 @@ package com.av.repository;
 
 import com.av.pojo.Sinhvien;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Admin
  */
 public interface ListSinhVienRepository {
-    List<Sinhvien> getSinhviens();
+    List<Sinhvien> getSinhviens(Map<String, String> params);
             
 }

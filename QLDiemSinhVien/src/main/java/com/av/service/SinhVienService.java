@@ -5,6 +5,7 @@
 package com.av.service;
 
 import com.av.pojo.Diem;
+import com.av.pojo.Lophoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
@@ -19,6 +20,8 @@ public interface SinhVienService {
     Sinhvien getSinhvien(int idTaiKhoan);
     int getHocKy();
     Taikhoan getTaiKhoan(int idTaiKhoan);
-    
-    
+    List<Lophoc> getLopHocs();
+    boolean addOrUpdateSinhVien(Sinhvien sv );
+    Sinhvien getSinhVienById(int idSinhVien);
+    boolean deleteSinhVien(int idSinhVien);
 }

@@ -5,9 +5,12 @@
 package com.av.pojo;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -25,9 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Diem.findAll", query = "SELECT d FROM Diem d"),
-    @NamedQuery(name = "Diem.findByIdDiem", query = "SELECT d FROM Diem d WHERE d.diemPK.idDiem = :idDiem"),
-    @NamedQuery(name = "Diem.findByIdSinhVien", query = "SELECT d FROM Diem d WHERE d.diemPK.idSinhVien = :idSinhVien"),
-    @NamedQuery(name = "Diem.findByIdMonHoc", query = "SELECT d FROM Diem d WHERE d.diemPK.idMonHoc = :idMonHoc"),
+    @NamedQuery(name = "Diem.findByIdDiem", query = "SELECT d FROM Diem d WHERE d.idDiem = :idDiem"),
     @NamedQuery(name = "Diem.findByDiemGiuaKy", query = "SELECT d FROM Diem d WHERE d.diemGiuaKy = :diemGiuaKy"),
     @NamedQuery(name = "Diem.findByDiemCuoiKy", query = "SELECT d FROM Diem d WHERE d.diemCuoiKy = :diemCuoiKy"),
     @NamedQuery(name = "Diem.findByDiemTrungBinh", query = "SELECT d FROM Diem d WHERE d.diemTrungBinh = :diemTrungBinh"),
@@ -36,8 +37,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Diem implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected DiemPK diemPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idDiem")
+    private Integer idDiem;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "diemGiuaKy")
     private Double diemGiuaKy;
@@ -50,30 +54,26 @@ public class Diem implements Serializable {
     private String xepLoai;
     @Column(name = "trangThai")
     private Short trangThai;
-    @JoinColumn(name = "idMonHoc", referencedColumnName = "idMonHoc", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Monhoc monhoc;
-    @JoinColumn(name = "idSinhVien", referencedColumnName = "idSinhVien", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Sinhvien sinhvien;
+    @JoinColumn(name = "idMonHoc", referencedColumnName = "idMonHoc")
+    @ManyToOne
+    private Monhoc idMonHoc;
+    @JoinColumn(name = "idSinhVien", referencedColumnName = "idSinhVien")
+    @ManyToOne
+    private Sinhvien idSinhVien;
 
     public Diem() {
     }
 
-    public Diem(DiemPK diemPK) {
-        this.diemPK = diemPK;
+    public Diem(Integer idDiem) {
+        this.idDiem = idDiem;
     }
 
-    public Diem(int idDiem, int idSinhVien, int idMonHoc) {
-        this.diemPK = new DiemPK(idDiem, idSinhVien, idMonHoc);
+    public Integer getIdDiem() {
+        return idDiem;
     }
 
-    public DiemPK getDiemPK() {
-        return diemPK;
-    }
-
-    public void setDiemPK(DiemPK diemPK) {
-        this.diemPK = diemPK;
+    public void setIdDiem(Integer idDiem) {
+        this.idDiem = idDiem;
     }
 
     public Double getDiemGiuaKy() {
@@ -116,26 +116,26 @@ public class Diem implements Serializable {
         this.trangThai = trangThai;
     }
 
-    public Monhoc getMonhoc() {
-        return monhoc;
+    public Monhoc getIdMonHoc() {
+        return idMonHoc;
     }
 
-    public void setMonhoc(Monhoc monhoc) {
-        this.monhoc = monhoc;
+    public void setIdMonHoc(Monhoc idMonHoc) {
+        this.idMonHoc = idMonHoc;
     }
 
-    public Sinhvien getSinhvien() {
-        return sinhvien;
+    public Sinhvien getIdSinhVien() {
+        return idSinhVien;
     }
 
-    public void setSinhvien(Sinhvien sinhvien) {
-        this.sinhvien = sinhvien;
+    public void setIdSinhVien(Sinhvien idSinhVien) {
+        this.idSinhVien = idSinhVien;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (diemPK != null ? diemPK.hashCode() : 0);
+        hash += (idDiem != null ? idDiem.hashCode() : 0);
         return hash;
     }
 
@@ -146,7 +146,7 @@ public class Diem implements Serializable {
             return false;
         }
         Diem other = (Diem) object;
-        if ((this.diemPK == null && other.diemPK != null) || (this.diemPK != null && !this.diemPK.equals(other.diemPK))) {
+        if ((this.idDiem == null && other.idDiem != null) || (this.idDiem != null && !this.idDiem.equals(other.idDiem))) {
             return false;
         }
         return true;
@@ -154,7 +154,11 @@ public class Diem implements Serializable {
 
     @Override
     public String toString() {
-        return "com.av.pojo.Diem[ diemPK=" + diemPK + " ]";
+        return "com.av.pojo.Diem[ idDiem=" + idDiem + " ]";
+    }
+
+    public void setIdMonHoc(PhieuMonHoc c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

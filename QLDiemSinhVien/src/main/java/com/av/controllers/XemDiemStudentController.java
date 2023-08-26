@@ -39,7 +39,7 @@ public class XemDiemStudentController {
     
     @GetMapping("/sinhvien/xemdiem")
     public String xemdiem(Model model, @RequestParam Map<String, String> params){
-         model.addAttribute("diemtrungbinh",this.diemService.getDiemTrungBinh(1));
+         
         return "xemdiemsinhvien";
     }
 }

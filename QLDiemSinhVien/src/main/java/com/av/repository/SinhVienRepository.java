@@ -4,6 +4,7 @@
  */
 package com.av.repository;
 
+import com.av.pojo.Lophoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
@@ -16,9 +17,10 @@ import java.util.Map;
  */
 public interface SinhVienRepository {
     Sinhvien getSinhVien(int idTaiKhoan);
-    
     int getHocKy();
     Taikhoan getTaiKhoan(int idTaiKhoan);
-    
-    
+    List<Lophoc> getLopHocs();
+    boolean addOrUpdateSinhVien(Sinhvien sv);
+    Sinhvien getSinhVienById(int idSinhVien);
+    boolean deleteSinhVien(int idSinhVien);
 }

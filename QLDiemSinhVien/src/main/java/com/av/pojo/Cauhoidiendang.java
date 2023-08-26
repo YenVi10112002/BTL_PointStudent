@@ -7,7 +7,6 @@ package com.av.pojo;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,7 +47,7 @@ public class Cauhoidiendang implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "noiDungCauHoi")
     private String noiDungCauHoi;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCauHoiDienDan")
+    @OneToMany(mappedBy = "idCauHoiDienDan")
     private Set<Traloidiendan> traloidiendanSet;
     @JoinColumn(name = "idTaiKhoan", referencedColumnName = "idTaiKhoan")
     @ManyToOne(optional = false)

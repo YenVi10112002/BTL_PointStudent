@@ -8,7 +8,11 @@ import com.av.pojo.Cauhoidiendang;
 import com.av.pojo.Sinhvien;
 import com.av.repository.ListSinhVienRepository;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -25,10 +29,21 @@ public class ListSinhVienRepositoryImpl implements ListSinhVienRepository{
      @Autowired
     private LocalSessionFactoryBean factory;
     @Override
-    public List<Sinhvien> getSinhviens() {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Sinhvien");
-        
-        return q.getResultList();
+    public List<Sinhvien> getSinhviens(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+       
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
+        Root root = q.from(Sinhvien.class);
+        q.select(root);
+        if(params != null)
+        {
+            
+            String idSV = params.get("idSinhVien");
+            if(idSV != null && !idSV.isEmpty())
+                q.where(b.equal(root.get("idSinhVien"), Integer.parseInt(idSV)));
+        }
+        Query query = session.createQuery(q);
+        return query.getResultList();
     } 
 }

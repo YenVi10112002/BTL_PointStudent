@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author FPTSHOP
  */
 public interface LoginService extends UserDetailsService{
-//    List<Taikhoan> getTaikhoans(String tenTK);
     Taikhoan getUserByUsername(String username);
     UserDetails getLoggedInUserDetails(Authentication authentication);
     int GetIdTaiKhoan(UserDetails userDetails);

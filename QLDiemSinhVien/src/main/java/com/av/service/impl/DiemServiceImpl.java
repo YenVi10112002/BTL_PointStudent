@@ -4,10 +4,18 @@
  */
 package com.av.service.impl;
 
+import com.av.pojo.Diem;
+import com.av.pojo.Giangvien;
 import com.av.repository.DiemRepository;
 import com.av.service.DiemService;
 import java.util.List;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,5 +36,11 @@ public class DiemServiceImpl implements DiemService {
     public double getDiemTrungBinhHe(int sinhvienId){
         return diemRepository.getDiemTrungBinhHe(sinhvienId);
     }
+
+    @Override
+    public boolean addDiem(Diem d) {
+        return diemRepository.addDiem(d);
+    }
+    
 
 }

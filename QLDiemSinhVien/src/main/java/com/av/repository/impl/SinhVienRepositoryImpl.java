@@ -5,6 +5,8 @@
 package com.av.repository.impl;
 
 import com.av.pojo.Diem;
+import com.av.pojo.Lophoc;
+import com.av.pojo.Monhoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
@@ -25,7 +27,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.transaction.annotation.Propagation;
 
 /**
  *
@@ -71,7 +75,7 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
     @Override
     public Taikhoan getTaiKhoan(int idTaiKhoan) {
-                Session session = this.factory.getObject().getCurrentSession();
+        Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
 
@@ -91,6 +95,81 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         }
     }
 
-    
+    @Override
+    public List<Lophoc> getLopHocs() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From Lophoc");
+        return q.getResultList();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean addOrUpdateSinhVien(Sinhvien sv) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            if (sv.getIdSinhVien() == null) {
+                s.save(sv);
+//                Diem diem = new Diem();
+//                diem.setIdSinhVien(sv);
+//                s.save(diem);
+            } else {
+//                CriteriaBuilder b = s.getCriteriaBuilder();
+//                CriteriaQuery<Diem> q = b.createQuery(Diem.class);
+//                Root<Diem> root = q.from(Diem.class);
+//                q.select(root).where(b.equal(root.get("idSinhVien"), sv));
+//                Query query = s.createQuery(q);
+//                Diem d = (Diem) query.getSingleResult();
+//                if (d.getIdSinhVien() != null) {
+                    s.update(sv);
+//                    d.setIdMonHoc(sv.getMonhoc());
+//                    s.update(d);
+//                }
+                
+            }
+            return true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+
+        }
+        return false;
+    }
+
+    @Override
+    public Sinhvien getSinhVienById(int idSinhVien) {
+
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
+
+        Root<Sinhvien> root = q.from(Sinhvien.class);
+        q.select(root);
+
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(root.get("idSinhVien"), idSinhVien));
+        q.where(predicates.toArray(new Predicate[0]));
+        Query query = s.createQuery(q);
+        return (Sinhvien) query.getSingleResult();
+
+    }
+
+    @Override
+    public boolean deleteSinhVien(int idSinhVien) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Sinhvien sv = this.getSinhVienById(idSinhVien);
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
+        Root r = q.from(Taikhoan.class);
+        q.select(r).where(b.equal(r.get("idTaiKhoan"), sv.getIdTaiKhoan().getIdTaiKhoan()));
+        Query query = s.createQuery(q);
+        Taikhoan tk = (Taikhoan) query.getSingleResult();
+        try {
+            s.remove(tk);
+            s.remove(sv);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 
 }

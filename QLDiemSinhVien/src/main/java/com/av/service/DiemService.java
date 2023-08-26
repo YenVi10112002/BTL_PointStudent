@@ -4,6 +4,7 @@
  */
 package com.av.service;
 
+import com.av.pojo.Diem;
 import java.util.List;
 
 /**
@@ -13,5 +14,7 @@ import java.util.List;
 public interface DiemService {
     double getDiemTrungBinh(int sinhvienId);
     double getDiemTrungBinhHe(int sinhvienId);
+    boolean addDiem(Diem d);
 
 }
+

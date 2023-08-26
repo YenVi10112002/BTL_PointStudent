@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author FPTSHOP
  */
 @Controller
-@ControllerAdvice
 @PropertySource("classpath:configs.properties")
 public class IndexController {
 

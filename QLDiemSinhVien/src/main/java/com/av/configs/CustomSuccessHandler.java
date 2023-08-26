@@ -37,12 +37,15 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler{
             } else if (authority.getAuthority().equals("ROLE_SV")) {
                 redirectStrategy.sendRedirect(hsr, hsr1, "/sinhvien");
                 return;
+            }else if (authority.getAuthority().equals("ROLE_GVU")) {
+                redirectStrategy.sendRedirect(hsr, hsr1, "/giaovu");
+                return;
             }
             // Add more role checks and corresponding redirect URLs as needed
         }
 
         // If no specific role matches, redirect to the default URL
-        redirectStrategy.sendRedirect(hsr, hsr1, "/giaodu");
+        redirectStrategy.sendRedirect(hsr, hsr1, "/");
     }
     
 }

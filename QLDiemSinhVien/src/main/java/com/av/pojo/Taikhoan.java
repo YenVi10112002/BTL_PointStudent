@@ -62,7 +62,7 @@ public class Taikhoan implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "ChucVu")
     private String chucVu;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTaiKhoan")
+    @OneToMany(mappedBy = "idTaiKhoan")
     private Set<Traloidiendan> traloidiendanSet;
     @OneToOne(mappedBy = "idTaiKhoan")
     private Giaovu giaovu;
@@ -74,6 +74,8 @@ public class Taikhoan implements Serializable {
     private Giangvien giangvien;
     @Transient
     private String xacNhanMk;
+    @Transient
+    private Giangvien giangvien1;
 
     public Taikhoan() {
     }
@@ -201,5 +203,21 @@ public class Taikhoan implements Serializable {
     public void setXacNhanMk(String xacNhanMk) {
         this.xacNhanMk = xacNhanMk;
     }
+
+    /**
+     * @return the giangvien1
+     */
+    public Giangvien getGiangvien1() {
+        return giangvien1;
+    }
+
+    /**
+     * @param giangvien1 the giangvien1 to set
+     */
+    public void setGiangvien1(Giangvien giangvien1) {
+        this.giangvien1 = giangvien1;
+    }
+
+    
     
 }

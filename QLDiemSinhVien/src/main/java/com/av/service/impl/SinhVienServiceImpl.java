@@ -5,9 +5,11 @@
 package com.av.service.impl;
 
 import com.av.pojo.Diem;
+import com.av.pojo.Lophoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
+import com.av.repository.DiemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.av.repository.SinhVienRepository;
@@ -23,6 +25,8 @@ import java.util.Map;
 public class SinhVienServiceImpl implements SinhVienService{
     @Autowired
     private SinhVienRepository tongRepository;
+    
+    
     @Override
     public Sinhvien getSinhvien(int idTaiKhoan){
         
@@ -39,6 +43,28 @@ public class SinhVienServiceImpl implements SinhVienService{
     public Taikhoan getTaiKhoan(int idTaiKhoan) {
         return tongRepository.getTaiKhoan(idTaiKhoan);
     }
+
+    @Override
+    public List<Lophoc> getLopHocs() {
+        return tongRepository.getLopHocs();
+    }
+
+    @Override
+    public boolean addOrUpdateSinhVien(Sinhvien sv) {
+        return tongRepository.addOrUpdateSinhVien(sv);
+    }
+
+    @Override
+    public Sinhvien getSinhVienById(int idSinhVien) {
+        return tongRepository.getSinhVienById(idSinhVien);
+    }
+
+    @Override
+    public boolean deleteSinhVien(int idSinhVien) {
+        return tongRepository.deleteSinhVien(idSinhVien);
+    }
+
+   
     
     
     

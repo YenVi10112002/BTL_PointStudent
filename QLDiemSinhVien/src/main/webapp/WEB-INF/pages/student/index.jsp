@@ -26,8 +26,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>${diemtrungbinh}</td>
-                    <td>${diemtrungbinhhe}</td>
+                    <td></td>
+                    <td></td>
                     <td>Giỏi</td>
                 </tr>
             </tbody>
