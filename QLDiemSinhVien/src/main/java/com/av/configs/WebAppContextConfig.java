@@ -4,26 +4,29 @@
  */
 package com.av.configs;
 
-
 import com.av.formatter.CauHoiFormatter;
 import com.av.formatter.GiangVienFormatter;
 import com.av.formatter.LopHocFormatter;
 import com.av.formatter.MonHocFormatter;
 import com.av.formatter.SinhVienFormatter;
 import com.av.formatter.TaiKhoanFormatter;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
 import java.text.SimpleDateFormat;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-
 
 /**
  *
@@ -37,6 +40,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.av.repository",
     "com.av.service"
 })
+
 public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Override
@@ -44,7 +48,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         configurer.enable();
     }
 
-    
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new CauHoiFormatter());
@@ -58,16 +61,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
     }
-    
-    @Bean
-    public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver resolver
-                = new CommonsMultipartResolver();
-        resolver.setDefaultEncoding("UTF-8");
-        return resolver;
-    }
-    
-    
 //    @Bean
 //    public InternalResourceViewResolver internalResourceViewResolver() {
 //        InternalResourceViewResolver r = new InternalResourceViewResolver();
@@ -77,9 +70,28 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 //
 //        return r;
 //    }
+    @Bean
+    public SimpleDateFormat simpleDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
+    }
 
     @Bean
-    public SimpleDateFormat simpleDateFormat(){
-        return new SimpleDateFormat("dd/MM/yyyy");
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver
+                = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+        return resolver;
     }
+
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dhcvsbuew",
+                        "api_key", "127245518483839",
+                        "api_secret", "1CExekjHALzqnQGG7Hr-FoOWlk8",
+                        "secure", true));
+        return cloudinary;
+    }
+
 }

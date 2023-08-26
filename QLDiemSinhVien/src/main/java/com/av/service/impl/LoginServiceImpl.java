@@ -9,6 +9,7 @@ import com.av.pojo.Taikhoan;
 import com.av.repository.LoginRepository;
 import com.av.service.LoginService;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,7 +17,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -26,12 +29,8 @@ import org.springframework.stereotype.Service;
 public class LoginServiceImpl implements LoginService{
     @Autowired
     private LoginRepository loginRepo;
-    
-
-//    @Override
-//    public List<Taikhoan> getTaikhoans(String tenTK) {
-//        return this.loginRepo.getTaikhoans(tenTK);
-//    }
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Taikhoan getUserByUsername(String username) {
@@ -50,20 +49,32 @@ public class LoginServiceImpl implements LoginService{
         return new org.springframework.security.core.userdetails.User(taikhoans.getTenTaiKhoan(), taikhoans.getMatKhau(), auth);
     }
 
-    
+    @Override
+    public boolean authUser(String username, String password) {
+        return this.loginRepo.authUser(username, password);
+    }
+
+    @Override
+    public Taikhoan addUser(Map<String, String> params) {
+        Taikhoan u = new Taikhoan();
+        u.setTenTaiKhoan(params.get("username"));
+        u.setMatKhau(this.passwordEncoder.encode(params.get("password")));
+        u.setChucVu("ROLE_SV");
+        this.loginRepo.addUser(u);
+        return u;
+    }
+    @Override
     public UserDetails getLoggedInUserDetails(Authentication authentication) {
         // Trả về thông tin UserDetails của người dùng đã đăng nhập thành công
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userDetails;
     }
+    @Override
     public int GetIdTaiKhoan(UserDetails userDetails){
         Taikhoan taikhoans = this.getUserByUsername(userDetails.getUsername());
        
         return taikhoans.getIdTaiKhoan();
-    }
-    
-    
-    
+    }   
     
 
     

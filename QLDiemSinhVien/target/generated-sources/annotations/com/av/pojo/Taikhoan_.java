@@ -1,6 +1,5 @@
 package com.av.pojo;
 
-import com.av.pojo.Cauhoidiendang;
 import com.av.pojo.Giangvien;
 import com.av.pojo.Giaovu;
 import com.av.pojo.Sinhvien;
@@ -10,11 +9,12 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-08-26T08:03:58")
+@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-08-26T10:59:29")
 @StaticMetamodel(Taikhoan.class)
 public class Taikhoan_ { 
 
     public static volatile SingularAttribute<Taikhoan, String> tenTaiKhoan;
+    public static volatile SingularAttribute<Taikhoan, String> image;
     public static volatile SingularAttribute<Taikhoan, String> matKhau;
     public static volatile SetAttribute<Taikhoan, Traloidiendan> traloidiendanSet;
     public static volatile SingularAttribute<Taikhoan, Integer> idTaiKhoan;
@@ -22,6 +22,5 @@ public class Taikhoan_ {
     public static volatile SingularAttribute<Taikhoan, Sinhvien> sinhvien;
     public static volatile SingularAttribute<Taikhoan, Giangvien> giangvien;
     public static volatile SingularAttribute<Taikhoan, String> chucVu;
-    public static volatile SetAttribute<Taikhoan, Cauhoidiendang> cauhoidiendangSet;
 
 }

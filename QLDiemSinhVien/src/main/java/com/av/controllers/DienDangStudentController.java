@@ -7,8 +7,6 @@ package com.av.controllers;
 import com.av.pojo.Cauhoidiendang;
 import com.av.pojo.Traloidiendan;
 import java.util.Map;
-import com.av.service.CauHoiService;
-import com.av.service.ListSinhVienService;
 import com.av.service.LoginService;
 import com.av.service.SinhVienService;
 import org.springframework.ui.Model;
@@ -22,29 +20,31 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.av.service.DienDanService;
+import com.av.service.TaiKhoanService;
 
 /**
  *
  * @author Admin
  */
 @Controller
+@ControllerAdvice
 @PropertySource("classpath:configs.properties")
 public class DienDangStudentController {
 
     @Autowired
-    private ListSinhVienService sinhvienService;
-    @Autowired
-    private CauHoiService cauhoiServite;
+    private DienDanService cauhoiServite;
     @Autowired
     private LoginService loService;
     @Autowired
     private SinhVienService tongquanService;
     @Autowired
+    private TaiKhoanService taiKhoanService;
+    @Autowired
     private Environment env;
 
     @ModelAttribute
     public void comonAttr(Model model) {
-        
         model.addAttribute("traloidiendan", new Traloidiendan());
         model.addAttribute("cauhoidiendan", new Cauhoidiendang());
 
@@ -52,7 +52,8 @@ public class DienDangStudentController {
 
     @RequestMapping("/sinhvien/diendan")
     public String diendan(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
-        model.addAttribute("taikhoan", this.tongquanService.getTaiKhoan(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
+        model.addAttribute("dscauhoi", this.cauhoiServite.getCauHoiDienDan());
+        model.addAttribute("taikhoan", this.taiKhoanService.getTaiKhoan(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
         model.addAttribute("sinhvien", this.tongquanService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
         model.addAttribute("traloi", this.cauhoiServite.getTraloi(params));
         model.addAttribute("cauhoi", this.cauhoiServite.getCauHoi(params));
@@ -60,8 +61,8 @@ public class DienDangStudentController {
     }
 
     @PostMapping("/sinhvien/diendan")
-    public String add(@ModelAttribute(value = "traloidiendan") Traloidiendan p, @ModelAttribute(value="cauhoidiendan") Cauhoidiendang a) {
-        if (this.cauhoiServite.addOrUpdateTraloi(p) == true || this.cauhoiServite.addOrUpdateCauHoi(a)==true) {
+    public String add(@ModelAttribute(value = "traloidiendan") Traloidiendan p, @ModelAttribute(value = "cauhoidiendan") Cauhoidiendang a) {
+        if (this.cauhoiServite.addOrUpdateTraloi(p) == true || this.cauhoiServite.addOrUpdateCauHoi(a) == true) {
             return "redirect:/sinhvien";
         }
         return "diendansinhvien";

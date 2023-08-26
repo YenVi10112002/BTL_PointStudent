@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tổng Quan</title>
+        <link href="<c:url value="/resources/css/student.css" />" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -28,7 +29,14 @@
                     <div class="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul class="navbar-nav">
                             <li class="nav-item user-name-img" style="background-color: aliceblue;border-radius: 50%;">
-                                <a class="nav-link " href="#"><i class="fa-solid fa-user icon-padding" style="color: black; background-color: aliceblue;border-radius: 5px;"></i></a>
+                                <c:choose>
+                                    <c:when test="${taikhoan.image == null}">
+                                        <a class="nav-link " href="#"><i class="fa-solid fa-user icon-padding" style="color: black; background-color: aliceblue;border-radius: 5px;"></i></a>
+                                        </c:when>
+                                        <c:otherwise>
+                                        <div class="icon-image-header" style="background: url('<c:url value="${taikhoan.image}" />') top center / cover no-repeat; "></div>
+                                    </c:otherwise>
+                                </c:choose>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
@@ -52,95 +60,6 @@
         <tiles:insertAttribute name="footer"/>
     </body>
 
-    <style>
-
-        
-        .icon-padding{
-            padding: 0 10px;
-        }
-        .dark-color{
-            color: black !important;
-        }
-        .navbar{
-            background-color: lightcyan !important;
-        }
-        .name-text{
-            margin: 30px 10px;
-            font-weight: bold;
-        }
-        .text-header-tong{
-            margin-left: 30px;
-            color: darkgrey;
-        }
-
-
-        .user-name-img {
-            margin-left: 900px;
-        }
-
-        .logo-menu {
-            height: 120px;
-            padding: 10px 5px;
-            text-align: center;
-
-
-        }
-        .header-logo{
-            color: black;
-        }
-
-        .logo-menu a {
-            line-height: 100px;
-            font-weight: bold;
-        }
-
-        .contend {
-            position: relative;
-            left: 20%;
-            width: 80%;
-        }
-
-        .vertical-menu {
-            background-color: #05386B!important;
-            ;
-            width: 20%;
-            height: 100%;
-            z-index: 100;
-            position: fixed;
-            color: aliceblue;
-            display: inline-block;
-        }
-
-        .text-menu {
-            margin-left: 20px;
-            font-weight: bold;
-        }
-
-        .vertical-menu a {
-            display: block;
-            text-decoration: none;
-
-        }
-
-        .menu-item:hover {
-            background-color: darkgrey;
-            color: aliceblue;
-
-        }
-
-        .menu-item{
-            padding: 10px 30px;
-            color: aliceblue;
-
-        }
-
-        .menu-items {
-            margin-bottom: 35px;
-        }
-        .dropdown-menu{
-            background-color: lightcyan;
-        }
-    </style>
 
 </html>
 

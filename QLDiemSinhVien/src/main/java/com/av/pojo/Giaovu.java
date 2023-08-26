@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author FPTSHOP
+ * @author Admin
  */
 @Entity
 @Table(name = "giaovu")

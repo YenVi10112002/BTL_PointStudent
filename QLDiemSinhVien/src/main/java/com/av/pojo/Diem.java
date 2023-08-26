@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author FPTSHOP
+ * @author Admin
  */
 @Entity
 @Table(name = "diem")
@@ -55,10 +55,10 @@ public class Diem implements Serializable {
     @Column(name = "trangThai")
     private Short trangThai;
     @JoinColumn(name = "idMonHoc", referencedColumnName = "idMonHoc")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Monhoc idMonHoc;
     @JoinColumn(name = "idSinhVien", referencedColumnName = "idSinhVien")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Sinhvien idSinhVien;
 
     public Diem() {
@@ -155,10 +155,6 @@ public class Diem implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Diem[ idDiem=" + idDiem + " ]";
-    }
-
-    public void setIdMonHoc(PhieuMonHoc c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

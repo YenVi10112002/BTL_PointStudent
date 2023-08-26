@@ -4,6 +4,8 @@
  */
 package com.av.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,15 +13,14 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  *
@@ -29,9 +30,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebSecurity
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
+    "com.av.controllers",
     "com.av.repository",
-    "com.av.service"
+    "com.av.service",
+    "com.av.components"
 })
+@Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -66,7 +70,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/giaovu/**").access("hasRole('ROLE_GVU')");
         http.csrf().disable();
     }
-    public SimpleDateFormat simpleDateFormat() {
+    
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dhcvsbuew",
+                        "api_key", "127245518483839",
+                        "api_secret", "1CExekjHALzqnQGG7Hr-FoOWlk8",
+                        "secure", true));
+        return cloudinary;
+    }
+     public SimpleDateFormat simpleDateFormat() {
         return new SimpleDateFormat("yyyy-MM-dd");
     }
 
@@ -74,4 +89,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public CustomDateEditor customDateEditor() {
         return new CustomDateEditor(simpleDateFormat(), true);
     }
+    
+
 }

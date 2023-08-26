@@ -24,48 +24,9 @@
                    required>
         </div>
         <div class="btn-change-password-div">
-            <button type="submit" class="btn btn-primary btn-change-password ">Submit</button>
+            <button type="submit" class="btn btn-primary btn-change-password ">Thay Đổi</button>
         </div>
 
 
     </form>
 </div>
-<style>
-    .btn-change-password-div {
-        display: flex;
-        justify-content: center;
-    }
-
-    .btn-change-password {
-        margin-top: 10px;
-        width: 100px;
-        position: relative;
-    }
-
-    .change-password-form {
-        width: 70%;
-        position: relative;
-        margin: 0px auto;
-    }
-
-    .change-password-title {
-        font-size: 30px;
-        font-weight: 400;
-        text-align: center;
-
-    }
-
-    .change-password {
-        padding: 30px 20px;
-        width: 60%;
-        background-color: cadetblue;
-        position: relative;
-        margin: 70px auto;
-        border-radius: 10px;
-        border-radius: 10px;
-        -moz-box-shadow: -3px -3px 5px 0px #666;
-        -webkit-box-shadow: -3px -3px 5px 0px #666;
-        box-shadow: -3px -3px 5px 0px #666;
-    }
-
-</style>

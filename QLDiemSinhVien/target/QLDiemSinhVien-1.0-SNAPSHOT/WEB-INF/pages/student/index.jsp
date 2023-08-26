@@ -26,8 +26,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td>${Diemtrungbinh}</td>
+                    <td>${Diemtrungbinh4}</td>
                     <td>Giỏi</td>
                 </tr>
             </tbody>
@@ -46,106 +46,18 @@
                 </tr>
             </thead>
             <tbody >
+                <c:forEach items="${dsDiem}" var="diem">
+                    <tr>
+                    <td>${diem[0]}</td>
+                    <td>${diem[1]}</td>
+                    <td>${diem[2]}</td>
+                </tr>
+                </c:forEach>
                 
-                <tr>
-                    <td>2</td>
-                    <td>8.5</td>
-                    <td>3.0</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>4.0</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>7</td>
-                    <td>2.5</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>8</td>
-                    <td>3.5</td>
-                </tr>
-                <tr >
-                    <td >6</td>
-                    <td>9.0</td>
-                    <td>3.5</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>8.5</td>
-                    <td>3.0</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>10</td>
-                    <td>4.0</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>7</td>
-                    <td>2.5</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>8</td>
-                    <td>3.5</td>
-                </tr>
             </tbody>
         </table>
     </div>
 </div>
-<style>
-    .table{
-        margin-left: 30px;
-    }
-    .icon-padding{
-        padding: 0 10px;
-    }
-    .dark-color{
-        color: black !important;
-    }
-    .navbar{
-        background-color: lightcyan !important;
-    }
-    .name-text{
-        margin: 30px 10px;
-        font-weight: bold;
-    }
-    .text-header-tong{
-        margin-left: 30px;
-        color: darkgrey;
-    }
-    .point-ky{
-        margin: 40px 30px;
-    }
-    .point-tong>li{
-        float: left;
-    }
-    .point {
-        margin: 20px 30px;
-    }
 
-    .user-name-img {
-        margin-left: 900px;
-    }
-
-    .logo-menu {
-        height: 120px;
-        padding: 10px 5px;
-        text-align: center;
-
-
-    }
-    .header-logo{
-        color: black;
-    }
-
-    .logo-menu a {
-        line-height: 100px;
-        font-weight: bold;
-    }
-</style>
 
 

@@ -4,16 +4,16 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author FPTSHOP
+ * @author Admin
  */
 @Entity
 @Table(name = "cauhoidiendang")
@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Cauhoidiendang.findAll", query = "SELECT c FROM Cauhoidiendang c"),
     @NamedQuery(name = "Cauhoidiendang.findByIdCauHoiDienDan", query = "SELECT c FROM Cauhoidiendang c WHERE c.idCauHoiDienDan = :idCauHoiDienDan"),
-    @NamedQuery(name = "Cauhoidiendang.findByNoiDungCauHoi", query = "SELECT c FROM Cauhoidiendang c WHERE c.noiDungCauHoi = :noiDungCauHoi")})
+    @NamedQuery(name = "Cauhoidiendang.findByNoiDungCauHoi", query = "SELECT c FROM Cauhoidiendang c WHERE c.noiDungCauHoi = :noiDungCauHoi"),
+    @NamedQuery(name = "Cauhoidiendang.findByIdTaiKhoan", query = "SELECT c FROM Cauhoidiendang c WHERE c.idTaiKhoan = :idTaiKhoan")})
 public class Cauhoidiendang implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,14 +45,16 @@ public class Cauhoidiendang implements Serializable {
     private Integer idCauHoiDienDan;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 300)
+    @Size(min = 1, max = 1000)
     @Column(name = "noiDungCauHoi")
     private String noiDungCauHoi;
-    @OneToMany(mappedBy = "idCauHoiDienDan")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idTaiKhoan")
+    private int idTaiKhoan;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCauHoiDienDan")
+    @JsonIgnore
     private Set<Traloidiendan> traloidiendanSet;
-    @JoinColumn(name = "idTaiKhoan", referencedColumnName = "idTaiKhoan")
-    @ManyToOne(optional = false)
-    private Taikhoan idTaiKhoan;
 
     public Cauhoidiendang() {
     }
@@ -60,9 +63,10 @@ public class Cauhoidiendang implements Serializable {
         this.idCauHoiDienDan = idCauHoiDienDan;
     }
 
-    public Cauhoidiendang(Integer idCauHoiDienDan, String noiDungCauHoi) {
+    public Cauhoidiendang(Integer idCauHoiDienDan, String noiDungCauHoi, int idTaiKhoan) {
         this.idCauHoiDienDan = idCauHoiDienDan;
         this.noiDungCauHoi = noiDungCauHoi;
+        this.idTaiKhoan = idTaiKhoan;
     }
 
     public Integer getIdCauHoiDienDan() {
@@ -81,6 +85,14 @@ public class Cauhoidiendang implements Serializable {
         this.noiDungCauHoi = noiDungCauHoi;
     }
 
+    public int getIdTaiKhoan() {
+        return idTaiKhoan;
+    }
+
+    public void setIdTaiKhoan(int idTaiKhoan) {
+        this.idTaiKhoan = idTaiKhoan;
+    }
+
     @XmlTransient
     public Set<Traloidiendan> getTraloidiendanSet() {
         return traloidiendanSet;
@@ -88,14 +100,6 @@ public class Cauhoidiendang implements Serializable {
 
     public void setTraloidiendanSet(Set<Traloidiendan> traloidiendanSet) {
         this.traloidiendanSet = traloidiendanSet;
-    }
-
-    public Taikhoan getIdTaiKhoan() {
-        return idTaiKhoan;
-    }
-
-    public void setIdTaiKhoan(Taikhoan idTaiKhoan) {
-        this.idTaiKhoan = idTaiKhoan;
     }
 
     @Override

@@ -4,69 +4,53 @@
  */
 package com.av.service.impl;
 
-import com.av.pojo.Diem;
 import com.av.pojo.Lophoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
-import com.av.pojo.Traloidiendan;
-import com.av.repository.DiemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.av.repository.SinhVienRepository;
 import com.av.service.SinhVienService;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author Admin
  */
 @Service
-public class SinhVienServiceImpl implements SinhVienService{
+public class SinhVienServiceImpl implements SinhVienService {
+
     @Autowired
-    private SinhVienRepository tongRepository;
-    
-    
+    private SinhVienRepository sinhvienRepository;
+
     @Override
-    public Sinhvien getSinhvien(int idTaiKhoan){
-        
-        return tongRepository.getSinhVien(idTaiKhoan);
-        
-    }
-    
-    @Override
-    public int getHocKy(){
-    return tongRepository.getHocKy();
+    public Sinhvien getSinhvien(int idTaiKhoan) {
+
+        return sinhvienRepository.getSinhVien(idTaiKhoan);
+
     }
 
     @Override
-    public Taikhoan getTaiKhoan(int idTaiKhoan) {
-        return tongRepository.getTaiKhoan(idTaiKhoan);
+    public List<Sinhvien> getSinhviens() {
+        return sinhvienRepository.getSinhviens();
     }
-
-    @Override
+     @Override
     public List<Lophoc> getLopHocs() {
-        return tongRepository.getLopHocs();
+        return sinhvienRepository.getLopHocs();
     }
 
     @Override
     public boolean addOrUpdateSinhVien(Sinhvien sv) {
-        return tongRepository.addOrUpdateSinhVien(sv);
+        return sinhvienRepository.addOrUpdateSinhVien(sv);
     }
 
     @Override
     public Sinhvien getSinhVienById(int idSinhVien) {
-        return tongRepository.getSinhVienById(idSinhVien);
+        return sinhvienRepository.getSinhVienById(idSinhVien);
     }
 
     @Override
     public boolean deleteSinhVien(int idSinhVien) {
-        return tongRepository.deleteSinhVien(idSinhVien);
+        return sinhvienRepository.deleteSinhVien(idSinhVien);
     }
-
-   
-    
-    
-    
-    
 }

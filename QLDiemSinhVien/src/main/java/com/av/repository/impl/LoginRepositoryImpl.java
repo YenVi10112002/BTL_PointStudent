@@ -13,11 +13,8 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.av.repository.LoginRepository;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 
-import javax.persistence.criteria.Root;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  *
@@ -29,23 +26,9 @@ public class LoginRepositoryImpl implements LoginRepository {
 
     @Autowired
     private LocalSessionFactoryBean Factory;
+    @Autowired
+    private BCryptPasswordEncoder passEncoder;
 
-//    @Override
-//    public List<Taikhoan> getTaikhoans(String tenTK) {
-//        Session s = this.Factory.getObject().getCurrentSession();
-//        CriteriaBuilder builder = s.getCriteriaBuilder();
-//        CriteriaQuery<Taikhoan> query = builder.createQuery(Taikhoan.class);
-//        Root root = query.from(Taikhoan.class);
-//        query = query.select(root);
-//        
-//        if(!tenTK.isEmpty()){
-//            Predicate p = builder.equal(root.get("tenTaiKhoan").as(String.class), tenTK.trim());
-//            query = query.where(p);
-//        }
-//        
-//        Query q = s.createQuery(query);
-//        return q.getResultList();
-//    }
     @Override
     public Taikhoan getUserByUsername(String username) {
         Session s = this.Factory.getObject().getCurrentSession();
@@ -53,4 +36,19 @@ public class LoginRepositoryImpl implements LoginRepository {
         q.setParameter("un", username);
         return (Taikhoan) q.getSingleResult();
     }
+
+    @Override
+    public boolean authUser(String username, String password) {
+        Taikhoan u = this.getUserByUsername(username);
+
+        return this.passEncoder.matches(password, u.getMatKhau());
+    }
+
+    @Override
+    public Taikhoan addUser(Taikhoan u) {
+        Session s = this.Factory.getObject().getCurrentSession();
+        s.save(u);
+        return u;
+    }
+
 }

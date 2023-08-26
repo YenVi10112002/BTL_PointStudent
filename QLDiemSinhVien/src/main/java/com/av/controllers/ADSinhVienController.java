@@ -4,14 +4,13 @@
  */
 package com.av.controllers;
 
-import com.av.pojo.Diem;
 import com.av.pojo.Sinhvien;
 import com.av.service.DiemService;
-import com.av.service.ListSinhVienService;
+
 import com.av.service.SinhVienService;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
-import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -35,9 +34,6 @@ public class ADSinhVienController {
     private SinhVienService svService;
 
     @Autowired
-    private ListSinhVienService listSVService;
-
-    @Autowired
     private DiemService diemService;
 
     @Autowired
@@ -46,7 +42,7 @@ public class ADSinhVienController {
     @ModelAttribute
     public void lopHoc(Model model) {
         model.addAttribute("lophoc", svService.getLopHocs());
-        
+
     }
 
     @InitBinder
@@ -55,11 +51,10 @@ public class ADSinhVienController {
     }
 
     @RequestMapping("/giaovu/sinhvien")
-    public String list(Model model, Map<String, String> params) {
-        model.addAttribute("sinhvien", listSVService.getSinhviens(params));
+    public String list(Model model) {
+        model.addAttribute("sinhvien", svService.getSinhviens());
         return "dssinhvien";
     }
-
     @GetMapping("/giaovu/sinhvien/add")
     public String addsinhVien(Model model) {
         model.addAttribute("sinhvien", new Sinhvien());
@@ -75,9 +70,9 @@ public class ADSinhVienController {
     @PostMapping("/giaovu/sinhvien/add")
     public String add(@ModelAttribute(value = "sinhvien") Sinhvien sv) {
         if (this.svService.addOrUpdateSinhVien(sv) == true) {
-                return "redirect:/giaovu/sinhvien";
+            return "redirect:/giaovu/sinhvien";
         }
-        
+
         return "add";
     }
 }

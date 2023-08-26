@@ -4,6 +4,7 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -23,10 +24,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author FPTSHOP
+ * @author Admin
  */
 @Entity
 @Table(name = "taikhoan")
@@ -36,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Taikhoan.findByIdTaiKhoan", query = "SELECT t FROM Taikhoan t WHERE t.idTaiKhoan = :idTaiKhoan"),
     @NamedQuery(name = "Taikhoan.findByTenTaiKhoan", query = "SELECT t FROM Taikhoan t WHERE t.tenTaiKhoan = :tenTaiKhoan"),
     @NamedQuery(name = "Taikhoan.findByMatKhau", query = "SELECT t FROM Taikhoan t WHERE t.matKhau = :matKhau"),
-    @NamedQuery(name = "Taikhoan.findByChucVu", query = "SELECT t FROM Taikhoan t WHERE t.chucVu = :chucVu")})
+    @NamedQuery(name = "Taikhoan.findByChucVu", query = "SELECT t FROM Taikhoan t WHERE t.chucVu = :chucVu"),
+    @NamedQuery(name = "Taikhoan.findByImage", query = "SELECT t FROM Taikhoan t WHERE t.image = :image")})
 public class Taikhoan implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,20 +65,28 @@ public class Taikhoan implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "ChucVu")
     private String chucVu;
-    @OneToMany(mappedBy = "idTaiKhoan")
+    @Size(max = 1000)
+    @Column(name = "Image")
+    private String image;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTaiKhoan")
+    @JsonIgnore
     private Set<Traloidiendan> traloidiendanSet;
     @OneToOne(mappedBy = "idTaiKhoan")
+    @JsonIgnore
     private Giaovu giaovu;
     @OneToOne(mappedBy = "idTaiKhoan")
+    @JsonIgnore
     private Sinhvien sinhvien;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTaiKhoan")
-    private Set<Cauhoidiendang> cauhoidiendangSet;
     @OneToOne(mappedBy = "idTaiKhoan")
+    @JsonIgnore
     private Giangvien giangvien;
     @Transient
     private String xacNhanMk;
     @Transient
     private Giangvien giangvien1;
+    
+    @Transient
+    private MultipartFile file;
 
     public Taikhoan() {
     }
@@ -123,6 +134,14 @@ public class Taikhoan implements Serializable {
         this.chucVu = chucVu;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @XmlTransient
     public Set<Traloidiendan> getTraloidiendanSet() {
         return traloidiendanSet;
@@ -146,15 +165,6 @@ public class Taikhoan implements Serializable {
 
     public void setSinhvien(Sinhvien sinhvien) {
         this.sinhvien = sinhvien;
-    }
-
-    @XmlTransient
-    public Set<Cauhoidiendang> getCauhoidiendangSet() {
-        return cauhoidiendangSet;
-    }
-
-    public void setCauhoidiendangSet(Set<Cauhoidiendang> cauhoidiendangSet) {
-        this.cauhoidiendangSet = cauhoidiendangSet;
     }
 
     public Giangvien getGiangvien() {
@@ -205,6 +215,20 @@ public class Taikhoan implements Serializable {
     }
 
     /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
      * @return the giangvien1
      */
     public Giangvien getGiangvien1() {
@@ -218,6 +242,4 @@ public class Taikhoan implements Serializable {
         this.giangvien1 = giangvien1;
     }
 
-    
-    
 }

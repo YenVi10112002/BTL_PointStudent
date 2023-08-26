@@ -26,28 +26,33 @@ import org.springframework.security.core.Authentication;
  * @author Admin
  */
 @Controller
+@ControllerAdvice
 @PropertySource("classpath:configs.properties")
 public class TongQuanController {
 
     @Autowired
-    private SinhVienService tongquanService;
-    @Autowired
-    private DiemService diemService;
+    private SinhVienService sinhvienService;
     @Autowired
     private LoginService loService;
     @Autowired
+    private DiemService diemService;
+    @Autowired
     private Environment env;
 
-    @ModelAttribute
-    public void comonAttr(Model model, Authentication authentication) {
-        
+    @ModelAttribute("sinhvien")
+    public Sinhvien addSinhVienModelAttribute() {
+
+        return null; 
     }
 
     @RequestMapping("/sinhvien")
-    public String tongquan(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
-        model.addAttribute("hocky", this.tongquanService.getHocKy());
-        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
+    public String tongquan(Model model, Authentication authentication, @ModelAttribute("sinhvien") Sinhvien sinhvien) {
 
+        sinhvien = this.sinhvienService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication)));
+        model.addAttribute("Diemtrungbinh", this.diemService.getDiemTrungBinh(sinhvien.getIdSinhVien()));
+        model.addAttribute("Diemtrungbinh4", this.diemService.getDiemTrungBinhHe(sinhvien.getIdSinhVien()));
+        model.addAttribute("sinhvien", this.sinhvienService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
+        model.addAttribute("dsDiem", this.diemService.getListDiemTrungBinh(sinhvien.getIdSinhVien()));
         return "sinhvien";
     }
 }

@@ -4,9 +4,11 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author FPTSHOP
+ * @author Admin
  */
 @Entity
 @Table(name = "lophoc")
@@ -51,7 +53,8 @@ public class Lophoc implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "khoaHoc")
     private String khoaHoc;
-    @OneToMany(mappedBy = "maLop")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "maLop")
+    @JsonIgnore
     private Set<Sinhvien> sinhvienSet;
 
     public Lophoc() {

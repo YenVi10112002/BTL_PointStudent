@@ -4,11 +4,14 @@
  */
 package com.av.controllers;
 
+import com.av.pojo.Sinhvien;
 import com.av.service.DiemService;
+import com.av.service.LoginService;
 import com.av.service.SinhVienService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,21 +28,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class XemDiemStudentController {
     @Autowired
-    private SinhVienService tongquanService;
+    private SinhVienService sinhVienService;
+    @Autowired
+    private LoginService loService;
     @Autowired
     private DiemService diemService;
     @Autowired
     private Environment env;
 
-    @ModelAttribute
-    public void comonAttr(Model model) {
-        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(1));
+    @ModelAttribute("sinhvien")
+    public Sinhvien addSinhVienModelAttribute() {
 
+        return null; 
     }
     
     @GetMapping("/sinhvien/xemdiem")
-    public String xemdiem(Model model, @RequestParam Map<String, String> params){
-         
+    public String xemdiem(Model model, Authentication authentication, @ModelAttribute("sinhvien") Sinhvien sinhvien, @RequestParam Map<String, String> params){
+        
+        sinhvien = this.sinhVienService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication)));
+        model.addAttribute("dsDiem", this.diemService.getListDiem(sinhvien.getIdSinhVien()));
+        model.addAttribute("Diemtrungbinh", this.diemService.getDiemTrungBinh(sinhvien.getIdSinhVien()));
+        model.addAttribute("Diemtrungbinh4", this.diemService.getDiemTrungBinhHe(sinhvien.getIdSinhVien()));
+        model.addAttribute("sinhvien", this.sinhVienService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
         return "xemdiemsinhvien";
     }
 }

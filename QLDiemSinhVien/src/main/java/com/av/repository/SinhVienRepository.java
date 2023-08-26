@@ -16,10 +16,9 @@ import java.util.Map;
  * @author Admin
  */
 public interface SinhVienRepository {
-    Sinhvien getSinhVien(int idTaiKhoan);
-    int getHocKy();
-    Taikhoan getTaiKhoan(int idTaiKhoan);
-    List<Lophoc> getLopHocs();
+    Sinhvien getSinhVien(int idTaiKhoan);   
+    List<Sinhvien> getSinhviens();
+     List<Lophoc> getLopHocs();
     boolean addOrUpdateSinhVien(Sinhvien sv);
     Sinhvien getSinhVienById(int idSinhVien);
     boolean deleteSinhVien(int idSinhVien);

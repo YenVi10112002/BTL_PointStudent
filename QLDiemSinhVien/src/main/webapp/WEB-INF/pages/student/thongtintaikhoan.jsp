@@ -5,10 +5,40 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="info-user">
     <div class="info-title-user">
-        <p class="info-user-image"><i class="fa-solid fa-user icon-padding"></i></p>
+        <c:choose>
+            <c:when test="${taikhoan.image == null}">
+
+                <p class="info-user-image"><i class="fa-solid fa-user icon-padding"></i></p>
+                </c:when>
+                <c:otherwise>
+                <div class="info-user-image-2" style="background: url('<c:url value="${taikhoan.image}" />') top center / cover no-repeat; "></div>
+            </c:otherwise>
+        </c:choose>
+
+        <c:url value="/sinhvien/thongtin" var="action"/>
+        <form:form modelAttribute="sv" method="post" action="${action}" enctype="multipart/form-data">
+            <form:input path="idTaiKhoan" type="hidden" value="${taikhoan.idTaiKhoan}" />
+            <form:input path="tenTaiKhoan" type="hidden" value="${taikhoan.tenTaiKhoan}" />
+            <form:input path="matKhau" type="hidden" value="${taikhoan.matKhau}" />
+            <form:input path="chucVu" type="hidden" value="${taikhoan.chucVu}" />
+            <div class="form-group" >
+                <form:input type="file" style="width: 105px;" cssClass="form-control" path="file" id="imgFile"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-danger mt-2" type="submit">Thêm Ảnh</button>
+            </div>
+            <c:if test="${errMsg != null}">
+                <div class="alert alert-secondary text-size mt-3 ">
+                    ${errMsg}
+                </div>
+            </c:if>
+
+        </form:form>
+
         <p class="info-private">Thông tin Cá Nhân</p>
     </div>
     <div class="info-user-text-reply">
@@ -43,55 +73,3 @@
     </div>
 
 </div>
-<style>
-    .info-user-text-reply{
-        padding:0px 50px 50px 50px;
-    }
-    .info-title-user{
-        background-color: cadetblue;
-        padding: 15px;
-        margin-bottom: 40px;
-        border-radius: 10px;
-    }
-    .info-private{
-        display: inline-block;
-        position: relative;
-        font-size: 28px;
-        font-weight: 500;
-        margin: 0px 0px 0px 130px;
-    }
-    .info-user-text2{
-        font-weight: 470;
-    }
-    .info-user-texts{
-        border-bottom: 1px solid darkgrey;
-        margin: 10px 0px;
-    }
-    .info-user-text{
-        font-size: 17px;
-        font-weight: 600 ;
-        margin: 10px 5px;
-        width: 35%;
-        display: inline-block;
-    }
-    .info-user-image{
-        font-size: 40px;
-        background-color: antiquewhite;
-        display: inline-block;
-        padding: 20px;
-        margin: auto 20px;
-        border-radius: 50%;
-    }
-    .info-user{
-        border: 1px solid gray;
-        position: relative;
-        width: 60%;
-        border-radius: 10px;
-        margin:50px auto;
-        border-radius: 10px;
-        -moz-box-shadow: -3px -3px 5px 0px #666;
-        -webkit-box-shadow: -3px -3px 5px 0px #666;
-        box-shadow: -3px -3px 5px 0px #666;
-    }
-
-</style>

@@ -55,7 +55,8 @@
 
     </div>
 </div>
-<div class="traloi-diendan-none" id="container2">
+
+<script><div class="traloi-diendan-none" id="container2">
     <div class="form-traloi-diendan">
         <div class="close-traloi-diendan" id="dong-traloi">Đóng</div>       
         <form:form class="d-flex" modelAttribute="cauhoidiendan" method="post" action="${action}">
@@ -65,7 +66,6 @@
         </form:form>
     </div>
 </div>
-<script>
     // mở đống
     const toggleButtons = document.querySelectorAll('.xemcautraloi');
     const close = document.querySelectorAll('.close-traloi-diendan');
@@ -124,126 +124,6 @@
     });
 
 </script>
-<style>
-    @keyframes modelFaceIn {
-        from {
-            transform: translateY(-130px);
-            opacity: 0;
-        }
 
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    .show {
-        display: block !important;
-    }
-
-    .user-traloi-diendan-name {
-        margin-bottom: -10px;
-        font-size: 15px;
-    }
-
-    .traloi-diendan-user {
-        margin: 25px 20px 5px 20px;
-        border-bottom: 1px solid #666;
-    }
-
-    .close-traloi-diendan {
-        background-color: #05386B;
-        position: absolute;
-        right: 0;
-        top: 0;
-        color: #fff;
-        padding: 8px;
-        border-top-right-radius: 10px;
-        border-bottom-left-radius: 10px;
-        cursor: pointer;
-    }
-
-    .btn-traloi-diendan {
-        background-color: #05386B;
-        color: aliceblue;
-        font-size: small;
-        font-weight: 500;
-        border-radius: 10px;
-        width: 100px;
-        height: 50px;
-    }
-
-    .form-traloi-diendan {
-        background-color: aliceblue;
-        position: relative;
-        width: 80%;
-        padding: 25px;
-        border-radius: 10px;
-        top: 10%;
-        margin: auto;
-        max-height: 600px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        animation: modelFaceIn ease .5s;
-
-    }
-
-    .traloi-diendan-none {
-        display: none;
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 20%;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        align-items: center;
-        justify-content: center;
-
-    }
-
-    .add-contend-question{
-        position: absolute;
-        left: 80%;
-        top:100px;
-        padding: 10px 15px;
-        color: aliceblue !important;
-        border-radius: 10px;
-        background-color: #05386B;
-    }
-    .content-question-noidung{
-        margin: 25px 15px;
-    }
-    .content-question-day{
-        margin-left: 20px;
-
-        color: #525d69;
-    }
-    .reply-text-link{
-        margin-left: 800px;
-    }
-    .text-contend-link{
-        text-decoration: none;
-        color: black;
-    }
-    .text-contend-link:hover{
-        color: #525d69;
-    }
-    .content-question{
-        border: 0.5px solid gray;
-        padding: 25px;
-        margin: 40px 0px;
-        border-radius: 10px;
-        -moz-box-shadow: -3px -3px 5px 0px #666;
-        -webkit-box-shadow: -3px -3px 5px 0px #666;
-        box-shadow: -3px -3px 5px 0px #666;
-
-    }
-    .content-diendan{
-        margin: 40px 60px;
-    }
-    .nav-menu{
-        height: 60px;
-    }
-</style>
 
 

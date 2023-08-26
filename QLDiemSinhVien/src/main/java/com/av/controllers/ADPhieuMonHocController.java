@@ -44,17 +44,8 @@ public class ADPhieuMonHocController {
 //        Map<String, PhieuMonHoc> cart = (Map<String, PhieuMonHoc>) session.getAttribute("cart");
 //        if(cart != null)
 //            model.addAttribute("carts", cart.values());
-        model.addAttribute("diem", new Diem());
         model.addAttribute("sinhvien", this.svService.getSinhVienById(id));
         return "dangkymhsv";
     }
 
-    @PostMapping("/giaovu/sinhvien/addMH/{id}")
-    public String luu(Model model, @ModelAttribute(value = "diem") Diem d) {
-        if (this.diemService.addDiem(d) == true) {
-            return "redirect:/giaovu/sinhvien";
-        }
-
-        return "dangkymhsv";
-    }
 }

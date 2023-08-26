@@ -6,7 +6,6 @@ package com.av.repository.impl;
 
 import com.av.pojo.Diem;
 import com.av.pojo.Lophoc;
-import com.av.pojo.Monhoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
@@ -66,33 +65,11 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
     }
 
     @Override
-    public int getHocKy() {
+    public List<Sinhvien> getSinhviens() {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("SELECT MAX(hocKy) FROM Monhoc");
-        Integer maxValue = (Integer) q.getSingleResult();
-        return maxValue;
-    }
+        Query q = s.createQuery("From Sinhvien");
 
-    @Override
-    public Taikhoan getTaiKhoan(int idTaiKhoan) {
-        Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
-
-        Root<Taikhoan> root = q.from(Taikhoan.class);
-        q.select(root);
-        List<Predicate> predicates = new ArrayList<>();
-
-        predicates.add(b.equal(root.get("idTaiKhoan"), idTaiKhoan));
-        q.where(predicates.toArray(new Predicate[0]));
-        Query query = session.createQuery(q);
-        try {
-            return (Taikhoan) query.getSingleResult();
-        } catch (NoResultException | NonUniqueResultException ex) {
-
-            ex.printStackTrace();
-            return null;
-        }
+        return q.getResultList();
     }
 
     @Override
@@ -109,28 +86,19 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         try {
             if (sv.getIdSinhVien() == null) {
                 s.save(sv);
-//                Diem diem = new Diem();
-//                diem.setIdSinhVien(sv);
-//                s.save(diem);
+//               
             } else {
-//                CriteriaBuilder b = s.getCriteriaBuilder();
-//                CriteriaQuery<Diem> q = b.createQuery(Diem.class);
-//                Root<Diem> root = q.from(Diem.class);
-//                q.select(root).where(b.equal(root.get("idSinhVien"), sv));
-//                Query query = s.createQuery(q);
-//                Diem d = (Diem) query.getSingleResult();
-//                if (d.getIdSinhVien() != null) {
-                    s.update(sv);
-//                    d.setIdMonHoc(sv.getMonhoc());
-//                    s.update(d);
-//                }
-                
+//                
+                s.update(sv);
+
             }
+
             return true;
         } catch (HibernateException e) {
             e.printStackTrace();
 
         }
+
         return false;
     }
 
@@ -139,9 +107,11 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
+        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class
+        );
 
-        Root<Sinhvien> root = q.from(Sinhvien.class);
+        Root<Sinhvien> root = q.from(Sinhvien.class
+        );
         q.select(root);
 
         List<Predicate> predicates = new ArrayList<>();
@@ -157,8 +127,10 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         Session s = this.factory.getObject().getCurrentSession();
         Sinhvien sv = this.getSinhVienById(idSinhVien);
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
-        Root r = q.from(Taikhoan.class);
+        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class
+        );
+        Root r = q.from(Taikhoan.class
+        );
         q.select(r).where(b.equal(r.get("idTaiKhoan"), sv.getIdTaiKhoan().getIdTaiKhoan()));
         Query query = s.createQuery(q);
         Taikhoan tk = (Taikhoan) query.getSingleResult();
@@ -171,5 +143,4 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
             return false;
         }
     }
-
 }

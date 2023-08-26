@@ -18,10 +18,11 @@ import java.util.Map;
  */
 public interface SinhVienService {
     Sinhvien getSinhvien(int idTaiKhoan);
-    int getHocKy();
-    Taikhoan getTaiKhoan(int idTaiKhoan);
-    List<Lophoc> getLopHocs();
+    List<Sinhvien> getSinhviens();
+     List<Lophoc> getLopHocs();
     boolean addOrUpdateSinhVien(Sinhvien sv );
     Sinhvien getSinhVienById(int idSinhVien);
     boolean deleteSinhVien(int idSinhVien);
+    
+    
 }

@@ -42,10 +42,10 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler{
                 return;
             }
             // Add more role checks and corresponding redirect URLs as needed
+             redirectStrategy.sendRedirect(hsr, hsr1, "/");
         }
 
-        // If no specific role matches, redirect to the default URL
-        redirectStrategy.sendRedirect(hsr, hsr1, "/");
+
     }
     
 }

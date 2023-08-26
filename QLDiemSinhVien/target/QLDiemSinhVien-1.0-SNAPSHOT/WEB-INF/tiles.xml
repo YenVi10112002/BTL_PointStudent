@@ -4,13 +4,13 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
     <definition name="baseLayout"
-                template="/WEB-INF/layout/base.jsp">
+                template="/WEB-INF/layout/access/base.jsp">
         <put-attribute name="title" value="" />
         <put-attribute name="header"
-                       value="/WEB-INF/layout/header.jsp" />
+                       value="/WEB-INF/layout/access/header.jsp" />
         <put-attribute name="content" value="" />
         <put-attribute name="footer"
-                       value="/WEB-INF/layout/footer.jsp" />
+                       value="/WEB-INF/layout/access/footer.jsp" />
     </definition>
     <definition name="baseLayoutTeacher"
                 template="/WEB-INF/layout/teacher/base.jsp">
@@ -44,18 +44,14 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Đăng nhập" />
         <put-attribute name="content"
-                       value="/WEB-INF/pages/index.jsp" />
+                       value="/WEB-INF/pages/access/index.jsp" />
     </definition>
     <definition name="signup" extends="baseLayout">
         <put-attribute name="title" value="Đăng Ký" />
         <put-attribute name="content"
-                       value="/WEB-INF/pages/signup.jsp" />
+                       value="/WEB-INF/pages/access/signup.jsp" />
     </definition>
-    <definition name="teacher" extends="baseLayout">
-        <put-attribute name="title" value="Giảng viên" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/teacher.jsp" />
-    </definition>
+    
     
     <definition name="sinhvien" extends="baseLayoutStudent">
         <put-attribute name="title" value="Tổng Quan" />
@@ -74,7 +70,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/pages/student/xemdiemsinhvien.jsp" />
     </definition>
     
-     <definition name="thongtintaikhoan" extends="baseLayoutStudent">
+    <definition name="thongtintaikhoan" extends="baseLayoutStudent">
         <put-attribute name="title" value="Thông Tin Tài Khoản" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/student/thongtintaikhoan.jsp" />

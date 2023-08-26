@@ -4,18 +4,18 @@
  */
 package com.av.repository;
 
-import com.av.pojo.Diem;
-import com.av.pojo.Traloidiendan;
 import java.util.List;
-import java.util.Map;
+
+
 
 /**
  *
  * @author Admin
  */
 public interface DiemRepository {
-    double getDiemTrungBinh(int sinhvienId);
-    double getDiemTrungBinhHe(int sinhvienId);
-    boolean addDiem(Diem d);
+        double getDiemTrungBinh(int sinhvienId);
+        double getDiemTrungBinhHe(int sinhvienId);
+        List<Object> getListDiem(int sinhvienId);
+        List<Object> getListDiemTrungBinh(int sinhvienId);
 
 }
