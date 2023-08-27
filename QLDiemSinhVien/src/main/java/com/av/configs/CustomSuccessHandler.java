@@ -41,11 +41,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler{
                 redirectStrategy.sendRedirect(hsr, hsr1, "/giaovu");
                 return;
             }
-            // Add more role checks and corresponding redirect URLs as needed
              redirectStrategy.sendRedirect(hsr, hsr1, "/");
         }
-
-
-    }
-    
+    }   
 }

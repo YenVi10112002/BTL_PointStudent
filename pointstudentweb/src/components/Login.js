@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Apis, { AuthApis, endpoints } from "../configs/Apis";
 import cookie from "react-cookies";
+import { MyUserConText } from "../App";
 const Login = () => {
 
+    const [user, dispatch] = useContext(MyUserConText)
     const [username, setusername] = useState();
     const [password, setpassword] = useState();
 
     const login = (evt) => {
-         evt.preventDefault();
+        evt.preventDefault();
 
-         const process = async () => {
+        const process = async () => {
             try {
                 let res = await Apis.post(endpoints['login'], {
                     "tenTaiKhoan": username,
@@ -19,19 +21,27 @@ const Login = () => {
                 })
                 cookie.save("token", res.data);
 
-                let {data} = await AuthApis().get(endpoints['current-user']);
+                let { data } = await AuthApis().get(endpoints['current-user']);
                 cookie.save("user", data);
-                console.info(data);
 
-            } catch(ex){
+                dispatch({
+                    "type": "login",
+                    "payLoad": data
+
+                })
+            } catch (ex) {
                 console.error(ex);
             }
-         }
-         process();
+        }
+        process();
 
     }
 
-    return (
+    if (user !== null) {
+        return <Navigate to="/home" />;
+    }
+
+        return <>
         <div className="container">
             <div className=" form-login  shadow-lg ">
                 <div className="text-center " >
@@ -64,8 +74,11 @@ const Login = () => {
                 </Form >
             </div>
         </div>
+    </>
+    
 
 
-    )
+
+
 }
 export default Login;

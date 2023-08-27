@@ -2,6 +2,7 @@ com\av\pojo\Diem_.class
 com\av\configs\WebAppContextConfig.class
 com\av\pojo\Monhoc_.class
 com\av\controllers\SignUpController.class
+com\av\controllers\ApiDiemController.class
 com\av\service\impl\DienDanServiceImpl.class
 com\av\service\DienDanService.class
 com\av\controllers\ApiDienDanController.class

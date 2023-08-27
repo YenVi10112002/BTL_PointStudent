@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
-import { AuthApis, endpoints } from "../configs/Apis";
 import { MyUserConText } from "../App";
-import { useContext } from "react";
-const Home = () => {
+import { useContext, useEffect, useState } from "react";
+import { AuthApis, endpoints } from "../configs/Apis";
+import MySpinner from "../layout/MySpinner";
+
+
+const XemDiem = () => {
     const [user, dispatch] = useContext(MyUserConText);
-    const [DSDiem, setDSDiem] = useState([]);
-    const [Diem, setDiem] = useState([]);
+    const [DSDiem, setDSDiem] = useState([], null);
+    const [Diem, setDiem] = useState([], null);
     const [DiemHe4, setDiemHe4] = useState([]);
     useEffect(() => {
         const loadloadDSDiem = async () => {
             try {
-                let e = endpoints['DSDiemTrungBinhHocKy'];
+                let e = endpoints['DSDiem'];
                 let a = endpoints['DiemTrungBinhHe10'];
                 let b = endpoints['DiemTrungBinhHe4'];
                 e = `${e}?SinhVienId=${user.idSinhVien}`;
@@ -28,9 +30,11 @@ const Home = () => {
 
         }
         loadloadDSDiem();
-    }, [])
+    }, []);
+
+    
     return (
-        <div class="contend">
+        <><div class="contend">
             <nav class="navbar navbar-1 navbar-expand-sm navbar-dark nav-menu">
                 <div class="container-fluid">
                     <a class="navbar-brand dark-color header-logo " href="#"><i class="fa-solid fa-bell icon-padding"></i></a>
@@ -53,10 +57,10 @@ const Home = () => {
                 </div>
             </nav>
             <div class="point">
-                <h4 >Tổng quan</h4>
-                <h6 class="text-header-tong ">Tổng Hợp Nhanh Các Thông Tin </h6>
+                <h4>Tổng quan</h4>
+                <h6 class="text-header-tong">Tổng Hợp Nhanh Các Thông Tin </h6>
                 <div class="container mt-3">
-                    <h2 class="name-text"> Phạm Hoàng Ân</h2>
+                    <h2 class="name-text">Phạm Hoàng Ân</h2>
                     <p class="text-header-tong">Tổng Hợp Điểm & Xếp Loại Học Tập</p>
                     <table class="table">
                         <thead>
@@ -67,41 +71,51 @@ const Home = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr >
+                            <tr>
                                 <td>{Diem}</td>
                                 <td>{DiemHe4}</td>
                                 <td>Giỏi</td>
                             </tr>
-
-
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class=" point-ky">
+            </div><div class=" point-ky">
                 <div class="container mt-3">
                     <p class="text-header-tong">Tổng Hợp Điểm Của Từng Học Kỳ</p>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th >Học Kỳ</th>
-                                <th>Điểm Hệ 10</th>
-                                <th>Điểm hệ 4</th>
+                                <th>Học Kỳ</th>
+                                <th>Môn Học</th>
+                                <th>Điểm Giữa Kì</th>
+                                <th>Điểm Cuối Kỳ</th>
+                                <th>Điểm Trung Bình</th>
+                                <th>Điểm Hệ 4</th>
+                                <th>Tình Trạng</th>
                             </tr>
                         </thead>
-                        <tbody >
-                            {DSDiem.map(c => <tr key={c[2]}>
-                                <td>{c[0]}</td>
-                                <td>{c[1]}</td>
-                                <td>{c[2]}</td>
-                            </tr>
-                            )}
+                        
+                        <tbody>
+                            {DSDiem.map(c => {
+                                return (<tr>
+                                    <td>{c[5]}</td>
+                                    <td>{c[4]}</td>
+                                    <td>{c[2]}</td>
+                                    <td>{c[1]}</td>
+                                    <td>{c[0]}</td>
+                                    <td>{c[6]}</td>
+                                    <td>{c[3] === 1 ? 'Đậu' : 'Rớt'}</td>
+                                </tr>
+                                )
+                            })
+                            }
+
+
                         </tbody>
                     </table>
                 </div>
             </div>
-
-        </div>
+        </div></>
     )
 }
-export default Home;
+export default XemDiem;

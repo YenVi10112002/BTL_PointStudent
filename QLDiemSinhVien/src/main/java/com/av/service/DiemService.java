@@ -5,6 +5,7 @@
 package com.av.service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -13,6 +14,11 @@ import java.util.List;
 public interface DiemService {
     double getDiemTrungBinh(int sinhvienId);
     double getDiemTrungBinhHe(int sinhvienId);
+    double getDiemTrungBinh2(Map<String, String> params);
+    double getDiemTrungBinhHe4(Map<String, String> params);
     List<Object> getListDiem(int sinhvienId);
     List<Object> getListDiemTrungBinh(int sinhvienId);
+    List<Object> getListDiemTrungBinh2(Map<String, String> params);
+    List<Object> getListDiem2(Map<String, String> params);
+
 }
