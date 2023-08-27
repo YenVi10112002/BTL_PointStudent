@@ -6,17 +6,17 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:url value="/giaovu/sinhvien" var="action"/>
 <div class="nav-tk">
-    
-    <div class="input-button-tk">
-        <input placeholder="Nhập tên muốn tìm...."/>
-        <button>Tìm kiếm</button>
-    </div>
+    <form class="input-button-tk" action="${action}">
+        <input  type="text" name="tensv" placeholder="Nhập tên muốn tìm...."/>
+        <button type="submit">Tìm kiếm</button>
+    </form>
 </div >
 <div class="table-sv">
     <h1 class="text-center">Danh sách sinh viên</h1>
 
-    <table class="table ">
+    <table class="table " id="customers">
         <thead>
             <tr>
                 <th>Mã số sinh viên</th>
@@ -48,7 +48,7 @@
                         
                         <c:url value="/giaovu/sinhvien/add/${sv.idSinhVien}" var="api" />
 
-                        <button class="btn btn-danger" onclick="deleteSinhVien('${api}')">Xóa</button>
+                        <button class="btn-xoavacn bg-xoa" onclick="deleteSinhVien('${api}')">Xóa</button>
                         <a href="<c:url value="/giaovu/sinhvien/addMH/${sv.idSinhVien}"/>" class="btn-xoavacn bg-cn"> Cấp môn học</a>
                     </td>
                 </tr>
@@ -56,7 +56,4 @@
         </tbody>
     </table>
 </div>   
-
-
-<script src="<c:url value="/js/main.js" />"></script>
 

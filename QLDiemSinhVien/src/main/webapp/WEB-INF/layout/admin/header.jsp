@@ -13,21 +13,23 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item me-2">
+            <ul class="navbar-nav ">
+                <li class="nav-item ">
                     <a class="nav-link" href="<c:url value="/giaovu/sinhvien"/>">Danh sách sinh viên</a>
                 </li>
-                <li class="nav-item me-2">
+                <li class="nav-item ">
                     <a class="nav-link" href="<c:url value="/giaovu/giangvien"/>">Danh sách giảng viên</a>
                 </li>
-                <li class="nav-item me-2">
+                <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/giaovu/monhoc"/>">Danh sách môn học</a>
                 </li>
-                <li class="nav-item me-2">
+                <li class="nav-item ">
                     <a class="nav-link" href="<c:url value="/giaovu/taikhoan"/>">Danh sách tài khoản</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-user" style="color: #f2f2f2;"></i></a>
+                <li class="nav-item dropdown last-item">
+                    <c:if test="${pageContext.request.userPrincipal.name != null}">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-user" style="color: #f2f2f2;"></i>Chào ${giaovu.tenGiaoVu}</a>
+                    </c:if>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
                         <li><a class="dropdown-item" href="#">Thay đổi mật khẩu</a></li>

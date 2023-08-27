@@ -99,32 +99,36 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         }
         return false;
     }
-    
+
     @Override
     public boolean addAcountGV(Taikhoan t) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        
+
         // Kiểm tra xem tên tài khoản có bị trùng không
         CriteriaQuery<Long> countQuery = b.createQuery(Long.class);
         Root<Taikhoan> countRoot = countQuery.from(Taikhoan.class);
         countQuery.select(b.count(countRoot)).where(b.equal(countRoot.get("tenTaiKhoan"), t.getTenTaiKhoan()));
         long duplicateCount = s.createQuery(countQuery).uniqueResult();
-        
+
         //Lưu id tài khoản vào khóa ngoại của giảng viên 
         CriteriaQuery<Giangvien> q = b.createQuery(Giangvien.class);
         Root<Giangvien> root = q.from(Giangvien.class);
         q.select(root).where(b.equal(root.get("idGiangVien"), t.getGiangvien1().getIdGiangVien()));
         Query query = s.createQuery(q);
         Giangvien gv = (Giangvien) query.getSingleResult();
-        
+
         try {
-            if (t.getIdTaiKhoan() == null && gv != null && duplicateCount == 0) {
-                s.save(t);
-                gv.setIdTaiKhoan(t);
+            if (duplicateCount == 0) {
+                if (t.getIdTaiKhoan() == null && gv != null) {
+                    s.save(t);
+                    gv.setIdTaiKhoan(t);
+                    
+                }
                 return true;
-            }else
+            } else {
                 return false;
+            }
         } catch (HibernateException ex) {
             System.err.println(ex.getMessage());
             return false;

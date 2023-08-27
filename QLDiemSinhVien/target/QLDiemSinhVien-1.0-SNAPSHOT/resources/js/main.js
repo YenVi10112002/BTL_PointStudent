@@ -100,7 +100,7 @@ function loadData() {
                 });
 
                 tableHtml += '</tbody></table>';
-              dataContainer = tableHtml;
+              dataContainer.innerHTML = tableHtml;
         } else {
             dataContainer.innerHTML = '<p>No carts available.</p>';
         }

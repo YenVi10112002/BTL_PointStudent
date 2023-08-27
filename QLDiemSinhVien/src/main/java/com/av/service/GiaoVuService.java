@@ -12,7 +12,7 @@ import java.util.List;
  * @author FPTSHOP
  */
 public interface GiaoVuService {
-    List<Giaovu> getGiaovus(int idTaiKhoan);
+    Giaovu getGiaovus(int idTaiKhoan);
     
     
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.av.repository.SinhVienRepository;
 import com.av.service.SinhVienService;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -31,10 +32,10 @@ public class SinhVienServiceImpl implements SinhVienService {
     }
 
     @Override
-    public List<Sinhvien> getSinhviens() {
-        return sinhvienRepository.getSinhviens();
+    public List<Sinhvien> getSinhviens(Map<String, String> params) {
+        return sinhvienRepository.getSinhviens(params);
     }
-     @Override
+    @Override
     public List<Lophoc> getLopHocs() {
         return sinhvienRepository.getLopHocs();
     }

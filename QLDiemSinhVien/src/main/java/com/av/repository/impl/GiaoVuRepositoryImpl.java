@@ -32,7 +32,7 @@ public class GiaoVuRepositoryImpl implements GiaoVuRepository{
     private LocalSessionFactoryBean factory;
     
     @Override
-    public List<Giaovu> getGiaovus(int idTaiKhoan) {
+    public Giaovu getGiaovus(int idTaiKhoan) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Giaovu> q = b.createQuery(Giaovu.class);
@@ -46,7 +46,7 @@ public class GiaoVuRepositoryImpl implements GiaoVuRepository{
         q.where(predicates.toArray(Predicate[]::new));
         
         Query query = s.createQuery(q);
-        return query.getResultList();
+        return (Giaovu) query.getSingleResult();
     }
     
 }

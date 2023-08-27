@@ -71,9 +71,9 @@ public class ApiPhieuMoNhocController {
         Map<String, Object> response = new HashMap<>();
 
         if (cart != null) {
-            response.put("carts", cart.values());
+            response.put("cart", cart.values());
         } else {
-            response.put("carts", null);
+            response.put("cart", null);
         }
         return ResponseEntity.ok(response);
     }

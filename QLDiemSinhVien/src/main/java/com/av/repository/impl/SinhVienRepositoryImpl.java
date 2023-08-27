@@ -19,9 +19,12 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.av.repository.SinhVienRepository;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -65,11 +68,23 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
     }
 
     @Override
-    public List<Sinhvien> getSinhviens() {
+    public List<Sinhvien> getSinhviens(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Sinhvien");
-
-        return q.getResultList();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
+        
+        Root<Sinhvien> root = q.from(Sinhvien.class);
+        q.select(root);
+        List<Predicate> predicates = new ArrayList<>();
+        
+        String tenSV = params.get("tensv");
+        if (tenSV != null && !tenSV.isEmpty()) {
+            predicates.add(b.like(root.get("hoTen"), String.format("%%%s%%", tenSV)));
+        }
+        q.where(predicates.toArray(Predicate[]::new));
+        
+        Query query = s.createQuery(q);
+        return query.getResultList();
     }
 
     @Override

@@ -19,20 +19,23 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </head>
-    <body >
+    <body>
         <tiles:insertAttribute name="header" />
         <div class="container">
             <tiles:insertAttribute name="content"/>
         </div>
         <tiles:insertAttribute name="footer"/>
-        <script src="<c:url value="/js/main.js" />"></script>
-        
+        <script src="<c:url value="/resources/js/main.js" />"></script>
+
     </body>
-    
+
 </html>
 <style>
     body {
         font-family: initial;
+    }
+    .input-button-tktk{
+        margin-left: auto;
     }
     .btn-xoavacn {
         border: 1px solid black;
@@ -44,7 +47,6 @@
     .bg-cn {
         background-color: LightSkyBlue;
         display: inline-block;
-        width: 90px;
         text-align: center;
     }
     .bg-xoa {
@@ -122,7 +124,7 @@
         font-size: 18px;
     }
     .input-button-tk{
-        margin-left: auto;
+        margin: 0px auto;
     }
     a.a-tk{
         box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
@@ -153,14 +155,39 @@
     .info-svmh{
         box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
         padding: 20px;
-        width: 280px;
+        width: 400px;
     }
     .header-info-svmh{
         font-size: 23px;
+        text-align: center;
     }
     .label-info-svmh{
         font-size: 18px;
         margin-bottom: 5px;
+    }
+    /*    li.dropdown{
+            margin-left: 650px;
+            display: inline-block;
+            padding-left: 100px;
+        }*/
+    .navbar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+
+    .nav-item {
+        margin-right: 10px; /* Khoảng cách giữa các phần tử <li> */
+    }
+
+    li.last-item {
+        float: right;
+        display: inline-block;/* Đẩy phần tử cuối cùng ra góc phải */
+    }
+    .center-text-addmh{
+        width: 130px;
+        font-weight: bold;
     }
     #customers {
         font-family: Arial, Helvetica, sans-serif;

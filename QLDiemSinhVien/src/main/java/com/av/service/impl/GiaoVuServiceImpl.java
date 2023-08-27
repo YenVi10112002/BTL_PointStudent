@@ -21,7 +21,7 @@ public class GiaoVuServiceImpl implements GiaoVuService{
     @Autowired
     private GiaoVuRepository giaoVuRepo;
     @Override
-    public List<Giaovu> getGiaovus(int idTaiKhoan) {
+    public Giaovu getGiaovus(int idTaiKhoan) {
         return this.giaoVuRepo.getGiaovus(idTaiKhoan);
     }
     

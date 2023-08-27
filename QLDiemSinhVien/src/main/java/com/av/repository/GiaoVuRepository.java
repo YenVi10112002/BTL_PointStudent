@@ -12,6 +12,6 @@ import java.util.List;
  * @author FPTSHOP
  */
 public interface GiaoVuRepository {
-    List<Giaovu> getGiaovus(int idTaiKhoan);
+    Giaovu getGiaovus(int idTaiKhoan);
     
 }

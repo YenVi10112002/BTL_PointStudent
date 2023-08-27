@@ -20,25 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class ApiTaiKhoanController {
-    @Autowired
-    private TaiKhoanService tkService;
     
-    @PostMapping("giaovu/taikhoan")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String add(Model model, @ModelAttribute(value = "dangki") Taikhoan t) {
-        String errMsg = "";
-        if (t.getMatKhau().equals(t.getXacNhanMk())) {
-            if (this.tkService.addAcountGV(t) == true) {
-                return "redirect:/giaovu/taikhoan";
-            } else {
-                errMsg = "Đã có lỗi!";
-            }
-        } else {
-            errMsg = "Mật khẩu không Khớp!!!";
-        }
-        model.addAttribute("errMsg", errMsg);
-        return "dstaikhoan";
-    }
     
     
 }

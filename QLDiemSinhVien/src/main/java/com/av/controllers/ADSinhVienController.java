@@ -10,6 +10,7 @@ import com.av.service.DiemService;
 import com.av.service.SinhVienService;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -42,7 +44,6 @@ public class ADSinhVienController {
     @ModelAttribute
     public void lopHoc(Model model) {
         model.addAttribute("lophoc", svService.getLopHocs());
-
     }
 
     @InitBinder
@@ -51,8 +52,8 @@ public class ADSinhVienController {
     }
 
     @RequestMapping("/giaovu/sinhvien")
-    public String list(Model model) {
-        model.addAttribute("sinhvien", svService.getSinhviens());
+    public String list(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("sinhvien", this.svService.getSinhviens(params));
         return "dssinhvien";
     }
     @GetMapping("/giaovu/sinhvien/add")
@@ -72,7 +73,6 @@ public class ADSinhVienController {
         if (this.svService.addOrUpdateSinhVien(sv) == true) {
             return "redirect:/giaovu/sinhvien";
         }
-
         return "add";
     }
 }
