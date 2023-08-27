@@ -153,7 +153,8 @@
     animation: modelFaceIn ease .5s;
 
   }
-  .form-themcauhoi-diendan{
+
+  .form-themcauhoi-diendan {
     background-color: aliceblue;
     position: relative;
     width: 85%;
@@ -177,6 +178,7 @@
     justify-content: center;
 
   }
+
   .add-contend-question {
     position: absolute;
     left: 80%;
@@ -227,4 +229,63 @@
 
   .nav-menu {
     height: 60px;
+  }
+
+
+  /*Xem diem*/
+
+  .table {
+    margin-left: 30px;
+  }
+
+  .icon-padding {
+    padding: 0 10px;
+  }
+
+  .dark-color {
+    color: black !important;
+  }
+
+
+  .name-text {
+    margin: 30px 10px;
+    font-weight: bold;
+  }
+
+  .text-header-tong {
+    margin-left: 30px;
+    color: darkgrey;
+  }
+
+  .point-ky {
+    margin: 40px 30px;
+  }
+
+  .point-tong>li {
+    float: left;
+  }
+
+  .point {
+    margin: 20px 30px;
+  }
+
+  .user-name-img {
+    margin-left: 900px;
+  }
+
+  .logo-menu {
+    height: 120px;
+    padding: 10px 5px;
+    text-align: center;
+
+
+  }
+
+  .header-logo {
+    color: black;
+  }
+
+  .logo-menu a {
+    line-height: 100px;
+    font-weight: bold;
   }

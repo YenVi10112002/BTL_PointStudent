@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Apis, { endpoints } from "../configs/Apis";
-
+import Apis, { AuthApis, endpoints } from "../configs/Apis";
+import { MyUserConText } from "../App";
+import { useContext } from "react";
 const DienDan = () => {
+    const [user, dispatch] = useContext(MyUserConText);
     const [cauHois, setCauhois] = useState([]);
     useEffect(() => {
         const loadCauHoi = async () => {
 
-            let res = await Apis.get(endpoints['cauHois']);
+            let res = await AuthApis().get(endpoints['cauHois']);
 
             setCauhois(res.data);
         }
@@ -17,8 +19,6 @@ const DienDan = () => {
 
 
     return (
-
-
 
 
         <div class="contend">
@@ -32,7 +32,7 @@ const DienDan = () => {
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
-                                    Phạm Hoàng Ân</a>
+                                    {user.hoTen}</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
                                     <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>

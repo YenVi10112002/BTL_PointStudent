@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link, useSearchParams } from "react-router-dom";
-import Apis, { endpoints } from "../configs/Apis";
+import Apis, { AuthApis, endpoints } from "../configs/Apis";
+import { MyUserConText } from "../App";
+import { useContext } from "react";
 
 const TraLoiDienDan = () => {
+    const [user, dispatch] = useContext(MyUserConText);
     const [cautraloi, setCauTraLoi] = useState([]);
     const [cauhoi, setcauhoi] = useState([]);
     const [q] = useSearchParams();
@@ -15,7 +18,7 @@ const TraLoiDienDan = () => {
                 if (cauhoiid != null) {
                     e = `${e}?cauhoiId=${cauhoiid}`;
                 }
-                let res = await Apis.get(e);
+                let res = await AuthApis().get(e);
 
                 setCauTraLoi(res.data);
             } catch (ex) {
@@ -29,7 +32,7 @@ const TraLoiDienDan = () => {
             if (cauhoiid != null) {
                 ch = `${ch}?cauhoiId=${cauhoiid}`;
             }
-            let res = await Apis.get(ch);
+            let res = await AuthApis().get(ch);
 
             setcauhoi(res.data);
         }
@@ -40,8 +43,6 @@ const TraLoiDienDan = () => {
 
 
     return (
-
-
 
 
         <div class="contend">
@@ -55,7 +56,7 @@ const TraLoiDienDan = () => {
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
-                                    Phạm Hoàng Ân</a>
+                                    {user.hoTen}</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
                                     <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>

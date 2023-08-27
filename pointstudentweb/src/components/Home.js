@@ -1,4 +1,34 @@
+import { useEffect, useState } from "react";
+import { AuthApis, endpoints } from "../configs/Apis";
+import { MyUserConText } from "../App";
+import { useContext } from "react";
 const Home = () => {
+    const [user, dispatch] = useContext(MyUserConText);
+    const [DSDiem, setDSDiem] = useState([]);
+    const [Diem, setDiem] = useState([]);
+    const [DiemHe4, setDiemHe4] = useState([]);
+    useEffect(() => {
+        const loadloadDSDiem = async () => {
+            try {
+                let e = endpoints['DSDiemTrungBinhHocKy'];
+                let a = endpoints['DiemTrungBinhHe10'];
+                let b = endpoints['DiemTrungBinhHe4'];
+                e = `${e}?SinhVienId=${user.idSinhVien}`;
+                a = `${a}?SinhVienId=${user.idSinhVien}`;
+                b = `${b}?SinhVienId=${user.idSinhVien}`;
+                let res1 = await AuthApis().get(e);
+                let res2 = await AuthApis().get(a);
+                let res3 = await AuthApis().get(b);
+                setDSDiem(res1.data);
+                setDiem(res2.data);
+                setDiemHe4(res3.data);
+            } catch (ex) {
+                console.error(ex);
+            }
+
+        }
+        loadloadDSDiem();
+    }, [])
     return (
         <div class="contend">
             <nav class="navbar navbar-1 navbar-expand-sm navbar-dark nav-menu">
@@ -11,7 +41,7 @@ const Home = () => {
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
-                                    Phạm Hoàng Ân</a>
+                                    {user.hoTen}</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
                                     <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>
@@ -24,9 +54,9 @@ const Home = () => {
             </nav>
             <div class="point">
                 <h4 >Tổng quan</h4>
-                <h6 class="text-header-tong">Tổng Hợp Nhanh Các Thông Tin </h6>
+                <h6 class="text-header-tong ">Tổng Hợp Nhanh Các Thông Tin </h6>
                 <div class="container mt-3">
-                        <h2 class="name-text"> Phạm Hoàng Ân</h2>
+                    <h2 class="name-text"> Phạm Hoàng Ân</h2>
                     <p class="text-header-tong">Tổng Hợp Điểm & Xếp Loại Học Tập</p>
                     <table class="table">
                         <thead>
@@ -37,11 +67,13 @@ const Home = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>9</td>
-                                <td>3.5</td>
+                            <tr >
+                                <td>{Diem}</td>
+                                <td>{DiemHe4}</td>
                                 <td>Giỏi</td>
                             </tr>
+
+
                         </tbody>
                     </table>
                 </div>
@@ -58,11 +90,12 @@ const Home = () => {
                             </tr>
                         </thead>
                         <tbody >
-                                <tr>
-                                    <td>1</td>
-                                    <td>9</td>
-                                    <td>3.5</td>
-                                </tr>
+                            {DSDiem.map(c => <tr key={c[2]}>
+                                <td>{c[0]}</td>
+                                <td>{c[1]}</td>
+                                <td>{c[2]}</td>
+                            </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
