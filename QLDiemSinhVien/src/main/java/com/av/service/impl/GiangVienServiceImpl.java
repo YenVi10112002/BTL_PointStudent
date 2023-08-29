@@ -41,6 +41,11 @@ public class GiangVienServiceImpl implements GiangVienService{
         return this.giangVienRepository.deleteGV(idGiangVien);
     }
 
+    @Override
+    public Giangvien getGiangVienByIdTaiKhoan(int idTaiKhoan) {
+        return this.giangVienRepository.getGiangVienByIdTaiKhoan(idTaiKhoan);
+    }
+
     
     
     

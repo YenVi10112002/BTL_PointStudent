@@ -11,11 +11,13 @@ import com.av.service.SinhVienService;
 
 import java.util.Date;
 import java.util.Map;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -56,23 +58,27 @@ public class ADSinhVienController {
         model.addAttribute("sinhvien", this.svService.getSinhviens(params));
         return "dssinhvien";
     }
+
     @GetMapping("/giaovu/sinhvien/add")
     public String addsinhVien(Model model) {
-        model.addAttribute("sinhvien", new Sinhvien());
+        model.addAttribute("sinhvienn", new Sinhvien());
         return "add";
     }
 
     @GetMapping("/giaovu/sinhvien/add/{id}")
     public String update(Model model, @PathVariable(value = "id") int id) {
-        model.addAttribute("sinhvien", svService.getSinhVienById(id));
+        model.addAttribute("sinhvienn", svService.getSinhVienById(id));
         return "add";
     }
 
     @PostMapping("/giaovu/sinhvien/add")
-    public String add(@ModelAttribute(value = "sinhvien") Sinhvien sv) {
-        if (this.svService.addOrUpdateSinhVien(sv) == true) {
-            return "redirect:/giaovu/sinhvien";
+    public String add(@ModelAttribute(value = "sinhvienn") @Valid Sinhvien sv, BindingResult rs) {
+        if (!rs.hasErrors()) {
+            if (this.svService.addOrUpdateSinhVien(sv) == true) {
+                return "redirect:/giaovu/sinhvien";
+            }
         }
+
         return "add";
     }
 }

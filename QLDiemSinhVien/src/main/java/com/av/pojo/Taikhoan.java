@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Admin
+ * @author FPTSHOP
  */
 @Entity
 @Table(name = "taikhoan")
@@ -38,13 +40,10 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Taikhoan.findByIdTaiKhoan", query = "SELECT t FROM Taikhoan t WHERE t.idTaiKhoan = :idTaiKhoan"),
     @NamedQuery(name = "Taikhoan.findByTenTaiKhoan", query = "SELECT t FROM Taikhoan t WHERE t.tenTaiKhoan = :tenTaiKhoan"),
     @NamedQuery(name = "Taikhoan.findByMatKhau", query = "SELECT t FROM Taikhoan t WHERE t.matKhau = :matKhau"),
-    @NamedQuery(name = "Taikhoan.findByChucVu", query = "SELECT t FROM Taikhoan t WHERE t.chucVu = :chucVu"),
     @NamedQuery(name = "Taikhoan.findByImage", query = "SELECT t FROM Taikhoan t WHERE t.image = :image")})
 public class Taikhoan implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    public static final String SV = "ROLE_SV";
-    public static final String GV = "ROLE_GV";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -60,23 +59,24 @@ public class Taikhoan implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "MatKhau")
     private String matKhau;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "ChucVu")
-    private String chucVu;
     @Size(max = 1000)
-    @Column(name = "Image")
+    @Column(name = "image")
     private String image;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTaiKhoan")
+    @OneToMany(mappedBy = "idTaiKhoan")
     @JsonIgnore
     private Set<Traloidiendan> traloidiendanSet;
+    @JoinColumn(name = "ChucVu", referencedColumnName = "idloaitaikhoan")
+    @ManyToOne
+    private Loaitaikhoan chucVu;
     @OneToOne(mappedBy = "idTaiKhoan")
     @JsonIgnore
     private Giaovu giaovu;
     @OneToOne(mappedBy = "idTaiKhoan")
     @JsonIgnore
     private Sinhvien sinhvien;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTaiKhoan")
+    @JsonIgnore
+    private Set<Cauhoidiendang> cauhoidiendangSet;
     @OneToOne(mappedBy = "idTaiKhoan")
     @JsonIgnore
     private Giangvien giangvien;
@@ -84,7 +84,7 @@ public class Taikhoan implements Serializable {
     private String xacNhanMk;
     @Transient
     private Giangvien giangvien1;
-    
+
     @Transient
     private MultipartFile file;
 
@@ -95,11 +95,10 @@ public class Taikhoan implements Serializable {
         this.idTaiKhoan = idTaiKhoan;
     }
 
-    public Taikhoan(Integer idTaiKhoan, String tenTaiKhoan, String matKhau, String chucVu) {
+    public Taikhoan(Integer idTaiKhoan, String tenTaiKhoan, String matKhau) {
         this.idTaiKhoan = idTaiKhoan;
         this.tenTaiKhoan = tenTaiKhoan;
         this.matKhau = matKhau;
-        this.chucVu = chucVu;
     }
 
     public Integer getIdTaiKhoan() {
@@ -126,14 +125,6 @@ public class Taikhoan implements Serializable {
         this.matKhau = matKhau;
     }
 
-    public String getChucVu() {
-        return chucVu;
-    }
-
-    public void setChucVu(String chucVu) {
-        this.chucVu = chucVu;
-    }
-
     public String getImage() {
         return image;
     }
@@ -151,6 +142,14 @@ public class Taikhoan implements Serializable {
         this.traloidiendanSet = traloidiendanSet;
     }
 
+    public Loaitaikhoan getChucVu() {
+        return chucVu;
+    }
+
+    public void setChucVu(Loaitaikhoan chucVu) {
+        this.chucVu = chucVu;
+    }
+
     public Giaovu getGiaovu() {
         return giaovu;
     }
@@ -165,6 +164,15 @@ public class Taikhoan implements Serializable {
 
     public void setSinhvien(Sinhvien sinhvien) {
         this.sinhvien = sinhvien;
+    }
+
+    @XmlTransient
+    public Set<Cauhoidiendang> getCauhoidiendangSet() {
+        return cauhoidiendangSet;
+    }
+
+    public void setCauhoidiendangSet(Set<Cauhoidiendang> cauhoidiendangSet) {
+        this.cauhoidiendangSet = cauhoidiendangSet;
     }
 
     public Giangvien getGiangvien() {
@@ -199,13 +207,13 @@ public class Taikhoan implements Serializable {
     public String toString() {
         return "com.av.pojo.Taikhoan[ idTaiKhoan=" + idTaiKhoan + " ]";
     }
-
+    
     /**
      * @return the xacNhanMk
      */
     public String getXacNhanMk() {
         return xacNhanMk;
-    }
+}
 
     /**
      * @param xacNhanMk the xacNhanMk to set

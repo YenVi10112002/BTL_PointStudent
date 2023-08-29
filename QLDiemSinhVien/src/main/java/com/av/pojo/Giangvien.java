@@ -4,8 +4,10 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,10 +25,11 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Admin
+ * @author FPTSHOP
  */
 @Entity
 @Table(name = "giangvien")
@@ -75,6 +79,9 @@ public class Giangvien implements Serializable {
     @Size(min = 1, max = 11)
     @Column(name = "soDienThoai")
     private String soDienThoai;
+    @OneToMany(mappedBy = "idGiangVien")
+    @JsonIgnore
+    private Set<Monhoc> monhocSet;
     @JoinColumn(name = "idTaiKhoan", referencedColumnName = "idTaiKhoan")
     @OneToOne
     private Taikhoan idTaiKhoan;
@@ -149,6 +156,15 @@ public class Giangvien implements Serializable {
 
     public void setSoDienThoai(String soDienThoai) {
         this.soDienThoai = soDienThoai;
+    }
+
+    @XmlTransient
+    public Set<Monhoc> getMonhocSet() {
+        return monhocSet;
+    }
+
+    public void setMonhocSet(Set<Monhoc> monhocSet) {
+        this.monhocSet = monhocSet;
     }
 
     public Taikhoan getIdTaiKhoan() {

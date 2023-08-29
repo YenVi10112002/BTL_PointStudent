@@ -4,6 +4,7 @@
  */
 package com.av.service.impl;
 
+import com.av.pojo.Loaitaikhoan;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.repository.TaiKhoanRepository;
@@ -11,13 +12,20 @@ import com.av.service.TaiKhoanService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +33,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Admin
  */
-@Service
+@Service("userDetailsService")
 public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Autowired
@@ -56,7 +64,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     public boolean addAcount(Taikhoan t) {
         String pass = t.getMatKhau();
         t.setMatKhau(this.passwordEncoder.encode(pass));
-        t.setChucVu(Taikhoan.SV);
+        t.setChucVu(this.getChucVu(3));
         
         return taikhoanRepository.addAcount(t);
     }
@@ -64,7 +72,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     public boolean addAcountGV(Taikhoan t) {
         String pass = t.getMatKhau();
         t.setMatKhau(this.passwordEncoder.encode(pass));
-        t.setChucVu(Taikhoan.GV);
+        t.setChucVu(this.getChucVu(2));
         return taikhoanRepository.addAcountGV(t);
     }
 
@@ -73,4 +81,52 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         return this.taikhoanRepository.getTaiKhoan();
     }
 
+    @Override
+    public Loaitaikhoan getChucVu(int id) {
+        return this.taikhoanRepository.getChucVu(id);
+    }
+    
+    @Override
+    public Taikhoan getUserByUsername(String username) {
+       return this.taikhoanRepository.getUserByUsername(username);
+    }
+
+    // Dang Nhap
+    @Override
+    public UserDetails loadUserByUsername(String tenTK) throws UsernameNotFoundException {
+        Taikhoan taikhoans = this.getUserByUsername(tenTK);
+        if(taikhoans == null)
+            throw new UsernameNotFoundException("Tài khoản không tồn tại!!!");
+        
+        Set<GrantedAuthority> auth = new HashSet<>();
+        auth.add(new SimpleGrantedAuthority(taikhoans.getChucVu().getTenloaitaikhoan()));
+        return new org.springframework.security.core.userdetails.User(taikhoans.getTenTaiKhoan(), taikhoans.getMatKhau(), auth);
+    }
+
+    @Override
+    public boolean authUser(String username, String password) {
+        return this.taikhoanRepository.authUser(username, password);
+    }
+
+    @Override
+    public Taikhoan addUser(Map<String, String> params) {
+        Taikhoan u = new Taikhoan();
+        u.setTenTaiKhoan(params.get("username"));
+        u.setMatKhau(this.passwordEncoder.encode(params.get("password")));
+        u.setChucVu(this.taikhoanRepository.getChucVu(3));
+        this.taikhoanRepository.addUser(u);
+        return u;
+    }
+    @Override
+    public UserDetails getLoggedInUserDetails(Authentication authentication) {
+        // Trả về thông tin UserDetails của người dùng đã đăng nhập thành công
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails;
+    }
+    @Override
+    public int GetIdTaiKhoan(UserDetails userDetails){
+        Taikhoan taikhoans = this.getUserByUsername(userDetails.getUsername());
+       
+        return taikhoans.getIdTaiKhoan();
+    }
 }

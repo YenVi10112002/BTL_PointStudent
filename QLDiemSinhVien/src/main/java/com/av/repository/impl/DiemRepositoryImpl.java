@@ -48,7 +48,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Double> q = b.createQuery(Double.class);
         Root<Diem> root = q.from(Diem.class);
-        q.select(b.avg(root.get("diemTrungBinh")))
+        q.select(b.avg(root.get("diemTrungBình")))
                 .where(b.equal(root.get("idSinhVien"), sinhvienId));
         Query query = s.createQuery(q);
 
@@ -76,7 +76,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Double> q = b.createQuery(Double.class);
         Root<Diem> root = q.from(Diem.class);
-        q.select(b.avg(root.get("diemTrungBinh")))
+        q.select(b.avg(root.get("diemTrungBình")))
                 .where(b.equal(root.get("idSinhVien"), sinhvienId));
         Query query = s.createQuery(q);
         DecimalFormat decimalFormat = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
@@ -112,7 +112,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         predicates.add(b.equal(rDiem.get("idSinhVien"), sinhvienId));
         predicates.add(b.equal(rDiem.get("idMonHoc"), rMonhoc.get("idMonHoc")));
 
-        q.select(b.array(rDiem.get("diemTrungBinh"), rDiem.get("diemCuoiKy"), rDiem.get("diemGiuaKy"), rDiem.get("trangThai"), rMonhoc.get("tenMonHoc"), rMonhoc.get("hocKy"), b.prod(rDiem.get("diemTrungBinh"), 0.4)))
+        q.select(b.array(rDiem.get("diemTrungBình"), rDiem.get("diemCuoiKy"), rDiem.get("diemGiuaKy"), rDiem.get("trangThai"), rMonhoc.get("diemTrungBình"), rMonhoc.get("hocKy"), b.prod(rDiem.get("diemTrungBinh"), 0.4)))
                 .where(predicates.toArray(Predicate[]::new));
 
         q.orderBy(b.asc(rMonhoc.get("hocKy")));
@@ -139,8 +139,8 @@ public class DiemRepositoryImpl implements DiemRepository {
         predicates.add(b.equal(rDiem.get("idSinhVien"), sinhvienId));
         predicates.add(b.equal(rDiem.get("idMonHoc"), rMonhoc.get("idMonHoc")));
 
-        Expression<Double> averageDiemTrungBinh = b.avg(rDiem.get("diemTrungBinh"));
-        Expression<Double> averageDiemTrungBinh4 = b.prod(b.avg(rDiem.get("diemTrungBinh")), 0.4);
+        Expression<Double> averageDiemTrungBinh = b.avg(rDiem.get("diemTrungBình"));
+        Expression<Double> averageDiemTrungBinh4 = b.prod(b.avg(rDiem.get("diemTrungBình")), 0.4);
 
         q.multiselect(
                 rMonhoc.get("hocKy"),
@@ -172,8 +172,8 @@ public class DiemRepositoryImpl implements DiemRepository {
         predicates.add(b.equal(rDiem.get("idSinhVien"), Integer.parseInt(sinhvienId)));
         predicates.add(b.equal(rDiem.get("idMonHoc"), rMonhoc.get("idMonHoc")));
 
-        Expression<Double> averageDiemTrungBinh = b.avg(rDiem.get("diemTrungBinh"));
-        Expression<Double> averageDiemTrungBinh4 = b.prod(b.avg(rDiem.get("diemTrungBinh")), 0.4);
+        Expression<Double> averageDiemTrungBinh = b.avg(rDiem.get("diemTrungBình"));
+        Expression<Double> averageDiemTrungBinh4 = b.prod(b.avg(rDiem.get("diemTrungBình")), 0.4);
         q.multiselect(
                 rMonhoc.get("hocKy"),
                 averageDiemTrungBinh,
@@ -199,7 +199,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         CriteriaQuery<Double> q = b.createQuery(Double.class);
         Root<Diem> root = q.from(Diem.class);
          String sinhvienId = params.get("SinhVienId");
-        q.select(b.avg(root.get("diemTrungBinh")))
+        q.select(b.avg(root.get("diemTrungBình")))
                 .where(b.equal(root.get("idSinhVien"), Integer.parseInt(sinhvienId)));
         Query query = s.createQuery(q);
 
@@ -227,7 +227,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         CriteriaQuery<Double> q = b.createQuery(Double.class);
         Root<Diem> root = q.from(Diem.class);
         String sinhvienId = params.get("SinhVienId");
-        q.select(b.avg(root.get("diemTrungBinh")))
+        q.select(b.avg(root.get("diemTrungBình")))
                 
                 .where(b.equal(root.get("idSinhVien"), Integer.parseInt(sinhvienId)));
         Query query = s.createQuery(q);
@@ -263,7 +263,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         predicates.add(b.equal(rDiem.get("idSinhVien"), Integer.parseInt(sinhvienId)));
         predicates.add(b.equal(rDiem.get("idMonHoc"), rMonhoc.get("idMonHoc")));
 
-        q.select(b.array(rDiem.get("diemTrungBinh"), rDiem.get("diemCuoiKy"), rDiem.get("diemGiuaKy"), rDiem.get("trangThai"), rMonhoc.get("tenMonHoc"), rMonhoc.get("hocKy"), b.prod(rDiem.get("diemTrungBinh"), 0.4)))
+        q.select(b.array(rDiem.get("diemTrungBình"), rDiem.get("diemCuoiKy"), rDiem.get("diemGiuaKy"), rDiem.get("trangThai"), rMonhoc.get("tenMonHoc"), rMonhoc.get("hocKy"), b.prod(rDiem.get("diemTrungBình"), 0.4)))
                 .where(predicates.toArray(Predicate[]::new));
 
         q.orderBy(b.asc(rMonhoc.get("hocKy")));

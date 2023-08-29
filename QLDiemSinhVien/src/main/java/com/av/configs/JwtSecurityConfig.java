@@ -64,6 +64,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         // Disable crsf cho đường dẫn /rest/**
         http.csrf().ignoringAntMatchers("/api/**");
         http.authorizeRequests().antMatchers("/api/login/").permitAll();
+        http.authorizeRequests().antMatchers("/api/current-user/").permitAll();
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_GV') or hasRole('ROLE_SV')")

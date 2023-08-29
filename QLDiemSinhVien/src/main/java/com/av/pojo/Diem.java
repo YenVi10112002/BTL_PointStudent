@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Admin
+ * @author FPTSHOP
  */
 @Entity
 @Table(name = "diem")
@@ -29,11 +29,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Diem.findAll", query = "SELECT d FROM Diem d"),
     @NamedQuery(name = "Diem.findByIdDiem", query = "SELECT d FROM Diem d WHERE d.idDiem = :idDiem"),
+    @NamedQuery(name = "Diem.findByXepLoai", query = "SELECT d FROM Diem d WHERE d.xepLoai = :xepLoai"),
+    @NamedQuery(name = "Diem.findByTrangThai", query = "SELECT d FROM Diem d WHERE d.trangThai = :trangThai"),
     @NamedQuery(name = "Diem.findByDiemGiuaKy", query = "SELECT d FROM Diem d WHERE d.diemGiuaKy = :diemGiuaKy"),
     @NamedQuery(name = "Diem.findByDiemCuoiKy", query = "SELECT d FROM Diem d WHERE d.diemCuoiKy = :diemCuoiKy"),
-    @NamedQuery(name = "Diem.findByDiemTrungBinh", query = "SELECT d FROM Diem d WHERE d.diemTrungBinh = :diemTrungBinh"),
-    @NamedQuery(name = "Diem.findByXepLoai", query = "SELECT d FROM Diem d WHERE d.xepLoai = :xepLoai"),
-    @NamedQuery(name = "Diem.findByTrangThai", query = "SELECT d FROM Diem d WHERE d.trangThai = :trangThai")})
+    @NamedQuery(name = "Diem.findByDiemKT1", query = "SELECT d FROM Diem d WHERE d.diemKT1 = :diemKT1"),
+    @NamedQuery(name = "Diem.findByDiemTK2", query = "SELECT d FROM Diem d WHERE d.diemTK2 = :diemTK2"),
+    @NamedQuery(name = "Diem.findByDiemTK3", query = "SELECT d FROM Diem d WHERE d.diemTK3 = :diemTK3"),
+    @NamedQuery(name = "Diem.findByDiemTrungB\u00ecnh", query = "SELECT d FROM Diem d WHERE d.diemTrungB\u00ecnh = :diemTrungB\u00ecnh")})
 public class Diem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,23 +45,29 @@ public class Diem implements Serializable {
     @Basic(optional = false)
     @Column(name = "idDiem")
     private Integer idDiem;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "diemGiuaKy")
-    private Double diemGiuaKy;
-    @Column(name = "diemCuoiKy")
-    private Double diemCuoiKy;
-    @Column(name = "diemTrungBinh")
-    private Double diemTrungBinh;
     @Size(max = 20)
     @Column(name = "xepLoai")
     private String xepLoai;
     @Column(name = "trangThai")
     private Short trangThai;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "diemGiuaKy")
+    private Double diemGiuaKy;
+    @Column(name = "diemCuoiKy")
+    private Double diemCuoiKy;
+    @Column(name = "DiemKT1")
+    private Double diemKT1;
+    @Column(name = "DiemTK2")
+    private Double diemTK2;
+    @Column(name = "DiemTK3")
+    private Double diemTK3;
+    @Column(name = "diemTrungB\u00ecnh")
+    private Double diemTrungBình;
     @JoinColumn(name = "idMonHoc", referencedColumnName = "idMonHoc")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Monhoc idMonHoc;
     @JoinColumn(name = "idSinhVien", referencedColumnName = "idSinhVien")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Sinhvien idSinhVien;
 
     public Diem() {
@@ -74,6 +83,22 @@ public class Diem implements Serializable {
 
     public void setIdDiem(Integer idDiem) {
         this.idDiem = idDiem;
+    }
+
+    public String getXepLoai() {
+        return xepLoai;
+    }
+
+    public void setXepLoai(String xepLoai) {
+        this.xepLoai = xepLoai;
+    }
+
+    public Short getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(Short trangThai) {
+        this.trangThai = trangThai;
     }
 
     public Double getDiemGiuaKy() {
@@ -92,28 +117,36 @@ public class Diem implements Serializable {
         this.diemCuoiKy = diemCuoiKy;
     }
 
-    public Double getDiemTrungBinh() {
-        return diemTrungBinh;
+    public Double getDiemKT1() {
+        return diemKT1;
     }
 
-    public void setDiemTrungBinh(Double diemTrungBinh) {
-        this.diemTrungBinh = diemTrungBinh;
+    public void setDiemKT1(Double diemKT1) {
+        this.diemKT1 = diemKT1;
     }
 
-    public String getXepLoai() {
-        return xepLoai;
+    public Double getDiemTK2() {
+        return diemTK2;
     }
 
-    public void setXepLoai(String xepLoai) {
-        this.xepLoai = xepLoai;
+    public void setDiemTK2(Double diemTK2) {
+        this.diemTK2 = diemTK2;
     }
 
-    public Short getTrangThai() {
-        return trangThai;
+    public Double getDiemTK3() {
+        return diemTK3;
     }
 
-    public void setTrangThai(Short trangThai) {
-        this.trangThai = trangThai;
+    public void setDiemTK3(Double diemTK3) {
+        this.diemTK3 = diemTK3;
+    }
+
+    public Double getDiemTrungBình() {
+        return diemTrungBình;
+    }
+
+    public void setDiemTrungBình(Double diemTrungBình) {
+        this.diemTrungBình = diemTrungBình;
     }
 
     public Monhoc getIdMonHoc() {

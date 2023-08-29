@@ -29,7 +29,7 @@
                 <tr>
                     <td>${tk.idTaiKhoan}</td>
                     <td>${tk.tenTaiKhoan}</td>
-                    <td>${tk.chucVu}</td>
+                    <td>${tk.chucVu.tenloaitaikhoan}</td>
                 </tr>
             </c:forEach>
         </tbody>

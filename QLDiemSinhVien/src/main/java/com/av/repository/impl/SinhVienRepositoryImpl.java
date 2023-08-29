@@ -72,17 +72,17 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
-        
+
         Root<Sinhvien> root = q.from(Sinhvien.class);
         q.select(root);
         List<Predicate> predicates = new ArrayList<>();
-        
+
         String tenSV = params.get("tensv");
         if (tenSV != null && !tenSV.isEmpty()) {
             predicates.add(b.like(root.get("hoTen"), String.format("%%%s%%", tenSV)));
         }
         q.where(predicates.toArray(Predicate[]::new));
-        
+
         Query query = s.createQuery(q);
         return query.getResultList();
     }
@@ -95,17 +95,13 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
     public boolean addOrUpdateSinhVien(Sinhvien sv) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
             if (sv.getIdSinhVien() == null) {
                 s.save(sv);
-//               
             } else {
-//                
                 s.update(sv);
-
             }
 
             return true;
@@ -113,7 +109,6 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
             e.printStackTrace();
 
         }
-
         return false;
     }
 
@@ -142,16 +137,14 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         Session s = this.factory.getObject().getCurrentSession();
         Sinhvien sv = this.getSinhVienById(idSinhVien);
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class
-        );
-        Root r = q.from(Taikhoan.class
-        );
+        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
+        Root r = q.from(Taikhoan.class);
         q.select(r).where(b.equal(r.get("idTaiKhoan"), sv.getIdTaiKhoan().getIdTaiKhoan()));
         Query query = s.createQuery(q);
-        Taikhoan tk = (Taikhoan) query.getSingleResult();
         try {
-            s.remove(tk);
+            Taikhoan tk = (Taikhoan) query.getSingleResult();
             s.remove(sv);
+            s.remove(tk);
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();

@@ -5,12 +5,17 @@
 package com.av.repository.impl;
 
 import com.av.pojo.Giangvien;
+import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.repository.GiangvienRepository;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -101,6 +106,28 @@ public class GiangvienRepositoryImpl implements GiangvienRepository {
             return false;
         }
 
+    }
+
+    @Override
+    public Giangvien getGiangVienByIdTaiKhoan(int idTaiKhoan) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Giangvien> q = b.createQuery(Giangvien.class);
+
+        Root<Giangvien> root = q.from(Giangvien.class);
+        q.select(root);
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(b.equal(root.get("idTaiKhoan"), idTaiKhoan));
+        q.where(predicates.toArray(new Predicate[0]));
+        Query query = session.createQuery(q);
+        try {
+            return (Giangvien) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import cookie from "react-cookies";
-const SERVER_CONTEXT = "/QLDiemSinhVien"
+const SERVER_CONTEXT = "/QLDiemSinhVien";
 
 export const endpoints = {
     "cauHois": `${SERVER_CONTEXT}/api/cauhoi/`,
@@ -11,8 +11,8 @@ export const endpoints = {
     "DSDiemTrungBinhHocKy":`${SERVER_CONTEXT}/api/DSDiemSVHocKy/`,
     "DiemTrungBinhHe10":`${SERVER_CONTEXT}/api/TrungBinhDiem/`,
     "DiemTrungBinhHe4":`${SERVER_CONTEXT}/api/TrungBinhDiemHe4/`,
-    "DSDiem":`${SERVER_CONTEXT}/api/DanhSachDiem/`
-
+    "DSDiem":`${SERVER_CONTEXT}/api/DanhSachDiem/`,
+    "DSMonHocById":`${SERVER_CONTEXT}/api/monhocsinhvien/`
 }
 
 export const AuthApis = () => {

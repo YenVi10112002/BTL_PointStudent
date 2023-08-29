@@ -7,7 +7,7 @@ package com.av.filters;
 
 import com.av.components.JwtService;
 import com.av.pojo.Taikhoan;
-import com.av.service.LoginService;
+import com.av.service.TaiKhoanService;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +34,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
     @Autowired
     private JwtService jwtService;
     @Autowired
-    private LoginService userService;
+    private TaiKhoanService tkService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -43,16 +43,14 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
         String authToken = httpRequest.getHeader(TOKEN_HEADER);
         if (jwtService.validateTokenLogin(authToken)) {
             String username = jwtService.getUsernameFromToken(authToken);
-            Taikhoan user = userService.getUserByUsername(username);
+            Taikhoan user = tkService.getUserByUsername(username);
             if (user != null) {
                 boolean enabled = true;
                 boolean accountNonExpired = true;
                 boolean credentialsNonExpired = true;
-                boolean accountNonLocked = true;
-                
+                boolean accountNonLocked = true;         
                 Set<GrantedAuthority> authorities = new HashSet<>();
-                authorities.add(new SimpleGrantedAuthority(user.getChucVu()));
-                
+                authorities.add(new SimpleGrantedAuthority(user.getChucVu().getTenloaitaikhoan()));               
                 UserDetails userDetail = new org.springframework.security.core.userdetails.User(username, user.getMatKhau(), enabled, accountNonExpired,
                         credentialsNonExpired, accountNonLocked, authorities);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetail,

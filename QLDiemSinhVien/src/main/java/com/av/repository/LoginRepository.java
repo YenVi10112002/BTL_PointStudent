@@ -13,8 +13,6 @@ import java.util.List;
  * @author FPTSHOP
  */
 public interface LoginRepository {
-    Taikhoan getUserByUsername(String username);
-    boolean authUser(String username, String password);
-    Taikhoan addUser(Taikhoan user);
+    
     
 }

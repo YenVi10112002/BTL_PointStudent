@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Admin
+ * @author FPTSHOP
  */
 @Entity
 @Table(name = "sinhvien")
@@ -54,46 +53,32 @@ public class Sinhvien implements Serializable {
     @Basic(optional = false)
     @Column(name = "idSinhVien")
     private Integer idSinhVien;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "hoTen")
     private String hoTen;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "heDaoTao")
     private String heDaoTao;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "ngaySinh")
     @Temporal(TemporalType.DATE)
     private Date ngaySinh;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "diaChi")
     private String diaChi;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "gioiTinh")
-    private short gioiTinh;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 11)
+    private Short gioiTinh;
+    @Size(max = 11)
     @Column(name = "soDienThoai")
     private String soDienThoai;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSinhVien")
+    @OneToMany(mappedBy = "idSinhVien")
     @JsonIgnore
     private Set<Diem> diemSet;
     @JoinColumn(name = "maLop", referencedColumnName = "idLopHoc")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Lophoc maLop;
     @JoinColumn(name = "idTaiKhoan", referencedColumnName = "idTaiKhoan")
     @OneToOne
@@ -104,17 +89,6 @@ public class Sinhvien implements Serializable {
 
     public Sinhvien(Integer idSinhVien) {
         this.idSinhVien = idSinhVien;
-    }
-
-    public Sinhvien(Integer idSinhVien, String hoTen, String heDaoTao, Date ngaySinh, String diaChi, short gioiTinh, String soDienThoai, String email) {
-        this.idSinhVien = idSinhVien;
-        this.hoTen = hoTen;
-        this.heDaoTao = heDaoTao;
-        this.ngaySinh = ngaySinh;
-        this.diaChi = diaChi;
-        this.gioiTinh = gioiTinh;
-        this.soDienThoai = soDienThoai;
-        this.email = email;
     }
 
     public Integer getIdSinhVien() {
@@ -157,11 +131,11 @@ public class Sinhvien implements Serializable {
         this.diaChi = diaChi;
     }
 
-    public short getGioiTinh() {
+    public Short getGioiTinh() {
         return gioiTinh;
     }
 
-    public void setGioiTinh(short gioiTinh) {
+    public void setGioiTinh(Short gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
 

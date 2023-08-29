@@ -7,6 +7,7 @@ package com.av.repository;
 import com.av.pojo.Monhoc;
 import com.av.pojo.PhieuMonHoc;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -17,5 +18,6 @@ public interface MonHocRepository {
     boolean addOrUpdateMonHoc(Monhoc mh);
     Monhoc getMonHocById(int id);
     boolean deleteMonHoc(int id);
+    List<Object> getMonHocByGiangVien(Map<String, String> params);
     
 }

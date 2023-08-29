@@ -5,11 +5,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-<<<<<<< HEAD
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-08-27T03:16:10")
-=======
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-08-26T16:18:30")
->>>>>>> 7a6501278db722a7e7531bea51022dd1df282994
+@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-08-29T15:47:44")
 @StaticMetamodel(Giaovu.class)
 public class Giaovu_ { 
 

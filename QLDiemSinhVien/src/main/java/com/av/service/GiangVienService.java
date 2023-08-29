@@ -16,4 +16,5 @@ public interface GiangVienService {
     boolean addOrUpdateGiangVien(Giangvien gv);
     Giangvien getGiangVienById(int idGiangVien);
     boolean deleteGV(int idGiangVien);
+    Giangvien getGiangVienByIdTaiKhoan(int idTaiKhoan);
 }

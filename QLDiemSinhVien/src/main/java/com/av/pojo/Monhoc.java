@@ -8,12 +8,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Admin
+ * @author FPTSHOP
  */
 @Entity
 @Table(name = "monhoc")
@@ -37,8 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Monhoc.findByHinhThucThi", query = "SELECT m FROM Monhoc m WHERE m.hinhThucThi = :hinhThucThi"),
     @NamedQuery(name = "Monhoc.findBySoTinChi", query = "SELECT m FROM Monhoc m WHERE m.soTinChi = :soTinChi"),
     @NamedQuery(name = "Monhoc.findByHocKy", query = "SELECT m FROM Monhoc m WHERE m.hocKy = :hocKy"),
-    @NamedQuery(name = "Monhoc.findByPhongHoc", query = "SELECT m FROM Monhoc m WHERE m.phongHoc = :phongHoc"),
-    @NamedQuery(name = "Monhoc.findByIdGiangVien", query = "SELECT m FROM Monhoc m WHERE m.idGiangVien = :idGiangVien")})
+    @NamedQuery(name = "Monhoc.findByPhongHoc", query = "SELECT m FROM Monhoc m WHERE m.phongHoc = :phongHoc")})
 public class Monhoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,12 +70,10 @@ public class Monhoc implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "phongHoc")
     private String phongHoc;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "idGiangVien")
-    private String idGiangVien;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMonHoc")
+    @JoinColumn(name = "idGiangVien", referencedColumnName = "idGiangVien")
+    @ManyToOne
+    private Giangvien idGiangVien;
+    @OneToMany(mappedBy = "idMonHoc")
     @JsonIgnore
     private Set<Diem> diemSet;
 
@@ -86,14 +84,13 @@ public class Monhoc implements Serializable {
         this.idMonHoc = idMonHoc;
     }
 
-    public Monhoc(Integer idMonHoc, String tenMonHoc, String hinhThucThi, int soTinChi, int hocKy, String phongHoc, String idGiangVien) {
+    public Monhoc(Integer idMonHoc, String tenMonHoc, String hinhThucThi, int soTinChi, int hocKy, String phongHoc) {
         this.idMonHoc = idMonHoc;
         this.tenMonHoc = tenMonHoc;
         this.hinhThucThi = hinhThucThi;
         this.soTinChi = soTinChi;
         this.hocKy = hocKy;
         this.phongHoc = phongHoc;
-        this.idGiangVien = idGiangVien;
     }
 
     public Integer getIdMonHoc() {
@@ -144,11 +141,11 @@ public class Monhoc implements Serializable {
         this.phongHoc = phongHoc;
     }
 
-    public String getIdGiangVien() {
+    public Giangvien getIdGiangVien() {
         return idGiangVien;
     }
 
-    public void setIdGiangVien(String idGiangVien) {
+    public void setIdGiangVien(Giangvien idGiangVien) {
         this.idGiangVien = idGiangVien;
     }
 

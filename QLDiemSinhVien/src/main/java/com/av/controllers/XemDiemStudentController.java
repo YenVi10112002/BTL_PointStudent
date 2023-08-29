@@ -6,8 +6,8 @@ package com.av.controllers;
 
 import com.av.pojo.Sinhvien;
 import com.av.service.DiemService;
-import com.av.service.LoginService;
 import com.av.service.SinhVienService;
+import com.av.service.TaiKhoanService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -30,7 +30,7 @@ public class XemDiemStudentController {
     @Autowired
     private SinhVienService sinhVienService;
     @Autowired
-    private LoginService loService;
+    private TaiKhoanService taiKhoanService;
     @Autowired
     private DiemService diemService;
     @Autowired
@@ -45,11 +45,11 @@ public class XemDiemStudentController {
     @GetMapping("/sinhvien/xemdiem")
     public String xemdiem(Model model, Authentication authentication, @ModelAttribute("sinhvien") Sinhvien sinhvien, @RequestParam Map<String, String> params){
         
-        sinhvien = this.sinhVienService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication)));
+        sinhvien = this.sinhVienService.getSinhvien(taiKhoanService.GetIdTaiKhoan(taiKhoanService.getLoggedInUserDetails(authentication)));
         model.addAttribute("dsDiem", this.diemService.getListDiem(sinhvien.getIdSinhVien()));
         model.addAttribute("Diemtrungbinh", this.diemService.getDiemTrungBinh(sinhvien.getIdSinhVien()));
         model.addAttribute("Diemtrungbinh4", this.diemService.getDiemTrungBinhHe(sinhvien.getIdSinhVien()));
-        model.addAttribute("sinhvien", this.sinhVienService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
+        model.addAttribute("sinhvien", this.sinhVienService.getSinhvien(taiKhoanService.GetIdTaiKhoan(taiKhoanService.getLoggedInUserDetails(authentication))));
         return "xemdiemsinhvien";
     }
 }

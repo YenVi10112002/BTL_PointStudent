@@ -15,6 +15,7 @@ public interface GiangvienRepository {
     List<Giangvien> getGiangviens();
     boolean addOrUpdateGiangVien(Giangvien sv);
     Giangvien getGiangVienById(int idGiangVien);
+    Giangvien getGiangVienByIdTaiKhoan(int idTaiKhoan);
     boolean deleteGV(int idGiangVien);
     
 }

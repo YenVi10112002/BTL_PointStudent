@@ -5,6 +5,7 @@
 package com.av.repository.impl;
 
 import com.av.pojo.Giangvien;
+import com.av.pojo.Loaitaikhoan;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.repository.TaiKhoanRepository;
@@ -21,6 +22,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,9 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    
+    @Autowired
+    private BCryptPasswordEncoder passEncoder;
 
     @Override
     public boolean updateImg(Taikhoan s) {
@@ -143,4 +148,33 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         return q.getResultList();
     }
 
+    @Override
+    public Loaitaikhoan getChucVu(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From Loaitaikhoan where idloaitaikhoan=:id");
+        q.setParameter("id", id);
+        return (Loaitaikhoan) q.getSingleResult();
+    }
+    @Override
+    public Taikhoan getUserByUsername(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From Taikhoan Where tenTaiKhoan=:un");
+        q.setParameter("un", username);
+        return (Taikhoan) q.getSingleResult();
+    }
+
+    @Override
+    public boolean authUser(String username, String password) {
+        Taikhoan u = this.getUserByUsername(username);
+
+        return this.passEncoder.matches(password, u.getMatKhau());
+    }
+
+    @Override
+    public Taikhoan addUser(Taikhoan u) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.save(u);
+        return u;
+    }
+    
 }

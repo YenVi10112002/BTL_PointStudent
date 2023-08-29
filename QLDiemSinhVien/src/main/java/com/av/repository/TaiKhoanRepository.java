@@ -4,6 +4,7 @@
  */
 package com.av.repository;
 
+import com.av.pojo.Loaitaikhoan;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import java.util.List;
@@ -18,4 +19,8 @@ public interface TaiKhoanRepository {
     boolean addAcount(Taikhoan t);
     boolean addAcountGV(Taikhoan t);
     List<Taikhoan> getTaiKhoan();
+    Loaitaikhoan getChucVu(int id);
+    Taikhoan getUserByUsername(String username);
+    boolean authUser(String username, String password);
+    Taikhoan addUser(Taikhoan user);
 }

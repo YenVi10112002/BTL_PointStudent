@@ -27,9 +27,9 @@
                     <a class="nav-link" href="<c:url value="/giaovu/taikhoan"/>">Danh sách tài khoản</a>
                 </li>
                 <li class="nav-item dropdown last-item">
-                    <c:if test="${pageContext.request.userPrincipal.name != null}">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-user" style="color: #f2f2f2;"></i>Chào ${giaovu.tenGiaoVu}</a>
-                    </c:if>
+
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-user" style="color: #f2f2f2;"></i>Chào ${giaovu.tenGiaoVu}</a>
+
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
                         <li><a class="dropdown-item" href="#">Thay đổi mật khẩu</a></li>

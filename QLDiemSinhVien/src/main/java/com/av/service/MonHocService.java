@@ -6,6 +6,7 @@ package com.av.service;
 
 import com.av.pojo.Monhoc;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,4 +17,5 @@ public interface MonHocService {
     boolean addOrUpdateMonHoc(Monhoc mh);
     Monhoc getMonHocById(int id);
     boolean deleteMonHoc(int id);
+    List<Object> getMonHocByGiangVien(Map<String, String> params);
 }

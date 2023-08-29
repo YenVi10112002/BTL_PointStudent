@@ -19,10 +19,10 @@
                     <form:input type="text" class="form-control" path="hoTen" id="name" placeholder="Họ và tên" name="name" />
                     <label for="name">Họ và tên</label>
                 </div>
-                            <div class="form-floating mt-3 mb-3">
-                <form:input type="text" class="form-control" path="ngaySinh" id="dateofbirth" placeholder="Ngày sinh" name="dateofbirth"/>
-                <label for="dateofbirth">Ngày sinh</label>
-            </div>
+                <div class="form-floating mt-3 mb-3">
+                    <form:input type="date" class="form-control" path="ngaySinh" id="dateofbirth" placeholder="Ngày sinh" name="dateofbirth"/>
+                    <label for="dateofbirth">Ngày sinh</label>
+                </div>
                 <div class="form-floating mt-3 mb-3">
                     <form:input type="text" class="form-control" path="diaChi" id="address" placeholder="Địa chỉ " name="address"/>
                     <label for="address">Địa chỉ</label>

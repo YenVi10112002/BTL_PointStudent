@@ -5,7 +5,6 @@
 package com.av.controllers;
 
 import com.av.pojo.Taikhoan;
-import com.av.service.LoginService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -36,8 +35,6 @@ public class ThongTinStudentController {
     @Autowired
     private SinhVienService tongquanService;
     @Autowired
-    private LoginService loService;
-    @Autowired
     private TaiKhoanService taikhoanService;
     @Autowired
     private Environment env;
@@ -50,8 +47,8 @@ public class ThongTinStudentController {
 
     @GetMapping("/sinhvien/thongtin")
     public String thongtin(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
-        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
-        model.addAttribute("taikhoan", this.taikhoanService.getTaiKhoan(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
+        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(taikhoanService.GetIdTaiKhoan(taikhoanService.getLoggedInUserDetails(authentication))));
+        model.addAttribute("taikhoan", this.taikhoanService.getTaiKhoan(taikhoanService.GetIdTaiKhoan(taikhoanService.getLoggedInUserDetails(authentication))));
         return "thongtintaikhoan";
     }
 

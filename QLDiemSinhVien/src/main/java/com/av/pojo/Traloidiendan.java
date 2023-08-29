@@ -16,13 +16,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Admin
+ * @author FPTSHOP
  */
 @Entity
 @Table(name = "traloidiendan")
@@ -39,16 +38,14 @@ public class Traloidiendan implements Serializable {
     @Basic(optional = false)
     @Column(name = "idTraLoiDienDan")
     private Integer idTraLoiDienDan;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1000)
+    @Size(max = 400)
     @Column(name = "noiDungTraLoi")
     private String noiDungTraLoi;
     @JoinColumn(name = "idCauHoiDienDan", referencedColumnName = "idCauHoiDienDan")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Cauhoidiendang idCauHoiDienDan;
     @JoinColumn(name = "idTaiKhoan", referencedColumnName = "idTaiKhoan")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Taikhoan idTaiKhoan;
 
     public Traloidiendan() {
@@ -56,11 +53,6 @@ public class Traloidiendan implements Serializable {
 
     public Traloidiendan(Integer idTraLoiDienDan) {
         this.idTraLoiDienDan = idTraLoiDienDan;
-    }
-
-    public Traloidiendan(Integer idTraLoiDienDan, String noiDungTraLoi) {
-        this.idTraLoiDienDan = idTraLoiDienDan;
-        this.noiDungTraLoi = noiDungTraLoi;
     }
 
     public Integer getIdTraLoiDienDan() {

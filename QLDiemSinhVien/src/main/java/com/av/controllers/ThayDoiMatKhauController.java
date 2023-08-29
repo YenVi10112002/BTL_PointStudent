@@ -4,7 +4,6 @@
  */
 package com.av.controllers;
 
-import com.av.service.LoginService;
 import com.av.service.SinhVienService;
 import com.av.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ThayDoiMatKhauController {
     
     @Autowired
-    private LoginService loService;
-    @Autowired
     private SinhVienService tongquanService;
     @Autowired
     private TaiKhoanService taiKhoanService;
@@ -32,8 +29,8 @@ public class ThayDoiMatKhauController {
     
     @GetMapping("/sinhvien/thaydoimatkhau")
     public String thaydoimatkhau(Model model, Authentication authentication){
-         model.addAttribute("taikhoan", this.taiKhoanService.getTaiKhoan(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
-        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
+         model.addAttribute("taikhoan", this.taiKhoanService.getTaiKhoan(taiKhoanService.GetIdTaiKhoan(taiKhoanService.getLoggedInUserDetails(authentication))));
+        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(taiKhoanService.GetIdTaiKhoan(taiKhoanService.getLoggedInUserDetails(authentication))));
         return "thaydoimatkhau";
     }
 }

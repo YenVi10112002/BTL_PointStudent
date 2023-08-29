@@ -7,7 +7,6 @@ package com.av.controllers;
 import com.av.pojo.Cauhoidiendang;
 import com.av.pojo.Traloidiendan;
 import java.util.Map;
-import com.av.service.LoginService;
 import com.av.service.SinhVienService;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,6 @@ public class DienDangStudentController {
     @Autowired
     private DienDanService cauhoiServite;
     @Autowired
-    private LoginService loService;
-    @Autowired
     private SinhVienService tongquanService;
     @Autowired
     private TaiKhoanService taiKhoanService;
@@ -53,8 +50,8 @@ public class DienDangStudentController {
     @RequestMapping("/sinhvien/diendan")
     public String diendan(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
         model.addAttribute("dscauhoi", this.cauhoiServite.getCauHoiDienDan());
-        model.addAttribute("taikhoan", this.taiKhoanService.getTaiKhoan(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
-        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(loService.GetIdTaiKhoan(loService.getLoggedInUserDetails(authentication))));
+        model.addAttribute("taikhoan", this.taiKhoanService.getTaiKhoan(taiKhoanService.GetIdTaiKhoan(taiKhoanService.getLoggedInUserDetails(authentication))));
+        model.addAttribute("sinhvien", this.tongquanService.getSinhvien(taiKhoanService.GetIdTaiKhoan(taiKhoanService.getLoggedInUserDetails(authentication))));
         model.addAttribute("traloi", this.cauhoiServite.getTraloi(params));
         model.addAttribute("cauhoi", this.cauhoiServite.getCauHoi(params));
         return "diendansinhvien";

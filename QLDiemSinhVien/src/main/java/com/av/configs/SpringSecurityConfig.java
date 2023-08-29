@@ -81,7 +81,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         "secure", true));
         return cloudinary;
     }
-     public SimpleDateFormat simpleDateFormat() {
+    
+    public SimpleDateFormat simpleDateFormat() {
         return new SimpleDateFormat("yyyy-MM-dd");
     }
 

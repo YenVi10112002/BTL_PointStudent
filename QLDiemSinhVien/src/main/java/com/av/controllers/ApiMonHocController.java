@@ -5,10 +5,16 @@
 package com.av.controllers;
 
 import com.av.service.MonHocService;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,4 +33,14 @@ public class ApiMonHocController {
     public void delete(@PathVariable(value = "id") int id) {
         this.mhService.deleteMonHoc(id);
     }
+    
+    @GetMapping("/api/monhocsinhvien/")
+    @CrossOrigin
+    public ResponseEntity<List<Object>> listMHSV(@RequestParam Map<String, String> params){
+        return new ResponseEntity<>(this.mhService.getMonHocByGiangVien(params), HttpStatus.OK);
+    }
+    
+    
+    
+    
 }

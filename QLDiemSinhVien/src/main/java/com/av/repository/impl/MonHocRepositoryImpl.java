@@ -4,16 +4,20 @@
  */
 package com.av.repository.impl;
 
+import com.av.pojo.Diem;
+import com.av.pojo.Giangvien;
 import com.av.pojo.Monhoc;
-import com.av.pojo.PhieuMonHoc;
 import com.av.repository.MonHocRepository;
+import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -85,6 +89,30 @@ public class MonHocRepositoryImpl implements MonHocRepository {
         }
     }
 
+    @Override
+    public List<Object> getMonHocByGiangVien(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rMonHoc = q.from(Monhoc.class);
+        Root rGiangVien = q.from(Giangvien.class);
+        
+        if(params != null){
+            List<Predicate> predicates = new ArrayList<>();
+            String idTaiKhoan = params.get("taiKhoanId");
+            if(idTaiKhoan != null){
+                predicates.add(b.equal(rGiangVien.get("idTaiKhoan"), Integer.parseInt(idTaiKhoan)));
+                predicates.add(b.equal(rMonHoc.get("idGiangVien"), rGiangVien.get("idGiangVien")));
+            }
+            q.select(rMonHoc.get("tenMonHoc")).where(predicates.toArray(Predicate[]::new));
+        }
+        Query query = s.createQuery(q);
+        return query.getResultList();
+        
+    }
+
+    
     
 
 }

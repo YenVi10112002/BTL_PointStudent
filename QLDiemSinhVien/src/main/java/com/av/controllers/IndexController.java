@@ -4,7 +4,7 @@
  */
 package com.av.controllers;
 
-import com.av.service.LoginService;
+
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -25,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @PropertySource("classpath:configs.properties")
 public class IndexController {
 
-    @Autowired
-    private LoginService loginService;
     @Autowired
     private Environment env;
 

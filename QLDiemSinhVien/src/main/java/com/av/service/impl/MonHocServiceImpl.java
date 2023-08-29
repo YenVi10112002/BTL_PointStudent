@@ -8,6 +8,7 @@ import com.av.pojo.Monhoc;
 import com.av.repository.MonHocRepository;
 import com.av.service.MonHocService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,11 @@ public class MonHocServiceImpl  implements MonHocService{
     @Override
     public boolean deleteMonHoc(int id) {
         return this.mhRepository.deleteMonHoc(id);
+    }
+
+    @Override
+    public List<Object> getMonHocByGiangVien(Map<String, String> params) {
+        return this.mhRepository.getMonHocByGiangVien(params);
     }
     
 }

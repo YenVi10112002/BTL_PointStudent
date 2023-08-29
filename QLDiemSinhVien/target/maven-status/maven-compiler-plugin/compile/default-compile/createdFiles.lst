@@ -11,6 +11,7 @@ com\av\pojo\Giangvien_.class
 com\av\repository\MonHocRepository.class
 com\av\configs\CustomSuccessHandler.class
 com\av\controllers\ThongTinStudentController.class
+com\av\pojo\Loaitaikhoan.class
 com\av\service\impl\DiemServiceImpl.class
 com\av\pojo\Traloidiendan.class
 com\av\service\GiaoVuService.class
@@ -32,7 +33,6 @@ com\av\pojo\Giangvien.class
 com\av\service\impl\MonHocServiceImpl.class
 com\av\controllers\ApiPhieuMoNhocController.class
 com\av\repository\impl\LoginRepositoryImpl.class
-com\av\service\LoginService.class
 com\av\pojo\Sinhvien_.class
 com\av\pojo\Cauhoidiendang.class
 com\av\controllers\ADMonHocController.class
@@ -43,6 +43,7 @@ com\av\controllers\IndexController.class
 com\av\service\GiangVienService.class
 com\av\controllers\AdminController.class
 com\av\repository\DienDanRepository.class
+com\av\pojo\Loaitaikhoan_.class
 com\av\configs\SpringSecurityConfig.class
 com\av\controllers\ApiADSinhVienController.class
 com\av\controllers\ADPhieuMonHocController.class
@@ -77,7 +78,6 @@ com\av\service\impl\PhieuMonHocServiceImpl.class
 com\av\service\SinhVienService.class
 com\av\controllers\DienDangStudentController.class
 com\av\repository\LoginRepository.class
-com\av\service\impl\LoginServiceImpl.class
 com\av\repository\impl\GiangvienRepositoryImpl.class
 com\av\configs\JwtSecurityConfig.class
 com\av\service\DiemService.class
