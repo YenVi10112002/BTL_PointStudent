@@ -166,9 +166,6 @@ a{
     color: black !important;
 }
 
-.navbar {
-    background-color: lightcyan !important;
-}
 
 .gv-name-text {
     margin: 30px 10px;
@@ -221,7 +218,7 @@ a{
 
 .gv-vertical-menu {
     background-color: #05386B !important;
-    ;
+    
     width: 20%;
     height: 100%;
     z-index: 100;
@@ -266,6 +263,11 @@ a{
     margin-bottom: 35px;
 }
 
-.dropdown-menu {
+.gv-dropdown-menu {
     background-color: lightcyan;
 }
+
+
+
+
+

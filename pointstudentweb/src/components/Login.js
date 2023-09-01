@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Apis, { AuthApis, endpoints } from "../configs/Apis";
 import cookie from "react-cookies";
 import { MyUserConText } from "../App";
@@ -8,6 +8,8 @@ const Login = () => {
   const [user, dispatch] = useContext(MyUserConText);
   const [username, setusername] = useState();
   const [password, setpassword] = useState();
+  let nav = useNavigate();
+
 
   const login = (evt) => {
     evt.preventDefault();
@@ -23,10 +25,14 @@ const Login = () => {
             let { data } = await AuthApis().get(endpoints['current-user']);
             cookie.save("user", data);
 
+            let sinhvien = await AuthApis().get(endpoints['current-sinhvien']);
+            cookie.save("sinhvien", sinhvien.data);
+            let giangvien = await AuthApis().get(endpoints['current-giangvien']);
+            cookie.save("giangvien", giangvien.data);
+
             dispatch({
                 "type": "login",
                 "payLoad": data
-
             })
         } catch (ex) {
             console.error(ex);
@@ -37,7 +43,7 @@ const Login = () => {
   };
 
   if (user !== null) {
-    return <Navigate to="/home" />;
+     nav("/home");
   }
 
   return (

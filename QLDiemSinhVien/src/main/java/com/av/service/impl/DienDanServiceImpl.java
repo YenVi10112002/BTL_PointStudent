@@ -18,10 +18,10 @@ import com.av.service.DienDanService;
  * @author Admin
  */
 @Service
-public class DienDanServiceImpl implements DienDanService{
+public class DienDanServiceImpl implements DienDanService {
+
     @Autowired
     private DienDanRepository loRepository;
-
 
     @Override
     public Object getCauHoi(Map<String, String> params) {
@@ -30,13 +30,14 @@ public class DienDanServiceImpl implements DienDanService{
 
     @Override
     public boolean addOrUpdateTraloi(Traloidiendan p) {
-       return loRepository.addOrUpdateTraloi(p);
+        return loRepository.addOrUpdateTraloi(p);
     }
 
     @Override
     public List<Object> getCauHoiDienDan() {
         return loRepository.getCauHoiDienDan();
     }
+
     @Override
     public List<Object> getTraloi(Map<String, String> params) {
         return loRepository.getTraLoi(params);
@@ -45,6 +46,13 @@ public class DienDanServiceImpl implements DienDanService{
     @Override
     public boolean addOrUpdateCauHoi(Cauhoidiendang p) {
         return loRepository.addOrUpdateCauHoi(p);
+    }
+
+    @Override
+    public boolean deleteCauHoi(Map<String, String> params) {
+
+        return this.loRepository.deleteCauHoi(params);
+
     }
 
 }

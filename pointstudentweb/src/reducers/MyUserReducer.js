@@ -7,6 +7,8 @@ const MyUserReducer = (currentState, action) => {
         case "logout":
             cookie.remove("token");
             cookie.remove("user");
+            cookie.remove("sinhvien");
+            cookie.remove("giangvien");
             return null;
 
     }

@@ -25,9 +25,9 @@ const HeaderStudent = () => {
             </div>
             <div class="menu-items">
                 <p class="text-menu">Thông Tin tài Khoản</p>
-                <a class="menu-item" href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a>
-                <a class="menu-item" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a>
-                <Link class="menu-item" onClick={logout}><i class="fa-solid fa-right-to-bracket icon-padding"></i>Thoát Quyền Sử Dụng</Link>
+                <Link class="menu-item" to="/thongtin"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</Link>
+                <Link class="menu-item" to="/thaydoimatkhau"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</Link>
+                <Link class="menu-item" onClick={logout} to="/"><i class="fa-solid fa-right-to-bracket icon-padding"></i>Thoát Quyền Sử Dụng</Link>
             </div>
         </div>    
     )

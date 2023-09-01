@@ -4,8 +4,10 @@
  */
 package com.av.repository;
 
+import com.av.pojo.Diem;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -22,5 +24,9 @@ public interface DiemRepository {
         List<Object> getListDiemTrungBinh(int sinhvienId);
         List<Object> getListDiemTrungBinh2(Map<String, String> params);
         List<Object> getListDiem2(Map<String, String> params);
+        Diem addDiem(Diem diem);
+        List<Diem> getDiemByCSV(Map<String, String> params);
+        List<Diem> getDiemByIdMonHoc(int idMonHoc, int idSinhVien);
+        
 
 }

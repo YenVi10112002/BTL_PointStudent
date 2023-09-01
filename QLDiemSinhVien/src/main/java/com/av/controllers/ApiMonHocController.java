@@ -4,6 +4,8 @@
  */
 package com.av.controllers;
 
+import com.av.pojo.Monhoc;
+import com.av.repository.SinhVienRepository;
 import com.av.service.MonHocService;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,8 @@ public class ApiMonHocController {
     
     @Autowired
     private MonHocService mhService;
+    @Autowired
+    private SinhVienRepository svService;
     
     @DeleteMapping("/giaovu/monhoc/add/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -34,12 +38,17 @@ public class ApiMonHocController {
         this.mhService.deleteMonHoc(id);
     }
     
-    @GetMapping("/api/monhocsinhvien/")
+    @GetMapping("/api/monhocgiangvien/")
     @CrossOrigin
-    public ResponseEntity<List<Object>> listMHSV(@RequestParam Map<String, String> params){
+    public ResponseEntity<List<Monhoc>> listMHSV(@RequestParam Map<String, String> params){
         return new ResponseEntity<>(this.mhService.getMonHocByGiangVien(params), HttpStatus.OK);
     }
     
+    @GetMapping("/api/monhocsinhvien/")
+    @CrossOrigin
+    public ResponseEntity<List<Object>> listSVMH(@RequestParam Map<String, String> params){
+        return new ResponseEntity<>(this.svService.getSinhvienByMonHoc(params), HttpStatus.OK);
+    }
     
     
     

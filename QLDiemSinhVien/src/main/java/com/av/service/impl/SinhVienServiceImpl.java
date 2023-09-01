@@ -54,4 +54,8 @@ public class SinhVienServiceImpl implements SinhVienService {
     public boolean deleteSinhVien(int idSinhVien) {
         return sinhvienRepository.deleteSinhVien(idSinhVien);
     }
+    @Override
+    public List<Object> getSinhvienByMonHoc(Map<String, String> params) {
+        return sinhvienRepository.getSinhvienByMonHoc(params);
+    }
 }

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Alert } from "react-bootstrap";
 import { Link, useSearchParams } from "react-router-dom";
 import Apis, { AuthApis, endpoints } from "../configs/Apis";
 import { MyUserConText } from "../App";
 import { useContext } from "react";
 
 const TraLoiDienDan = () => {
-    const [user, dispatch] = useContext(MyUserConText);
+    const [user, dispatch, sinhvien, dispatchsv] = useContext(MyUserConText);
+    const [changeSuccess, setChangeSuccess] = useState(false);
+    const [noiDung, setNoiDung] = useState();
     const [cautraloi, setCauTraLoi] = useState([]);
     const [cauhoi, setcauhoi] = useState([]);
     const [q] = useSearchParams();
@@ -27,7 +29,7 @@ const TraLoiDienDan = () => {
 
         }
         const loadcauhoi = async () => {
-            let ch = endpoints['cauhoi']
+            let ch = endpoints['cauhoi'];
             let cauhoiid = q.get("cauhoiId");
             if (cauhoiid != null) {
                 ch = `${ch}?cauhoiId=${cauhoiid}`;
@@ -38,9 +40,28 @@ const TraLoiDienDan = () => {
         }
         loadcautraloi();
         loadcauhoi();
-    }, [q])
+    }, [q], setChangeSuccess)
 
+    const addTraLoi = (evt) => {
+        evt.preventDefault();
+        const process = async () => {
+            try {
+                let cauHoiId = q.get("cauhoiId");
+                let res = await AuthApis().post(endpoints['themTraLoi'], {
+                    "noiDungTraLoi": noiDung,
+                    "idTaiKhoan": user.idTaiKhoan,
+                    "idCauHoiDienDan": cauHoiId
+                })
+            } catch (ex) {
+                console.error(ex);
+            }
+            setNoiDung("");
+        }
+        process();
 
+        setChangeSuccess(true);
+
+    };
 
     return (
 
@@ -56,7 +77,7 @@ const TraLoiDienDan = () => {
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
-                                    {user.hoTen}</a>
+                                    {sinhvien.hoTen}</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
                                     <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>
@@ -69,36 +90,33 @@ const TraLoiDienDan = () => {
             </nav>
             <div class="traloi-diendan-none">
                 <div class="form-traloi-diendan">
-                    <div key={cauhoi[1]}>
-                        <h5><i class="fa-solid fa-user icon-padding"></i>{cauhoi[2]}</h5>
+                    <div key={cauhoi.idCauHoiDienDan}>
+                        <h5><i class="fa-solid fa-user icon-padding"></i></h5>
                         <p class="content-question-day"><i class="fa-solid fa-calendar-days icon-padding"></i>Ngày 25, tháng 7,
                             năm 2023, 7:57AM</p>
-                        <p class="content-question-noidung">{cauhoi[0]}</p>
+                        <p class="content-question-noidung">{cauhoi.noiDungCauHoi}</p>
                     </div>
 
-                    <Form>
+                    <Form onSubmit={addTraLoi}>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Control type="text" placeholder="Trả Lời.... " />
+                            <Form.Control type="text" value={noiDung}
+                                onChange={(e) => setNoiDung(e.target.value)} placeholder="Trả Lời.... " required />
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Button className="btn-traloi-diendan"><i class="fa-solid fa-reply icon-padding"></i>Trả Lời</Button>
+                            <Button className="btn-traloi-diendan" type="submit"><i class="fa-solid fa-reply icon-padding"></i>Trả Lời</Button>
                         </Form.Group>
+                        {changeSuccess === true ? <Alert variant="secondary">Trả Lời Thành Công </Alert> : <div></div>}
                     </Form>
                     <Link to="/diendan" class="close-traloi-diendan ">Đóng</Link>
 
-
-                    {cautraloi.map(c => {
-                        if ( c === null) {
-                            return (
-                                <div class="traloi-diendan-user" key={c[1]}>
-                                    <p class="content-question-noidung">Chưa có câu trả lời !!!</p>
-                                </div>
-                            );
-                        }
+                    {cautraloi.length === 0 ? <div class="traloi-diendan-user">
+                        <p class="content-question-noidung">Chưa có câu trả lời !!!</p>
+                    </div>: <></>}
+                    {cautraloi.map(c => {   
                         return (
-                            <div class="traloi-diendan-user" key={c[1]}>
-                                <h5 class="user-traloi-diendan-name"><i class="fa-solid fa-user icon-padding"></i>{c[2]}</h5>
-                                <p class="content-question-noidung">{c[0]}</p>
+                            <div class="traloi-diendan-user" key={c.idTraLoiDienDan}>
+                                <h5 class="user-traloi-diendan-name"><i class="fa-solid fa-user icon-padding"></i>{c.idTaiKhoan.tenTaiKhoan}</h5>
+                                <p class="content-question-noidung">{c.noiDungTraLoi}</p>
                             </div>
                         );
                     })}

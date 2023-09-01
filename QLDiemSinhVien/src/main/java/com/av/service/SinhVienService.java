@@ -23,6 +23,7 @@ public interface SinhVienService {
     boolean addOrUpdateSinhVien(Sinhvien sv );
     Sinhvien getSinhVienById(int idSinhVien);
     boolean deleteSinhVien(int idSinhVien);
+    List<Object> getSinhvienByMonHoc(Map<String, String> params);
     
     
 }

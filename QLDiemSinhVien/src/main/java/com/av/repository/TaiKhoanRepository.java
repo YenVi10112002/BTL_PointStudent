@@ -8,6 +8,8 @@ import com.av.pojo.Loaitaikhoan;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import java.util.List;
+import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -23,4 +25,6 @@ public interface TaiKhoanRepository {
     Taikhoan getUserByUsername(String username);
     boolean authUser(String username, String password);
     Taikhoan addUser(Taikhoan user);
+    boolean kiemTraTaiKhoan (Taikhoan user);
+    Taikhoan thayDoiMatKhau(Taikhoan a);
 }

@@ -151,4 +151,26 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
             return false;
         }
     }
+    
+    @Override
+    public List<Object> getSinhvienByMonHoc(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+
+        Root rSinhVien = q.from(Sinhvien.class);
+        Root rDiem = q.from(Diem.class);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            String idMonHoc = params.get("monHocId");
+            if (idMonHoc != null) {
+                predicates.add(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
+                predicates.add(b.equal(rDiem.get("idSinhVien"), rSinhVien.get("idSinhVien")));
+            }
+            q.select(rSinhVien).where(predicates.toArray(Predicate[]::new));
+        }
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
 }

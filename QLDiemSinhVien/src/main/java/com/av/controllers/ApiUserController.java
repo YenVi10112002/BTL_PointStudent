@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ApiUserController {
+
     @Autowired
     private JwtService jwtService;
     @Autowired
@@ -44,7 +47,7 @@ public class ApiUserController {
     private SinhVienService sinhvienService;
     @Autowired
     private DiemService diemserviec;
-    
+
     @PostMapping("/login/")
     @CrossOrigin
     public ResponseEntity<String> login(@RequestBody Taikhoan user) {
@@ -54,36 +57,64 @@ public class ApiUserController {
         }
         return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
     }
-    
+
     @GetMapping("/test/")
     @CrossOrigin(origins = {"127.0.0.1:5500"})
     public ResponseEntity<String> test(Principal pricipal) {
         return new ResponseEntity<>("SUCCESSFUL", HttpStatus.OK);
     }
-    
-    @PostMapping(path = "/users/", 
-            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, 
+
+    @PostMapping(path = "/users/",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin
-    public ResponseEntity<Taikhoan> addUser(@RequestParam Map<String, String> params) {
+    public ResponseEntity<String> addUser(@RequestParam Map<String, String> params) {
         Taikhoan user = this.tkService.addUser(params);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>("Successfull", HttpStatus.CREATED);
     }
-    
+
+    @PostMapping("/change-password/")
+    @CrossOrigin
+    public ResponseEntity<Taikhoan> changePassword(@RequestParam Map<String, String> params) {
+        if (this.tkService.authUser(params.get("tenTaiKhoan").toString(), params.get("matKhau").toString()) == true) {
+            Taikhoan a = tkService.thayDoiMatKhau(params);
+
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
+    }
+
     @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public ResponseEntity<Giangvien> details(Principal user) {
+    public ResponseEntity<Taikhoan> details(Principal user) {
         Taikhoan u = this.tkService.getUserByUsername(user.getName());
-//        Sinhvien sv = this.sinhvienService.getSinhvien(u.getIdTaiKhoan());
+        Sinhvien sv = this.sinhvienService.getSinhvien(u.getIdTaiKhoan());
+//        Giangvien gv = this.gvService.getGiangVienByIdTaiKhoan(u.getIdTaiKhoan());
+        return new ResponseEntity<>(u, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/current-sinhvien/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public ResponseEntity<Sinhvien> detailsinhven(Principal user) {
+        Taikhoan u = this.tkService.getUserByUsername(user.getName());
+        Sinhvien sv = this.sinhvienService.getSinhvien(u.getIdTaiKhoan());
+//        Giangvien gv = this.gvService.getGiangVienByIdTaiKhoan(u.getIdTaiKhoan());
+        return new ResponseEntity<>(sv, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/change-avt/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin
+    public ResponseEntity<Taikhoan> updateAVT(@RequestParam Map<String, String> params, @RequestPart MultipartFile avatar) {
+        Taikhoan user = this.tkService.updateImg(params, avatar);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/current-user-gv/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public ResponseEntity<Giangvien> detailsgiangvien(Principal user) {
+        Taikhoan u = this.tkService.getUserByUsername(user.getName());
         Giangvien gv = this.gvService.getGiangVienByIdTaiKhoan(u.getIdTaiKhoan());
         return new ResponseEntity<>(gv, HttpStatus.OK);
     }
-    
-//    @GetMapping(path = "/current-user-gv/", produces = MediaType.APPLICATION_JSON_VALUE)
-//    @CrossOrigin
-//    public ResponseEntity<Giangvien> details(Principal user) {
-//        Taikhoan u = this.tkService.getUserByUsername(user.getName());
-//        Giangvien gv = this.sinhvienService.getSinhvien(u.getIdTaiKhoan());
-//        return new ResponseEntity<>(gv, HttpStatus.OK);
-//    }
 }

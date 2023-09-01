@@ -19,5 +19,6 @@ public interface DienDanService {
     boolean addOrUpdateCauHoi(Cauhoidiendang p);
     List<Object> getCauHoiDienDan();
     List<Object> getTraloi(Map<String, String> params);
+    boolean deleteCauHoi(Map<String, String> params);
 
 }

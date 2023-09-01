@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -198,7 +199,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Double> q = b.createQuery(Double.class);
         Root<Diem> root = q.from(Diem.class);
-         String sinhvienId = params.get("SinhVienId");
+        String sinhvienId = params.get("SinhVienId");
         q.select(b.avg(root.get("diemTrungBình")))
                 .where(b.equal(root.get("idSinhVien"), Integer.parseInt(sinhvienId)));
         Query query = s.createQuery(q);
@@ -228,7 +229,6 @@ public class DiemRepositoryImpl implements DiemRepository {
         Root<Diem> root = q.from(Diem.class);
         String sinhvienId = params.get("SinhVienId");
         q.select(b.avg(root.get("diemTrungBình")))
-                
                 .where(b.equal(root.get("idSinhVien"), Integer.parseInt(sinhvienId)));
         Query query = s.createQuery(q);
         DecimalFormat decimalFormat = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
@@ -257,7 +257,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
         Root<Diem> rDiem = q.from(Diem.class);
         Root<Monhoc> rMonhoc = q.from(Monhoc.class);
-         String sinhvienId = params.get("SinhVienId");
+        String sinhvienId = params.get("SinhVienId");
         List<Predicate> predicates = new ArrayList<>();
 
         predicates.add(b.equal(rDiem.get("idSinhVien"), Integer.parseInt(sinhvienId)));
@@ -276,6 +276,43 @@ public class DiemRepositoryImpl implements DiemRepository {
             ex.printStackTrace();
             return Collections.emptyList();
         }
+    }
+
+    @Override
+    public Diem addDiem(Diem diem) {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        session.update(diem);
+
+        return diem;
+    }
+
+    @Override
+    public List<Diem> getDiemByIdMonHoc(int idMonHoc, int idSinhVien) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root<Diem> rDiem = q.from(Diem.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(rDiem.get("idSinhVien"), idSinhVien));
+        predicates.add(b.equal(rDiem.get("idMonHoc"), idMonHoc));
+        q.select(b.array(rDiem))
+                .where(predicates.toArray(Predicate[]::new));
+        Query query = session.createQuery(q);
+        return (List<Diem>) query.getResultList();
+    }
+    @Override
+    public List<Diem> getDiemByCSV(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+        String idMonHoc = params.get("idMonHoc");
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Diem> q = b.createQuery(Diem.class);
+        Root<Diem> rDiem = q.from(Diem.class);
+        
+        q.select(rDiem)
+                .where(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
+        Query query = session.createQuery(q);
+        return (List<Diem>) query.getResultList();
     }
 
 }

@@ -55,7 +55,8 @@ public class ThongTinStudentController {
     @PostMapping("/sinhvien/thongtin")
     public String update(@ModelAttribute(value = "sv") Taikhoan p) {
         String errMsg = "";
-        if (this.taikhoanService.updateImg(p) == true) {
+//        this.taikhoanService.updateImg(p) ==
+        if ( true) {
             errMsg="Cập nhật ảnh thành công!!";
             return "redirect:/sinhvien/thongtin";
         }

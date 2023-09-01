@@ -7,6 +7,7 @@ package com.av.repository.impl;
 import com.av.pojo.Cauhoidiendang;
 import com.av.pojo.Giangvien;
 import com.av.pojo.Sinhvien;
+import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,20 +47,17 @@ public class DienDanRepositoryImpl implements DienDanRepository {
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
         Root<Cauhoidiendang> rCauHoi = q.from(Cauhoidiendang.class);
-        Root<Sinhvien> rSinhVien = q.from(Sinhvien.class);
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
             String cateId = params.get("cauhoiId");
             if (cateId != null) {
                 predicates.add(b.equal(rCauHoi.get("idCauHoiDienDan"), Integer.parseInt(cateId)));
-                predicates.add(b.equal(rCauHoi.get("idTaiKhoan"), rSinhVien.get("idTaiKhoan")));
+
             }
-            q.select(b.array(rCauHoi.get("noiDungCauHoi"), rCauHoi.get("idCauHoiDienDan"), rSinhVien.get("hoTen")))
+            q.select(b.array(rCauHoi))
                     .where(predicates.toArray(Predicate[]::new));
         }
-
-        q.groupBy(rCauHoi.get("idCauHoiDienDan"));
         Query query = session.createQuery(q);
         try {
             return query.getSingleResult();
@@ -99,12 +97,9 @@ public class DienDanRepositoryImpl implements DienDanRepository {
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
 
         Root<Cauhoidiendang> rCauHoi = q.from(Cauhoidiendang.class);
-        Root<Sinhvien> rSinhVien = q.from(Sinhvien.class);
 
-        q.select(b.array(rCauHoi.get("noiDungCauHoi"), rCauHoi.get("idCauHoiDienDan"), rSinhVien.get("hoTen")))
-                .where(b.equal(rCauHoi.get("idTaiKhoan"), rSinhVien.get("idTaiKhoan")));
+        q.select(b.array(rCauHoi));
 
-        q.groupBy(rCauHoi.get("idCauHoiDienDan"));
         Query query = s.createQuery(q);
         try {
             return query.getResultList();
@@ -118,25 +113,20 @@ public class DienDanRepositoryImpl implements DienDanRepository {
     @Override
     public List<Object> getTraLoi(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
-
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
         Root<Traloidiendan> rTraLoi = q.from(Traloidiendan.class);
-        Root<Sinhvien> rSinhVien = q.from(Sinhvien.class);
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
             String cateId = params.get("cauhoiId");
             if (cateId != null) {
                 predicates.add(b.equal(rTraLoi.get("idCauHoiDienDan"), Integer.parseInt(cateId)));
-                predicates.add(b.equal(rTraLoi.get("idTaiKhoan"), rSinhVien.get("idTaiKhoan")));
             }
-            q.select(b.array(rTraLoi.get("noiDungTraLoi"), rTraLoi.get("idTraLoiDienDan"), rSinhVien.get("hoTen")))
+            q.select(b.array(rTraLoi))
                     .where(predicates.toArray(Predicate[]::new));
         }
-
         q.orderBy(b.desc(rTraLoi.get("idTraLoiDienDan")));
-        q.groupBy(rTraLoi.get("idTraLoiDienDan"));
         Query query = session.createQuery(q);
         try {
             return query.getResultList();
@@ -160,7 +150,6 @@ public class DienDanRepositoryImpl implements DienDanRepository {
                     s.update(p);
                 }
             }
-
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();
@@ -168,4 +157,42 @@ public class DienDanRepositoryImpl implements DienDanRepository {
         }
     }
 
+    @Override
+    public boolean deleteCauHoi(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root<Traloidiendan> rTraLoi = q.from(Traloidiendan.class);
+        if (params != null) {
+
+            String cateId = params.get("idCauHoiDienDan");
+            q.select(b.array(rTraLoi))
+                    .where(b.equal(rTraLoi.get("idCauHoiDienDan"), Integer.parseInt(cateId)));
+        }
+        Cauhoidiendang cauhoi = this.getCauHoiById(params);
+        Query query = session.createQuery(q);
+        List<Traloidiendan> traloi = query.getResultList();
+
+        for (Traloidiendan tl : traloi) {
+            session.delete(tl);
+        }
+        session.delete(cauhoi);
+        return true;
+    }
+
+    @Override
+    public Cauhoidiendang getCauHoiById(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+
+        Root<Cauhoidiendang> rCauHoi = q.from(Cauhoidiendang.class);
+        String cateId = params.get("idCauHoiDienDan");
+        q.select(b.array(rCauHoi))
+                .where(b.equal(rCauHoi.get("idCauHoiDienDan"), Integer.parseInt(cateId)));
+
+        q.groupBy(rCauHoi.get("idCauHoiDienDan"));
+        Query query = s.createQuery(q);
+        return (Cauhoidiendang) query.getSingleResult();
+    }
 }

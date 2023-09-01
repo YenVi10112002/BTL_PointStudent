@@ -90,7 +90,7 @@ public class MonHocRepositoryImpl implements MonHocRepository {
     }
 
     @Override
-    public List<Object> getMonHocByGiangVien(Map<String, String> params) {
+    public List<Monhoc> getMonHocByGiangVien(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
@@ -105,7 +105,8 @@ public class MonHocRepositoryImpl implements MonHocRepository {
                 predicates.add(b.equal(rGiangVien.get("idTaiKhoan"), Integer.parseInt(idTaiKhoan)));
                 predicates.add(b.equal(rMonHoc.get("idGiangVien"), rGiangVien.get("idGiangVien")));
             }
-            q.select(rMonHoc.get("tenMonHoc")).where(predicates.toArray(Predicate[]::new));
+            q.select(rMonHoc).where(predicates.toArray(Predicate[]::new));
+            q.groupBy(rMonHoc.get("idMonHoc"));
         }
         Query query = s.createQuery(q);
         return query.getResultList();

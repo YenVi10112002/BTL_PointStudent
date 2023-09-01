@@ -43,7 +43,7 @@ public class MonHocServiceImpl  implements MonHocService{
     }
 
     @Override
-    public List<Object> getMonHocByGiangVien(Map<String, String> params) {
+    public List<Monhoc> getMonHocByGiangVien(Map<String, String> params) {
         return this.mhRepository.getMonHocByGiangVien(params);
     }
     

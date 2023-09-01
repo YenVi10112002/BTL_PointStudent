@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { AuthApis, endpoints } from "../configs/Apis";
 import { MyUserConText } from "../App";
 import { useContext } from "react";
+
+
 const Home = () => {
-    const [user, dispatch] = useContext(MyUserConText);
+    const [user, dispatch, sinhvien, dispatchsv] = useContext(MyUserConText);
     const [DSDiem, setDSDiem] = useState([]);
     const [Diem, setDiem] = useState([]);
     const [DiemHe4, setDiemHe4] = useState([]);
@@ -13,9 +15,9 @@ const Home = () => {
                 let e = endpoints['DSDiemTrungBinhHocKy'];
                 let a = endpoints['DiemTrungBinhHe10'];
                 let b = endpoints['DiemTrungBinhHe4'];
-                e = `${e}?SinhVienId=${user.idSinhVien}`;
-                a = `${a}?SinhVienId=${user.idSinhVien}`;
-                b = `${b}?SinhVienId=${user.idSinhVien}`;
+                e = `${e}?SinhVienId=${sinhvien.idSinhVien}`;
+                a = `${a}?SinhVienId=${sinhvien.idSinhVien}`;
+                b = `${b}?SinhVienId=${sinhvien.idSinhVien}`;
                 let res1 = await AuthApis().get(e);
                 let res2 = await AuthApis().get(a);
                 let res3 = await AuthApis().get(b);
@@ -41,7 +43,7 @@ const Home = () => {
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
-                                    {user.hoTen}</a>
+                                    {sinhvien.hoTen}</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
                                     <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>

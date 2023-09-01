@@ -28,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -44,16 +45,19 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public boolean updateImg(Taikhoan s) {
-        if (!s.getFile().isEmpty()) {
+    public Taikhoan updateImg(Map<String, String> params, MultipartFile avatar) {
+        Taikhoan tk = this.getTaiKhoan(Integer.parseInt(params.get("idTaiKhoan")) );
+        
+        if (!avatar.isEmpty()) {
             try {
-                Map r = this.cloudinary.uploader().upload(s.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-                s.setImage(r.get("secure_url").toString());
+                Map r = this.cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                tk.setImage(r.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(TaiKhoanService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return this.taikhoanRepository.updateImg(s);
+        this.taikhoanRepository.updateImg(tk);
+        return tk;
     }
     @Override
     public Taikhoan getTaiKhoan(int idTaiKhoan) {
@@ -111,11 +115,14 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     @Override
     public Taikhoan addUser(Map<String, String> params) {
         Taikhoan u = new Taikhoan();
-        u.setTenTaiKhoan(params.get("username"));
-        u.setMatKhau(this.passwordEncoder.encode(params.get("password")));
+        u.setTenTaiKhoan(params.get("tenTaiKhoan"));
+        u.setMatKhau(this.passwordEncoder.encode(params.get("matKhau")));
         u.setChucVu(this.taikhoanRepository.getChucVu(3));
-        this.taikhoanRepository.addUser(u);
-        return u;
+        if(taikhoanRepository.kiemTraTaiKhoan(u)){
+            this.taikhoanRepository.addUser(u);
+            return u;
+        }
+        return null;
     }
     @Override
     public UserDetails getLoggedInUserDetails(Authentication authentication) {
@@ -128,5 +135,13 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         Taikhoan taikhoans = this.getUserByUsername(userDetails.getUsername());
        
         return taikhoans.getIdTaiKhoan();
+    }
+
+    @Override
+    public Taikhoan thayDoiMatKhau( Map<String, String> params) {
+        Taikhoan tk = this.taikhoanRepository.getUserByUsername(params.get("tenTaiKhoan").toString());
+        tk.setMatKhau(this.passwordEncoder.encode(params.get("matKhauMoi")));
+        this.taikhoanRepository.thayDoiMatKhau(tk);
+        return tk;
     }
 }

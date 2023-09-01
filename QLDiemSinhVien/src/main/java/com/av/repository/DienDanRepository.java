@@ -20,4 +20,7 @@ public interface DienDanRepository {
     boolean addOrUpdateCauHoi(Cauhoidiendang p);
     List<Object> getCauHoiDienDan();
     List<Object> getTraLoi(Map<String, String> params);
+    
+    boolean deleteCauHoi(Map<String, String> params);
+    Cauhoidiendang getCauHoiById(Map<String, String> params);
 }

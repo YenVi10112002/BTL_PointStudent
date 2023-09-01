@@ -17,5 +17,5 @@ public interface MonHocService {
     boolean addOrUpdateMonHoc(Monhoc mh);
     Monhoc getMonHocById(int id);
     boolean deleteMonHoc(int id);
-    List<Object> getMonHocByGiangVien(Map<String, String> params);
+    List<Monhoc> getMonHocByGiangVien(Map<String, String> params);
 }

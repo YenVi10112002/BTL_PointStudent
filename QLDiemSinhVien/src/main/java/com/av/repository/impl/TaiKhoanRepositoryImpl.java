@@ -11,6 +11,7 @@ import com.av.pojo.Taikhoan;
 import com.av.repository.TaiKhoanRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
@@ -36,7 +37,7 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
-    
+
     @Autowired
     private BCryptPasswordEncoder passEncoder;
 
@@ -44,12 +45,9 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
     public boolean updateImg(Taikhoan s) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
-            if (!s.getFile().isEmpty()) {
-                session.update(s);
-                return true;
-            } else {
-                return false;
-            }
+            session.update(s);
+            return true;
+
         } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
@@ -128,7 +126,7 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
                 if (t.getIdTaiKhoan() == null && gv != null) {
                     s.save(t);
                     gv.setIdTaiKhoan(t);
-                    
+
                 }
                 return true;
             } else {
@@ -155,6 +153,7 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         q.setParameter("id", id);
         return (Loaitaikhoan) q.getSingleResult();
     }
+
     @Override
     public Taikhoan getUserByUsername(String username) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -166,15 +165,62 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
     @Override
     public boolean authUser(String username, String password) {
         Taikhoan u = this.getUserByUsername(username);
-
         return this.passEncoder.matches(password, u.getMatKhau());
     }
 
     @Override
     public Taikhoan addUser(Taikhoan u) {
         Session s = this.factory.getObject().getCurrentSession();
-        s.save(u);
-        return u;
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
+        Root<Sinhvien> root = q.from(Sinhvien.class);
+        q.select(root)
+                .where(b.equal(root.get("email"), u.getTenTaiKhoan()));
+
+        Query query = s.createQuery(q);
+
+        try {
+            Sinhvien p = (Sinhvien) query.getSingleResult();
+            if (p.getIdTaiKhoan() == null && p.getEmail() != null) {
+                s.save(u);
+                p.setIdTaiKhoan(u);
+                s.update(p);
+                return u;
+            }
+        } catch (HibernateException ex) {
+            return null;
+        }
+        return null;
     }
-    
+
+    @Override
+    public boolean kiemTraTaiKhoan(Taikhoan user) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
+        Root<Sinhvien> root = q.from(Sinhvien.class);
+        q.select(root)
+                .where(b.equal(root.get("email"), user.getTenTaiKhoan()));
+        Query query = s.createQuery(q);
+        try {
+            Sinhvien p = (Sinhvien) query.getSingleResult();
+
+            if (p.getIdTaiKhoan() == null && p.getEmail() != null) {
+                return true;
+            }
+
+        } catch (HibernateException ex) {
+            return false;
+
+        }
+        return false;
+    }
+
+    @Override
+    public Taikhoan thayDoiMatKhau(Taikhoan a) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.update(a);
+        return a;
+    }
+
 }

@@ -12,13 +12,14 @@ import java.util.Map;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Admin
  */
 public interface TaiKhoanService extends UserDetailsService {
-   boolean updateImg(Taikhoan s);  
+   Taikhoan updateImg(Map<String, String> params, MultipartFile avatar);  
    Taikhoan getTaiKhoan(int idTaiKhoan);
    boolean addAcount(Taikhoan t);
     boolean addAcountGV(Taikhoan t);
@@ -29,5 +30,6 @@ public interface TaiKhoanService extends UserDetailsService {
     boolean authUser(String username, String password);
     Taikhoan addUser(Map<String, String> params);
     int GetIdTaiKhoan(UserDetails userDetails);
+    Taikhoan thayDoiMatKhau(Map<String, String> params);
 }
 
