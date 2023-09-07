@@ -14,4 +14,5 @@ import java.util.Map;
 public interface PhieuMonHocService {
     boolean addPhieuMH(Map<String, PhieuMonHoc> carts);
     PhieuMonHoc getPhieuMonHoc();
+    boolean deletePhieuMH(int idMonHoc);
 }

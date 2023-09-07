@@ -4,6 +4,8 @@
  */
 package com.av.repository;
 
+import com.av.pojo.Cauhoidiendang;
+import com.av.pojo.Diem;
 import com.av.pojo.Lophoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
@@ -25,4 +27,6 @@ public interface SinhVienRepository {
      List<Object> getSinhvienByMonHoc(Map<String, String> params);
      
     
+   
+
 }

@@ -70,17 +70,8 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/pages/student/xemdiemsinhvien.jsp" />
     </definition>
     
-    <definition name="thongtintaikhoan" extends="baseLayoutStudent">
-        <put-attribute name="title" value="Thông Tin Tài Khoản" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/student/thongtintaikhoan.jsp" />
-    </definition>
     
-    <definition name="thaydoimatkhau" extends="baseLayoutStudent">
-        <put-attribute name="title" value="Thay Đổi Mật Khẩu" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/student/thaydoimatkhau.jsp" />
-    </definition>
+    
     
     <definition name="giaovien" extends="baseLayoutTeacher">
         <put-attribute name="title" value="Giáo Viên" />
@@ -141,5 +132,15 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Đăng ký môn học" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/admin/dangKyMHSV.jsp" />
+    </definition>
+    <definition name="thongtintaikhoan" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Thông Tin Tài Khoản" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/thongtintaikhoan.jsp" />
+    </definition>
+    <definition name="thaydoimatkhau" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Thay Đổi Mật Khẩu" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/thaydoimatkhau.jsp" />
     </definition>
 </tiles-definitions>

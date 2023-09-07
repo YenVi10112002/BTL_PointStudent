@@ -6,8 +6,10 @@ package com.av.controllers;
 
 import com.av.pojo.Sinhvien;
 import com.av.service.DiemService;
+import com.av.service.GiaoVuService;
 
 import com.av.service.SinhVienService;
+import com.av.service.TaiKhoanService;
 
 import java.util.Date;
 import java.util.Map;
@@ -15,6 +17,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,14 +41,19 @@ public class ADSinhVienController {
     private SinhVienService svService;
 
     @Autowired
-    private DiemService diemService;
+    private GiaoVuService gvuService;
+    
+    @Autowired
+    private TaiKhoanService tkService;
 
     @Autowired
     private CustomDateEditor customDateEditor;
 
     @ModelAttribute
-    public void lopHoc(Model model) {
+    public void lopHoc(Model model, Authentication auth) {
         model.addAttribute("lophoc", svService.getLopHocs());
+        model.addAttribute("giaovu", this.gvuService.getGiaovus(this.tkService.GetIdTaiKhoan(tkService.getLoggedInUserDetails(auth))));
+
     }
 
     @InitBinder
@@ -56,6 +64,7 @@ public class ADSinhVienController {
     @RequestMapping("/giaovu/sinhvien")
     public String list(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("sinhvien", this.svService.getSinhviens(params));
+
         return "dssinhvien";
     }
 

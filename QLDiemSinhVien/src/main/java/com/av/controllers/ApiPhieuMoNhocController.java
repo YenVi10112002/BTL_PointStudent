@@ -12,15 +12,18 @@ import com.av.service.MonHocService;
 import com.av.service.PhieuMonHocService;
 import com.av.service.SinhVienService;
 import com.av.utils.Utils;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+import org.eclipse.persistence.annotations.ReadOnly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,10 +41,10 @@ public class ApiPhieuMoNhocController {
 
     @Autowired
     private MonHocService mhService;
-    
+
     @Autowired
     private SinhVienService svService;
-    
+
     @Autowired
     private PhieuMonHocService phieuMHService;
 
@@ -51,18 +54,19 @@ public class ApiPhieuMoNhocController {
 
         return new ResponseEntity<>(monhocs, HttpStatus.OK);
     }
-    
+
     @PostMapping("/giaovu/api/phieuMH")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> listCart(@RequestBody Map<String, PhieuMonHoc> cart){
+    @CrossOrigin
+    public ResponseEntity<String> listCart(@RequestBody Map<String, PhieuMonHoc> cart) {
         boolean success = this.phieuMHService.addPhieuMH(cart);
-        if(success){
-            return ResponseEntity.ok("Đã lưu thành công.");
-        }else{
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lưu thất bại.");
+        if (success == true) {
+           return new ResponseEntity<>("Da xoa", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("loi", HttpStatus.OK);
         }
     }
-    
+
     @GetMapping("/giaovu/api/cart")
     @CrossOrigin
     public ResponseEntity<?> dangKi(HttpSession session, Model model) {
@@ -78,15 +82,30 @@ public class ApiPhieuMoNhocController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/giaovu/api/phieuMH/delete/{idMonHoc}")
+    @ResponseStatus(HttpStatus.OK)
+    @CrossOrigin
+    public ResponseEntity<String> removeFromCart(@PathVariable(value = "idMonHoc") Integer idMonHoc, @RequestParam(value = "idSinhVien") Integer idSinhVien) {
+        boolean success = this.phieuMHService.deletePhieuMH(idMonHoc);
+        if (success) {
+            return ResponseEntity.ok("Đã xoa thành công.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Xoa thất bại.");
+        }
+    }
+
     @GetMapping("/giaovu/api/monhoc/{idMonHoc}")
-    public ResponseEntity<Integer> cart(@RequestParam(value = "idSinhVien") Integer idSinhVien,@PathVariable(value = "idMonHoc") Integer id, HttpSession session) {
+    @CrossOrigin
+    public ResponseEntity<Integer> cart(@RequestParam(value = "idSinhVien") Integer idSinhVien, @PathVariable(value = "idMonHoc") Integer id, HttpSession session
+    ) {
+        String errMsg = "";
         Map<Integer, PhieuMonHoc> cart = (Map<Integer, PhieuMonHoc>) session.getAttribute("cart");
         if (cart == null) {
             cart = new HashMap<>();
         }
 
         if (cart.containsKey(id) == true) {
-            PhieuMonHoc c = cart.get(id);
+            errMsg = "Môn học đã tồn tại trong giỏ hàng";
         } else {
             Monhoc mh = this.mhService.getMonHocById(id);
             Sinhvien sv = this.svService.getSinhVienById(idSinhVien);

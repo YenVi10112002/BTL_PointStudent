@@ -189,6 +189,7 @@
         width: 130px;
         font-weight: bold;
     }
+
     #customers {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
@@ -278,8 +279,109 @@
         justify-content: center;
 
     }
+    /* Thong Tin Tai Khoan */
+    .icon-image-header{
+        width: 45px;
+        height: 45px;
+        border-radius: 100%;
+        padding: 5px;
+    }
 
+    .info-user-image-2{
+        display: inline-block;
+        background-color: black;
+        padding: 20px 5px 20px 5px;
+        width: 100px;
+        height: 100px;
+        margin: auto 20px;
+        overflow: hidden;
+        border-radius: 100%;
+    }
+    .info-user-text-reply{
+        padding:0px 50px 50px 50px;
+    }
+    .info-title-user{
+        background-color: cadetblue;
+        padding: 15px;
+        margin-bottom: 40px;
+        border-radius: 10px;
+    }
+    .info-private{
+        display: inline-block;
+        position: relative;
+        font-size: 28px;
+        font-weight: 500;
+        margin: 0px 0px 0px 130px;
+    }
+    .info-user-text2{
+        font-weight: 470;
+    }
+    .info-user-texts{
+        border-bottom: 1px solid darkgrey;
+        margin: 10px 0px;
+    }
+    .info-user-text{
+        font-size: 17px;
+        font-weight: 600 ;
+        margin: 10px 5px;
+        width: 35%;
+        display: inline-block;
+    }
+    .info-user-image{
+        font-size: 40px;
+        background-color: antiquewhite;
+        display: inline-block;
+        padding: 20px;
+        margin: auto 20px;
+        border-radius: 50%;
+    }
+    .info-user{
+        border: 1px solid gray;
+        position: relative;
+        width: 60%;
+        border-radius: 10px;
+        margin:50px auto;
+        border-radius: 10px;
+        -moz-box-shadow: -3px -3px 5px 0px #666;
+        -webkit-box-shadow: -3px -3px 5px 0px #666;
+        box-shadow: -3px -3px 5px 0px #666;
+    }
+    /* Thay doi mat khau */
+    .btn-change-password-div {
+        display: flex;
+        justify-content: center;
+    }
 
+    .btn-change-password {
+        margin-top: 10px;
+        width: 100px;
+        position: relative;
+    }
 
+    .change-password-form {
+        width: 70%;
+        position: relative;
+        margin: 0px auto;
+    }
+
+    .change-password-title {
+        font-size: 30px;
+        font-weight: 400;
+        text-align: center;
+
+    }
+
+    .change-password {
+        padding: 30px 20px;
+        width: 60%;
+        background-color: cadetblue;
+        position: relative;
+        margin: 70px auto;
+        border-radius: 10px;
+        border-radius: 10px;
+        -moz-box-shadow: -3px -3px 5px 0px #666;
+        -webkit-box-shadow: -3px -3px 5px 0px #666;
+        box-shadow: -3px -3px 5px 0px #666;
+    }
 </style>
 

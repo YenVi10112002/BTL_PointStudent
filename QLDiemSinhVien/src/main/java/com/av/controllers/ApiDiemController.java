@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +34,11 @@ public class ApiDiemController {
 
     @Autowired
     private DiemService diemService;
+
+
+    @Autowired
+    private JavaMailSender emailSender;
+
 
     @RequestMapping("/DSDiemSVHocKy/")
     @CrossOrigin
@@ -60,7 +67,14 @@ public class ApiDiemController {
     @PostMapping("/add-diem/")
     @CrossOrigin
     public ResponseEntity<String> addTraLoi(@RequestBody Diem diem) {
-        this.diemService.addDiem(diem);
+//        this.diemService.addDiem(diem);
+        SimpleMailMessage message = new SimpleMailMessage();
+        if (this.diemService.addDiem(diem) != null) {
+            message.setTo("cua2432002@gmail.com");
+            message.setSubject("Thăng kia trả t 50tr");
+            message.setText("Nguoi dung đã đăng bai mới!!! Vào Xem");
+            emailSender.send(message);
+        }
         return new ResponseEntity<>("Successfull", HttpStatus.OK);
     }
 

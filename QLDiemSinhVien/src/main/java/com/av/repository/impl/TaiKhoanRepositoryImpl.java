@@ -8,6 +8,7 @@ import com.av.pojo.Giangvien;
 import com.av.pojo.Loaitaikhoan;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
+import com.av.repository.SinhVienRepository;
 import com.av.repository.TaiKhoanRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,9 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
     @Autowired
     private BCryptPasswordEncoder passEncoder;
+    
+    @Autowired
+    private SinhVienRepository svRepo;
 
     @Override
     public boolean updateImg(Taikhoan s) {
@@ -53,7 +57,7 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
             return false;
         }
     }
-
+    // Sua
     @Override
     public Taikhoan getTaiKhoan(int idTaiKhoan) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -62,10 +66,7 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
         Root<Taikhoan> root = q.from(Taikhoan.class);
         q.select(root);
-        List<Predicate> predicates = new ArrayList<>();
-
-        predicates.add(b.equal(root.get("idTaiKhoan"), idTaiKhoan));
-        q.where(predicates.toArray(new Predicate[0]));
+        q.where(b.equal(root.get("idTaiKhoan"), idTaiKhoan));
         Query query = session.createQuery(q);
         try {
             return (Taikhoan) query.getSingleResult();
@@ -222,12 +223,62 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
         return false;
     }
-
+    //Sua
     @Override
     public Taikhoan thayDoiMatKhau(Taikhoan a) {
         Session s = this.factory.getObject().getCurrentSession();
-        s.update(a);
+        if(a != null){
+            s.update(a);
+        }
+        
         return a;
     }
+    
+    // update xoa 
+//    @Override
+//    public boolean deleteTaiKhoanBySinhVien(int idSinhVien) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        Taikhoan tk = this.getTaikhoanBySinhVien(idSinhVien);
+//        try {
+//            if(tk != null){
+//                s.delete(tk);
+//            }
+//            return true;
+//        } catch (HibernateException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+    //update lay
+//     @Override
+//    public Taikhoan getTaikhoanBySinhVien(int idSinhVien) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        Sinhvien sv = this.svRepo.getSinhVienById(idSinhVien);
+//        CriteriaBuilder b = s.getCriteriaBuilder();
+//        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
+//        Root r = q.from(Taikhoan.class);
+//        if (sv.getIdTaiKhoan() != null) {
+//            q.select(r).where(b.equal(r.get("idTaiKhoan"), sv.getIdTaiKhoan().getIdTaiKhoan()));
+//            Query query = s.createQuery(q);
+//            return (Taikhoan) query.getSingleResult();
+//        }else
+//            return null;
+//    }
+    
+    //update xoa 
+    @Override
+    public boolean deleteTK(Taikhoan tk) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            if (tk != null) {
+                session.delete(tk);
+                return true;
+            }
+            return false;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
 
+    }
 }

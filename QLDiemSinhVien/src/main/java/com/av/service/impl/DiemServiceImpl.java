@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -89,7 +90,7 @@ public class DiemServiceImpl implements DiemService {
         String xepLoai;
         Short trangThai;
 
-        if (diem1.getDiemKT1() == null) {
+    if (diem1.getDiemKT1() == null) {
             diemTB = (diem1.getDiemGiuaKy() + diem1.getDiemCuoiKy()) * 0.5;
         } else if (diem1.getDiemTK2() == null) {
             diemTB = (diem1.getDiemGiuaKy() * 0.4 + diem1.getDiemKT1() * 0.1 + diem1.getDiemCuoiKy() * 0.5);
@@ -161,39 +162,40 @@ public class DiemServiceImpl implements DiemService {
                         diem.setDiemTK3(Double.parseDouble(diemTK3));
 //                        
                         this.addDiem(diem);// Cập nhật điểm trong cơ sở dữ liệu
-//                    }
-//                    return diemGiuaKy;
                     }
                 }
+
                 return "oke";
             } catch (IOException ex) {
                 Logger.getLogger(DiemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+
             }
+
         }
         return "oke";
     }
 
-    @Override
-    public Diem getDiemByIdMonHoc(int idMonHoc, int idSinhVien
+@Override
+public Diem getDiemByIdMonHoc(int idMonHoc, int idSinhVien
     ) {
 
         return this.diemRepository.getDiemByIdMonHoc(idMonHoc, idSinhVien);
     }
 
     @Override
-    public Diem getDiemByIdDiem(Map<String, String> params) {
+public Diem getDiemByIdDiem(Map<String, String> params) {
         String idDiem = params.get("idDiem");
         Diem diem = this.diemRepository.getDiemByIdDIem(Integer.parseInt(idDiem));
         return diem;
     }
 
     @Override
-    public List<Diem> getDiemByidGiangVien(Map<String, String> params) {
+public List<Diem> getDiemByidGiangVien(Map<String, String> params) {
         return this.diemRepository.getDiemByidGiangVien(params);
     }
 
     @Override
-    public boolean khoaDiem(Map<String, String> params) {
+public boolean khoaDiem(Map<String, String> params) {
        return this.diemRepository.khoaDiem(params);
     }
 

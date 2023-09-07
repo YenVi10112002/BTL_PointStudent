@@ -27,4 +27,8 @@ public interface TaiKhoanRepository {
     boolean addUser(Taikhoan user);
     boolean kiemTraTaiKhoan (Taikhoan user);
     Taikhoan thayDoiMatKhau(Taikhoan a);
+//    Taikhoan getTaikhoanBySinhVien(int idSinhVien);
+//    boolean deleteTaiKhoanBySinhVien(int idSinhVien);
+    boolean deleteTK(Taikhoan tk);
+    
 }

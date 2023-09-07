@@ -7,7 +7,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<c:if test="${errMsg != null}">
+<div class="alert alert-secondary">
+  <strong>${errMsg}</strong> 
+</div>
+</c:if>
 <h1 class="text-center">Danh sách giảng viên</h1>
 <table class="table ">
     <thead>

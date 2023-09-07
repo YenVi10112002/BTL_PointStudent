@@ -19,5 +19,6 @@ public interface MonHocRepository {
     Monhoc getMonHocById(int id);
     boolean deleteMonHoc(int id);
     List<Monhoc> getMonHocByGiangVien(Map<String, String> params);
+    Long CountMonHocInGV(int idGiangVien);
     
 }

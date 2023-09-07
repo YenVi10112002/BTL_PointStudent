@@ -5,8 +5,11 @@
 package com.av.controllers;
 
 import com.av.pojo.Monhoc;
+import com.av.service.GiaoVuService;
 import com.av.service.MonHocService;
+import com.av.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,24 +30,35 @@ public class ADMonHocController {
     @Autowired
     private MonHocService mhService;
     
+    @Autowired
+    private TaiKhoanService tkService;
+
+    @Autowired
+    private GiaoVuService gvuService;
+    
     @ModelAttribute
-    public void listMH(Model model){
+    public void listMH(Model model, Authentication auth){
         model.addAttribute("monhoc", this.mhService.getMonHocs());
+
     }
     
     @RequestMapping("/giaovu/monhoc")
-    public String monhoc(Model model){
+    public String monhoc(Model model, Authentication auth){
+        model.addAttribute("giaovu", this.gvuService.getGiaovus(this.tkService.GetIdTaiKhoan(tkService.getLoggedInUserDetails(auth))));
+
         return "dsmonhoc";
     }
     
     @GetMapping("/giaovu/monhoc/add")
-    public String addMonHoc(Model model){
+    public String addMonHoc(Model model, Authentication auth){
+        model.addAttribute("giaovu", this.gvuService.getGiaovus(this.tkService.GetIdTaiKhoan(tkService.getLoggedInUserDetails(auth))));
         model.addAttribute("monhocc", new Monhoc());
         return "addmh";
     }
     
     @GetMapping("/giaovu/monhoc/add/{id}")
-    public String updateMH(Model model, @PathVariable(value = "id") int id){
+    public String updateMH(Model model, @PathVariable(value = "id") int id, Authentication auth){
+        model.addAttribute("giaovu", this.gvuService.getGiaovus(this.tkService.GetIdTaiKhoan(tkService.getLoggedInUserDetails(auth))));
         model.addAttribute("monhocc", this.mhService.getMonHocById(id));
         return "addmh";
     }

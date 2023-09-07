@@ -31,5 +31,10 @@ public class PhieuMonHocServiceImpl implements PhieuMonHocService{
     public PhieuMonHoc getPhieuMonHoc() {
         return this.phieuMHRepo.getPhieuMonHoc();
     }
+
+    @Override
+    public boolean deletePhieuMH(int idMonHoc) {
+        return this.phieuMHRepo.deletePhieuMH(idMonHoc);
+    }
     
 }

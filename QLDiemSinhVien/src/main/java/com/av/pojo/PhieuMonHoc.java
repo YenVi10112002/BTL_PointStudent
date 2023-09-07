@@ -18,5 +18,38 @@ public class PhieuMonHoc {
     private int idSinhVien;
     private int dem;
 
-    
+    /**
+     * @return the idMonHoc
+     */
+    public int getIdMonHoc() {
+        return idMonHoc;
+    }
+
+    /**
+     * @return the tenMonHoc
+     */
+    public String getTenMonHoc() {
+        return tenMonHoc;
+    }
+
+    /**
+     * @return the phongHoc
+     */
+    public String getPhongHoc() {
+        return phongHoc;
+    }
+
+    /**
+     * @return the idSinhVien
+     */
+    public int getIdSinhVien() {
+        return idSinhVien;
+    }
+
+    /**
+     * @return the dem
+     */
+    public int getDem() {
+        return dem;
+    }
 }

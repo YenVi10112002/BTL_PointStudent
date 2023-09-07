@@ -4,11 +4,13 @@
  */
 package com.av.repository.impl;
 
+import com.av.pojo.Cauhoidiendang;
 import com.av.pojo.Diem;
 import com.av.pojo.Lophoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
+import com.av.repository.DienDanRepository;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
@@ -19,6 +21,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.av.repository.SinhVienRepository;
+import com.av.repository.TaiKhoanRepository;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,9 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+
+    @Autowired
+    private TaiKhoanRepository tkRepo;
 
     @Override
     public Sinhvien getSinhVien(int idTaiKhoan) {
@@ -117,11 +123,9 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class
-        );
+        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
 
-        Root<Sinhvien> root = q.from(Sinhvien.class
-        );
+        Root<Sinhvien> root = q.from(Sinhvien.class);
         q.select(root);
 
         List<Predicate> predicates = new ArrayList<>();
@@ -132,19 +136,21 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
     }
 
+    //xoa sinh vien
     @Override
     public boolean deleteSinhVien(int idSinhVien) {
         Session s = this.factory.getObject().getCurrentSession();
         Sinhvien sv = this.getSinhVienById(idSinhVien);
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
-        Root r = q.from(Taikhoan.class);
-        q.select(r).where(b.equal(r.get("idTaiKhoan"), sv.getIdTaiKhoan().getIdTaiKhoan()));
-        Query query = s.createQuery(q);
+        this.tkRepo.deleteTK(sv.getIdTaiKhoan());
+//        CriteriaBuilder b = s.getCriteriaBuilder();
+//        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
+//        Root r = q.from(Taikhoan.class);
+//        q.select(r).where(b.equal(r.get("idTaiKhoan"), sv.getIdTaiKhoan().getIdTaiKhoan()));
+//        Query query = s.createQuery(q);
         try {
-            Taikhoan tk = (Taikhoan) query.getSingleResult();
-            s.remove(sv);
-            s.remove(tk);
+//            Taikhoan tk = (Taikhoan) query.getSingleResult();
+            s.delete(sv);
+//            s.remove(tk);
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();
@@ -164,36 +170,32 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
-             
 
             String idMonHoc = params.get("monHocId");
             if (idMonHoc != null) {
                 predicates.add(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
             }
-
 //            String idSinhVien = params.get("idSinhVien");
 //            if (idSinhVien != null) {
 //                predicates.add(b.equal(rDiem.get("idSinhVien"), Integer.parseInt(idSinhVien)));
 //            }
-
             String tenSinhVien = params.get("tenSinhVien");
             if (tenSinhVien != null) {
                 try {
                     int parsedIdSinhVien = Integer.parseInt(tenSinhVien);
                     predicates.add(b.equal(rDiem.get("idSinhVien"), parsedIdSinhVien));
                 } catch (NumberFormatException e) {
-                    
                     predicates.add(b.equal(rDiem.get("idSinhVien"), rSinhVien.get("idSinhVien")));
                     predicates.add(b.like(rSinhVien.get("hoTen"), String.format("%%%s%%", tenSinhVien)));
                 }
             }
-
             q.groupBy(rDiem.get("idDiem"));
             q.select(rDiem).where(predicates.toArray(new Predicate[0]));
-
             Query query = s.createQuery(q);
             return query.getResultList();
+
         }
         return null;
     }
+
 }

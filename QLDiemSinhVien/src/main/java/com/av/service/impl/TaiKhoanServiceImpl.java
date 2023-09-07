@@ -144,4 +144,13 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         this.taikhoanRepository.thayDoiMatKhau(tk);
         return tk;
     }
+
+    @Override
+    public Taikhoan thayDoiMatKhauAD(Taikhoan user) {
+        Taikhoan a = this.getTaiKhoan(user.getIdTaiKhoan());
+        a.setMatKhau(this.passwordEncoder.encode(user.getXacNhanMk()));
+        this.taikhoanRepository.thayDoiMatKhau(a);
+        return user;
+    }
+    
 }

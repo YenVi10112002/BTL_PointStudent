@@ -189,4 +189,58 @@ public class DienDanRepositoryImpl implements DienDanRepository {
         Query query = s.createQuery(q);
         return (Cauhoidiendang) query.getSingleResult();
     }
+    @Override
+    public List<Traloidiendan> getTraLoiByTaiKhoan(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Traloidiendan[]> q = b.createQuery(Traloidiendan[].class);
+        Root r = q.from(Traloidiendan.class);
+        q.select(r);
+        q.where(b.equal(r.get("idTaiKhoan").get("idTaiKhoan"), id));
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+
+    @Override
+    public boolean deleteTraloiByTaiKhoan(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        List<Traloidiendan> traLois = this.getTraLoiByTaiKhoan(id);
+        try {
+            for (Traloidiendan traloi : traLois) {
+                s.delete(traloi);
+            }
+            return true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+    @Override
+    public boolean deleteCauHoiByTaiKhoan(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        List<Cauhoidiendang> cauHois = this.getCauhoiByTaiKhoan(id);
+        try {
+            for (Cauhoidiendang cauHoi : cauHois) {
+                this.deleteCauHoi(cauHoi);
+            }
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        
+    }
+
+    @Override
+    public List<Cauhoidiendang> getCauhoiByTaiKhoan(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Cauhoidiendang[]> q = b.createQuery(Cauhoidiendang[].class);
+        Root r = q.from(Cauhoidiendang.class);
+        q.select(r);
+        q.where(b.equal(r.get("idTaiKhoan").get("idTaiKhoan"), id));
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
 }
