@@ -5,7 +5,10 @@
 package com.av.controllers;
 
 import com.av.pojo.Taikhoan;
+import com.av.service.GiangVienService;
 import com.av.service.GiaoVuService;
+import com.av.service.MonHocService;
+import com.av.service.SinhVienService;
 import com.av.service.TaiKhoanService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +31,25 @@ public class AdminController {
 
     @Autowired
     private TaiKhoanService tkService;
+    
 
     @Autowired
     private GiaoVuService gvuService;
-
-
-    @RequestMapping("/giaovu")
-    public String admin(Model model, Authentication auth) {
+    
+    @ModelAttribute
+    public void nameGVu(Model model, Authentication auth){
         model.addAttribute("giaovu", this.gvuService.getGiaovus(this.tkService.GetIdTaiKhoan(tkService.getLoggedInUserDetails(auth))));
+    }
+    
+    @RequestMapping("/giaovu")
+    public String admin() {
         return "admin";
     }
-
+    @GetMapping("/giaovu/thongtin")
+    public String thongtin(Model model) {
+        return "thongtintaikhoan";
+    }
+    
     @RequestMapping("/giaovu/taikhoan/dangki")
     public String dangky(Model model) {
         model.addAttribute("dangki", new Taikhoan());
@@ -50,11 +61,11 @@ public class AdminController {
         model.addAttribute("taikhoan", this.tkService.getTaiKhoan());
         return "dstaikhoan";
     }
-
+    
     @PostMapping("giaovu/taikhoan/dangki")
     public String add(Model model, @ModelAttribute(value = "dangki") @Valid Taikhoan t, BindingResult rs) {
         String errMsg = "";
-        if (rs.hasErrors()) {
+        if (!rs.hasErrors()) {
             if (t.getMatKhau().equals(t.getXacNhanMk())) {
                 if (this.tkService.addAcountGV(t) == true) {
                     return "redirect:/giaovu/taikhoan";

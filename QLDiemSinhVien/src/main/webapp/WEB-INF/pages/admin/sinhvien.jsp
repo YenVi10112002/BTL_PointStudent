@@ -48,8 +48,8 @@
                         
                         <c:url value="/giaovu/sinhvien/add/${sv.idSinhVien}" var="api" />
 
-                        <button class="btn-xoavacn bg-xoa" onclick="deleteSinhVien('${api}')">Xóa</button>
-                        <a href="<c:url value="/giaovu/sinhvien/addMH/${sv.idSinhVien}"/>" class="btn-xoavacn bg-cn"> Cấp môn học</a>
+                        <button class="btn-xoavacn bg-xoa " onclick="deleteSinhVien('${api}')">Xóa</button>
+                        <a href="<c:url value="/giaovu/sinhvien/addMH/${sv.idSinhVien}"/>" class="btn-xoavacn bg-cn "> Cấp môn học</a>
                     </td>
                 </tr>
             </c:forEach>

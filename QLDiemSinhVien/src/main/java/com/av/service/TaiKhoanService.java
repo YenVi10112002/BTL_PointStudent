@@ -31,5 +31,6 @@ public interface TaiKhoanService extends UserDetailsService {
     Taikhoan addUser(Map<String, String> params);
     int GetIdTaiKhoan(UserDetails userDetails);
     Taikhoan thayDoiMatKhau(Map<String, String> params);
+    Taikhoan thayDoiMatKhauAD(Taikhoan user);
 }
 

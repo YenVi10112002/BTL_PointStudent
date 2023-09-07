@@ -25,6 +25,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -313,6 +314,34 @@ public class DiemRepositoryImpl implements DiemRepository {
                 .where(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
         Query query = session.createQuery(q);
         return (List<Diem>) query.getResultList();
+    }
+    // lay diem theo sinh vien
+    @Override
+    public List<Diem> getDiemBySinhVien(int idSinhVien) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Diem[]> q = b.createQuery(Diem[].class);
+        
+        Root r = q.from(Diem.class);
+        q.select(r);
+        q.where(b.equal(r.get("idSinhVien").get("idSinhVien"), idSinhVien));
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+    // xoa diem theo sinh vien
+    @Override
+    public boolean deleteDiemBySinhVien(int idSinhVien) {
+        Session s = this.factory.getObject().getCurrentSession();
+        List<Diem> diems = this.getDiemBySinhVien(idSinhVien);
+        try {
+            for (Diem diem : diems) {
+                s.delete(diem);    
+            }
+            return true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

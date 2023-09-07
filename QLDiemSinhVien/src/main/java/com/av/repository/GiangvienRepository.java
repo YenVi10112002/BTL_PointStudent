@@ -5,6 +5,7 @@
 package com.av.repository;
 
 import com.av.pojo.Giangvien;
+import com.av.pojo.Taikhoan;
 import java.util.List;
 
 /**
@@ -17,5 +18,6 @@ public interface GiangvienRepository {
     Giangvien getGiangVienById(int idGiangVien);
     Giangvien getGiangVienByIdTaiKhoan(int idTaiKhoan);
     boolean deleteGV(int idGiangVien);
+//    Taikhoan getTaikhoanByGV(int idGiangVien);
     
 }

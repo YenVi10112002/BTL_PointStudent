@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm     navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="javascript:void(0)">Admin</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -31,8 +31,8 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-user" style="color: #f2f2f2;"></i>Chào ${giaovu.tenGiaoVu}</a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
-                        <li><a class="dropdown-item" href="#">Thay đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/giaovu/thongtin"/>">Thông tin tài khoản</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/giaovu/thaydoimatkhau/${taiKh}"/>">Thay đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" href="<c:url value="/logout" />">Đăng xuất</a></li>
                     </ul>
                 </li>

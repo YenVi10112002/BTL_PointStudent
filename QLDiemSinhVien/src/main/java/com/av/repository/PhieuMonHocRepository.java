@@ -14,4 +14,7 @@ import java.util.Map;
 public interface PhieuMonHocRepository {
     boolean addPhieuMH(Map<String, PhieuMonHoc> carts);
     PhieuMonHoc getPhieuMonHoc();
+    boolean deletePhieuMH(int idMonHoc);
+    PhieuMonHoc getPhieuMonHocByIdMh(int idMonHoc);
+    PhieuMonHoc getPhieuMonHocByIdSv(int idSinhVien);
 }

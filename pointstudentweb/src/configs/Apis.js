@@ -23,11 +23,12 @@ export const endpoints = {
     "deleteCauHoi":`${SERVER_CONTEXT}/api/delete-cauhoi/`,
     "monHocIdTK":`${SERVER_CONTEXT}/api/monhocgiangvien/`,
     "DSSinhVienByMonHoc":`${SERVER_CONTEXT}/api/monhocsinhvien/`,
+    "themdiem": `${SERVER_CONTEXT}/api/add-diem/`,
 }
 
 export const AuthApis = () => {
     return axios.create({
-        baseURL: "http://localhost:8086",
+        baseURL: "http://localhost:8080",
         headers: {
             "Authorization": cookie.load("token")
         }
@@ -35,5 +36,5 @@ export const AuthApis = () => {
 }
 
 export default axios.create({
-    baseURL: "http://localhost:8086"
+    baseURL: "http://localhost:8080"
 })

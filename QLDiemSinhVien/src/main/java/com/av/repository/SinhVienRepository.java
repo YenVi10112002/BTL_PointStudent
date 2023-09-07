@@ -4,6 +4,8 @@
  */
 package com.av.repository;
 
+import com.av.pojo.Cauhoidiendang;
+import com.av.pojo.Diem;
 import com.av.pojo.Lophoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
@@ -22,5 +24,6 @@ public interface SinhVienRepository {
     boolean addOrUpdateSinhVien(Sinhvien sv);
     Sinhvien getSinhVienById(int idSinhVien);
     boolean deleteSinhVien(int idSinhVien);
-     List<Object> getSinhvienByMonHoc(Map<String, String> params);
+    List<Object> getSinhvienByMonHoc(Map<String, String> params);
+   
 }

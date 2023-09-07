@@ -5,9 +5,12 @@
 package com.av.repository.impl;
 
 import com.av.pojo.Giangvien;
+import com.av.pojo.Monhoc;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.repository.GiangvienRepository;
+import com.av.repository.MonHocRepository;
+import com.av.repository.TaiKhoanRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -36,6 +39,11 @@ public class GiangvienRepositoryImpl implements GiangvienRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
+    @Autowired
+    private TaiKhoanRepository tkRepo;
+    
+    @Autowired
+    private MonHocRepository mhRepo;
     @Override
     public List<Giangvien> getGiangviens() {
         Session session = this.factory.getObject().getCurrentSession();
@@ -52,14 +60,13 @@ public class GiangvienRepositoryImpl implements GiangvienRepository {
     @Override
     public boolean addOrUpdateGiangVien(Giangvien gv) {
         Session s = this.factory.getObject().getCurrentSession();
-        
+
         try {
             if (gv.getIdGiangVien() == null) {
                 s.save(gv);
             } else {
                 s.update(gv);
             }
-
             return true;
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -82,25 +89,21 @@ public class GiangvienRepositoryImpl implements GiangvienRepository {
         Query query = session.createQuery(q);
         return (Giangvien) query.getSingleResult();
     }
-
+    
+    //update xoa
     @Override
     public boolean deleteGV(int idGiangVien) {
         Session session = this.factory.getObject().getCurrentSession();
         Giangvien gv = this.getGiangVienById(idGiangVien);
-        CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
-        Root r = q.from(Taikhoan.class);
-        q.select(r).where(b.equal(r.get("idTaiKhoan"), gv.getIdTaiKhoan().getIdTaiKhoan()));
-        Query query = session.createQuery(q);
-        
+        long countMH = this.mhRepo.CountMonHocInGV(idGiangVien);
+        this.tkRepo.deleteTK(gv.getIdTaiKhoan());
         try {
-            if (gv.getIdTaiKhoan().getIdTaiKhoan() != null) {
-                Taikhoan tk = (Taikhoan) query.getSingleResult();
+            if (countMH == 0) {
                 session.delete(gv);
-                session.delete(tk);
+                return true;
             }
-            session.remove(gv);
-            return true;
+            return false;
+
         } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
@@ -129,5 +132,25 @@ public class GiangvienRepositoryImpl implements GiangvienRepository {
             return null;
         }
     }
+    
+    
+
+    
+
+//    @Override
+//    public Taikhoan getTaikhoanByGV(int idGiangVien) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        Giangvien gv = this.getGiangVienById(idGiangVien);
+//        CriteriaBuilder b = s.getCriteriaBuilder();
+//        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
+//        Root r = q.from(Taikhoan.class);
+//        if (gv.getIdTaiKhoan() != null) {
+//            q.select(r).where(b.equal(r.get("idTaiKhoan"), gv.getIdTaiKhoan().getIdTaiKhoan()));
+//            Query query = s.createQuery(q);
+//            return (Taikhoan) query.getSingleResult();
+//        } else {
+//            return null;
+//        }
+//    }
 
 }

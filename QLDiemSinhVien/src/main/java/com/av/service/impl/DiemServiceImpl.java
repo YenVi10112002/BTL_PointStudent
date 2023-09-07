@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -129,34 +130,41 @@ public class DiemServiceImpl implements DiemService {
     @Override
     public List<Diem> getDiemByCSV(Map<String, String> params, MultipartFile file) {
         List<Diem> updatedDiemList = new ArrayList<>();
+        
         if (!file.isEmpty()) {
             try (
-                    CSVParser parser = CSVParser.parse(new FileReader((File) file), CSVFormat.DEFAULT);) {
+                CSVParser parser = CSVParser.parse(file.getInputStream(), Charset.defaultCharset(), CSVFormat.EXCEL)) {
                 String idMonHoc = params.get("idMonHoc");
 
                 for (CSVRecord record : parser) {
-                    int idSinhVien = Integer.parseInt(record.get("idSinhVien"));
-                    Double diemGiuaKy = Double.valueOf(record.get("diemGiuaKy"));
-                    Double diemCuoiKy = Double.valueOf(record.get("diemCuoiKy"));
-                    Double diemTK1 = Double.valueOf(record.get("diemTK1"));
-                    Double diemTK2 = Double.valueOf(record.get("diemTK2"));
-                    Double diemTK3 = Double.valueOf(record.get("diemTK3"));
+                    try {
+                        int idSinhVien = Integer.valueOf(record.get(0));
+                        Double diemGiuaKy = Double.valueOf(record.get(1));
+                        Double diemCuoiKy = Double.valueOf(record.get(2));
+                        Double diemTK1 = Double.valueOf(record.get(3));
+                        Double diemTK2 = Double.valueOf(record.get(4));
+                        Double diemTK3 = Double.valueOf(record.get(5));
 
-                    Diem diem = (Diem) this.diemRepository.getDiemByIdMonHoc(Integer.parseInt(idMonHoc), idSinhVien);
-                    if (diem != null) {
-                        diem.setDiemCuoiKy(diemCuoiKy);
-                        diem.setDiemGiuaKy(diemGiuaKy);
-                        diem.setDiemKT1(diemTK1);
-                        diem.setDiemTK2(diemTK2);
-                        diem.setDiemTK3(diemTK3);
-                        this.diemRepository.addDiem(this.addDiem(diem));
-                        updatedDiemList.add(diem);
+                        Diem diem = (Diem) this.diemRepository.getDiemByIdMonHoc(Integer.parseInt(idMonHoc), idSinhVien);
+                        if (diem != null) {
+                            diem.setDiemCuoiKy(diemCuoiKy);
+                            diem.setDiemGiuaKy(diemGiuaKy);
+                            diem.setDiemKT1(diemTK1);
+                            diem.setDiemTK2(diemTK2);
+                            diem.setDiemTK3(diemTK3);
+                            this.diemRepository.addDiem(this.addDiem(diem));
+                            updatedDiemList.add(diem);
+                        }
+                    } catch (NumberFormatException ex) {
+                        Logger.getLogger(DiemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
+
                 }
             } catch (IOException ex) {
                 Logger.getLogger(DiemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-                return updatedDiemList;
-            }
+
+            } 
 
         }
         return updatedDiemList;

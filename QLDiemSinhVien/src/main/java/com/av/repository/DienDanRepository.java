@@ -14,13 +14,15 @@ import java.util.Map;
  * @author Admin
  */
 public interface DienDanRepository {
-
     Object getCauHoi(Map<String, String> params);
     boolean addOrUpdateTraloi(Traloidiendan p);
     boolean addOrUpdateCauHoi(Cauhoidiendang p);
     List<Object> getCauHoiDienDan();
     List<Object> getTraLoi(Map<String, String> params);
-    
-    boolean deleteCauHoi(Map<String, String> params);
+    boolean deleteCauHoi(Cauhoidiendang p);
     Cauhoidiendang getCauHoiById(Map<String, String> params);
+    List<Traloidiendan> getTraLoiByTaiKhoan(int id);
+    boolean deleteTraloiByTaiKhoan(int id);
+    List<Cauhoidiendang> getCauhoiByTaiKhoan(int id);
+    boolean deleteCauHoiByTaiKhoan(int id);
 }

@@ -27,6 +27,9 @@ public interface DiemRepository {
         Diem addDiem(Diem diem);
         List<Diem> getDiemByCSV(Map<String, String> params);
         List<Diem> getDiemByIdMonHoc(int idMonHoc, int idSinhVien);
+        //lay va xoa diem theo sinh vien
+        List<Diem> getDiemBySinhVien(int idSinhVien);
+        boolean deleteDiemBySinhVien(int idSinhVien);
         
 
 }

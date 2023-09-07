@@ -46,18 +46,18 @@
                             <td>${mh.idMonHoc}</td>
                             <td>${mh.tenMonHoc}</td>
                             <td>${mh.phongHoc}</td>
-                            <td>
+                            <td> 
+                            
                                 <a href="javascript:;" onclick="addToCart(${mh.idMonHoc})" >Chọn</a>
+                                <a href="javascript:;" onclick="unselectItem(${mh.idMonHoc})" style="display: none;">Hủy chọn</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-
             <h4>Môn học: <span id="cart-counter" class="badge bg-secondary">0</span></h4>
             <div id="spinner" style="display: none;">Loading...</div>
-            <div id="table-monhoc">
-                
+            <div id="table-monhoc">                
             </div>
         </div>
     </div>

@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { MyUserConText } from "../../App";
 import { AuthApis, endpoints } from "../../configs/Apis";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const CTMonHoc = () => {
     const [user, dispatch, giangvien, dispatchsv] = useContext(MyUserConText);
@@ -23,6 +24,7 @@ const CTMonHoc = () => {
             }
 
         }
+
         loadSv();
     }, [q]);
     return (
@@ -93,18 +95,24 @@ const CTMonHoc = () => {
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>Mã điểm</th>
                                     <th>Mã số sinh viên</th>
                                     <th>Họ và tên</th>
                                     <th>Giới tính</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {DSSinhVien.map(sv => {
                                     return (
                                         <tr>
-                                            <td>{sv.idSinhVien}</td>
-                                            <td>{sv.hoTen}</td>
-                                            <td>{sv.gioiTinh === 1 ? 'Nam' : 'Nữ'}</td>
+                                            <td>{sv[3]}</td>
+                                            <td>{sv[0]}</td>
+                                            <td>{sv[1]}</td>
+                                            <td>{sv[2] === 1 ? 'Nam' : 'Nữ'}</td>
+                                            <td>
+                                                <Link to={`/giangvien/chitietdiem/`}>Nhập điểm</Link>
+                                            </td>
                                         </tr>
                                     )
                                 })}

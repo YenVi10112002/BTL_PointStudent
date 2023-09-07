@@ -61,7 +61,6 @@ public class MonHocRepositoryImpl implements MonHocRepository {
 
     @Override
     public Monhoc getMonHocById(int id) {
-        Session s = this.factory.getObject().getCurrentSession();
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Monhoc> q = b.createQuery(Monhoc.class);
@@ -112,7 +111,22 @@ public class MonHocRepositoryImpl implements MonHocRepository {
         return query.getResultList();
         
     }
+    
+    //Update
+    @Override
+    public Long CountMonHocInGV(int idGiangVien) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
 
+        Root r = q.from(Monhoc.class);
+        q.select(b.count(r)).where(b.equal(r.get("idGiangVien").get("idGiangVien"), idGiangVien));
+
+        long countMonHoc = session.createQuery(q).uniqueResult();
+
+        return countMonHoc;
+
+    }
     
     
 

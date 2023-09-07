@@ -34,9 +34,12 @@
                         <label for="cfpw">Nhập lại mật khẩu</label>
                     </div>
                     <div class="form-floating mb-3 mt-3">
+
                         <form:select class="form-select" id="teacher" name="teacher" path="giangvien1">
                             <c:forEach items="${giangvien}" var="gv">
-                                <option value="${gv.idGiangVien}">${gv.hoTen}</option>
+                                <c:if test="${gv.idTaiKhoan == null}">
+                                    <option value="${gv.idGiangVien}">${gv.hoTen}</option>
+                                </c:if>
                             </c:forEach>
                         </form:select> 
                         <label for="teacher">Danh sách giảng viên</label>
