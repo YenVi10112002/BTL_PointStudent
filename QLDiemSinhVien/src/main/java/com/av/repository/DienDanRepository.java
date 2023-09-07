@@ -21,6 +21,6 @@ public interface DienDanRepository {
     List<Object> getCauHoiDienDan();
     List<Object> getTraLoi(Map<String, String> params);
     
-    boolean deleteCauHoi(Map<String, String> params);
+    boolean deleteCauHoi(Cauhoidiendang p);
     Cauhoidiendang getCauHoiById(Map<String, String> params);
 }

@@ -14,15 +14,33 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Admin
  */
 public interface DiemService {
+
     double getDiemTrungBinh(int sinhvienId);
+
     double getDiemTrungBinhHe(int sinhvienId);
+
     double getDiemTrungBinh2(Map<String, String> params);
+
     double getDiemTrungBinhHe4(Map<String, String> params);
+
     List<Object> getListDiem(int sinhvienId);
+
     List<Object> getListDiemTrungBinh(int sinhvienId);
+
     List<Object> getListDiemTrungBinh2(Map<String, String> params);
+
     List<Object> getListDiem2(Map<String, String> params);
+
     Diem addDiem(Diem diem);
-    List<Diem> getDiemByCSV(Map<String, String> params, MultipartFile file);
-    List<Diem> getDiemByIdMonHoc(int idMonHoc, int idSinhVien);
+
+    String getDiemByCSV(Map<String, String> params, MultipartFile file);
+
+    Diem getDiemByIdMonHoc(int idMonHoc, int idSinhVien);
+
+    Diem getDiemByIdDiem(Map<String, String> params);
+
+    List<Diem> getDiemByidGiangVien(Map<String, String> params);
+
+    boolean khoaDiem(Map<String, String> params);
+
 }

@@ -4,6 +4,7 @@ import { useContext } from "react";
 
 const HeaderTeacher = () => {
   const [user, dispatch, giangvien, dispatchgv] = useContext(MyUserConText);
+
   const logout = () => {
     dispatch({
       type: "logout",

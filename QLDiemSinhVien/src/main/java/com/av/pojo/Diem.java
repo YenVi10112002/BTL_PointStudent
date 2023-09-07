@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Diem.findByIdDiem", query = "SELECT d FROM Diem d WHERE d.idDiem = :idDiem"),
     @NamedQuery(name = "Diem.findByXepLoai", query = "SELECT d FROM Diem d WHERE d.xepLoai = :xepLoai"),
     @NamedQuery(name = "Diem.findByTrangThai", query = "SELECT d FROM Diem d WHERE d.trangThai = :trangThai"),
+    @NamedQuery(name = "Diem.findByKhoaDiem", query = "SELECT d FROM Diem d WHERE d.khoaDiem = :khoaDiem"),
     @NamedQuery(name = "Diem.findByDiemGiuaKy", query = "SELECT d FROM Diem d WHERE d.diemGiuaKy = :diemGiuaKy"),
     @NamedQuery(name = "Diem.findByDiemCuoiKy", query = "SELECT d FROM Diem d WHERE d.diemCuoiKy = :diemCuoiKy"),
     @NamedQuery(name = "Diem.findByDiemKT1", query = "SELECT d FROM Diem d WHERE d.diemKT1 = :diemKT1"),
@@ -50,6 +51,8 @@ public class Diem implements Serializable {
     private String xepLoai;
     @Column(name = "trangThai")
     private Short trangThai;
+    @Column(name = "khoaDiem")
+    private Short khoaDiem;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "diemGiuaKy")
     private Double diemGiuaKy;
@@ -164,6 +167,7 @@ public class Diem implements Serializable {
     public void setIdSinhVien(Sinhvien idSinhVien) {
         this.idSinhVien = idSinhVien;
     }
+    
 
     @Override
     public int hashCode() {
@@ -188,6 +192,20 @@ public class Diem implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Diem[ idDiem=" + idDiem + " ]";
+    }
+
+    /**
+     * @return the khoaDiem
+     */
+    public Short getKhoaDiem() {
+        return khoaDiem;
+    }
+
+    /**
+     * @param khoaDiem the khoaDiem to set
+     */
+    public void setKhoaDiem(Short khoaDiem) {
+        this.khoaDiem = khoaDiem;
     }
     
 }

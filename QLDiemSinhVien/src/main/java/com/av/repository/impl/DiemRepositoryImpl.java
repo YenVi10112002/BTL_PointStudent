@@ -113,7 +113,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         predicates.add(b.equal(rDiem.get("idSinhVien"), sinhvienId));
         predicates.add(b.equal(rDiem.get("idMonHoc"), rMonhoc.get("idMonHoc")));
 
-        q.select(b.array(rDiem.get("diemTrungBình"), rDiem.get("diemCuoiKy"), rDiem.get("diemGiuaKy"), rDiem.get("trangThai"), rMonhoc.get("diemTrungBình"), rMonhoc.get("hocKy"), b.prod(rDiem.get("diemTrungBinh"), 0.4)))
+        q.select(b.array(rDiem.get("diemTrungBình"), rDiem.get("diemCuoiKy"), rDiem.get("diemGiuaKy"), rDiem.get("trangThai"), rDiem.get("khoaDiem"), rMonhoc.get("hocKy"), rMonhoc.get("tenMonHoc"), b.prod(rDiem.get("diemTrungBình"), 0.4)))
                 .where(predicates.toArray(Predicate[]::new));
 
         q.orderBy(b.asc(rMonhoc.get("hocKy")));
@@ -263,7 +263,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         predicates.add(b.equal(rDiem.get("idSinhVien"), Integer.parseInt(sinhvienId)));
         predicates.add(b.equal(rDiem.get("idMonHoc"), rMonhoc.get("idMonHoc")));
 
-        q.select(b.array(rDiem.get("diemTrungBình"), rDiem.get("diemCuoiKy"), rDiem.get("diemGiuaKy"), rDiem.get("trangThai"), rMonhoc.get("tenMonHoc"), rMonhoc.get("hocKy"), b.prod(rDiem.get("diemTrungBình"), 0.4)))
+        q.select(b.array(rDiem.get("diemTrungBình"), rDiem.get("diemCuoiKy"), rDiem.get("diemGiuaKy"), rDiem.get("trangThai"), rMonhoc.get("tenMonHoc"), rMonhoc.get("hocKy"), b.prod(rDiem.get("diemTrungBình"), 0.4), rDiem.get("khoaDiem")))
                 .where(predicates.toArray(Predicate[]::new));
 
         q.orderBy(b.asc(rMonhoc.get("hocKy")));
@@ -288,7 +288,7 @@ public class DiemRepositoryImpl implements DiemRepository {
     }
 
     @Override
-    public List<Diem> getDiemByIdMonHoc(int idMonHoc, int idSinhVien) {
+    public Diem getDiemByIdMonHoc(int idMonHoc, int idSinhVien) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
@@ -299,7 +299,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         q.select(b.array(rDiem))
                 .where(predicates.toArray(Predicate[]::new));
         Query query = session.createQuery(q);
-        return (List<Diem>) query.getResultList();
+        return (Diem) query.getSingleResult();
     }
     @Override
     public List<Diem> getDiemByCSV(Map<String, String> params) {
@@ -315,4 +315,74 @@ public class DiemRepositoryImpl implements DiemRepository {
         return (List<Diem>) query.getResultList();
     }
 
+    @Override
+    public Diem getDiemByIdDIem(int idDiem) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Diem> q = b.createQuery(Diem.class);
+        Root<Diem> rDiem = q.from(Diem.class);
+        q.select(rDiem)
+                .where(b.equal(rDiem.get("idDiem"), idDiem));
+        Query query = session.createQuery(q);
+        return (Diem) query.getSingleResult();
+        
+    }
+
+    @Override
+    public List<Diem> getDiemByidGiangVien(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root rSinhVien = q.from(Sinhvien.class);
+        Root rDiem = q.from(Diem.class);
+        Root rMonHoc = q.from(Monhoc.class);
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+             
+            String giangVien = params.get("idGiangVien");
+            if (giangVien != null) {
+                predicates.add(b.equal(rMonHoc.get("idGiangVien"), Integer.parseInt(giangVien)));
+                predicates.add(b.equal(rDiem.get("idMonHoc"), rMonHoc.get("idMonHoc")));
+            }
+            String tenSinhVien = params.get("tenSinhVien");
+            if (tenSinhVien != null) {
+                try {
+                    int parsedIdSinhVien = Integer.parseInt(tenSinhVien);
+                    predicates.add(b.equal(rDiem.get("idSinhVien"), parsedIdSinhVien));
+                } catch (NumberFormatException e) {
+                    
+                    predicates.add(b.equal(rDiem.get("idSinhVien"), rSinhVien.get("idSinhVien")));
+                    predicates.add(b.like(rSinhVien.get("hoTen"), String.format("%%%s%%", tenSinhVien)));
+                }
+            }
+
+            q.groupBy(rDiem.get("idDiem"));
+            q.select(rDiem).where(predicates.toArray(new Predicate[0]));
+
+            Query query = s.createQuery(q);
+            return query.getResultList();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean khoaDiem(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Diem[]> q = b.createQuery(Diem[].class);
+        Root rDiem = q.from(Diem.class);
+        if(params!=null){
+            String idMonHoc = params.get("idMonHoc");
+             q.select(rDiem).where(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
+            Query query = s.createQuery(q);
+             List<Diem> DiemSV = query.getResultList();
+             short khoaDiem = 1;
+             for(Diem diem: DiemSV){
+                 diem.setKhoaDiem(khoaDiem);
+             }
+             return true;
+        }
+        return false;
+    }
+    
 }

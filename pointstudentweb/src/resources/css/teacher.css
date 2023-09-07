@@ -146,11 +146,6 @@ a{
     background-color: #0d6097;
 }
 
-.gv-Search-student {
-    width: 33%;
-    margin-left: 500px;
-
-}
 
 .gv-item-name {
     position: relative;
@@ -190,7 +185,7 @@ a{
 }
 
 .gv-user-name-img {
-    margin-left: 30px;
+    margin-left: 90px;
 }
 
 .gv-logo-menu {
@@ -267,7 +262,25 @@ a{
     background-color: lightcyan;
 }
 
+.btn-creat-pdf{
+    margin-left: 80%;
+}
 
+.btn-search-student {
+    border-radius: 10px;
+    border: #05386B;
+    background-color: #05386B;
+    color: aliceblue;
+    margin-left: 10px;
+}
 
+.btn-search-student:hover {
+    background-color: #0d6097;
+}
 
+.Search-student {
+    width: 300px;
+    margin-left: 470px;
+
+}
 

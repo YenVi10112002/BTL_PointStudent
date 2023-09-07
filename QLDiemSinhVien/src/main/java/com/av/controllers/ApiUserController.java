@@ -55,7 +55,7 @@ public class ApiUserController {
             String token = this.jwtService.generateTokenLogin(user.getTenTaiKhoan());
             return new ResponseEntity<>(token, HttpStatus.OK);
         }
-        return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("error", HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/test/")
@@ -69,8 +69,11 @@ public class ApiUserController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin
     public ResponseEntity<String> addUser(@RequestParam Map<String, String> params) {
-        Taikhoan user = this.tkService.addUser(params);
-        return new ResponseEntity<>("Successfull", HttpStatus.CREATED);
+        if(this.tkService.addUser(params)) {
+            return new ResponseEntity<>("Successfull", HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("error", HttpStatus.OK);
+        
     }
 
     @PostMapping("/change-password/")

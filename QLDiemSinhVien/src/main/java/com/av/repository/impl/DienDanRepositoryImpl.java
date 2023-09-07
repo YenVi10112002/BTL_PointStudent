@@ -158,25 +158,19 @@ public class DienDanRepositoryImpl implements DienDanRepository {
     }
 
     @Override
-    public boolean deleteCauHoi(Map<String, String> params) {
+    public boolean deleteCauHoi(Cauhoidiendang p) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
         Root<Traloidiendan> rTraLoi = q.from(Traloidiendan.class);
-        if (params != null) {
-
-            String cateId = params.get("idCauHoiDienDan");
-            q.select(b.array(rTraLoi))
-                    .where(b.equal(rTraLoi.get("idCauHoiDienDan"), Integer.parseInt(cateId)));
-        }
-        Cauhoidiendang cauhoi = this.getCauHoiById(params);
+        q.select(b.array(rTraLoi))
+                .where(b.equal(rTraLoi.get("idCauHoiDienDan"), p.getIdCauHoiDienDan()));
         Query query = session.createQuery(q);
         List<Traloidiendan> traloi = query.getResultList();
-
         for (Traloidiendan tl : traloi) {
             session.delete(tl);
         }
-        session.delete(cauhoi);
+        session.delete(p);
         return true;
     }
 

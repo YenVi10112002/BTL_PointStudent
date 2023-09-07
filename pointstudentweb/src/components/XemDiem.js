@@ -2,6 +2,7 @@ import { MyUserConText } from "../App";
 import { useContext, useEffect, useState } from "react";
 import { AuthApis, endpoints } from "../configs/Apis";
 import MySpinner from "../layout/MySpinner";
+import HeaderSV from "../layout/sinhvien/HeaderSV"
 
 
 const XemDiem = () => {
@@ -32,30 +33,10 @@ const XemDiem = () => {
         loadloadDSDiem();
     }, []);
 
-    
+
     return (
         <><div class="contend">
-            <nav class="navbar navbar-1 navbar-expand-sm navbar-dark nav-menu">
-                <div class="container-fluid">
-                    <a class="navbar-brand dark-color header-logo " href="#"><i class="fa-solid fa-bell icon-padding"></i></a>
-                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                        <ul class="navbar-nav">
-                            <li class="nav-item user-name-img">
-                                <a class="nav-link dark-color" href="#"><i class="fa-solid fa-user icon-padding" ></i></a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
-                                    {sinhvien.hoTen}</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
-                                    <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>
-                                    <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-right-to-bracket icon-padding"></i>Đăng Xuất</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <HeaderSV  />
             <div class="point">
                 <h4>Tổng quan</h4>
                 <h6 class="text-header-tong">Tổng Hợp Nhanh Các Thông Tin </h6>
@@ -94,17 +75,22 @@ const XemDiem = () => {
                                 <th>Tình Trạng</th>
                             </tr>
                         </thead>
-                        
+
                         <tbody>
                             {DSDiem.map(c => {
                                 return (<tr>
                                     <td>{c[5]}</td>
                                     <td>{c[4]}</td>
-                                    <td>{c[2]}</td>
-                                    <td>{c[1]}</td>
-                                    <td>{c[0]}</td>
-                                    <td>{c[6]}</td>
-                                    <td>{c[3] === 1 ? 'Đậu' : 'Rớt'}</td>
+                                    {c[7] === 1 ? <><td>{c[2]}</td>
+                                        <td>{c[1]}</td>
+                                        <td>{c[0]}</td>
+                                        <td>{c[6]}</td>
+                                        <td>{c[3] === 1 ? 'Đậu' : 'Rớt'}</td></> : <><td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Chưa nhập điểm</td></>}
+
                                 </tr>
                                 )
                             })

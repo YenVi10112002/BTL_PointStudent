@@ -162,6 +162,11 @@
             <artifactId>commons-csv</artifactId>
             <version>1.9.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.3</version> <!-- Phiên bản mới nhất của OpenCSV -->
+        </dependency>
         
     </dependencies>
 

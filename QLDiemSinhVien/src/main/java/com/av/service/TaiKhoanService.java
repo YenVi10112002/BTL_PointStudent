@@ -28,7 +28,7 @@ public interface TaiKhoanService extends UserDetailsService {
     Taikhoan getUserByUsername(String username);
     UserDetails getLoggedInUserDetails(Authentication authentication);
     boolean authUser(String username, String password);
-    Taikhoan addUser(Map<String, String> params);
+    boolean addUser(Map<String, String> params);
     int GetIdTaiKhoan(UserDetails userDetails);
     Taikhoan thayDoiMatKhau(Map<String, String> params);
 }

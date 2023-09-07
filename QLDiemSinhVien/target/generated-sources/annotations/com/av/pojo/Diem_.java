@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-09-01T17:10:31")
+@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-09-07T00:35:52")
 @StaticMetamodel(Diem.class)
 public class Diem_ { 
 
@@ -18,6 +18,7 @@ public class Diem_ {
     public static volatile SingularAttribute<Diem, Double> diemKT1;
     public static volatile SingularAttribute<Diem, Sinhvien> idSinhVien;
     public static volatile SingularAttribute<Diem, Double> diemTrungBình;
+    public static volatile SingularAttribute<Diem, Short> khoaDiem;
     public static volatile SingularAttribute<Diem, String> xepLoai;
     public static volatile SingularAttribute<Diem, Double> diemCuoiKy;
     public static volatile SingularAttribute<Diem, Double> diemGiuaKy;

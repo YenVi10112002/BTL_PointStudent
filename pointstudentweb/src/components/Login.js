@@ -1,50 +1,55 @@
 import { useContext, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Apis, { AuthApis, endpoints } from "../configs/Apis";
 import cookie from "react-cookies";
 import { MyUserConText } from "../App";
+import MySpinner from "../layout/MySpinner";
 const Login = () => {
   const [user, dispatch] = useContext(MyUserConText);
   const [username, setusername] = useState();
   const [password, setpassword] = useState();
+  const [taiKhoan, setTaiKhoan] = useState([]);
   let nav = useNavigate();
 
 
   const login = (evt) => {
     evt.preventDefault();
 
+
     const process = async () => {
-        try {
-            let res = await Apis.post(endpoints['login'], {
-                "tenTaiKhoan": username,
-                "matKhau": password
-            })
-            cookie.save("token", res.data);
+      try {
 
-            let { data } = await AuthApis().get(endpoints['current-user']);
-            cookie.save("user", data);
+        let res = await Apis.post(endpoints['login'], {
+          "tenTaiKhoan": username,
+          "matKhau": password
+        })
+        cookie.save("token", res.data);
 
-            let sinhvien = await AuthApis().get(endpoints['current-sinhvien']);
-            cookie.save("sinhvien", sinhvien.data);
-            let giangvien = await AuthApis().get(endpoints['current-giangvien']);
-            cookie.save("giangvien", giangvien.data);
-
-            dispatch({
-                "type": "login",
-                "payLoad": data
-            })
-        } catch (ex) {
-            console.error(ex);
+        let { data } = await AuthApis().get(endpoints['current-user']);
+        cookie.save("user", data);
+        setTaiKhoan(data);
+        if (taiKhoan.chucVu.tenloaitaikhoan == "ROLE_SV") {
+          let sinhvien = await AuthApis().get(endpoints['current-sinhvien']);
+          cookie.save("sinhvien", sinhvien.data);
         }
+        else {
+          let giangvien = await AuthApis().get(endpoints['current-giangvien']);
+          cookie.save("giangvien", giangvien.data);
+        }
+        dispatch({
+          "type": "login",
+          "payLoad": data
+        })
+
+      } catch (ex) {
+        console.error(ex);
+      }
     }
-    process();   
+    process();
 
   };
 
-  if (user !== null) {
-     nav("/home");
-  }
 
   return (
     <>
@@ -61,6 +66,7 @@ const Login = () => {
                 value={username}
                 onChange={(e) => setusername(e.target.value)}
                 placeholder="Tài Khoản"
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -70,12 +76,14 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setpassword(e.target.value)}
                 placeholder="Mật Khẩu"
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3">
               <Button id="submit" type="submit">
                 Đăng Nhập
               </Button>
+
             </Form.Group>
             <div>
               <hr width="100%" size="3px" align="center" color="#9C9C9C" />

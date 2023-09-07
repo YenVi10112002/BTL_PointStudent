@@ -162,7 +162,7 @@
     border-radius: 10px;
     top: 10%;
     margin: auto;
-    max-height: 600px;
+    max-height: 750px;
 
     animation: modelFaceIn ease .5s;
   }
@@ -288,6 +288,7 @@
     margin-left: 900px;
   }
 
+
   .logo-menu {
     height: 120px;
     padding: 10px 5px;
@@ -366,6 +367,16 @@
     overflow: hidden;
     border-radius: 100%;
   }
+  .info-user-image-3 {
+    display: inline-block;
+    background-color: black;
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 100%;
+  }
+
 
   .info-user-text-reply {
     padding: 0px 50px 50px 50px;
@@ -427,6 +438,14 @@
     border-radius: 50%; /* Bo tròn hình ảnh */
     width: 100px; /* Điều chỉnh kích thước hình ảnh */
     height: 100px;
+    object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
+    display: block; /* Hiển thị hình ảnh là một khối */
+    margin: 0 auto;
+  }
+  .img-user-avatar-header{
+    border-radius: 50%; /* Bo tròn hình ảnh */
+    width: 30px; /* Điều chỉnh kích thước hình ảnh */
+    height: 30px;
     object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
     display: block; /* Hiển thị hình ảnh là một khối */
     margin: 0 auto;

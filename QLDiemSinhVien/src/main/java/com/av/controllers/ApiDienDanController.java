@@ -63,7 +63,7 @@ public class ApiDienDanController {
         this.diendanservice.addOrUpdateTraloi(traloi);
         return new ResponseEntity<>(traloi.getNoiDungTraLoi(), HttpStatus.OK);
     }
-
+    
     @DeleteMapping("/delete-cauhoi/")
     @CrossOrigin
     public ResponseEntity<String> deleteCauHoi(@RequestParam Map<String, String> params) {
@@ -71,3 +71,4 @@ public class ApiDienDanController {
         return new ResponseEntity<>("Successfull", HttpStatus.OK);
     }
 }
+

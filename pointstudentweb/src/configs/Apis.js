@@ -23,6 +23,11 @@ export const endpoints = {
     "deleteCauHoi":`${SERVER_CONTEXT}/api/delete-cauhoi/`,
     "monHocIdTK":`${SERVER_CONTEXT}/api/monhocgiangvien/`,
     "DSSinhVienByMonHoc":`${SERVER_CONTEXT}/api/monhocsinhvien/`,
+    "addDiem":`${SERVER_CONTEXT}/api/add-diem/`,
+    "addListDiem":`${SERVER_CONTEXT}/api/add-List-diem/`,
+    "getdiemById":`${SERVER_CONTEXT}/api/diem-idDiem/`,
+    "getSinhVienByIdOrTen":`${SERVER_CONTEXT}/api/diemSV-idSV/`,
+    "khoaDiem":`${SERVER_CONTEXT}/api/KhoaDiem/`,
 }
 
 export const AuthApis = () => {

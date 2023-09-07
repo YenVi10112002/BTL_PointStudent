@@ -26,6 +26,10 @@ import ThemChuDeGV from "./components/GiangVien/ThemChuDeGV";
 import TraLoiDienDanGV from "./components/GiangVien/TraLoiDienDanGV";
 import ThayDoiMatKhauGV from "./components/GiangVien/ThayDoiMatKhauGV";
 import ThongTinTaiKhoanGV from "./components/GiangVien/ThongTinTaiKhoaGV";
+import NhapDiemSinhVien from "./components/GiangVien/NhapDiemSinhVien";
+import TimSinhVien from "./components/GiangVien/TimSinhVien";
+import LoginChat from "./components/Chat/loginChat";
+import ChatFireBase from "./components/Chat/ChatFireBase";
 
 export const MyUserConText = createContext();
 
@@ -49,12 +53,14 @@ function App() {
               <Route path="/xemdiem" element={<XemDiem />} />
               <Route path="/thaydoimatkhau" element={<ThayDoiMatKhau />} />
               <Route path="/thongtin" element={<Thongtintaikhoan/>} />
+              <Route path="/chat" element={<LoginChat />} />
+              <Route path="/chatTrucTuyen" element={<ChatFireBase />} />
             </Routes>
           </BrowserRouter>
         </MyUserConText.Provider>
       );
     }
-    else {
+    else if (user.chucVu.tenloaitaikhoan === "ROLE_GV"){
       return (
         <MyUserConText.Provider value={[user, dispatch, giangvien, dispatchgv]}>
           <BrowserRouter>
@@ -67,6 +73,8 @@ function App() {
               <Route path="/giangvien/traloidiendan" element={<TraLoiDienDanGV />} />
               <Route path="/giangvien/thaydoimatkhau" element={<ThayDoiMatKhauGV />} />
               <Route path="/giangvien/thongtintaikhoan"element={<ThongTinTaiKhoanGV />}/>
+              <Route path="/giangvien/nhapdiemsinhvien"element={<NhapDiemSinhVien />}/>
+              <Route path="/giangvien/timsinhvien"element={<TimSinhVien />}/>
             </Routes>
           </BrowserRouter>
         </MyUserConText.Provider>

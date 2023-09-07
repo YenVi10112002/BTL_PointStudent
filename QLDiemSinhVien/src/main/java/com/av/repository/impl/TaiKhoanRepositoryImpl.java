@@ -169,7 +169,7 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
     }
 
     @Override
-    public Taikhoan addUser(Taikhoan u) {
+    public boolean addUser(Taikhoan u) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
@@ -181,16 +181,18 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
         try {
             Sinhvien p = (Sinhvien) query.getSingleResult();
+
             if (p.getIdTaiKhoan() == null && p.getEmail() != null) {
                 s.save(u);
                 p.setIdTaiKhoan(u);
                 s.update(p);
-                return u;
+                return true;
             }
+
+            return false;
         } catch (HibernateException ex) {
-            return null;
+            return false;
         }
-        return null;
     }
 
     @Override
@@ -202,6 +204,10 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         q.select(root)
                 .where(b.equal(root.get("email"), user.getTenTaiKhoan()));
         Query query = s.createQuery(q);
+        List<Sinhvien> resultList = query.getResultList();
+        if (resultList.isEmpty()) {
+            return false; // Truy vấn không trả về kết quả
+        }
         try {
             Sinhvien p = (Sinhvien) query.getSingleResult();
 
@@ -213,6 +219,7 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
             return false;
 
         }
+
         return false;
     }
 

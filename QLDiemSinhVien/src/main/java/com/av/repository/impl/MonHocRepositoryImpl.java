@@ -61,7 +61,6 @@ public class MonHocRepositoryImpl implements MonHocRepository {
 
     @Override
     public Monhoc getMonHocById(int id) {
-        Session s = this.factory.getObject().getCurrentSession();
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Monhoc> q = b.createQuery(Monhoc.class);
@@ -107,10 +106,11 @@ public class MonHocRepositoryImpl implements MonHocRepository {
             }
             q.select(rMonHoc).where(predicates.toArray(Predicate[]::new));
             q.groupBy(rMonHoc.get("idMonHoc"));
+            Query query = s.createQuery(q);
+            return query.getResultList();
         }
-        Query query = s.createQuery(q);
-        return query.getResultList();
-        
+        return null;
+            
     }
 
     

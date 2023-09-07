@@ -22,6 +22,7 @@ const HeaderStudent = () => {
                 <Link to="/home" class="menu-item"><i class="fa-solid fa-house icon-padding"></i>Tổng Quan</Link>
                 <Link class="menu-item" to="/diendan"><i class="fa-solid fa-message icon-padding"></i>Diễn Đàn</Link>
                 <Link class="menu-item" to="/xemdiem"><i class="fa-solid fa-gift icon-padding"></i>Xem Điểm</Link>
+                <Link class="menu-item" to="/chat"><i class="fa-solid fa-gift icon-padding"></i>Chat</Link>
             </div>
             <div class="menu-items">
                 <p class="text-menu">Thông Tin tài Khoản</p>

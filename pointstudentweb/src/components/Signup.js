@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
 import Apis, { endpoints } from "../configs/Apis";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MySpinner from "../layout/MySpinner";
 const Signup = () => {
 
@@ -12,6 +12,7 @@ const Signup = () => {
 
     const [loading, setLoading] = useState(false);
     const [pass, setPass] = useState(true);
+    const [erro, setErro] = useState(true);
     const [user, setUser] = useState({
         "tenTaiKhoan": "",
         "matKhau": "",
@@ -19,9 +20,9 @@ const Signup = () => {
     });
 
 
-    
+
     /*Gui maill */
-    
+
     const change = (evt, field) => {
         setUser(current => {
             return { ...current, [field]: evt.target.value }
@@ -31,6 +32,8 @@ const Signup = () => {
 
     const signup = (evt) => {
         evt.preventDefault();
+        setErro(true);
+
 
         const process = async () => {
             let formData = new FormData();
@@ -43,10 +46,15 @@ const Signup = () => {
             if (res.status === 201) {
                 nav("/");
             }
+            if (res.status === 200) {
+                setErro(false);
+                setLoading(false);
+            }
         }
 
         if (user.matKhau !== user.xacNhanMK) {
             setPass(false);
+
         }
         else {
             process();
@@ -55,7 +63,7 @@ const Signup = () => {
 
     }
 
-    
+
     return (
         <div className="container">
             <div className=" form-login  shadow-lg ">
@@ -84,7 +92,17 @@ const Signup = () => {
 
                     </Form.Group>
                 </Form >
+                <div>
+                    <hr width="100%" size="3px" align="center" color="#9C9C9C" />
+                    <div className="btn-submit">
+                        <p>
+                            Sinh Viên Đã Có Tài Khoản ? <Link to="/">Đăng Nhập</Link>{" "}
+                        </p>
+                    </div>
+                </div>
+
                 {pass === false ? <Alert variant="secondary">Mật khẩu không trùng khớp</Alert> : <div></div>}
+                {erro === false ? <Alert variant="secondary">Tài khoản đã tồn tại hoặc bạn không sử dụng đúng email được cấp</Alert> : <div></div>}
             </div>
 
         </div>

@@ -113,16 +113,16 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     }
 
     @Override
-    public Taikhoan addUser(Map<String, String> params) {
+    public boolean addUser(Map<String, String> params) {
         Taikhoan u = new Taikhoan();
         u.setTenTaiKhoan(params.get("tenTaiKhoan"));
         u.setMatKhau(this.passwordEncoder.encode(params.get("matKhau")));
         u.setChucVu(this.taikhoanRepository.getChucVu(3));
         if(taikhoanRepository.kiemTraTaiKhoan(u)){
             this.taikhoanRepository.addUser(u);
-            return u;
+            return true;
         }
-        return null;
+        return false;
     }
     @Override
     public UserDetails getLoggedInUserDetails(Authentication authentication) {

@@ -51,11 +51,11 @@
                 <c:forEach items="${dsDiem}" var="diem">
                     <tr >
                         <td >${diem[5]}</td>
-                        <td>${diem[4]}</td>
+                        <td>${diem[6]}</td>
                         <td>${diem[2]}</td>
                         <td >${diem[1]}</td>
                         <td>${diem[0]}</td>
-                        <td>${diem[6]}</td>
+                        <td>${diem[7]}</td>
                         <c:choose>
                             <c:when test="${diem[3] == 1}">
                                 <td>Đậu</td>

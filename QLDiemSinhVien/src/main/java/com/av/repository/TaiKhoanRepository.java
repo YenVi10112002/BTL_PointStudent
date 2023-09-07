@@ -24,7 +24,7 @@ public interface TaiKhoanRepository {
     Loaitaikhoan getChucVu(int id);
     Taikhoan getUserByUsername(String username);
     boolean authUser(String username, String password);
-    Taikhoan addUser(Taikhoan user);
+    boolean addUser(Taikhoan user);
     boolean kiemTraTaiKhoan (Taikhoan user);
     Taikhoan thayDoiMatKhau(Taikhoan a);
 }

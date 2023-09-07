@@ -3,6 +3,7 @@ import { MyUserConText } from "../App";
 import { useContext, useState } from "react";
 import Apis, { AuthApis, endpoints } from "../configs/Apis";
 import MySpinner from "../layout/MySpinner";
+import HeaderSV from "../layout/sinhvien/HeaderSV"
 
 
 const ThayDoiMatKhau = () => {
@@ -21,7 +22,7 @@ const ThayDoiMatKhau = () => {
 
     const change = (evt, field) => {
         setTaiKhoan(current => {
-            return {...current, [field]: evt.target.value}
+            return { ...current, [field]: evt.target.value }
         })
     }
 
@@ -36,7 +37,7 @@ const ThayDoiMatKhau = () => {
 
         const process = async () => {
             let formData = new FormData();
-            
+
 
             formData.append("tenTaiKhoan", user.tenTaiKhoan);
             formData.append("matKhau", taiKhoan.matKhau);
@@ -51,41 +52,21 @@ const ThayDoiMatKhau = () => {
             }
         }
 
-        if(taiKhoan.matKhauMoi !== taiKhoan.xacNhanMKMoi){
+        if (taiKhoan.matKhauMoi !== taiKhoan.xacNhanMKMoi) {
             setPass(false);
         }
-        else if(taiKhoan.matKhauMoi === taiKhoan.matKhau){
+        else if (taiKhoan.matKhauMoi === taiKhoan.matKhau) {
             setDuplicatePass(true);
         }
         else {
             process();
             setLoading(false);
         }
-         
+
     }
     return (
         <div class="contend">
-            <nav class="navbar navbar-1 navbar-expand-sm navbar-dark nav-menu">
-                <div class="container-fluid">
-                    <a class="navbar-brand dark-color header-logo " href="#"><i class="fa-solid fa-bell icon-padding"></i></a>
-                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                        <ul class="navbar-nav">
-                            <li class="nav-item user-name-img">
-                                <a class="nav-link dark-color" href="#"><i class="fa-solid fa-user icon-padding" ></i></a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
-                                    {sinhvien.hoTen}</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
-                                    <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>
-                                    <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-right-to-bracket icon-padding"></i>Đăng Xuất</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <HeaderSV  />
             <div class="change-password">
                 <p class="change-password-title">Thay Đổi Mật Khẩu</p>
                 <Form onSubmit={changePass} class="change-password-form">
@@ -105,13 +86,13 @@ const ThayDoiMatKhau = () => {
                             onChange={e => change(e, "xacNhanMKMoi")} placeholder="Nhập Lại Mật Khẩu" />
                     </Form.Group>
                     <Form.Group className="mb-3 btn-change-password-div">
-                    {loading === true?<MySpinner />:<Button className="btn-change-password" type="submit">Thay Đổi</Button>}
-                    
+                        {loading === true ? <MySpinner /> : <Button className="btn-change-password" type="submit">Thay Đổi</Button>}
+
                     </Form.Group>
-                    {pass===false ? <Alert variant="danger">Mật khẩu không trùng khớp</Alert>: <div></div>}
-                    {duplicatePass===true ? <Alert variant="danger">Mật khẩu trùng với mật khẩu hiện tại</Alert>: <div></div>}
-                    {changeSuccess===true ? <Alert variant="secondary">Thay Đổi Thành Công</Alert>: <div></div>}
-                    {faild===true ? <Alert variant="danger">Thay đổi thất bại</Alert>: <div></div>}
+                    {pass === false ? <Alert variant="danger">Mật khẩu không trùng khớp</Alert> : <div></div>}
+                    {duplicatePass === true ? <Alert variant="danger">Mật khẩu trùng với mật khẩu hiện tại</Alert> : <div></div>}
+                    {changeSuccess === true ? <Alert variant="secondary">Thay Đổi Thành Công</Alert> : <div></div>}
+                    {faild === true ? <Alert variant="danger">Thay đổi thất bại</Alert> : <div></div>}
                 </Form>
             </div>
 
