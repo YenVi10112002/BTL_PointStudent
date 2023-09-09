@@ -83,6 +83,8 @@ public class Taikhoan implements Serializable {
     @Transient
     private String xacNhanMk;
     @Transient
+    private String mkMoi;
+    @Transient
     private Giangvien giangvien1;
 
     @Transient
@@ -248,6 +250,20 @@ public class Taikhoan implements Serializable {
      */
     public void setGiangvien1(Giangvien giangvien1) {
         this.giangvien1 = giangvien1;
+    }
+
+    /**
+     * @return the mkMoi
+     */
+    public String getMkMoi() {
+        return mkMoi;
+    }
+
+    /**
+     * @param mkMoi the mkMoi to set
+     */
+    public void setMkMoi(String mkMoi) {
+        this.mkMoi = mkMoi;
     }
 
 }

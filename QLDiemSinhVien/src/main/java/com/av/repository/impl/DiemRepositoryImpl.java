@@ -28,6 +28,8 @@ import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,8 @@ public class DiemRepositoryImpl implements DiemRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private JavaMailSender emailSender;
 
     @Override
     public double getDiemTrungBinh(int sinhvienId) {
@@ -302,6 +306,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         Query query = session.createQuery(q);
         return (Diem) query.getSingleResult();
     }
+
     @Override
     public List<Diem> getDiemByCSV(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -309,25 +314,27 @@ public class DiemRepositoryImpl implements DiemRepository {
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Diem> q = b.createQuery(Diem.class);
         Root<Diem> rDiem = q.from(Diem.class);
-        
+
         q.select(rDiem)
                 .where(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
         Query query = session.createQuery(q);
         return (List<Diem>) query.getResultList();
     }
+
     // lay diem theo sinh vien
     @Override
     public List<Diem> getDiemBySinhVien(int idSinhVien) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Diem[]> q = b.createQuery(Diem[].class);
-        
+
         Root r = q.from(Diem.class);
         q.select(r);
         q.where(b.equal(r.get("idSinhVien").get("idSinhVien"), idSinhVien));
         Query query = s.createQuery(q);
         return query.getResultList();
     }
+
     // xoa diem theo sinh vien
     @Override
     public boolean deleteDiemBySinhVien(int idSinhVien) {
@@ -335,7 +342,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         List<Diem> diems = this.getDiemBySinhVien(idSinhVien);
         try {
             for (Diem diem : diems) {
-                s.delete(diem);    
+                s.delete(diem);
             }
             return true;
         } catch (HibernateException e) {
@@ -354,7 +361,7 @@ public class DiemRepositoryImpl implements DiemRepository {
                 .where(b.equal(rDiem.get("idDiem"), idDiem));
         Query query = session.createQuery(q);
         return (Diem) query.getSingleResult();
-        
+
     }
 
     @Override
@@ -367,7 +374,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         Root rMonHoc = q.from(Monhoc.class);
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
-             
+
             String giangVien = params.get("idGiangVien");
             if (giangVien != null) {
                 predicates.add(b.equal(rMonHoc.get("idGiangVien"), Integer.parseInt(giangVien)));
@@ -379,7 +386,7 @@ public class DiemRepositoryImpl implements DiemRepository {
                     int parsedIdSinhVien = Integer.parseInt(tenSinhVien);
                     predicates.add(b.equal(rDiem.get("idSinhVien"), parsedIdSinhVien));
                 } catch (NumberFormatException e) {
-                    
+
                     predicates.add(b.equal(rDiem.get("idSinhVien"), rSinhVien.get("idSinhVien")));
                     predicates.add(b.like(rSinhVien.get("hoTen"), String.format("%%%s%%", tenSinhVien)));
                 }
@@ -400,18 +407,36 @@ public class DiemRepositoryImpl implements DiemRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Diem[]> q = b.createQuery(Diem[].class);
         Root rDiem = q.from(Diem.class);
-        if(params!=null){
+        if (params != null) {
             String idMonHoc = params.get("idMonHoc");
-             q.select(rDiem).where(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
+            q.select(rDiem).where(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
             Query query = s.createQuery(q);
-             List<Diem> DiemSV = query.getResultList();
-             short khoaDiem = 1;
-             for(Diem diem: DiemSV){
-                 diem.setKhoaDiem(khoaDiem);
-             }
-             return true;
+            List<Diem> DiemSV = query.getResultList();
+            SimpleMailMessage message = new SimpleMailMessage();
+            short khoaDiem = 1;
+            for (Diem diem : DiemSV) {
+                diem.setKhoaDiem(khoaDiem);
+//                message.setTo(diem.getIdSinhVien().getIdTaiKhoan().getTenTaiKhoan().toString());
+//                message.setSubject("Thong bao diem");
+//                message.setText("Diem cua mon " + diem.getIdMonHoc().getTenMonHoc().toString() +" co ma mon "+ diem.getIdMonHoc().toString() + " Đã có");
+//                emailSender.send(message);
+            }
+            return true;
         }
         return false;
     }
-    
+
+    @Override
+    public boolean deleteDiem(int idMonHoc, int idSinhVien) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Diem d = this.getDiemByIdMonHoc(idMonHoc, idSinhVien);
+        try {
+            if(d != null)
+                s.delete(d);
+            return true;
+        } catch (HibernateException e) {
+            return false;
+        }
+    }
+
 }

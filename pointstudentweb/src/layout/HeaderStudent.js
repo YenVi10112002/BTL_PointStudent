@@ -15,14 +15,14 @@ const HeaderStudent = () => {
     return (
         <div class="vertical-menu">
             <div class="active logo-menu">
-                <Link to="/home"><i class="fa-solid fa-book-open " ></i>Trường Đại Học Mở</Link>
+                <Link to="/home"><i class="fa-solid fa-book-open icon-padding " ></i>Trường Đại Học Mở</Link>
             </div>
             <div class="menu-items">
                 <p class="text-menu ">Dịch Vụ, Tiện Ích</p>
                 <Link to="/home" class="menu-item"><i class="fa-solid fa-house icon-padding"></i>Tổng Quan</Link>
                 <Link class="menu-item" to="/diendan"><i class="fa-solid fa-message icon-padding"></i>Diễn Đàn</Link>
                 <Link class="menu-item" to="/xemdiem"><i class="fa-solid fa-gift icon-padding"></i>Xem Điểm</Link>
-                <Link class="menu-item" to="/chat"><i class="fa-solid fa-gift icon-padding"></i>Chat</Link>
+                <Link class="menu-item" to="/chat"><i class="fa-brands fa-rocketchat icon-padding"></i>Chat</Link>
             </div>
             <div class="menu-items">
                 <p class="text-menu">Thông Tin tài Khoản</p>

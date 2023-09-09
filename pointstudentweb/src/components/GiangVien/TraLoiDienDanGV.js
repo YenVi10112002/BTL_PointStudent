@@ -15,6 +15,7 @@ const TraLoiDienDanGV = () => {
     const [q] = useSearchParams();
     useEffect(() => {
         const loadcautraloi = async () => {
+            setChangeSuccess(false)
             try {
                 let e = endpoints['cauTraLoi'];
                 let cauhoiid = q.get("cauhoiId");
@@ -41,7 +42,7 @@ const TraLoiDienDanGV = () => {
         }
         loadcautraloi();
         loadcauhoi();
-    }, [q], setChangeSuccess)
+    }, [q, changeSuccess])
 
     const addTraLoi = (evt) => {
         evt.preventDefault();
@@ -73,12 +74,10 @@ const TraLoiDienDanGV = () => {
                 <div class="form-traloi-diendan">
                     <div key={cauhoi.idCauHoiDienDan}>
                       
-                        <h5><i class="fa-solid fa-user icon-padding"></i></h5>
-                        <p class="content-question-day"><i class="fa-solid fa-calendar-days icon-padding"></i>Ngày 25, tháng 7,
-                            năm 2023, 7:57AM</p>
-                        <p class="content-question-noidung">{cauhoi.noiDungCauHoi}</p>
+                        <h5><i class="fa-solid fa-user icon-padding"></i> </h5>
+                        <p class="content-question-day"><i class="fa-solid fa-calendar-days icon-padding"></i>{cauhoi.ngayTao}</p>
+                        <p class="content-question-noidung">{cauhoi.noiDungCauHoi}</p>  
                     </div>
-
                     <Form onSubmit={addTraLoi}>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Control type="text" value={noiDung}

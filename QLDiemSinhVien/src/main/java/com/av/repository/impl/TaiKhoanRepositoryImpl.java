@@ -46,15 +46,15 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
     private SinhVienRepository svRepo;
 
     @Override
-    public boolean updateImg(Taikhoan s) {
+    public Taikhoan updateImg(Taikhoan s) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
             session.update(s);
-            return true;
+            return s;
 
         } catch (HibernateException ex) {
             ex.printStackTrace();
-            return false;
+            return null;
         }
     }
     // Sua

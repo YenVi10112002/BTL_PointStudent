@@ -34,7 +34,7 @@ const Home = () => {
     }, [])
     return (
         <div class="contend">
-            <HeaderSV  />
+            <HeaderSV />
             <div class="point">
                 <h4 >Tổng quan</h4>
                 <h6 class="text-header-tong ">Tổng Hợp Nhanh Các Thông Tin </h6>
@@ -53,7 +53,20 @@ const Home = () => {
                             <tr >
                                 <td>{Diem}</td>
                                 <td>{DiemHe4}</td>
-                                <td>Giỏi</td>
+                                <td>
+                                    {(() => {
+                                        switch (true) {
+                                            case Diem >= 8.5:
+                                                return 'Giỏi';
+                                            case Diem >= 7:
+                                                return 'Khá';
+                                            case Diem >= 5:
+                                                return 'Trung bình';
+                                            default:
+                                                return 'Yếu';
+                                        }
+                                    })()}
+                                </td>
                             </tr>
 
 
@@ -75,8 +88,9 @@ const Home = () => {
                         <tbody >
                             {DSDiem.map(c => <tr key={c[2]}>
                                 <td>{c[0]}</td>
-                                <td>{c[1]}</td>
-                                <td>{c[2]}</td>
+                                <td>{parseFloat(c[1]).toFixed(2)}</td>
+                                <td>{parseFloat(c[2]).toFixed(2)}</td>
+
                             </tr>
                             )}
                         </tbody>

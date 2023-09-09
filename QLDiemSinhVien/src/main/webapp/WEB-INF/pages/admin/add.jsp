@@ -17,19 +17,22 @@
                 <form:hidden path="idSinhVien"/>
                 <form:hidden path="idTaiKhoan"/>
                 <div class="form-floating mb-3 mt-3">
-                    <form:input type="text" class="form-control" path="hoTen" id="name" placeholder="Họ và tên" name="name" />
+                    <form:input type="text" class="form-control" path="hoTen" id="name" placeholder="Họ và tên" name="name"  required="true"/>
                     <label for="name">Họ và tên</label>
                 </div>
                 <div class="form-floating mt-3 mb-3">
-                    <form:input type="text" class="form-control" path="heDaoTao" id="trainingsystem" placeholder="Hệ đào tạo" name="trainingsystem"/>
+                     <form:select path="heDaoTao" id="trainingsystem" class="form-select" cssErrorClass="is-invalid">
+                        <form:option value="Chất lượng cao" label="Chất lượng cao" />
+                        <form:option value="Đại trà" label="Đại trà" />
+                    </form:select>
                     <label for="trainingsystem">Hệ đào tạo</label>
                 </div>
                 <div class="form-floating mt-3 mb-3">
-                    <form:input type="date" class="form-control" path="ngaySinh" id="dateofbirth" placeholder="Ngày sinh" name="dateofbirth"/>
+                    <form:input type="date" class="form-control" path="ngaySinh" id="dateofbirth" placeholder="Ngày sinh" name="dateofbirth"  required="true"/>
                     <label for="dateofbirth">Ngày sinh</label>
                 </div>
                 <div class="form-floating mt-3 mb-3">
-                    <form:input type="text" class="form-control" path="diaChi" id="address" placeholder="Địa chỉ " name="address"/>
+                    <form:input type="text" class="form-control" path="diaChi" id="address" placeholder="Địa chỉ " name="address" required="true"/>
                     <label for="address">Địa chỉ</label>
                 </div>
                 <div class="form-floating mt-3 mb-3">
@@ -56,11 +59,11 @@
                     <label for="class">Danh sách lớp học</label>                
                 </div>    
                 <div class="form-floating mt-3 mb-3">
-                    <form:input type="text" class="form-control" path="soDienThoai" id="phonenumber" placeholder="Số điện thoại" name="phonenumber"/>
+                    <form:input type="text" class="form-control" path="soDienThoai" id="phonenumber" placeholder="Số điện thoại" name="phonenumber"  required="true"/>
                     <label for="phonenumber">Số điện thoại</label>
                 </div>
                 <div class="form-floating mt-3 mb-3">
-                    <form:input type="text" class="form-control" path="email" id="email" placeholder="Email" name="email"/>
+                    <form:input type="email" class="form-control" path="email" id="email" placeholder="Email" name="email"  required="true"/>
                     <label for="email">Email</label>
                 </div>
                 <div class="btn-form-addsv">

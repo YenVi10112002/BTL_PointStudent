@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Cauhoidiendang.findAll", query = "SELECT c FROM Cauhoidiendang c"),
     @NamedQuery(name = "Cauhoidiendang.findByIdCauHoiDienDan", query = "SELECT c FROM Cauhoidiendang c WHERE c.idCauHoiDienDan = :idCauHoiDienDan"),
-    @NamedQuery(name = "Cauhoidiendang.findByNoiDungCauHoi", query = "SELECT c FROM Cauhoidiendang c WHERE c.noiDungCauHoi = :noiDungCauHoi")})
+    @NamedQuery(name = "Cauhoidiendang.findByNoiDungCauHoi", query = "SELECT c FROM Cauhoidiendang c WHERE c.noiDungCauHoi = :noiDungCauHoi"),
+    @NamedQuery(name = "Cauhoidiendang.findByNgayTao", query = "SELECT c FROM Cauhoidiendang c WHERE c.ngayTao = :ngayTao")})
 public class Cauhoidiendang implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +49,8 @@ public class Cauhoidiendang implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "noiDungCauHoi")
     private String noiDungCauHoi;
+    @Column(name = "ngayTao")
+    private String ngayTao;
     @OneToMany(mappedBy = "idCauHoiDienDan")
     @JsonIgnore
     private Set<Traloidiendan> traloidiendanSet;
@@ -123,6 +126,20 @@ public class Cauhoidiendang implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Cauhoidiendang[ idCauHoiDienDan=" + idCauHoiDienDan + " ]";
+    }
+
+    /**
+     * @return the ngayTao
+     */
+    public String getNgayTao() {
+        return ngayTao;
+    }
+
+    /**
+     * @param ngayTao the ngayTao to set
+     */
+    public void setNgayTao(String ngayTao) {
+        this.ngayTao = ngayTao;
     }
     
 }

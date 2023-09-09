@@ -10,9 +10,9 @@
 <div class="change-password">
     <c:url value="/giaovu/thaydoimatkhau" var="action" />
     <p class="change-password-title">Thay Đổi Mật Khẩu</p>
-    <div class="alert alert-success">
-        <strong>Success!</strong> Indicates a successful or positive action.
-    </div>
+    <c:if test="${errMsg!=null}"><div class="alert alert-success">
+            ${errMsg}
+        </div></c:if>
     <form:form modelAttribute="taiKhoan" action="${action}" method="post"  class="change-password-form">
         <form:input path="idTaiKhoan" type="hidden" value="${taikhoanAD.idTaiKhoan}" />
         <div class="mb-3 mt-3">
@@ -22,8 +22,8 @@
         </div>
         <div class="mb-3">
             <label for="pwd" class="form-label">Nhập Mật Khẩu Mới:</label>
-            <input path="" type="password" class="form-control" id="pwd" placeholder="Nhập Mật Khẩu Mới" name="matKhauMoi"
-                   >
+            <form:input path="mkMoi" type="password" class="form-control" id="pwd" placeholder="Nhập Mật Khẩu Mới" name="matKhauMoi"
+                        />
         </div>
         <div class="mb-3">
             <label for="cfpwd" class="form-label">Nhập Lại Mật Khẩu:</label>

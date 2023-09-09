@@ -18,16 +18,17 @@ const CTMonHoc = () => {
     const [chot, setChot] = useState(true);
     const [checkTB, setCheckTB] = useState(false);
     const [success, setSuccess] = useState();
-    const [checkKhoaDiem, setCheckKhoaDiem] = useState(false);
+    const [checkKhoaDiem, setCheckKhoaDiem] = useState(true);
     let monHocId = q.get("monHocId");
     let nav = useNavigate();
     const [diems, setsetDiems] = useState({
         "idMonHoc": ""
     });
     useEffect(() => {
+        setChot(false)
+        setSuccess(false)
+       
         const loadSv = async () => {
-            setChot(false);
-            setSuccess(false);
             try {
                 let e = endpoints['DSSinhVienByMonHoc'];
                 monHocId = q.get("monHocId");
@@ -43,27 +44,37 @@ const CTMonHoc = () => {
                         e = `${e}?monHocId=${monHocId}&tenSinhVien=${tenSinhVien}`;
                         let res = await AuthApis().get(e);
                         setDSSinhVien(res.data);
+                        setCheckKhoaDiem(false)
                     }
                     else {
                         e = `${e}?monHocId=${monHocId}`;
                         let res = await AuthApis().get(e);
                         setDSSinhVien(res.data);
+                        const data = res.data;
+                        const hasKhoaDiemZero = data.some(sinhvien => sinhvien.khoaDiem === 1);
+                        
+                        if(hasKhoaDiemZero){
+                            setCheckKhoaDiem(false);
+                        }
+
+                        
                     }
                     //Kiểm tra xem các cột điểm đã khóa hay chưa
-                    for (let sinhvien in DSSinhVien) {
-                        if (sinhvien.khoaDiem === 0) {
-                            setCheckKhoaDiem(true);
-                            return;
-                        }
-                    }
+                    
+                    
                 }
+
             } catch (ex) {
                 console.error(ex);
             }
+            
+            
         }
 
-
         loadSv();
+        
+        
+        
     }, [q, chot, success]);
 
 
@@ -223,7 +234,7 @@ const CTMonHoc = () => {
                             </table>
                             {DSSinhVien.length === 0 ? <Alert variant="secondary" className="mt-3">Không có sinh viên</Alert> : <></>}
                         </div>
-                        {DSSinhVien.length !== 0 && checkKhoaDiem ? <><Link onClick={chotDiem} className="btn btn-secondary mt-2 mb-5 ">Chốt Điểm</Link><PDFGenerator data={DSSinhVien} /></> : <Alert variant="secondary" className="mt-3">Danh sách điểm đã khóa</Alert>}
+                        {DSSinhVien.length !== 0 && checkKhoaDiem ? <><Link onClick={chotDiem} className="btn btn-secondary mt-2 mb-5 ">Chốt Điểm</Link><PDFGenerator data={DSSinhVien} /></> : <></>}
                         {checkTB === true ? <Alert variant="danger" className="mt-3">Thất bại do điểm chưa hoàn thành !!!</Alert> : <div></div>}
                         {DSSinhVien.length !== 0 && checkKhoaDiem ? <Form onSubmit={updateDiem}>
                             <Form.Group className="mb-3">

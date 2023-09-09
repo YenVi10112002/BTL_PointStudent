@@ -14,7 +14,6 @@ const MyUserReducer = (currentState, action) => {
         case "logout_chat":
             cookie.remove("user_chat_id");
         
-
     }
     return currentState;
 }

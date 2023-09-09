@@ -8,6 +8,7 @@ import com.av.pojo.PhieuMonHoc;
 import com.av.pojo.Monhoc;
 import com.av.pojo.Sinhvien;
 import com.av.repository.PhieuMonHocRepository;
+import com.av.service.DiemService;
 import com.av.service.MonHocService;
 import com.av.service.PhieuMonHocService;
 import com.av.service.SinhVienService;
@@ -44,7 +45,9 @@ public class ApiPhieuMoNhocController {
 
     @Autowired
     private SinhVienService svService;
-
+    
+    @Autowired
+    private DiemService diemService;
     @Autowired
     private PhieuMonHocService phieuMHService;
 
@@ -61,7 +64,7 @@ public class ApiPhieuMoNhocController {
     public ResponseEntity<String> listCart(@RequestBody Map<String, PhieuMonHoc> cart) {
         boolean success = this.phieuMHService.addPhieuMH(cart);
         if (success == true) {
-           return new ResponseEntity<>("Da xoa", HttpStatus.OK);
+           return new ResponseEntity<>("Đã thêm sinh viên vào lớp học", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("loi", HttpStatus.OK);
         }
@@ -85,13 +88,10 @@ public class ApiPhieuMoNhocController {
     @DeleteMapping("/giaovu/api/phieuMH/delete/{idMonHoc}")
     @ResponseStatus(HttpStatus.OK)
     @CrossOrigin
-    public ResponseEntity<String> removeFromCart(@PathVariable(value = "idMonHoc") Integer idMonHoc, @RequestParam(value = "idSinhVien") Integer idSinhVien) {
-        boolean success = this.phieuMHService.deletePhieuMH(idMonHoc);
-        if (success) {
-            return ResponseEntity.ok("Đã xoa thành công.");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Xoa thất bại.");
-        }
+    public ResponseEntity<?> removeFromCart(@PathVariable(value = "idMonHoc") Integer idMonHoc, @RequestParam(value = "idSinhVien") Integer idSinhVien) {
+        this.diemService.deleteDiem(idMonHoc, idSinhVien);
+        this.phieuMHService.deletePhieuMH(idMonHoc, idSinhVien);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/giaovu/api/monhoc/{idMonHoc}")

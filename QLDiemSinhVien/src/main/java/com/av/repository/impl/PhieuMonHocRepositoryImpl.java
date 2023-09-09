@@ -13,6 +13,7 @@ import com.av.repository.SinhVienRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -62,44 +63,48 @@ public class PhieuMonHocRepositoryImpl implements PhieuMonHocRepository {
         }
 
     }
+
     @Override
     public PhieuMonHoc getPhieuMonHoc() {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("From PhieuMonHoc");
         return (PhieuMonHoc) q.getSingleResult();
     }
-    
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public boolean deletePhieuMH(int idMonHoc) {
+    public boolean deletePhieuMH(PhieuMonHoc pmh) {
         Session s = this.factory.getObject().getCurrentSession();
-        PhieuMonHoc pmh = this.getPhieuMonHocByIdMh(idMonHoc);
         try {
-            if(pmh != null)
-            {
-                s.remove(pmh);
+            if (pmh != null) {
+                s.delete(pmh);
             }
             return true;
         } catch (HibernateException e) {
             e.printStackTrace();
             return false;
         }
-        
     }
 
     @Override
-    public PhieuMonHoc getPhieuMonHocByIdMh(int idMonHoc) {
+    public PhieuMonHoc getPhieuMonHocByIdMh(int idMonHoc, int idSinhVien) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<PhieuMonHoc> q = b.createQuery(PhieuMonHoc.class);
-
         Root<PhieuMonHoc> r = q.from(PhieuMonHoc.class);
-        q.select(r).where(b.equal(r.get("idMonHoc"), idMonHoc));
-        
-      
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(r.get("idMonHoc"), idMonHoc));
+        predicates.add(b.equal(r.get("idSinhVien"), idSinhVien));
+        q.select(r).where(predicates.toArray(Predicate[]::new));
+
         Query query = s.createQuery(q);
-        return (PhieuMonHoc) query.getSingleResult();
+        PhieuMonHoc a =  (PhieuMonHoc) query.getSingleResult();
+        try {
+            return a;
+        } catch (NoResultException ex) {
+            // Xử lý nếu không tìm thấy kết quả, có thể trả về null hoặc throw một exception tùy theo logic ứng dụng của bạn.
+            return null;
+        }
     }
 
     @Override

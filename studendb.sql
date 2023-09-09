@@ -26,10 +26,11 @@ CREATE TABLE `cauhoidiendang` (
   `idCauHoiDienDan` int NOT NULL AUTO_INCREMENT,
   `noiDungCauHoi` varchar(300) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `idTaiKhoan` int NOT NULL,
+  `ngayTao` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
   PRIMARY KEY (`idCauHoiDienDan`),
   KEY `idTaiKhoan_idx` (`idTaiKhoan`) /*!80000 INVISIBLE */,
   CONSTRAINT `idTaiKhoan` FOREIGN KEY (`idTaiKhoan`) REFERENCES `taikhoan` (`idTaiKhoan`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +39,7 @@ CREATE TABLE `cauhoidiendang` (
 
 LOCK TABLES `cauhoidiendang` WRITE;
 /*!40000 ALTER TABLE `cauhoidiendang` DISABLE KEYS */;
-INSERT INTO `cauhoidiendang` VALUES (1,'Bạn nghĩ những phẩm chất nào là quan trọng nhất để một nhân viên IT có thể thăng tiến?',9),(2,'Bạn có thể kể cho tôi về một lần mà công việc không theo ý muốn của bạn?',9),(3,'Bạn nghĩ các tiến bộ khoa học, công nghệ sẽ tác động đến công việc của bạn như thế nào?',9),(4,'Dự án IT gần đây nhất là bạn thực hiện là gì? Bạn đóng vai trò như thế nào trong dự án đó?',9),(5,'Ã¢',9),(6,'Báº¡n nÃ o cÃ³ viá»c lÃ m vÃ o ca ÄÃªm khÃ´ng áº¡ ??',9),(8,'Ban co biet dia chi truong o dau khong?',10);
+INSERT INTO `cauhoidiendang` VALUES (16,'Cái chết được hiểu như thế nào trong văn hóa của bạn?',10,'2023-09-09 04:45'),(17,'Sự sẵn có của cái chết ảnh hưởng đến cuộc sống của chúng ta như thế nào? ',10,'2023-09-09 04:45'),(18,'Cái chết và ý nghĩa của cuộc sống ?',10,'2023-09-09 04:45'),(19,'Làm thế nào các nghệ sĩ và nhà văn đã biểu thị cái chết trong tác phẩm của họ? Cái chết thường thể hiện qua nghệ thuật và văn hóa ở cách nào?',10,'2023-09-09 04:45'),(47,'thanhvi12',9,'2023-09-09 04:45'),(49,'hoangan@ou.edu.vn',34,'2023-09-09 04:48'),(50,'Bạn có khỏe không ?',34,'2023-09-09 15:04');
 /*!40000 ALTER TABLE `cauhoidiendang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,12 +62,13 @@ CREATE TABLE `diem` (
   `DiemTK2` double DEFAULT NULL,
   `DiemTK3` double DEFAULT NULL,
   `diemTrungBình` double DEFAULT NULL,
+  `khoaDiem` tinyint DEFAULT NULL,
   PRIMARY KEY (`idDiem`),
   KEY `idSinhVien_idx` (`idSinhVien`),
   KEY `idMonHoc_idx` (`idMonHoc`),
   CONSTRAINT `idMonHoc` FOREIGN KEY (`idMonHoc`) REFERENCES `monhoc` (`idMonHoc`),
   CONSTRAINT `idSinhVien` FOREIGN KEY (`idSinhVien`) REFERENCES `sinhvien` (`idSinhVien`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +77,7 @@ CREATE TABLE `diem` (
 
 LOCK TABLES `diem` WRITE;
 /*!40000 ALTER TABLE `diem` DISABLE KEYS */;
-INSERT INTO `diem` VALUES (59,36,1,'Giỏi',1,8,8,NULL,NULL,NULL,8),(60,36,2,'Giỏi',1,8,9,NULL,NULL,NULL,8.5),(61,36,3,'Giỏi',1,9,10,NULL,NULL,NULL,9.5),(62,36,4,'Giỏi',1,8,8,NULL,NULL,NULL,8),(63,36,5,'Giỏi',1,9,9,NULL,NULL,NULL,9),(64,36,6,'Giỏi',1,9,8,NULL,NULL,NULL,8.5),(65,36,7,'Giỏi',1,8,9,NULL,NULL,NULL,8.5),(66,37,1,'Giỏi',1,7,7,NULL,NULL,NULL,7),(67,37,2,'Giỏi',1,8,8,NULL,NULL,NULL,8),(68,37,3,'Giỏi',1,9,9,NULL,NULL,NULL,9),(69,37,4,'Giỏi',1,10,10,NULL,NULL,NULL,10),(70,37,5,'Giỏi',1,10,10,NULL,NULL,NULL,10),(71,37,6,'Giỏi',1,9,9,NULL,NULL,NULL,9),(72,37,7,'Giỏi',1,8,8,NULL,NULL,NULL,8),(73,37,8,'Giỏi',1,9,10,NULL,NULL,NULL,9.5);
+INSERT INTO `diem` VALUES (59,37,3,'Yếu',0,2,1,1,3,1,1.4,0),(60,36,2,'Yếu',0,1,1,1,1,1,1,0),(61,36,3,'Khá',1,7,7,5,7,9,6.8,0),(62,36,4,'Giỏi',1,8,8,NULL,NULL,NULL,8,0),(63,36,5,'Giỏi',1,9,9,NULL,NULL,NULL,9,0),(64,36,6,'Giỏi',1,9,8,NULL,NULL,NULL,8.5,0),(65,36,7,'Giỏi',1,8,9,NULL,NULL,NULL,8.5,0),(66,37,2,'Yếu',0,2,1,1,1,1,1.2,0),(88,37,24,'Giỏi',1,9,9,9,9,9,9,0);
 /*!40000 ALTER TABLE `diem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +110,7 @@ CREATE TABLE `giangvien` (
 
 LOCK TABLES `giangvien` WRITE;
 /*!40000 ALTER TABLE `giangvien` DISABLE KEYS */;
-INSERT INTO `giangvien` VALUES (11,'Thai Tan Phat','1995-03-08',1,'phat@gmail.com','Thong Nhat','094567893',37),(13,'Phan Thanh Vi','1997-04-10',1,'vi@gmail.com','Lê Lợi','092356897',39),(14,'Trịnh Bảo Duy','1996-08-04',0,'duy@gmail.com','Nguyễn Văn Lượng ','035467981',35),(16,'Nguyen Thanh','1996-08-07',0,'thanh@ou.edu.vn','Nguyen Van Luong','0986457123',NULL),(17,'Phạm Thanh Thanh','1992-03-04',1,'thanhthanh@gmail.com','2000 Gò Dầu, tân quý, tân Phú','039972203',34);
+INSERT INTO `giangvien` VALUES (11,'Thai Tan Phat','1995-03-08',1,'phat@gmail.com','Thong Nhat','094567893',37),(13,'Phan Thanh Vi','1997-04-10',1,'vi@gmail.com','Lê Lợi','092356897',39),(14,'Trịnh Bảo Duy','1996-08-04',0,'duy@gmail.com','Nguyễn Văn Lượng ','035467981',35),(17,'Phạm Thanh Thanh','1992-03-04',1,'thanhthanh@gmail.com','2000 Gò Dầu, tân quý, tân Phú','039972203',34);
 /*!40000 ALTER TABLE `giangvien` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +221,7 @@ CREATE TABLE `monhoc` (
 
 LOCK TABLES `monhoc` WRITE;
 /*!40000 ALTER TABLE `monhoc` DISABLE KEYS */;
-INSERT INTO `monhoc` VALUES (1,'Lập Trình JaVa','Tự Luận',3,1,'NK-206',11),(2,'Cấu Trúc Dữ Liệu Và Giải Thuật','Trắc Nghiệm',4,1,'NK-301',11),(3,'Lập Trình web','Trắc Nghiệm',4,1,'NK-405',11),(4,'Lập Trình Giao Diện','Tự Luận',4,1,'NK-110',11),(5,'Lập Trình Kiến Trúc','Đồ Án',4,2,'NK-101',13),(6,'Công Nghệ Hiện Đại','Đồ Án',3,2,'NK-402',13),(7,'Dữ Liệu Phân Tán','Tự Luận',4,2,'NK-105',14),(8,'Mạng Máy Tính','Trắc Nghiệm',3,2,'NK-102',14),(22,'Công Nghệ Phần Mềm','Đồ Án',4,3,'NK-103',14),(23,'Quản Trị Mạng','Tự Luận',4,3,'NK-105',13),(24,'Khởi Nghiệp','Đồ Án',4,3,'NK-305',13);
+INSERT INTO `monhoc` VALUES (1,'Lập Trình JaVa','Tự Luận',3,1,'NK-206',17),(2,'Cấu Trúc Dữ Liệu Và Giải Thuật','Trắc Nghiệm',4,1,'NK-301',17),(3,'Lập Trình web','Trắc Nghiệm',4,1,'NK-405',17),(4,'Lập Trình Giao Diện','Tự Luận',4,1,'NK-110',17),(5,'Lập Trình Kiến Trúc','Đồ Án',4,2,'NK-101',13),(6,'Công Nghệ Hiện Đại','Đồ Án',3,2,'NK-402',13),(7,'Dữ Liệu Phân Tán','Tự Luận',4,2,'NK-105',14),(8,'Mạng Máy Tính','Trắc Nghiệm',3,2,'NK-102',14),(22,'Công Nghệ Phần Mềm','Đồ Án',4,3,'NK-103',14),(23,'Quản Trị Mạng','Tự Luận',4,3,'NK-105',13),(24,'Khởi Nghiệp','Đồ Án',4,3,'NK-305',13);
 /*!40000 ALTER TABLE `monhoc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,14 +234,14 @@ DROP TABLE IF EXISTS `sinhvien`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sinhvien` (
   `idSinhVien` int NOT NULL AUTO_INCREMENT,
-  `hoTen` varchar(50) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `hoTen` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `heDaoTao` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `ngaySinh` date DEFAULT NULL,
   `diaChi` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `gioiTinh` tinyint DEFAULT NULL,
   `soDienThoai` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `maLop` int DEFAULT NULL,
-  `email` varchar(50) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `idTaiKhoan` int DEFAULT NULL,
   PRIMARY KEY (`idSinhVien`),
   UNIQUE KEY `idTaiKhoan_UNIQUE` (`idTaiKhoan`),
@@ -248,7 +250,7 @@ CREATE TABLE `sinhvien` (
   KEY `idTaiKhoanSinhVien_idx` (`idTaiKhoan`),
   CONSTRAINT `idLopHoc` FOREIGN KEY (`maLop`) REFERENCES `lophoc` (`idLopHoc`),
   CONSTRAINT `idTaiKhoanSinhVien` FOREIGN KEY (`idTaiKhoan`) REFERENCES `taikhoan` (`idTaiKhoan`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -257,7 +259,7 @@ CREATE TABLE `sinhvien` (
 
 LOCK TABLES `sinhvien` WRITE;
 /*!40000 ALTER TABLE `sinhvien` DISABLE KEYS */;
-INSERT INTO `sinhvien` VALUES (26,'Nguyễn Hoàng Thiên Ân','Trực tiếp','2002-11-22','161 Lê Thánh Tông, phường 15, Quận 1',0,'0134772501',1,'thienan@ou.edu.vn',NULL),(27,'Phạm Hoàng Khang','Trực Tiếp','2002-04-12','31 Lê Lai, phường 2, Gò Vấp',1,'0377625441',1,'hoangkhang@ou.edu.vn',NULL),(28,'Lê Anh Khoa','Trực tiếp','2002-07-01','14 Phan Văn Tri, p13, Gò Vấp',1,'07725405227',1,'anhkhoa@ou.edu.vn',NULL),(29,'Phạm Hoàng Vân Anh','Trực tiếp','2002-04-04','35 Lê Văn Sỹ, phường 1, tân Bình',0,'0703112345',1,'vananh@ou.edu.vn',NULL),(36,'Phạm Hoàng Ân','Trực tiếp','2002-02-12','200 Gò Dầu, Tân Quý, Tân Phú',1,'0397769522',1,'hoangan@ou.edu.vn',9),(37,'Phan Yến Vi','Trực tiếp','2002-03-01','312 Quang Trung, Phường 12, Gò Vấp',0,'0722711246',1,'yenvi@ou.edu.vn',10),(38,'Phạm Hoàng Khánh Vân','Trực tiếp','2002-07-01','47 Âu Cơ, phường 14, Tân Bình',0,'0705522417',1,'khanhvan@ou.edu.vn',NULL),(39,'Phan Y Nhi','Truc tiep','2002-06-13','100 Tan Son Nhat',0,'0986457123',2,'ynhi@ou.edu.vn',NULL);
+INSERT INTO `sinhvien` VALUES (28,'Lê Anh Khoa','Trực tiếp','2002-07-01','14 Phan Văn Tri, p13, Gò Vấp',1,'07725405227',1,'anhkhoa@ou.edu.vn',47),(29,'Phạm Hoàng Vân Anh','Trực tiếp','2002-04-04','35 Lê Văn Sỹ, phường 1, tân Bình',0,'0703112345',1,'vananh@ou.edu.vn',NULL),(36,'Phạm Hoàng Ân','Trực tiếp','2002-02-12','200 Gò Dầu, Tân Quý, Tân Phú',1,'0397769522',1,'hoangan@ou.edu.vn',9),(37,'Phan Yến Vi','Trực tiếp','2002-03-01','312 Quang Trung, Phường 12, Gò Vấp',0,'0722711246',1,'2051050021ani@ou.edu.vn',10),(38,'Phạm Hoàng Khánh Vân','Trực tiếp','2002-07-01','47 Âu Cơ, phường 14, Tân Bình',0,'0705522417',1,'khanhvan@ou.edu.vn',49),(39,'Phan Y Nhi','Truc tiep','2002-06-13','100 Tan Son Nhat',0,'0986457123',2,'ynhi@ou.edu.vn',48);
 /*!40000 ALTER TABLE `sinhvien` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,11 +275,11 @@ CREATE TABLE `taikhoan` (
   `TenTaiKhoan` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `MatKhau` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `ChucVu` int DEFAULT NULL,
-  `image` varchar(1000) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `image` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   PRIMARY KEY (`idTaiKhoan`),
   KEY `idloaitk_idx` (`ChucVu`),
   CONSTRAINT `idloaitk` FOREIGN KEY (`ChucVu`) REFERENCES `loaitaikhoan` (`idloaitaikhoan`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,7 +288,7 @@ CREATE TABLE `taikhoan` (
 
 LOCK TABLES `taikhoan` WRITE;
 /*!40000 ALTER TABLE `taikhoan` DISABLE KEYS */;
-INSERT INTO `taikhoan` VALUES (6,'vanan','$2a$12$i4zdEUlM8hFivEfebiKohu48RZaaJN4K2/NgEWeD740XBswHCep0u',1,''),(7,'kimtuyen','$2a$12$vTtcPHbAkpbyVo8xVLaIKu1hVnliW6Sxmg7Xs0oh9Ab3kBfKT57my',1,''),(8,'vanthanh','$2a$12$I7zWTMDg8luaH4j6pBAY0ug/9/IcxdXQuXOuCpx4i85sbjHwdCboa',1,''),(9,'hoangan@ou.edu.vn','$2a$12$rSt08iChMsNtWY6poU00EuhR0a71qmmmLHPjee9aZ5Fcx.J5CeQA.',3,''),(10,'yenvi@ou.edu.vn','$2a$12$ZZtS0hP3Q.qzeMtj/LJfv.q6OeoTe/.C5VyXLJV9W2hYTYEqUNv/a',3,''),(34,'thanhvi','$2a$10$ZO9WmpbqiBvbQVk/oqRn0.UHJ6HtZwz7dJwaplqngR9As.sYgqfTC',2,''),(35,'baoduy','$2a$10$HcmRtCU8Dqq7axZTs6PkVeacTKV3DTIfK4/QqBqxpRqeeWAcbGJXa',2,''),(37,'phat789','$2a$10$j7PFjCfev3urSyau2t7daeV7apSoeaJBPEbokEl75rIKmKyiEwrnC',2,NULL),(39,'thuyenngu','$2a$10$1RdOE7QnpxveF2HQsFhfSukGU8PcYEUo.jbGtA.WJ8/QYmE9K2JGa',2,NULL);
+INSERT INTO `taikhoan` VALUES (6,'vanan','$2a$10$xFjJA.u4nzT3Tgo.Xrb2qOlyJX39WWdWaUCH8SuuYxe7Vw44TM9NW',1,''),(7,'kimtuyen','$2a$12$vTtcPHbAkpbyVo8xVLaIKu1hVnliW6Sxmg7Xs0oh9Ab3kBfKT57my',1,''),(8,'vanthanh','$2a$12$I7zWTMDg8luaH4j6pBAY0ug/9/IcxdXQuXOuCpx4i85sbjHwdCboa',1,''),(9,'hoangan@ou.edu.vn','$2a$10$gXzl63/9Uwrc1N12ox8HxOQSSnn5MQFU7qLQzDlC/ZHcmV9vaMPrC',3,'https://res.cloudinary.com/dhcvsbuew/image/upload/v1694098671/kekpddka5eimdzjfpebs.jpg'),(10,'2051050021@ou.edu.vn','$2a$12$ZZtS0hP3Q.qzeMtj/LJfv.q6OeoTe/.C5VyXLJV9W2hYTYEqUNv/a',3,'https://res.cloudinary.com/dhcvsbuew/image/upload/v1693411526/r5p1bbftvkfwg63akh1p.jpg'),(34,'thanhvi','$2a$10$K599eXIER88KrE41rbeOZORYk/SNTEpk05ULA42uxIOGAtx9v/BMG',2,'https://res.cloudinary.com/dhcvsbuew/image/upload/v1694246122/cozbha1e0w8urvm66bcv.jpg'),(35,'baoduy','$2a$10$HcmRtCU8Dqq7axZTs6PkVeacTKV3DTIfK4/QqBqxpRqeeWAcbGJXa',2,''),(37,'phat789','$2a$10$j7PFjCfev3urSyau2t7daeV7apSoeaJBPEbokEl75rIKmKyiEwrnC',2,NULL),(39,'thuyenngu','$2a$10$1RdOE7QnpxveF2HQsFhfSukGU8PcYEUo.jbGtA.WJ8/QYmE9K2JGa',2,NULL),(47,'anhkhoa@ou.edu.vn','$2a$10$flUZEtnxd1LtKBLT5LI/SOZGvlDb/I3hZ2JQYtozY7mYT5aj/p8Yy',3,NULL),(48,'ynhi@ou.edu.vn','$2a$10$AKe.iGORM4RrlGdMa1ui4uXTLy1LwJxdXQ7qBSEyuMsVgHJ4XAYRi',3,NULL),(49,'khanhvan@ou.edu.vn','$2a$10$z99amQNFQgWmPa/EsEVNfORXsAAxuVSfULJgucmqfSrHpCg9BP9/G',3,NULL);
 /*!40000 ALTER TABLE `taikhoan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -299,7 +301,7 @@ DROP TABLE IF EXISTS `traloidiendan`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `traloidiendan` (
   `idTraLoiDienDan` int NOT NULL AUTO_INCREMENT,
-  `noiDungTraLoi` varchar(400) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `noiDungTraLoi` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `idTaiKhoan` int DEFAULT NULL,
   `idCauHoiDienDan` int DEFAULT NULL,
   PRIMARY KEY (`idTraLoiDienDan`),
@@ -307,7 +309,7 @@ CREATE TABLE `traloidiendan` (
   KEY `idTaiKhoan_idx` (`idTaiKhoan`),
   CONSTRAINT `idCauHoi` FOREIGN KEY (`idCauHoiDienDan`) REFERENCES `cauhoidiendang` (`idCauHoiDienDan`),
   CONSTRAINT `idTaiKhoanCauTraLoi` FOREIGN KEY (`idTaiKhoan`) REFERENCES `taikhoan` (`idTaiKhoan`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -316,7 +318,7 @@ CREATE TABLE `traloidiendan` (
 
 LOCK TABLES `traloidiendan` WRITE;
 /*!40000 ALTER TABLE `traloidiendan` DISABLE KEYS */;
-INSERT INTO `traloidiendan` VALUES (1,'Có nha bạn !!',10,1),(2,'Cáº§n cá»«u vÃ  siÃªng nÄng.',9,1),(3,'minh khong biet',9,1),(4,'Lamg báº£o vá» ÄÆ°á»£c khÃ´ng áº¡',9,6);
+INSERT INTO `traloidiendan` VALUES (23,'Cái chết là sự khỏi đầu của một cuộc sống khác theo hình thức khác.',34,16),(24,'Cái chết là sự ràng buộc và bổ sung cho sự sống.',34,16),(25,'hoangan@ou.edu.vn',9,16),(26,'Cung bay do ban',9,16),(27,'thanhvi',9,16),(28,'hoangan@ou.edu.vn',9,16),(29,'thienan@ou.edu.vn',9,16),(30,'cua2432002@gmail.com',9,16),(31,'hoangan@ou.edu.vn',34,17),(32,'thanhvi',34,17);
 /*!40000 ALTER TABLE `traloidiendan` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -329,4 +331,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-29 15:53:53
+-- Dump completed on 2023-09-09 18:27:48

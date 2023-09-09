@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Admin
  */
 public interface TaiKhoanRepository {
-    boolean updateImg(Taikhoan s);
+    Taikhoan updateImg(Taikhoan s);
     Taikhoan getTaiKhoan(int idTaiKhoan);
     boolean addAcount(Taikhoan t);
     boolean addAcountGV(Taikhoan t);

@@ -90,7 +90,7 @@ public class DiemServiceImpl implements DiemService {
         String xepLoai;
         Short trangThai;
 
-    if (diem1.getDiemKT1() == null) {
+        if (diem1.getDiemKT1() == null) {
             diemTB = (diem1.getDiemGiuaKy() + diem1.getDiemCuoiKy()) * 0.5;
         } else if (diem1.getDiemTK2() == null) {
             diemTB = (diem1.getDiemGiuaKy() * 0.4 + diem1.getDiemKT1() * 0.1 + diem1.getDiemCuoiKy() * 0.5);
@@ -128,7 +128,7 @@ public class DiemServiceImpl implements DiemService {
         diem.setTrangThai(trangThai);
         diem.setXepLoai(xepLoai);
         diem.setDiemCuoiKy(diem1.getDiemCuoiKy());
-        diem.setDiemGiuaKy(diem1.getDiemCuoiKy());
+        diem.setDiemGiuaKy(diem1.getDiemGiuaKy());
         diem.setDiemKT1(diem1.getDiemKT1());
         diem.setDiemTK2(diem1.getDiemTK2());
         diem.setDiemTK3(diem1.getDiemTK3());
@@ -175,28 +175,33 @@ public class DiemServiceImpl implements DiemService {
         return "oke";
     }
 
-@Override
-public Diem getDiemByIdMonHoc(int idMonHoc, int idSinhVien
+    @Override
+    public Diem getDiemByIdMonHoc(int idMonHoc, int idSinhVien
     ) {
 
         return this.diemRepository.getDiemByIdMonHoc(idMonHoc, idSinhVien);
     }
 
     @Override
-public Diem getDiemByIdDiem(Map<String, String> params) {
+    public Diem getDiemByIdDiem(Map<String, String> params) {
         String idDiem = params.get("idDiem");
         Diem diem = this.diemRepository.getDiemByIdDIem(Integer.parseInt(idDiem));
         return diem;
     }
 
     @Override
-public List<Diem> getDiemByidGiangVien(Map<String, String> params) {
+    public List<Diem> getDiemByidGiangVien(Map<String, String> params) {
         return this.diemRepository.getDiemByidGiangVien(params);
     }
 
     @Override
-public boolean khoaDiem(Map<String, String> params) {
-       return this.diemRepository.khoaDiem(params);
+    public boolean khoaDiem(Map<String, String> params) {
+        return this.diemRepository.khoaDiem(params);
     }
 
+    @Override
+    public boolean deleteDiem(int idMonHoc, int idSinhVien) {
+        return this.diemRepository.deleteDiem(idMonHoc, idSinhVien);
+    }
+    
 }

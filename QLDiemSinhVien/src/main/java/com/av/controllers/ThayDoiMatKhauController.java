@@ -36,11 +36,19 @@ public class ThayDoiMatKhauController {
     }
 
     @PostMapping("/giaovu/thaydoimatkhau")
-    public String doiMatKhau(@ModelAttribute(value = "taiKhoan") Taikhoan tk) {
-        if (tk != null) {
+    public String doiMatKhau(@ModelAttribute(value = "taiKhoan") Taikhoan tk, Model model) {
+        String errMsg = "";
+        if (tk.getMatKhau().isEmpty() || tk.getXacNhanMk().isEmpty() || tk.getMkMoi().isEmpty()) {
+            errMsg = "Vui lòng điền đầy đủ thong tin !!!";
+        } else if (tk.getMkMoi().equals(tk.getXacNhanMk())) {
             this.tkService.thayDoiMatKhauAD(tk);
-            return "redirect:/giaovu/thaydoimatkhau";
+            errMsg = "Thay Đổi Thành Công";
+           
+            
+        } else {
+            errMsg = "Mật khẩu không trùng khớp !!!";
         }
+        model.addAttribute("errMsg", errMsg);
         return "thaydoimatkhau";
     }
 

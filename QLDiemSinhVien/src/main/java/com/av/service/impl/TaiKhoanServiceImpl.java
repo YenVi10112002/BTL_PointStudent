@@ -56,8 +56,8 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
                 Logger.getLogger(TaiKhoanService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        this.taikhoanRepository.updateImg(tk);
-        return tk;
+        Taikhoan user = this.taikhoanRepository.updateImg(tk);
+        return user;
     }
     @Override
     public Taikhoan getTaiKhoan(int idTaiKhoan) {
@@ -152,5 +152,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         this.taikhoanRepository.thayDoiMatKhau(a);
         return user;
     }
+
+    
     
 }

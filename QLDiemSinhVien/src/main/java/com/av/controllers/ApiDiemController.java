@@ -36,8 +36,7 @@ public class ApiDiemController {
     private DiemService diemService;
 
 
-    @Autowired
-    private JavaMailSender emailSender;
+    
 
 
     @RequestMapping("/DSDiemSVHocKy/")
@@ -67,14 +66,8 @@ public class ApiDiemController {
     @PostMapping("/add-diem/")
     @CrossOrigin
     public ResponseEntity<String> addTraLoi(@RequestBody Diem diem) {
-//        this.diemService.addDiem(diem);
-        SimpleMailMessage message = new SimpleMailMessage();
-        if (this.diemService.addDiem(diem) != null) {
-            message.setTo("cua2432002@gmail.com");
-            message.setSubject("Thăng kia trả t 50tr");
-            message.setText("Nguoi dung đã đăng bai mới!!! Vào Xem");
-            emailSender.send(message);
-        }
+        this.diemService.addDiem(diem);
+//       
         return new ResponseEntity<>("Successfull", HttpStatus.OK);
     }
 

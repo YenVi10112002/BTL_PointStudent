@@ -5,6 +5,7 @@
 package com.av.repository;
 
 import com.av.pojo.PhieuMonHoc;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Map;
 public interface PhieuMonHocRepository {
     boolean addPhieuMH(Map<String, PhieuMonHoc> carts);
     PhieuMonHoc getPhieuMonHoc();
-    boolean deletePhieuMH(int idMonHoc);
-    PhieuMonHoc getPhieuMonHocByIdMh(int idMonHoc);
+    boolean deletePhieuMH(PhieuMonHoc pmh);
+    PhieuMonHoc getPhieuMonHocByIdMh(int idMonHoc, int idSinhVien);
     PhieuMonHoc getPhieuMonHocByIdSv(int idSinhVien);
 }

@@ -47,13 +47,10 @@ public class DienDanServiceImpl implements DienDanService {
     public boolean addOrUpdateCauHoi(Cauhoidiendang p) {
         return loRepository.addOrUpdateCauHoi(p);
     }
-
     @Override
     public boolean deleteCauHoi(Map<String, String> params) {
         Cauhoidiendang cauhoi = this.loRepository.getCauHoiById(params);
         this.loRepository.deleteCauHoi(cauhoi);
         return this.loRepository.deleteCauHoi(cauhoi);
-
     }
-
 }

@@ -9,12 +9,13 @@ const Login = () => {
   const [user, dispatch] = useContext(MyUserConText);
   const [username, setusername] = useState();
   const [password, setpassword] = useState();
-  const [taiKhoan, setTaiKhoan] = useState([]);
+  const [success, setSuccess] = useState(false);
   let nav = useNavigate();
 
 
   const login = (evt) => {
     evt.preventDefault();
+    setSuccess(false);
 
 
     const process = async () => {
@@ -28,14 +29,15 @@ const Login = () => {
 
         let { data } = await AuthApis().get(endpoints['current-user']);
         cookie.save("user", data);
-        setTaiKhoan(data);
-        if (taiKhoan.chucVu.tenloaitaikhoan == "ROLE_SV") {
+        if (data.chucVu.tenloaitaikhoan == "ROLE_SV") {
           let sinhvien = await AuthApis().get(endpoints['current-sinhvien']);
           cookie.save("sinhvien", sinhvien.data);
+          nav("/home")
         }
         else {
           let giangvien = await AuthApis().get(endpoints['current-giangvien']);
           cookie.save("giangvien", giangvien.data);
+          nav("/giangvien/home")
         }
         dispatch({
           "type": "login",
@@ -44,6 +46,8 @@ const Login = () => {
 
       } catch (ex) {
         console.error(ex);
+        setSuccess(true);
+
       }
     }
     process();
@@ -83,8 +87,10 @@ const Login = () => {
               <Button id="submit" type="submit">
                 Đăng Nhập
               </Button>
+             
 
             </Form.Group>
+            {success ? <Alert variant="danger">Sai tên tài khoản hoặc mật khẩu</Alert> : <div></div>}
             <div>
               <hr width="100%" size="3px" align="center" color="#9C9C9C" />
               <div className="btn-submit">

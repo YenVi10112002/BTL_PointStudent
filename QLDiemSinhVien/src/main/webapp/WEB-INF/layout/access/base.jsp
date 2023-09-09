@@ -4,7 +4,7 @@
     Author     : FPTSHOP
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+ <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html>
 <html>
@@ -17,6 +17,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </head>
     <body>
+        <% request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8"); %>
         <tiles:insertAttribute name="header" />
         <div class="container">
             <tiles:insertAttribute name="content"/>
@@ -67,7 +69,7 @@
             width:  100%;
             text-align: center;
         }
-        
+
         .text-center{
             text-align: center;
         }
@@ -92,7 +94,7 @@
             font-family: initial;
             font-size: 30px;
         }
-            
+
         .margin-auto{
             margin-left: auto;
             margin-right: auto;

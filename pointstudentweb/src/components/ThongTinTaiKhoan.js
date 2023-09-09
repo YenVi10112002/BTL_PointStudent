@@ -4,6 +4,7 @@ import { useContext, useRef, useState } from "react";
 import MySpinner from "../layout/MySpinner";
 import { AuthApis, endpoints } from "../configs/Apis";
 import HeaderSV from "../layout/sinhvien/HeaderSV"
+import cookie from "react-cookies";
 
 
 const Thongtintaikhoan = () => {
@@ -21,6 +22,8 @@ const Thongtintaikhoan = () => {
         "matKhau": user.matKhau,
         "chucVu": user.chucVu.tenloaitaikhoan,
     });
+    
+      
 
     const updateImage = (evt) => {
         evt.preventDefault();
@@ -38,6 +41,8 @@ const Thongtintaikhoan = () => {
 
             setLoading(true)
             let res = await AuthApis().post(endpoints['udateImage'], form);
+            
+            cookie.update("user", res.data);
         }
         if (avatar.current.files.length > 0) {
             process();

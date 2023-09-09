@@ -30,8 +30,9 @@ public interface DiemRepository {
         Diem getDiemByIdDIem(int idDiem);
          List<Diem> getDiemByidGiangVien(Map<String, String> params);
         boolean khoaDiem(Map<String, String> params);
-        //lay va xoa diem theo sinh vien
         List<Diem> getDiemBySinhVien(int idSinhVien);
         boolean deleteDiemBySinhVien(int idSinhVien);
+        boolean deleteDiem(int idMonHoc, int idSinhVien);
+        
 
 }

@@ -12,25 +12,6 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="footer"
                        value="/WEB-INF/layout/access/footer.jsp" />
     </definition>
-    <definition name="baseLayoutTeacher"
-                template="/WEB-INF/layout/teacher/base.jsp">
-        <put-attribute name="title" value="" />
-        <put-attribute name="header"
-                       value="/WEB-INF/layout/teacher/header.jsp" />
-        <put-attribute name="content" value="" />
-        <put-attribute name="footer"
-                       value="/WEB-INF/layout/teacher/footer.jsp" />
-    </definition>
-    
-    <definition name="baseLayoutStudent"
-                template="/WEB-INF/layout/student/base.jsp">
-        <put-attribute name="title" value="" />
-        <put-attribute name="header"
-                       value="/WEB-INF/layout/student/header.jsp" />
-        <put-attribute name="content" value="" />
-        <put-attribute name="footer"
-                       value="/WEB-INF/layout/student/footer.jsp" />
-    </definition>
     <definition name="baseLayoutAdmin"
                 template="/WEB-INF/layout/admin/base.jsp">
         <put-attribute name="title" value="" />
@@ -50,38 +31,6 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Đăng Ký" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/access/signup.jsp" />
-    </definition>
-    
-    
-    <definition name="sinhvien" extends="baseLayoutStudent">
-        <put-attribute name="title" value="Tổng Quan" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/student/index.jsp" />
-    </definition>
-    <definition name="diendansinhvien" extends="baseLayoutStudent">
-        <put-attribute name="title" value="Diễn Đàn" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/student/diendan.jsp" />
-    </definition>
-    
-    <definition name="xemdiemsinhvien" extends="baseLayoutStudent">
-        <put-attribute name="title" value="Xem Điểm" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/student/xemdiemsinhvien.jsp" />
-    </definition>
-    
-    
-    
-    
-    <definition name="giaovien" extends="baseLayoutTeacher">
-        <put-attribute name="title" value="Giáo Viên" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/teacher/index.jsp" />
-    </definition>
-    <definition name="nhapdiem" extends="baseLayoutTeacher">
-        <put-attribute name="title" value="Nhập Điểm" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/teacher/nhapdiem.jsp" />
     </definition>
     <definition name="admin" extends="baseLayoutAdmin">
         <put-attribute name="title" value="Trang chủ" />

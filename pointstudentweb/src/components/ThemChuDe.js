@@ -21,6 +21,7 @@ const Themchude = () => {
             }
             let res = await AuthApis().get(ch);
             setcauhoi(res.data);
+            setNoiDung(res.data.noiDungCauHoi)
         
         }
         loadcauhoi();

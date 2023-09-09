@@ -42,5 +42,6 @@ public interface DiemService {
     List<Diem> getDiemByidGiangVien(Map<String, String> params);
 
     boolean khoaDiem(Map<String, String> params);
-
+    
+    boolean deleteDiem(int idMonHoc, int idSinhVien);
 }

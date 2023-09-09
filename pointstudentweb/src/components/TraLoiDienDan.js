@@ -14,7 +14,9 @@ const TraLoiDienDan = () => {
     const [cauhoi, setcauhoi] = useState([]);
     const [q] = useSearchParams();
     useEffect(() => {
+        
         const loadcautraloi = async () => {
+
             try {
                 let e = endpoints['cauTraLoi'];
                 let cauhoiid = q.get("cauhoiId");
@@ -41,7 +43,7 @@ const TraLoiDienDan = () => {
         }
         loadcautraloi();
         loadcauhoi();
-    }, [q], setChangeSuccess)
+    }, [q, cautraloi])
 
     const addTraLoi = (evt) => {
         evt.preventDefault();

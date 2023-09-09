@@ -12,7 +12,7 @@ const ThemChuDeGV = () => {
 
     let cauhoiid = q.get("cauhoiId");
     useEffect(() => {
-        
+
         const loadcauhoi = async () => {
             let ch = endpoints['cauhoi']
             let cauhoiid = q.get("cauhoiId");
@@ -21,7 +21,10 @@ const ThemChuDeGV = () => {
             }
             let res = await AuthApis().get(ch);
             setcauhoi(res.data);
-        
+            const currentDate = new Date();
+            console.log(currentDate);
+            setNoiDung(res.data.noiDungCauHoi)
+
         }
         loadcauhoi();
     }, [q])
@@ -29,20 +32,24 @@ const ThemChuDeGV = () => {
 
     const addCauHoi = (evt) => {
         evt.preventDefault();
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+        const formattedTime = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
         const process = async () => {
             try {
                 let cauhoiid = q.get("cauhoiId");
                 let res = await AuthApis().post(endpoints['themCauHoi'], {
                     "noiDungCauHoi": noiDung,
                     "idTaiKhoan": user.idTaiKhoan,
-                    "idCauHoiDienDan": cauhoiid
+                    "idCauHoiDienDan": cauhoiid,
+                    "ngayTao": `${formattedDate} ${formattedTime}`
                 })
             } catch (ex) {
                 console.error(ex);
             }
         }
         process();
-        
+
         nav("/giangvien/diendan");
     };
 
@@ -56,10 +63,10 @@ const ThemChuDeGV = () => {
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Nhập nội dung câu hỏi</Form.Label>
                         <Form.Control className="form-control me-2" type="text" value={noiDung}
-                            onChange={(e) => setNoiDung(e.target.value)} placeholder="Câu hỏi....." required/>
+                            onChange={(e) => setNoiDung(e.target.value)} placeholder="Câu hỏi....." required />
                     </Form.Group>
-                   
-                    {cauhoiid === null ?  <Button className="btn-traloi-diendan mt-3" type="submit"><i class="fa-solid fa-reply icon-padding"></i>Thêm Câu Hỏi</Button>:<Button className="btn-traloi-diendan mt-3" type="submit"><i class="fa-solid fa-reply icon-padding"></i>Chỉnh Sửa</Button>}
+
+                    {cauhoiid === null ? <Button className="btn-traloi-diendan mt-3" type="submit"><i class="fa-solid fa-reply icon-padding"></i>Thêm Câu Hỏi</Button> : <Button className="btn-traloi-diendan mt-3" type="submit"><i class="fa-solid fa-reply icon-padding"></i>Chỉnh Sửa</Button>}
                 </div>
             </Form>
         </div>

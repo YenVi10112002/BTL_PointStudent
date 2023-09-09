@@ -1,8 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, push, set, onValue } from 'firebase/database';
+import { getDatabase, ref, push, set, onValue, child, get } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
-
 const firebaseConfig = {
     apiKey: "AIzaSyDuZucgs6c6UlErIBi4QTWS6yNvkM6EbCo",
     authDomain: "studentapp-7afc7.firebaseapp.com",
@@ -22,4 +21,4 @@ const database = getDatabase(app);
 const auth = getAuth(app);
 
 
-export { database, ref, onValue, push, set, auth };
+export { database, ref, onValue, push, set, auth,  child, get };

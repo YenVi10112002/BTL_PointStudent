@@ -96,7 +96,7 @@ function unselectItem(idMonHoc) {
     const buttonElement = event.currentTarget;
 
     if (buttonElement.innerText === "Hủy chọn") {
-        fetch(`/QLDiemSinhVien/giaovu/api/phieuMH/delete/${idMonHoc}`, {
+        fetch(`/QLDiemSinhVien/giaovu/api/phieuMH/delete/${idMonHoc}?idSinhVien=${idSinhVien}`, {
             method: "DELETE",
         })
                 .then(response => {

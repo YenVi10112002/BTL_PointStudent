@@ -36,7 +36,7 @@ const XemDiem = () => {
 
     return (
         <><div class="contend">
-            <HeaderSV  />
+            <HeaderSV />
             <div class="point">
                 <h4>Tổng quan</h4>
                 <h6 class="text-header-tong">Tổng Hợp Nhanh Các Thông Tin </h6>
@@ -55,7 +55,20 @@ const XemDiem = () => {
                             <tr>
                                 <td>{Diem}</td>
                                 <td>{DiemHe4}</td>
-                                <td>Giỏi</td>
+                                <td>
+                                    {(() => {
+                                        switch (true) {
+                                            case Diem >= 8.5:
+                                                return 'Giỏi';
+                                            case Diem >= 7:
+                                                return 'Khá';
+                                            case Diem >= 5:
+                                                return 'Trung bình';
+                                            default:
+                                                return 'Yếu';
+                                        }
+                                    })()}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -78,18 +91,16 @@ const XemDiem = () => {
 
                         <tbody>
                             {DSDiem.map(c => {
-                                return (<tr>
+                                return (<tr key={c[5]}>
                                     <td>{c[5]}</td>
                                     <td>{c[4]}</td>
-                                    {c[7] === 1 ? <><td>{c[2]}</td>
-                                        <td>{c[1]}</td>
-                                        <td>{c[0]}</td>
-                                        <td>{c[6]}</td>
-                                        <td>{c[3] === 1 ? 'Đậu' : 'Rớt'}</td></> : <><td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Chưa nhập điểm</td></>}
+                                    <td>{c[1]}</td>
+                                    <td>{c[2]}</td>
+                                    <td>{parseFloat(c[0]).toFixed(2)}</td>
+                                    <td>{parseFloat(c[6]).toFixed(2)}</td>
+                                    {c[7] === 1 ? <>
+                                        <td>{c[3] === 1 ? 'Đậu' : 'Rớt'}</td></> : <>
+                                        <td>Chưa khóa</td></>}
 
                                 </tr>
                                 )
