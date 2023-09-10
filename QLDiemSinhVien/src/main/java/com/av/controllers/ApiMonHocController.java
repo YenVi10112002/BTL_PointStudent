@@ -44,12 +44,12 @@ public class ApiMonHocController {
         return new ResponseEntity<>(this.mhService.getMonHocByGiangVien(params), HttpStatus.OK);
     }
     
+    
     @GetMapping("/api/monhocsinhvien/")
     @CrossOrigin
     public ResponseEntity<List<Object>> listSVMH(@RequestParam Map<String, String> params){
         return new ResponseEntity<>(this.svService.getSinhvienByMonHoc(params), HttpStatus.OK);
     }
     
-    
-    
+        
 }

@@ -40,7 +40,7 @@ function App() {
   const [sinhvien, dispatchsv] = useReducer(MyUserReducer, cookie.load("sinhvien") || null);
   const [giangvien, dispatchgv] = useReducer(MyUserReducer, cookie.load("giangvien") || null);
   if (user !== null) {
-    if (user.chucVu.tenloaitaikhoan === "ROLE_SV" && sinhvien !==null) {
+    if (user.chucVu.tenloaitaikhoan === "ROLE_SV") {
       return (
         <MyUserConText.Provider value={[user, dispatch, sinhvien, dispatchsv]}>
           <BrowserRouter>
@@ -60,7 +60,7 @@ function App() {
         </MyUserConText.Provider>
       );
     }
-    else if (user.chucVu.tenloaitaikhoan === "ROLE_GV" && giangvien !==null){
+    else if (user.chucVu.tenloaitaikhoan === "ROLE_GV"){
       return (
         <MyUserConText.Provider value={[user, dispatch, giangvien, dispatchgv]}>
           <BrowserRouter>

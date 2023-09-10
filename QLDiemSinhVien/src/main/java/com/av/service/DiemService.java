@@ -44,4 +44,10 @@ public interface DiemService {
     boolean khoaDiem(Map<String, String> params);
     
     boolean deleteDiem(int idMonHoc, int idSinhVien);
+    
+    
+    
+    
+    
+    
 }

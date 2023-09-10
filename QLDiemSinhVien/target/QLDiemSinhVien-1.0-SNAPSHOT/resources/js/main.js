@@ -75,7 +75,7 @@ function addToCart(idMonHoc) {
                 })
                 .then(responseText => {
                     alert(responseText);
-                    buttonElement.innerText = "Hủy chọn";
+                    buttonElement.innerText = "Đã chọn";
                     buttonElement.onclick = function () {
                         unselectItem(idMonHoc);
                     };

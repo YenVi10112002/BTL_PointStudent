@@ -203,5 +203,5 @@ public class DiemServiceImpl implements DiemService {
     public boolean deleteDiem(int idMonHoc, int idSinhVien) {
         return this.diemRepository.deleteDiem(idMonHoc, idSinhVien);
     }
-    
+     
 }

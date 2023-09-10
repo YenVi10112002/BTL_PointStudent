@@ -93,7 +93,8 @@ public class ApiPhieuMoNhocController {
         this.phieuMHService.deletePhieuMH(idMonHoc, idSinhVien);
         return ResponseEntity.ok().build();
     }
-
+    
+    
     @GetMapping("/giaovu/api/monhoc/{idMonHoc}")
     @CrossOrigin
     public ResponseEntity<Integer> cart(@RequestParam(value = "idSinhVien") Integer idSinhVien, @PathVariable(value = "idMonHoc") Integer id, HttpSession session
@@ -103,7 +104,6 @@ public class ApiPhieuMoNhocController {
         if (cart == null) {
             cart = new HashMap<>();
         }
-
         if (cart.containsKey(id) == true) {
             errMsg = "Môn học đã tồn tại trong giỏ hàng";
         } else {
@@ -119,6 +119,7 @@ public class ApiPhieuMoNhocController {
         }
         session.setAttribute("cart", cart);
 
+        
         return new ResponseEntity<>(Utils.countCart(cart), HttpStatus.OK);
 //        System.out.printf("=== Cart = %d\n", Utils.countCart(cart));
     }

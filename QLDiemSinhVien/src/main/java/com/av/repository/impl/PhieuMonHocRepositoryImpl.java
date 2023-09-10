@@ -53,15 +53,15 @@ public class PhieuMonHocRepositoryImpl implements PhieuMonHocRepository {
                 Diem d = new Diem();
                 d.setIdMonHoc(mhRepository.getMonHocById(c.getIdMonHoc()));
                 d.setIdSinhVien(svRepository.getSinhVienById(c.getIdSinhVien()));
+                short a = 0;
+                d.setKhoaDiem(a);
                 s.save(d);
-
             }
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
-
     }
 
     @Override

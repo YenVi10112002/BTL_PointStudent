@@ -24,6 +24,7 @@ public interface DiemRepository {
         List<Object> getListDiemTrungBinh(int sinhvienId);
         List<Object> getListDiemTrungBinh2(Map<String, String> params);
         List<Object> getListDiem2(Map<String, String> params);
+        
         Diem addDiem(Diem diem);
         List<Diem> getDiemByCSV(Map<String, String> params);
         Diem getDiemByIdMonHoc(int idMonHoc, int idSinhVien);
@@ -34,5 +35,6 @@ public interface DiemRepository {
         boolean deleteDiemBySinhVien(int idSinhVien);
         boolean deleteDiem(int idMonHoc, int idSinhVien);
         
+
 
 }

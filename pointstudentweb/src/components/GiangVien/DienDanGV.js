@@ -36,7 +36,7 @@ const DienDanGV = () => {
 
                         setDeletionComplete(true); // Set deletion status to true
                     } else {
-                        nav("/diendan");
+                        nav("/giangvien/diendan");
                     }
                 }
             } catch (ex) {

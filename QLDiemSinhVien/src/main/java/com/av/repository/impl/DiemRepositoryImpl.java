@@ -416,10 +416,10 @@ public class DiemRepositoryImpl implements DiemRepository {
             short khoaDiem = 1;
             for (Diem diem : DiemSV) {
                 diem.setKhoaDiem(khoaDiem);
-//                message.setTo(diem.getIdSinhVien().getIdTaiKhoan().getTenTaiKhoan().toString());
-//                message.setSubject("Thong bao diem");
-//                message.setText("Diem cua mon " + diem.getIdMonHoc().getTenMonHoc().toString() +" co ma mon "+ diem.getIdMonHoc().toString() + " Đã có");
-//                emailSender.send(message);
+                message.setTo(diem.getIdSinhVien().getIdTaiKhoan().getTenTaiKhoan().toString());
+                message.setSubject("Thong bao diem");
+                message.setText("Diem cua mon " + diem.getIdMonHoc().getTenMonHoc().toString() +" co ma mon "+ diem.getIdMonHoc().getIdMonHoc().toString() + " Đã có");
+                emailSender.send(message);
             }
             return true;
         }
@@ -438,5 +438,9 @@ public class DiemRepositoryImpl implements DiemRepository {
             return false;
         }
     }
+
+    
+    
+    
 
 }

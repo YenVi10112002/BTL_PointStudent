@@ -32,9 +32,7 @@ const ChatFireBase = () => {
                     const userChatRooms = chatRoomsArray.filter((room) =>
                         room.members.hasOwnProperty(user_chat)
                     );
-
                     console.log("Fetched chat rooms:", userChatRooms); // Debug: Log the fetched data
-
                     setChatRooms(userChatRooms);
                 } else {
                     console.log("No chat rooms found"); // Debug: Log if no chat rooms were found
