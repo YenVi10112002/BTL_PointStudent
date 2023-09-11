@@ -26,6 +26,7 @@ public interface SinhVienRepository {
     boolean deleteSinhVien(int idSinhVien);
      List<Object> getSinhvienByMonHoc(Map<String, String> params);
      
+     Long countSinhVien();
     
    
 

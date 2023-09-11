@@ -47,12 +47,8 @@
                     <td>${sv.soDienThoai}</td>
                     <td>${sv.email}</td>
                     <td>
-
-
                         <a href="<c:url value="/giaovu/sinhvien/add/${sv.idSinhVien}"/>" class="btn-xoavacn bg-cn"> Cập nhật</a>
-
                         <c:url value="/giaovu/sinhvien/add/${sv.idSinhVien}" var="api" />
-
                         <button class="btn-xoavacn bg-xoa " onclick="deleteSinhVien('${api}')">Xóa</button>
                         <a href="<c:url value="/giaovu/sinhvien/addMH/${sv.idSinhVien}"/>" class="btn-xoavacn bg-cn "> Cấp môn học</a>
                     </td>
@@ -60,5 +56,14 @@
             </c:forEach>
         </tbody>
     </table>
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>
+            <c:forEach begin="1" end="${counter}" var="i">
+                <c:url value="/giaovu/sinhvien" var="pageAction">
+                    <c:param name="page" value="${i}"/>
+                </c:url>
+            <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
+            </c:forEach>
+    </ul> 
 </div>   
 

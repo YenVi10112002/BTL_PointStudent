@@ -17,6 +17,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author FPTSHOP
  */
 @Controller
+@PropertySource("classpath:configs.properties")
 public class ADSinhVienController {
 
     @Autowired
@@ -48,6 +51,8 @@ public class ADSinhVienController {
 
     @Autowired
     private CustomDateEditor customDateEditor;
+    @Autowired
+    private Environment env;
 
     @ModelAttribute
     public void lopHoc(Model model, Authentication auth) {
@@ -61,10 +66,15 @@ public class ADSinhVienController {
         binder.registerCustomEditor(Date.class, customDateEditor);
     }
 
-    @RequestMapping("/giaovu/sinhvien")
+   @RequestMapping("/giaovu/sinhvien")
     public String list(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("sinhvien", this.svService.getSinhviens(params));
-
+        
+        // phan trang
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        long count = this.svService.countSinhVien();
+        
+        model.addAttribute("counter", Math.ceil(count*1.0/pageSize));
         return "dssinhvien";
     }
 

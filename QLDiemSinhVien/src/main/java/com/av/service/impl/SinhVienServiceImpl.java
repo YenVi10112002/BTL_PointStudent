@@ -79,4 +79,10 @@ public class SinhVienServiceImpl implements SinhVienService {
     public List<Object> getSinhvienByMonHoc(Map<String, String> params) {
         return sinhvienRepository.getSinhvienByMonHoc(params);
     }
+    
+    // dem sv
+    @Override
+    public Long countSinhVien() {
+        return this.sinhvienRepository.countSinhVien();
+    }
 }

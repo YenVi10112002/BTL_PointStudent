@@ -43,25 +43,9 @@ public class DiemServiceImpl implements DiemService {
     @Autowired
     private DiemRepository diemRepository;
 
-    @Override
-    public double getDiemTrungBinh(int sinhvienId) {
-        return diemRepository.getDiemTrungBinh(sinhvienId);
-    }
 
-    @Override
-    public double getDiemTrungBinhHe(int sinhvienId) {
-        return diemRepository.getDiemTrungBinhHe(sinhvienId);
-    }
 
-    @Override
-    public List<Object> getListDiem(int sinhvienId) {
-        return diemRepository.getListDiem(sinhvienId);
-    }
 
-    @Override
-    public List<Object> getListDiemTrungBinh(int sinhvienId) {
-        return diemRepository.getListDiemTrungBinh(sinhvienId);
-    }
 
     @Override
     public List<Object> getListDiemTrungBinh2(Map<String, String> params) {

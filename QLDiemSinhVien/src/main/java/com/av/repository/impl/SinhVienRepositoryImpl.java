@@ -34,6 +34,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.Propagation;
 
 /**
@@ -50,6 +51,10 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
     @Autowired
     private TaiKhoanRepository tkRepo;
+    @Autowired
+    private Environment Env;
+    
+    
 
     @Override
     public Sinhvien getSinhVien(int idTaiKhoan) {
@@ -90,6 +95,16 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         q.where(predicates.toArray(Predicate[]::new));
 
         Query query = s.createQuery(q);
+        
+        if (params != null) {
+            String p = params.get("page");
+            if (p != null && !p.isEmpty()) {
+                int page = Integer.parseInt(p);
+                int pageSize = Integer.parseInt(this.Env.getProperty("PAGE_SIZE"));
+                query.setMaxResults(pageSize);
+                query.setFirstResult((page - 1) * pageSize);
+            }
+        }
         return query.getResultList();
     }
 
@@ -196,6 +211,21 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
         }
         return null;
+    }
+    
+    // dem sinh vien
+    @Override
+    public Long countSinhVien() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+
+        Root r = q.from(Sinhvien.class);
+        q.select(b.count(r));
+
+        long countSV = s.createQuery(q).uniqueResult();
+
+        return countSV;
     }
 
 }
