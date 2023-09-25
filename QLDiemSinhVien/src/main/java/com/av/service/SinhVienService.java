@@ -27,5 +27,7 @@ public interface SinhVienService {
     
     Long countSinhVien();
     
+    //update 26/9 danh sach sinh vien theo ma lop
+    List<Sinhvien> getSinhVienByIdLop(int idLop);
     
 }

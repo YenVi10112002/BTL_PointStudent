@@ -274,7 +274,7 @@ DROP TABLE IF EXISTS `loaihocky`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `loaihocky` (
   `idLoaiHocKy` int NOT NULL AUTO_INCREMENT,
-  `tenHocKy` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `tenHocKy` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`idLoaiHocKy`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -329,9 +329,11 @@ CREATE TABLE `lophoc` (
   PRIMARY KEY (`idLopHoc`),
   KEY `lophoc_hedaotao_idx` (`idHeDaoTao`),
   KEY `lophoc_nganh_idx` (`idNganh`),
+  KEY `khoahoc_idx` (`idKhoaHoc`),
+  CONSTRAINT `khoahoc` FOREIGN KEY (`idKhoaHoc`) REFERENCES `khoa` (`idkhoa`),
   CONSTRAINT `lophoc_hedaotao` FOREIGN KEY (`idHeDaoTao`) REFERENCES `hedaotao` (`idhedaotao`),
   CONSTRAINT `lophoc_nganh` FOREIGN KEY (`idNganh`) REFERENCES `nganhdaotao` (`idNganhDaoTao`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -340,7 +342,7 @@ CREATE TABLE `lophoc` (
 
 LOCK TABLES `lophoc` WRITE;
 /*!40000 ALTER TABLE `lophoc` DISABLE KEYS */;
-INSERT INTO `lophoc` VALUES (9,'DH20IT01',1,1,2),(10,'DH20CS01',1,2,2);
+INSERT INTO `lophoc` VALUES (9,'DH20IT01',1,1,2),(10,'DH20CS01',1,2,2),(11,'DH20IT02',1,1,2),(12,'DH20IT03',1,1,2),(13,'DH20CS02',1,2,2);
 /*!40000 ALTER TABLE `lophoc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -418,6 +420,7 @@ CREATE TABLE `monhocdangky` (
   `idSinhVien` int NOT NULL,
   `xepLoai` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `trangThai` tinyint DEFAULT NULL,
+  `khoaMon` tinyint DEFAULT NULL,
   PRIMARY KEY (`idMonHocDangKy`),
   KEY `monhocdangky_sinhvien_idx` (`idSinhVien`),
   KEY `monhocdangky_monhochocky_idx` (`idMonHoc`),
@@ -432,7 +435,7 @@ CREATE TABLE `monhocdangky` (
 
 LOCK TABLES `monhocdangky` WRITE;
 /*!40000 ALTER TABLE `monhocdangky` DISABLE KEYS */;
-INSERT INTO `monhocdangky` VALUES (1,1,52,NULL,0),(2,2,52,NULL,0),(3,3,52,NULL,0),(4,1,53,NULL,0),(5,2,53,NULL,0),(6,3,53,NULL,0),(7,1,54,NULL,0),(8,2,54,NULL,0),(9,3,54,NULL,0);
+INSERT INTO `monhocdangky` VALUES (1,1,52,NULL,0,0),(2,2,52,NULL,0,0),(3,3,52,NULL,0,0),(4,1,53,NULL,0,0),(5,2,53,NULL,0,0),(6,3,53,NULL,0,0),(7,1,54,NULL,0,0),(8,2,54,NULL,0,0),(9,3,54,NULL,0,0);
 /*!40000 ALTER TABLE `monhocdangky` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -472,7 +475,7 @@ DROP TABLE IF EXISTS `phonghoc`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `phonghoc` (
   `idPhongHoc` int NOT NULL AUTO_INCREMENT,
-  `tenPhongHoc` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `tenPhongHoc` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`idPhongHoc`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -549,7 +552,7 @@ CREATE TABLE `taikhoan` (
 
 LOCK TABLES `taikhoan` WRITE;
 /*!40000 ALTER TABLE `taikhoan` DISABLE KEYS */;
-INSERT INTO `taikhoan` VALUES (52,'hoangan@gmail.com','123456',1,NULL),(53,'yenvi@gmail.com','123456',1,NULL),(54,'huuthanh@gmail.com','123456',2,NULL),(55,'giakhoang@gmail.com','123456',2,NULL);
+INSERT INTO `taikhoan` VALUES (52,'hoangan@gmail.com','$2y$06$qELmOrioZqbIrVfFih6IL.AbeWu4MqI8oPI55essINeY.ciHTEuTC',1,NULL),(53,'yenvi@gmail.com','$2y$06$qELmOrioZqbIrVfFih6IL.AbeWu4MqI8oPI55essINeY.ciHTEuTC',1,NULL),(54,'huuthanh@gmail.com','$2y$06$qELmOrioZqbIrVfFih6IL.AbeWu4MqI8oPI55essINeY.ciHTEuTC',2,NULL),(55,'giakhoang@gmail.com','$2y$06$qELmOrioZqbIrVfFih6IL.AbeWu4MqI8oPI55essINeY.ciHTEuTC',2,NULL);
 /*!40000 ALTER TABLE `taikhoan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -591,4 +594,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-25 23:28:54
+-- Dump completed on 2023-09-26  5:27:19

@@ -49,10 +49,12 @@ com\av\repository\DienDanRepository.class
 com\av\pojo\Loaitaikhoan_.class
 com\av\configs\SpringSecurityConfig.class
 com\av\pojo\Khoadaotao.class
+com\av\controllers\ADLopHocController.class
 com\av\controllers\ApiADSinhVienController.class
 com\av\pojo\Monhocdangky_.class
 com\av\controllers\ADPhieuMonHocController.class
 com\av\pojo\MonhocHocky_.class
+com\av\repository\impl\DaoTaoRepositoryImpl.class
 com\av\service\impl\SinhVienServiceImpl.class
 com\av\pojo\Monhoc.class
 com\av\formatter\CauHoiFormatter.class
@@ -63,6 +65,7 @@ com\av\configs\AppConfig.class
 com\av\repository\TaiKhoanRepository.class
 com\av\service\impl\TaiKhoanServiceImpl.class
 com\av\pojo\Nganhdaotao_.class
+com\av\repository\DaoTaoRepository.class
 com\av\formatter\GiangVienFormatter.class
 com\av\repository\impl\DiemRepositoryImpl.class
 com\av\pojo\Giaovu.class
@@ -77,6 +80,7 @@ com\av\filters\JwtAuthenticationTokenFilter.class
 com\av\pojo\Taikhoan_.class
 com\av\formatter\LopHocFormatter.class
 com\av\repository\SinhVienRepository.class
+com\av\service\impl\DaoTaoServiceImpl.class
 com\av\pojo\Loaidiem_.class
 com\av\repository\impl\SinhVienRepositoryImpl.class
 com\av\pojo\Loaihocky.class
@@ -102,6 +106,7 @@ com\av\configs\TilesConfig.class
 com\av\utils\Utils.class
 com\av\pojo\Khoa_.class
 com\av\service\impl\GiaoVuServiceImpl.class
+com\av\service\DaoTaoService.class
 com\av\pojo\Phonghoc.class
 com\av\repository\impl\DienDanRepositoryImpl.class
 com\av\formatter\MonHocFormatter.class

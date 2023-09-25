@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Monhocdangky.findAll", query = "SELECT m FROM Monhocdangky m"),
     @NamedQuery(name = "Monhocdangky.findByIdMonHocDangKy", query = "SELECT m FROM Monhocdangky m WHERE m.idMonHocDangKy = :idMonHocDangKy"),
     @NamedQuery(name = "Monhocdangky.findByXepLoai", query = "SELECT m FROM Monhocdangky m WHERE m.xepLoai = :xepLoai"),
+    @NamedQuery(name = "Monhocdangky.findByKhoaMon", query = "SELECT m FROM Monhocdangky m WHERE m.khoaMon = :khoaMon"),
     @NamedQuery(name = "Monhocdangky.findByTrangThai", query = "SELECT m FROM Monhocdangky m WHERE m.trangThai = :trangThai")})
 public class Monhocdangky implements Serializable {
 
@@ -46,6 +47,8 @@ public class Monhocdangky implements Serializable {
     @Size(max = 20)
     @Column(name = "xepLoai")
     private String xepLoai;
+    @Column(name = "khoaMon")
+    private Short khoaMon;
     @Column(name = "trangThai")
     private Short trangThai;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMonHoc")
@@ -136,6 +139,20 @@ public class Monhocdangky implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Monhocdangky[ idMonHocDangKy=" + idMonHocDangKy + " ]";
+    }
+
+    /**
+     * @return the khoaMon
+     */
+    public Short getKhoaMon() {
+        return khoaMon;
+    }
+
+    /**
+     * @param khoaMon the khoaMon to set
+     */
+    public void setKhoaMon(Short khoaMon) {
+        this.khoaMon = khoaMon;
     }
     
 }

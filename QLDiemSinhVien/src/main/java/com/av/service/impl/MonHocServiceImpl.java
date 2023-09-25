@@ -46,5 +46,15 @@ public class MonHocServiceImpl  implements MonHocService{
     public List<Monhoc> getMonHocByGiangVien(Map<String, String> params) {
         return this.mhRepository.getMonHocByGiangVien(params);
     }
+
+    @Override
+    public List<Monhoc> getMonHocByIdSinhVien(int idSinhvien) {
+        return this.mhRepository.getMonHocByIdSinhVien(idSinhvien);
+    }
+
+    @Override
+    public List<Monhoc> getMonHocByIdSinhVienDangHoc(int idSinhvien) {
+        return this.mhRepository.getMonHocByIdSinhVienDangHoc(idSinhvien);
+    }
     
 }

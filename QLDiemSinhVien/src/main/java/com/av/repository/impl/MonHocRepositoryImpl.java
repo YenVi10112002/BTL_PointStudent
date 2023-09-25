@@ -7,6 +7,7 @@ package com.av.repository.impl;
 import com.av.pojo.Diem;
 import com.av.pojo.Giangvien;
 import com.av.pojo.Monhoc;
+import com.av.pojo.Monhocdangky;
 import com.av.repository.MonHocRepository;
 import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
@@ -93,14 +94,14 @@ public class MonHocRepositoryImpl implements MonHocRepository {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        
+
         Root rMonHoc = q.from(Monhoc.class);
         Root rGiangVien = q.from(Giangvien.class);
-        
-        if(params != null){
+
+        if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
             String idTaiKhoan = params.get("taiKhoanId");
-            if(idTaiKhoan != null){
+            if (idTaiKhoan != null) {
                 predicates.add(b.equal(rGiangVien.get("idTaiKhoan"), Integer.parseInt(idTaiKhoan)));
                 predicates.add(b.equal(rMonHoc.get("idGiangVien"), rGiangVien.get("idGiangVien")));
             }
@@ -110,9 +111,9 @@ public class MonHocRepositoryImpl implements MonHocRepository {
             return query.getResultList();
         }
         return null;
-            
+
     }
-    
+
     //Update
     @Override
     public Long CountMonHocInGV(int idGiangVien) {
@@ -128,7 +129,38 @@ public class MonHocRepositoryImpl implements MonHocRepository {
         return countMonHoc;
 
     }
-    
-    
+
+    @Override
+    public List<Monhoc> getMonHocByIdSinhVien(int idSinhvien) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+
+        Root rMonHoc = q.from(Monhocdangky.class);
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(b.equal(rMonHoc.get("idSinhVien"), idSinhvien));
+        predicates.add(b.equal(rMonHoc.get("trangThai"), 1));
+        predicates.add(b.equal(rMonHoc.get("khoaMon"), 1));
+        q.select(rMonHoc).where(predicates.toArray(Predicate[]::new));
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Monhoc> getMonHocByIdSinhVienDangHoc(int idSinhvien) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+
+        Root rMonHoc = q.from(Monhocdangky.class);
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(b.equal(rMonHoc.get("idSinhVien"), idSinhvien));
+        predicates.add(b.equal(rMonHoc.get("khoaMon"), 0));
+        q.select(rMonHoc).where(predicates.toArray(Predicate[]::new));
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
 
 }

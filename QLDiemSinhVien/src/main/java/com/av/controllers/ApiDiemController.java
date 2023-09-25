@@ -29,20 +29,20 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api")
 public class ApiDiemController {
 
-//    @Autowired
-//    private DiemService diemService;
+    @Autowired
+    private DiemService diemService;
 //
-//    @RequestMapping("/DSDiemSVHocKy/")
-//    @CrossOrigin
-//    public ResponseEntity<List<Object>> list(@RequestParam Map<String, String> params) {
-//        return new ResponseEntity<>(this.diemService.getListDiemTrungBinh2(params), HttpStatus.OK);
-//    }
+    @RequestMapping("/DSDiemSVHocKy/")
+    @CrossOrigin
+    public ResponseEntity<List<Object>> list(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.diemService.getListDiemTrungBinh2(params), HttpStatus.OK);
+    }
 //
-//    @RequestMapping("/TrungBinhDiem/")
-//    @CrossOrigin
-//    public ResponseEntity<Double> DiemtrungbinhSv(@RequestParam Map<String, String> params) {
-//        return new ResponseEntity<>(this.diemService.getDiemTrungBinh2(params), HttpStatus.OK);
-//    }
+    @RequestMapping("/TrungBinhDiem/")
+    @CrossOrigin
+    public ResponseEntity<Double> DiemtrungbinhSv(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.diemService.getDiemTrungBinh2(params), HttpStatus.OK);
+    }
 //
 //    @RequestMapping("/TrungBinhDiemHe4/")
 //    @CrossOrigin

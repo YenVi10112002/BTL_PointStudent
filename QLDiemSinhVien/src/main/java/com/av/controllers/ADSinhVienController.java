@@ -7,6 +7,7 @@ package com.av.controllers;
 import com.av.pojo.Sinhvien;
 import com.av.service.DiemService;
 import com.av.service.GiaoVuService;
+import com.av.service.MonHocService;
 
 import com.av.service.SinhVienService;
 import com.av.service.TaiKhoanService;
@@ -42,6 +43,8 @@ public class ADSinhVienController {
 
     @Autowired
     private SinhVienService svService;
+    @Autowired
+    private MonHocService mhService;
 
     @Autowired
     private GiaoVuService gvuService;
@@ -99,5 +102,12 @@ public class ADSinhVienController {
         }
 
         return "add";
+    }
+    @GetMapping("/giaovu/sinhvien/{id}")
+    public String chiTietSinhVien(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("sinhvienn", svService.getSinhVienById(id));
+        model.addAttribute("monHocDaHoc", this.mhService.getMonHocByIdSinhVien(id));
+        model.addAttribute("monHocDangHoc", this.mhService.getMonHocByIdSinhVienDangHoc(id));
+        return "chitietsinhvien";
     }
 }

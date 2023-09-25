@@ -85,4 +85,12 @@ public class SinhVienServiceImpl implements SinhVienService {
     public Long countSinhVien() {
         return this.sinhvienRepository.countSinhVien();
     }
+
+    
+    
+    //update 26/9 danh sach sinh vien theo ma lop
+    @Override
+    public List<Sinhvien> getSinhVienByIdLop(int idLop) {
+      return this.sinhvienRepository.getSinhVienByIdLop(idLop);
+    }
 }

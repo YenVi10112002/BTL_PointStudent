@@ -17,10 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface DiemRepository {
         
-//        double getDiemTrungBinh2(Map<String, String> params);
+        double getDiemTrungBinh2(Map<String, String> params);
 //        double getDiemTrungBinhHe4(Map<String, String> params);
 //        
-//        List<Object> getListDiemTrungBinh2(Map<String, String> params);
+        List<Object> getListDiemTrungBinh2(Map<String, String> params);
 //        List<Object> getListDiem2(Map<String, String> params);
 //        
 //        Diem addDiem(Diem diem);
@@ -33,6 +33,4 @@ public interface DiemRepository {
 //        boolean deleteDiemBySinhVien(int idSinhVien);
 //        boolean deleteDiem(int idMonHoc, int idSinhVien);
         
-
-
 }

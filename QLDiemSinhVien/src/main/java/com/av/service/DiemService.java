@@ -17,13 +17,13 @@ public interface DiemService {
 
    
 
-//    double getDiemTrungBinh2(Map<String, String> params);
+    double getDiemTrungBinh2(Map<String, String> params);
 //
 //    double getDiemTrungBinhHe4(Map<String, String> params);
 //
 //
 //
-//    List<Object> getListDiemTrungBinh2(Map<String, String> params);
+    List<Object> getListDiemTrungBinh2(Map<String, String> params);
 //
 //    List<Object> getListDiem2(Map<String, String> params);
 //

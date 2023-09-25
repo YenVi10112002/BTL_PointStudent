@@ -34,8 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Lophoc.findAll", query = "SELECT l FROM Lophoc l"),
     @NamedQuery(name = "Lophoc.findByIdLopHoc", query = "SELECT l FROM Lophoc l WHERE l.idLopHoc = :idLopHoc"),
-    @NamedQuery(name = "Lophoc.findByTenLopHoc", query = "SELECT l FROM Lophoc l WHERE l.tenLopHoc = :tenLopHoc"),
-    @NamedQuery(name = "Lophoc.findByIdKhoaHoc", query = "SELECT l FROM Lophoc l WHERE l.idKhoaHoc = :idKhoaHoc")})
+    @NamedQuery(name = "Lophoc.findByTenLopHoc", query = "SELECT l FROM Lophoc l WHERE l.tenLopHoc = :tenLopHoc")})
 public class Lophoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,10 +48,9 @@ public class Lophoc implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "tenLopHoc")
     private String tenLopHoc;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idKhoaHoc")
-    private int idKhoaHoc;
+    @JoinColumn(name = "idKhoaHoc", referencedColumnName = "idKhoa")
+    @ManyToOne(optional = false)
+    private Khoa idKhoaHoc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLop")
     private Set<Hocky> hockySet;
     @JoinColumn(name = "idHeDaoTao", referencedColumnName = "idhedaotao")
@@ -71,10 +69,9 @@ public class Lophoc implements Serializable {
         this.idLopHoc = idLopHoc;
     }
 
-    public Lophoc(Integer idLopHoc, String tenLopHoc, int idKhoaHoc) {
+    public Lophoc(Integer idLopHoc, String tenLopHoc) {
         this.idLopHoc = idLopHoc;
         this.tenLopHoc = tenLopHoc;
-        this.idKhoaHoc = idKhoaHoc;
     }
 
     public Integer getIdLopHoc() {
@@ -93,11 +90,11 @@ public class Lophoc implements Serializable {
         this.tenLopHoc = tenLopHoc;
     }
 
-    public int getIdKhoaHoc() {
+    public Khoa getIdKhoaHoc() {
         return idKhoaHoc;
     }
 
-    public void setIdKhoaHoc(int idKhoaHoc) {
+    public void setIdKhoaHoc(Khoa idKhoaHoc) {
         this.idKhoaHoc = idKhoaHoc;
     }
 

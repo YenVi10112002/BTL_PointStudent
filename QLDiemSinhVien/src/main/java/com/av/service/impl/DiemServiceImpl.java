@@ -40,22 +40,22 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class DiemServiceImpl implements DiemService {
 
-//    @Autowired
-//    private DiemRepository diemRepository;
+    @Autowired
+    private DiemRepository diemRepository;
 //
 //
 //
 //
 //
-//    @Override
-//    public List<Object> getListDiemTrungBinh2(Map<String, String> params) {
-//        return diemRepository.getListDiemTrungBinh2(params);
-//    }
+    @Override
+    public List<Object> getListDiemTrungBinh2(Map<String, String> params) {
+        return diemRepository.getListDiemTrungBinh2(params);
+    }
 //
-//    @Override
-//    public double getDiemTrungBinh2(Map<String, String> params) {
-//        return diemRepository.getDiemTrungBinh2(params);
-//    }
+    @Override
+    public double getDiemTrungBinh2(Map<String, String> params) {
+        return diemRepository.getDiemTrungBinh2(params);
+    }
 //
 //    @Override
 //    public double getDiemTrungBinhHe4(Map<String, String> params) {

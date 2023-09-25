@@ -21,4 +21,9 @@ public interface MonHocRepository {
     List<Monhoc> getMonHocByGiangVien(Map<String, String> params);
     Long CountMonHocInGV(int idGiangVien);
     
+    
+    //Start
+    List<Monhoc> getMonHocByIdSinhVien(int idSinhvien);
+    List<Monhoc> getMonHocByIdSinhVienDangHoc(int idSinhvien);
+    
 }

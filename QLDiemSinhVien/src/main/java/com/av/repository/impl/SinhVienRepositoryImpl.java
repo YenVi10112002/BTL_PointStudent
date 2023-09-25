@@ -228,4 +228,24 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         return countSV;
     }
 
+    
+    
+    //update 26/9 danh sach sinh vien theo ma lop
+    
+    @Override
+    public List<Sinhvien> getSinhVienByIdLop(int idLop) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
+
+        Root<Sinhvien> root = q.from(Sinhvien.class);
+        q.select(root);
+
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(root.get("maLop"), idLop));
+        q.where(predicates.toArray(new Predicate[0]));
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+
 }

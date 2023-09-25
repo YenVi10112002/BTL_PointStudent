@@ -92,4 +92,21 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content"
                        value="/WEB-INF/pages/admin/thaydoimatkhau.jsp" />
     </definition>
+    <definition name="lophoc" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Danh Sách Lớp Học" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/lophoc.jsp" />
+    </definition>
+    
+    <definition name="listsinhvienbyidlop" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Danh Sách Danh Viên " />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/listSinhVienIdLop.jsp" />
+    </definition>
+    <definition name="chitietsinhvien" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Chi tiết sinh viên " />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/chitietsinhvien.jsp" />
+    </definition>
+    
 </tiles-definitions>

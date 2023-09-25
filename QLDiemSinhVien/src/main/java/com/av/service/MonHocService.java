@@ -18,4 +18,7 @@ public interface MonHocService {
     Monhoc getMonHocById(int id);
     boolean deleteMonHoc(int id);
     List<Monhoc> getMonHocByGiangVien(Map<String, String> params);
+    
+    List<Monhoc> getMonHocByIdSinhVien(int idSinhvien);
+    List<Monhoc> getMonHocByIdSinhVienDangHoc(int idSinhvien);
 }

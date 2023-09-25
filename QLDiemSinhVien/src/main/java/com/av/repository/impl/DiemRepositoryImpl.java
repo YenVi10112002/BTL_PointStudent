@@ -6,6 +6,8 @@ package com.av.repository.impl;
 
 import com.av.pojo.Diem;
 import com.av.pojo.Monhoc;
+import com.av.pojo.MonhocHocky;
+import com.av.pojo.Monhocdangky;
 import com.av.pojo.Sinhvien;
 import com.av.repository.DiemRepository;
 import java.text.DecimalFormat;
@@ -43,72 +45,82 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional
 public class DiemRepositoryImpl implements DiemRepository {
 
-//    @Autowired
-//    private LocalSessionFactoryBean factory;
-//    @Autowired
-//    private JavaMailSender emailSender;
-//
-//
-//    @Override
-//    public List<Object> getListDiemTrungBinh2(Map<String, String> params) {
-//        Session session = this.factory.getObject().getCurrentSession();
-//        CriteriaBuilder b = session.getCriteriaBuilder();
-//        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-//        Root<Diem> rDiem = q.from(Diem.class);
-//        Root<Monhoc> rMonhoc = q.from(Monhoc.class);
-//        List<Predicate> predicates = new ArrayList<>();
-//        String sinhvienId = params.get("SinhVienId");
-//        predicates.add(b.equal(rDiem.get("idSinhVien"), Integer.parseInt(sinhvienId)));
-//        predicates.add(b.equal(rDiem.get("idMonHoc"), rMonhoc.get("idMonHoc")));
-//
-//        Expression<Double> averageDiemTrungBinh = b.avg(rDiem.get("diemTrungBình"));
-//        Expression<Double> averageDiemTrungBinh4 = b.prod(b.avg(rDiem.get("diemTrungBình")), 0.4);
-//        q.multiselect(
-//                rMonhoc.get("hocKy"),
-//                averageDiemTrungBinh,
-//                averageDiemTrungBinh4
-//        )
-//                .where(predicates.toArray(new Predicate[0]))
-//                .groupBy(rMonhoc.get("hocKy"));
-//
-//        Query query = session.createQuery(q);
-//
-//        try {
-//            return query.getResultList();
-//        } catch (NoResultException | NonUniqueResultException ex) {
-//            ex.printStackTrace();
-//            return Collections.emptyList();
-//        }
-//    }
-//
-//    @Override
-//    public double getDiemTrungBinh2(Map<String, String> params) {
-//        Session s = this.factory.getObject().getCurrentSession();
-//        CriteriaBuilder b = s.getCriteriaBuilder();
-//        CriteriaQuery<Double> q = b.createQuery(Double.class);
-//        Root<Diem> root = q.from(Diem.class);
-//        String sinhvienId = params.get("SinhVienId");
-//        q.select(b.avg(root.get("diemTrungBình")))
-//                .where(b.equal(root.get("idSinhVien"), Integer.parseInt(sinhvienId)));
-//        Query query = s.createQuery(q);
-//
-//        DecimalFormat decimalFormat = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
-//        try {
-//            Double averageValue = (Double) query.getSingleResult();
-//            if (averageValue != null) {
-//                averageValue = Double.valueOf(decimalFormat.format(averageValue));
-//            } else {
-//                averageValue = 0.0;
-//            }
-//            return averageValue;
-//        } catch (NoResultException e) {
-//            return 0.0; // Không tìm thấy sinh viên với ID tương ứng
-//        } catch (NonUniqueResultException e) {
-//            // Xử lý nếu có nhiều hơn một kết quả trả về (nếu ID không duy nhất)
-//            return 0.0;
-//        }
-//    }
-//
+    @Autowired
+    private LocalSessionFactoryBean factory;
+    @Autowired
+    private JavaMailSender emailSender;
+
+
+    @Override
+    public List<Object> getListDiemTrungBinh2(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root<Diem> rDiem = q.from(Diem.class);
+        Root<Monhocdangky> rMonhocDangKy = q.from(Monhocdangky.class);
+        Root<MonhocHocky> rMonHocHocKy = q.from(MonhocHocky.class);
+        List<Predicate> predicates = new ArrayList<>();
+        String sinhvienId = params.get("SinhVienId");
+        predicates.add(b.equal(rDiem.get("idMonHoc"), rMonhocDangKy.get("idMonHocDangKy")));
+        predicates.add(b.equal(rMonhocDangKy.get("idSinhVien"), Integer.parseInt(sinhvienId)));
+        predicates.add(b.equal(rDiem.get("tenDiem"), 6));
+        predicates.add(b.equal(rMonHocHocKy.get("idMonHocHocKy"), rMonhocDangKy.get("idMonHoc")));
+
+        Expression<Double> averageDiemTrungBinh = b.avg(rDiem.get("soDiem"));
+        Expression<Double> averageDiemTrungBinh4 = b.prod(b.avg(rDiem.get("soDiem")), 0.4);
+        q.multiselect(
+                rMonHocHocKy.get("idHocKy"),
+                averageDiemTrungBinh,
+                averageDiemTrungBinh4
+        )
+                .where(predicates.toArray(new Predicate[0]))
+                .groupBy(rMonhocDangKy.get("idHocKy"));
+
+        Query query = session.createQuery(q);
+
+        try {
+            return query.getResultList();
+        } catch (NoResultException | NonUniqueResultException ex) {
+            ex.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public double getDiemTrungBinh2(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Double> q = b.createQuery(Double.class);
+        Root<Diem> rDiem = q.from(Diem.class);
+        Root<Monhocdangky> rMonHocDangKy = q.from(Monhocdangky.class);
+        String sinhvienId = params.get("SinhVienId");
+         List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(rDiem.get("idMonHoc"), rMonHocDangKy.get("idMonHocDangKy")));
+        predicates.add(b.equal(rMonHocDangKy.get("idSinhVien"), Integer.parseInt(sinhvienId)));
+        predicates.add(b.equal(rDiem.get("tenDiem"), 6));
+        q.select(b.avg(rDiem.get("soDiem")))
+                .where(predicates.toArray(Predicate[]::new));
+                
+                
+        Query query = s.createQuery(q);
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
+        try {
+            Double averageValue = (Double) query.getSingleResult();
+            if (averageValue != null) {
+                averageValue = Double.valueOf(decimalFormat.format(averageValue));
+            } else {
+                averageValue = 0.0;
+            }
+            return averageValue;
+        } catch (NoResultException e) {
+            return 0.0; // Không tìm thấy sinh viên với ID tương ứng
+        } catch (NonUniqueResultException e) {
+            // Xử lý nếu có nhiều hơn một kết quả trả về (nếu ID không duy nhất)
+            return 0.0;
+        }
+    }
+
 //    @Override
 //    public double getDiemTrungBinhHe4(Map<String, String> params) {
 //        Session s = this.factory.getObject().getCurrentSession();

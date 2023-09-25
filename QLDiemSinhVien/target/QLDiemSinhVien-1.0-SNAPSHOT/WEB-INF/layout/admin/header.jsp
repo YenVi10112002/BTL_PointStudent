@@ -23,11 +23,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/giaovu/monhoc"/>">Danh sách môn học</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/giaovu/lophoc"/>">Danh sách lớp học</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/giaovu/lophoc"/>">Học kỳ đào tạo</a>
+                </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="<c:url value="/giaovu/taikhoan"/>">Danh sách tài khoản</a>
                 </li>
                 <li class="nav-item dropdown last-item">
-
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-user" style="color: #f2f2f2;"></i>Chào ${giaovu.tenGiaoVu}</a>
 
                     <ul class="dropdown-menu">
