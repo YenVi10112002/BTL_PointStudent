@@ -4,15 +4,17 @@
  */
 package com.av.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Lophoc.findAll", query = "SELECT l FROM Lophoc l"),
     @NamedQuery(name = "Lophoc.findByIdLopHoc", query = "SELECT l FROM Lophoc l WHERE l.idLopHoc = :idLopHoc"),
     @NamedQuery(name = "Lophoc.findByTenLopHoc", query = "SELECT l FROM Lophoc l WHERE l.tenLopHoc = :tenLopHoc"),
-    @NamedQuery(name = "Lophoc.findByKhoaHoc", query = "SELECT l FROM Lophoc l WHERE l.khoaHoc = :khoaHoc")})
+    @NamedQuery(name = "Lophoc.findByIdKhoaHoc", query = "SELECT l FROM Lophoc l WHERE l.idKhoaHoc = :idKhoaHoc")})
 public class Lophoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,12 +51,17 @@ public class Lophoc implements Serializable {
     private String tenLopHoc;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "khoaHoc")
-    private String khoaHoc;
+    @Column(name = "idKhoaHoc")
+    private int idKhoaHoc;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLop")
+    private Set<Hocky> hockySet;
+    @JoinColumn(name = "idHeDaoTao", referencedColumnName = "idhedaotao")
+    @ManyToOne(optional = false)
+    private Hedaotao idHeDaoTao;
+    @JoinColumn(name = "idNganh", referencedColumnName = "idNganhDaoTao")
+    @ManyToOne(optional = false)
+    private Nganhdaotao idNganh;
     @OneToMany(mappedBy = "maLop")
-    @JsonIgnore
-    
     private Set<Sinhvien> sinhvienSet;
 
     public Lophoc() {
@@ -64,10 +71,10 @@ public class Lophoc implements Serializable {
         this.idLopHoc = idLopHoc;
     }
 
-    public Lophoc(Integer idLopHoc, String tenLopHoc, String khoaHoc) {
+    public Lophoc(Integer idLopHoc, String tenLopHoc, int idKhoaHoc) {
         this.idLopHoc = idLopHoc;
         this.tenLopHoc = tenLopHoc;
-        this.khoaHoc = khoaHoc;
+        this.idKhoaHoc = idKhoaHoc;
     }
 
     public Integer getIdLopHoc() {
@@ -86,12 +93,37 @@ public class Lophoc implements Serializable {
         this.tenLopHoc = tenLopHoc;
     }
 
-    public String getKhoaHoc() {
-        return khoaHoc;
+    public int getIdKhoaHoc() {
+        return idKhoaHoc;
     }
 
-    public void setKhoaHoc(String khoaHoc) {
-        this.khoaHoc = khoaHoc;
+    public void setIdKhoaHoc(int idKhoaHoc) {
+        this.idKhoaHoc = idKhoaHoc;
+    }
+
+    @XmlTransient
+    public Set<Hocky> getHockySet() {
+        return hockySet;
+    }
+
+    public void setHockySet(Set<Hocky> hockySet) {
+        this.hockySet = hockySet;
+    }
+
+    public Hedaotao getIdHeDaoTao() {
+        return idHeDaoTao;
+    }
+
+    public void setIdHeDaoTao(Hedaotao idHeDaoTao) {
+        this.idHeDaoTao = idHeDaoTao;
+    }
+
+    public Nganhdaotao getIdNganh() {
+        return idNganh;
+    }
+
+    public void setIdNganh(Nganhdaotao idNganh) {
+        this.idNganh = idNganh;
     }
 
     @XmlTransient

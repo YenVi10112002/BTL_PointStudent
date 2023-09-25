@@ -21,7 +21,6 @@
             <tr>
                 <th>Mã số sinh viên</th>
                 <th>Họ và tên</th>
-                <th>Hệ đào tạo</th>
                 <th>Ngày sinh</th>
                 <th>Địa chỉ</th>
                 <th>Giới tính</th>
@@ -35,7 +34,6 @@
                 <tr>
                     <td>${sv.idSinhVien}</td>
                     <td>${sv.hoTen}</td>
-                    <td>${sv.heDaoTao}</td>
                     <td>${sv.ngaySinh}</td>
                     <td>${sv.diaChi}</td>
                     <td><c:choose>

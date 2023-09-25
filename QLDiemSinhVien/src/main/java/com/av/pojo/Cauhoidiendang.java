@@ -4,7 +4,6 @@
  */
 package com.av.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -49,10 +48,12 @@ public class Cauhoidiendang implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "noiDungCauHoi")
     private String noiDungCauHoi;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "ngayTao")
     private String ngayTao;
     @OneToMany(mappedBy = "idCauHoiDienDan")
-    @JsonIgnore
     private Set<Traloidiendan> traloidiendanSet;
     @JoinColumn(name = "idTaiKhoan", referencedColumnName = "idTaiKhoan")
     @ManyToOne(optional = false)
@@ -65,9 +66,10 @@ public class Cauhoidiendang implements Serializable {
         this.idCauHoiDienDan = idCauHoiDienDan;
     }
 
-    public Cauhoidiendang(Integer idCauHoiDienDan, String noiDungCauHoi) {
+    public Cauhoidiendang(Integer idCauHoiDienDan, String noiDungCauHoi, String ngayTao) {
         this.idCauHoiDienDan = idCauHoiDienDan;
         this.noiDungCauHoi = noiDungCauHoi;
+        this.ngayTao = ngayTao;
     }
 
     public Integer getIdCauHoiDienDan() {
@@ -84,6 +86,14 @@ public class Cauhoidiendang implements Serializable {
 
     public void setNoiDungCauHoi(String noiDungCauHoi) {
         this.noiDungCauHoi = noiDungCauHoi;
+    }
+
+    public String getNgayTao() {
+        return ngayTao;
+    }
+
+    public void setNgayTao(String ngayTao) {
+        this.ngayTao = ngayTao;
     }
 
     @XmlTransient
@@ -126,20 +136,6 @@ public class Cauhoidiendang implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Cauhoidiendang[ idCauHoiDienDan=" + idCauHoiDienDan + " ]";
-    }
-
-    /**
-     * @return the ngayTao
-     */
-    public String getNgayTao() {
-        return ngayTao;
-    }
-
-    /**
-     * @param ngayTao the ngayTao to set
-     */
-    public void setNgayTao(String ngayTao) {
-        this.ngayTao = ngayTao;
     }
     
 }

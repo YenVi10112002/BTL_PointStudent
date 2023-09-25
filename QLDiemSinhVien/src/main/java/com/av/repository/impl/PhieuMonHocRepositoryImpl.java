@@ -35,91 +35,91 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PhieuMonHocRepositoryImpl implements PhieuMonHocRepository {
 
-    @Autowired
-    private LocalSessionFactoryBean factory;
-
-    @Autowired
-    private SinhVienRepository svRepository;
-
-    @Autowired
-    private MonHocRepository mhRepository;
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public boolean addPhieuMH(Map<String, PhieuMonHoc> carts) {
-        Session s = this.factory.getObject().getCurrentSession();
-        try {
-            for (PhieuMonHoc c : carts.values()) {
-                Diem d = new Diem();
-                d.setIdMonHoc(mhRepository.getMonHocById(c.getIdMonHoc()));
-                d.setIdSinhVien(svRepository.getSinhVienById(c.getIdSinhVien()));
-                short a = 0;
-                d.setKhoaDiem(a);
-                s.save(d);
-            }
-            return true;
-        } catch (HibernateException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public PhieuMonHoc getPhieuMonHoc() {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From PhieuMonHoc");
-        return (PhieuMonHoc) q.getSingleResult();
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public boolean deletePhieuMH(PhieuMonHoc pmh) {
-        Session s = this.factory.getObject().getCurrentSession();
-        try {
-            if (pmh != null) {
-                s.delete(pmh);
-            }
-            return true;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public PhieuMonHoc getPhieuMonHocByIdMh(int idMonHoc, int idSinhVien) {
-        Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<PhieuMonHoc> q = b.createQuery(PhieuMonHoc.class);
-        Root<PhieuMonHoc> r = q.from(PhieuMonHoc.class);
-        List<Predicate> predicates = new ArrayList<>();
-        predicates.add(b.equal(r.get("idMonHoc"), idMonHoc));
-        predicates.add(b.equal(r.get("idSinhVien"), idSinhVien));
-        q.select(r).where(predicates.toArray(Predicate[]::new));
-
-        Query query = s.createQuery(q);
-        PhieuMonHoc a =  (PhieuMonHoc) query.getSingleResult();
-        try {
-            return a;
-        } catch (NoResultException ex) {
-            // Xử lý nếu không tìm thấy kết quả, có thể trả về null hoặc throw một exception tùy theo logic ứng dụng của bạn.
-            return null;
-        }
-    }
-
-    @Override
-    public PhieuMonHoc getPhieuMonHocByIdSv(int idSinhVien) {
-        Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<PhieuMonHoc> q = b.createQuery(PhieuMonHoc.class);
-
-        Root r = q.from(PhieuMonHoc.class);
-        q.select(r);
-
-        q.where(b.equal(r.get("idSinhVien"), idSinhVien));
-
-        Query query = s.createQuery(q);
-        return (PhieuMonHoc) query.getSingleResult();
-    }
+//    @Autowired
+//    private LocalSessionFactoryBean factory;
+//
+//    @Autowired
+//    private SinhVienRepository svRepository;
+//
+//    @Autowired
+//    private MonHocRepository mhRepository;
+//
+//    @Override
+//    @Transactional(propagation = Propagation.REQUIRED)
+//    public boolean addPhieuMH(Map<String, PhieuMonHoc> carts) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        try {
+//            for (PhieuMonHoc c : carts.values()) {
+//                Diem d = new Diem();
+//                d.setIdMonHoc(mhRepository.getMonHocById(c.getIdMonHoc()));
+//                d.setIdSinhVien(svRepository.getSinhVienById(c.getIdSinhVien()));
+//                short a = 0;
+//                d.setKhoaDiem(a);
+//                s.save(d);
+//            }
+//            return true;
+//        } catch (HibernateException ex) {
+//            ex.printStackTrace();
+//            return false;
+//        }
+//    }
+//
+//    @Override
+//    public PhieuMonHoc getPhieuMonHoc() {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        Query q = s.createQuery("From PhieuMonHoc");
+//        return (PhieuMonHoc) q.getSingleResult();
+//    }
+//
+//    @Override
+//    @Transactional(propagation = Propagation.REQUIRED)
+//    public boolean deletePhieuMH(PhieuMonHoc pmh) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        try {
+//            if (pmh != null) {
+//                s.delete(pmh);
+//            }
+//            return true;
+//        } catch (HibernateException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+//
+//    @Override
+//    public PhieuMonHoc getPhieuMonHocByIdMh(int idMonHoc, int idSinhVien) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        CriteriaBuilder b = s.getCriteriaBuilder();
+//        CriteriaQuery<PhieuMonHoc> q = b.createQuery(PhieuMonHoc.class);
+//        Root<PhieuMonHoc> r = q.from(PhieuMonHoc.class);
+//        List<Predicate> predicates = new ArrayList<>();
+//        predicates.add(b.equal(r.get("idMonHoc"), idMonHoc));
+//        predicates.add(b.equal(r.get("idSinhVien"), idSinhVien));
+//        q.select(r).where(predicates.toArray(Predicate[]::new));
+//
+//        Query query = s.createQuery(q);
+//        PhieuMonHoc a =  (PhieuMonHoc) query.getSingleResult();
+//        try {
+//            return a;
+//        } catch (NoResultException ex) {
+//            // Xử lý nếu không tìm thấy kết quả, có thể trả về null hoặc throw một exception tùy theo logic ứng dụng của bạn.
+//            return null;
+//        }
+//    }
+//
+//    @Override
+//    public PhieuMonHoc getPhieuMonHocByIdSv(int idSinhVien) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        CriteriaBuilder b = s.getCriteriaBuilder();
+//        CriteriaQuery<PhieuMonHoc> q = b.createQuery(PhieuMonHoc.class);
+//
+//        Root r = q.from(PhieuMonHoc.class);
+//        q.select(r);
+//
+//        q.where(b.equal(r.get("idSinhVien"), idSinhVien));
+//
+//        Query query = s.createQuery(q);
+//        return (PhieuMonHoc) query.getSingleResult();
+//    }
 
 }

@@ -13,9 +13,9 @@ import java.util.Map;
  * @author FPTSHOP
  */
 public interface PhieuMonHocRepository {
-    boolean addPhieuMH(Map<String, PhieuMonHoc> carts);
-    PhieuMonHoc getPhieuMonHoc();
-    boolean deletePhieuMH(PhieuMonHoc pmh);
-    PhieuMonHoc getPhieuMonHocByIdMh(int idMonHoc, int idSinhVien);
-    PhieuMonHoc getPhieuMonHocByIdSv(int idSinhVien);
+//    boolean addPhieuMH(Map<String, PhieuMonHoc> carts);
+//    PhieuMonHoc getPhieuMonHoc();
+//    boolean deletePhieuMH(PhieuMonHoc pmh);
+//    PhieuMonHoc getPhieuMonHocByIdMh(int idMonHoc, int idSinhVien);
+//    PhieuMonHoc getPhieuMonHocByIdSv(int idSinhVien);
 }

@@ -14,10 +14,7 @@
         <tr>
             <th>Mã môn học</th>
             <th>Tên môn học</th>
-            <th>Hình thức thi</th>
             <th>Số tín chỉ</th>
-            <th>Học kỳ</th>
-            <th>Phòng học</th>
             <th>
 
                 <a  href="<c:url value="/giaovu/monhoc/add"/>" class=" btn-xoavacn bg-add"  >Thêm Môn Học</a>
@@ -29,11 +26,7 @@
             <tr>
                 <td>${mh.idMonHoc}</td>
                 <td>${mh.tenMonHoc}</td>
-                <td>${mh.hinhThucThi}</td>
                 <td>${mh.soTinChi}</td>
-                <td>${mh.hocKy}</td>
-                <td>${mh.phongHoc}</td>
-               
                 <td>
                     <c:url value="/giaovu/monhoc/add/${mh.idMonHoc}" var="api"/>
                     <a href="${api}"class="btn-xoavacn bg-cn" > Cập nhật</a>

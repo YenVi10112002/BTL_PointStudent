@@ -19,6 +19,19 @@
     <class>com.av.pojo.Giaovu</class>
     <class>com.av.pojo.Cauhoidiendang</class>
     <class>com.av.pojo.Loaitaikhoan</class>
+    <class>com.av.pojo.MonhocHocky</class>
+    <class>com.av.pojo.Nganhdaotao</class>
+    <class>com.av.pojo.Khoadaotao</class>
+    <class>com.av.pojo.Monhocdangky</class>
+    <class>com.av.pojo.Khoa</class>
+    <class>com.av.pojo.Hedaotao</class>
+    <class>com.av.pojo.Hocky</class>
+    <class>com.av.pojo.Loaidiem</class>
+    <class>com.av.pojo.Phonghoc</class>
+    <class>com.av.pojo.Loaihocky</class>
+    <class>com.av.pojo.Khoadaotao_1</class>
+    <class>com.av.pojo.Hedaotao_1</class>
+    <class>com.av.pojo.Nganhdaotao_1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/saledb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

@@ -4,7 +4,6 @@
  */
 package com.av.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -80,8 +79,7 @@ public class Giangvien implements Serializable {
     @Column(name = "soDienThoai")
     private String soDienThoai;
     @OneToMany(mappedBy = "idGiangVien")
-    @JsonIgnore
-    private Set<Monhoc> monhocSet;
+    private Set<MonhocHocky> monhocHockySet;
     @JoinColumn(name = "idTaiKhoan", referencedColumnName = "idTaiKhoan")
     @OneToOne
     private Taikhoan idTaiKhoan;
@@ -159,12 +157,12 @@ public class Giangvien implements Serializable {
     }
 
     @XmlTransient
-    public Set<Monhoc> getMonhocSet() {
-        return monhocSet;
+    public Set<MonhocHocky> getMonhocHockySet() {
+        return monhocHockySet;
     }
 
-    public void setMonhocSet(Set<Monhoc> monhocSet) {
-        this.monhocSet = monhocSet;
+    public void setMonhocHockySet(Set<MonhocHocky> monhocHockySet) {
+        this.monhocHockySet = monhocHockySet;
     }
 
     public Taikhoan getIdTaiKhoan() {

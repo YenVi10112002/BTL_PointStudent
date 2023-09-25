@@ -4,7 +4,6 @@
  */
 package com.av.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -63,23 +62,18 @@ public class Taikhoan implements Serializable {
     @Column(name = "image")
     private String image;
     @OneToMany(mappedBy = "idTaiKhoan")
-    @JsonIgnore
     private Set<Traloidiendan> traloidiendanSet;
     @JoinColumn(name = "ChucVu", referencedColumnName = "idloaitaikhoan")
     @ManyToOne
     private Loaitaikhoan chucVu;
-    @OneToOne(mappedBy = "idTaiKhoan")
-    @JsonIgnore
-    private Giaovu giaovu;
-    @OneToOne(mappedBy = "idTaiKhoan")
-    @JsonIgnore
-    private Sinhvien sinhvien;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTaiKhoan")
-    @JsonIgnore
     private Set<Cauhoidiendang> cauhoidiendangSet;
     @OneToOne(mappedBy = "idTaiKhoan")
-    @JsonIgnore
     private Giangvien giangvien;
+    @OneToOne(mappedBy = "idTaiKhoan")
+    private Giaovu giaovu;
+    @OneToOne(mappedBy = "idTaiKhoan")
+    private Sinhvien sinhvien;
     @Transient
     private String xacNhanMk;
     @Transient
@@ -89,7 +83,6 @@ public class Taikhoan implements Serializable {
 
     @Transient
     private MultipartFile file;
-
     public Taikhoan() {
     }
 
@@ -152,22 +145,6 @@ public class Taikhoan implements Serializable {
         this.chucVu = chucVu;
     }
 
-    public Giaovu getGiaovu() {
-        return giaovu;
-    }
-
-    public void setGiaovu(Giaovu giaovu) {
-        this.giaovu = giaovu;
-    }
-
-    public Sinhvien getSinhvien() {
-        return sinhvien;
-    }
-
-    public void setSinhvien(Sinhvien sinhvien) {
-        this.sinhvien = sinhvien;
-    }
-
     @XmlTransient
     public Set<Cauhoidiendang> getCauhoidiendangSet() {
         return cauhoidiendangSet;
@@ -183,6 +160,22 @@ public class Taikhoan implements Serializable {
 
     public void setGiangvien(Giangvien giangvien) {
         this.giangvien = giangvien;
+    }
+
+    public Giaovu getGiaovu() {
+        return giaovu;
+    }
+
+    public void setGiaovu(Giaovu giaovu) {
+        this.giaovu = giaovu;
+    }
+
+    public Sinhvien getSinhvien() {
+        return sinhvien;
+    }
+
+    public void setSinhvien(Sinhvien sinhvien) {
+        this.sinhvien = sinhvien;
     }
 
     @Override
@@ -209,13 +202,13 @@ public class Taikhoan implements Serializable {
     public String toString() {
         return "com.av.pojo.Taikhoan[ idTaiKhoan=" + idTaiKhoan + " ]";
     }
-    
+
     /**
      * @return the xacNhanMk
      */
     public String getXacNhanMk() {
         return xacNhanMk;
-}
+    }
 
     /**
      * @param xacNhanMk the xacNhanMk to set
@@ -225,17 +218,17 @@ public class Taikhoan implements Serializable {
     }
 
     /**
-     * @return the file
+     * @return the mkMoi
      */
-    public MultipartFile getFile() {
-        return file;
+    public String getMkMoi() {
+        return mkMoi;
     }
 
     /**
-     * @param file the file to set
+     * @param mkMoi the mkMoi to set
      */
-    public void setFile(MultipartFile file) {
-        this.file = file;
+    public void setMkMoi(String mkMoi) {
+        this.mkMoi = mkMoi;
     }
 
     /**
@@ -253,17 +246,17 @@ public class Taikhoan implements Serializable {
     }
 
     /**
-     * @return the mkMoi
+     * @return the file
      */
-    public String getMkMoi() {
-        return mkMoi;
+    public MultipartFile getFile() {
+        return file;
     }
 
     /**
-     * @param mkMoi the mkMoi to set
+     * @param file the file to set
      */
-    public void setMkMoi(String mkMoi) {
-        this.mkMoi = mkMoi;
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
-
+    
 }

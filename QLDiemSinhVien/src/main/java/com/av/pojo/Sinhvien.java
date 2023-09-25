@@ -4,11 +4,11 @@
  */
 package com.av.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +23,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -39,13 +38,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sinhvien.findAll", query = "SELECT s FROM Sinhvien s"),
     @NamedQuery(name = "Sinhvien.findByIdSinhVien", query = "SELECT s FROM Sinhvien s WHERE s.idSinhVien = :idSinhVien"),
     @NamedQuery(name = "Sinhvien.findByHoTen", query = "SELECT s FROM Sinhvien s WHERE s.hoTen = :hoTen"),
-    @NamedQuery(name = "Sinhvien.findByHeDaoTao", query = "SELECT s FROM Sinhvien s WHERE s.heDaoTao = :heDaoTao"),
     @NamedQuery(name = "Sinhvien.findByNgaySinh", query = "SELECT s FROM Sinhvien s WHERE s.ngaySinh = :ngaySinh"),
     @NamedQuery(name = "Sinhvien.findByDiaChi", query = "SELECT s FROM Sinhvien s WHERE s.diaChi = :diaChi"),
     @NamedQuery(name = "Sinhvien.findByGioiTinh", query = "SELECT s FROM Sinhvien s WHERE s.gioiTinh = :gioiTinh"),
     @NamedQuery(name = "Sinhvien.findBySoDienThoai", query = "SELECT s FROM Sinhvien s WHERE s.soDienThoai = :soDienThoai"),
     @NamedQuery(name = "Sinhvien.findByEmail", query = "SELECT s FROM Sinhvien s WHERE s.email = :email")})
 public class Sinhvien implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSinhVien")
+    private Set<Monhocdangky> monhocdangkySet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,9 +57,6 @@ public class Sinhvien implements Serializable {
     @Size(max = 50)
     @Column(name = "hoTen")
     private String hoTen;
-    @Size(max = 50)
-    @Column(name = "heDaoTao")
-    private String heDaoTao;
     @Column(name = "ngaySinh")
     @Temporal(TemporalType.DATE)
     private Date ngaySinh;
@@ -74,9 +72,6 @@ public class Sinhvien implements Serializable {
     @Size(max = 50)
     @Column(name = "email")
     private String email;
-    @OneToMany(mappedBy = "idSinhVien")
-    @JsonIgnore
-    private Set<Diem> diemSet;
     @JoinColumn(name = "maLop", referencedColumnName = "idLopHoc")
     @ManyToOne
     private Lophoc maLop;
@@ -105,14 +100,6 @@ public class Sinhvien implements Serializable {
 
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
-    }
-
-    public String getHeDaoTao() {
-        return heDaoTao;
-    }
-
-    public void setHeDaoTao(String heDaoTao) {
-        this.heDaoTao = heDaoTao;
     }
 
     public Date getNgaySinh() {
@@ -155,15 +142,6 @@ public class Sinhvien implements Serializable {
         this.email = email;
     }
 
-    @XmlTransient
-    public Set<Diem> getDiemSet() {
-        return diemSet;
-    }
-
-    public void setDiemSet(Set<Diem> diemSet) {
-        this.diemSet = diemSet;
-    }
-
     public Lophoc getMaLop() {
         return maLop;
     }
@@ -203,6 +181,15 @@ public class Sinhvien implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Sinhvien[ idSinhVien=" + idSinhVien + " ]";
+    }
+
+    @XmlTransient
+    public Set<Monhocdangky> getMonhocdangkySet() {
+        return monhocdangkySet;
+    }
+
+    public void setMonhocdangkySet(Set<Monhocdangky> monhocdangkySet) {
+        this.monhocdangkySet = monhocdangkySet;
     }
     
 }

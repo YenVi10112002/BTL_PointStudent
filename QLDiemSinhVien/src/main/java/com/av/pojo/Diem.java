@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,15 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Diem.findAll", query = "SELECT d FROM Diem d"),
     @NamedQuery(name = "Diem.findByIdDiem", query = "SELECT d FROM Diem d WHERE d.idDiem = :idDiem"),
-    @NamedQuery(name = "Diem.findByXepLoai", query = "SELECT d FROM Diem d WHERE d.xepLoai = :xepLoai"),
-    @NamedQuery(name = "Diem.findByTrangThai", query = "SELECT d FROM Diem d WHERE d.trangThai = :trangThai"),
-    @NamedQuery(name = "Diem.findByKhoaDiem", query = "SELECT d FROM Diem d WHERE d.khoaDiem = :khoaDiem"),
-    @NamedQuery(name = "Diem.findByDiemGiuaKy", query = "SELECT d FROM Diem d WHERE d.diemGiuaKy = :diemGiuaKy"),
-    @NamedQuery(name = "Diem.findByDiemCuoiKy", query = "SELECT d FROM Diem d WHERE d.diemCuoiKy = :diemCuoiKy"),
-    @NamedQuery(name = "Diem.findByDiemKT1", query = "SELECT d FROM Diem d WHERE d.diemKT1 = :diemKT1"),
-    @NamedQuery(name = "Diem.findByDiemTK2", query = "SELECT d FROM Diem d WHERE d.diemTK2 = :diemTK2"),
-    @NamedQuery(name = "Diem.findByDiemTK3", query = "SELECT d FROM Diem d WHERE d.diemTK3 = :diemTK3"),
-    @NamedQuery(name = "Diem.findByDiemTrungB\u00ecnh", query = "SELECT d FROM Diem d WHERE d.diemTrungB\u00ecnh = :diemTrungB\u00ecnh")})
+    @NamedQuery(name = "Diem.findByTenDiem", query = "SELECT d FROM Diem d WHERE d.tenDiem = :tenDiem"),
+    @NamedQuery(name = "Diem.findBySoDiem", query = "SELECT d FROM Diem d WHERE d.soDiem = :soDiem"),
+    @NamedQuery(name = "Diem.findByKhoaDiem", query = "SELECT d FROM Diem d WHERE d.khoaDiem = :khoaDiem")})
 public class Diem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,38 +41,35 @@ public class Diem implements Serializable {
     @Basic(optional = false)
     @Column(name = "idDiem")
     private Integer idDiem;
-    @Size(max = 20)
-    @Column(name = "xepLoai")
-    private String xepLoai;
-    @Column(name = "trangThai")
-    private Short trangThai;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "tenDiem")
+    private String tenDiem;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "soDiem")
+    private double soDiem;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "khoaDiem")
-    private Short khoaDiem;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "diemGiuaKy")
-    private Double diemGiuaKy;
-    @Column(name = "diemCuoiKy")
-    private Double diemCuoiKy;
-    @Column(name = "DiemKT1")
-    private Double diemKT1;
-    @Column(name = "DiemTK2")
-    private Double diemTK2;
-    @Column(name = "DiemTK3")
-    private Double diemTK3;
-    @Column(name = "diemTrungB\u00ecnh")
-    private Double diemTrungBình;
-    @JoinColumn(name = "idMonHoc", referencedColumnName = "idMonHoc")
-    @ManyToOne
-    private Monhoc idMonHoc;
-    @JoinColumn(name = "idSinhVien", referencedColumnName = "idSinhVien")
-    @ManyToOne
-    private Sinhvien idSinhVien;
+    private short khoaDiem;
+    @JoinColumn(name = "idMonHoc", referencedColumnName = "idMonHocDangKy")
+    @ManyToOne(optional = false)
+    private Monhocdangky idMonHoc;
 
     public Diem() {
     }
 
     public Diem(Integer idDiem) {
         this.idDiem = idDiem;
+    }
+
+    public Diem(Integer idDiem, String tenDiem, double soDiem, short khoaDiem) {
+        this.idDiem = idDiem;
+        this.tenDiem = tenDiem;
+        this.soDiem = soDiem;
+        this.khoaDiem = khoaDiem;
     }
 
     public Integer getIdDiem() {
@@ -88,86 +80,37 @@ public class Diem implements Serializable {
         this.idDiem = idDiem;
     }
 
-    public String getXepLoai() {
-        return xepLoai;
+    public String getTenDiem() {
+        return tenDiem;
     }
 
-    public void setXepLoai(String xepLoai) {
-        this.xepLoai = xepLoai;
+    public void setTenDiem(String tenDiem) {
+        this.tenDiem = tenDiem;
     }
 
-    public Short getTrangThai() {
-        return trangThai;
+    public double getSoDiem() {
+        return soDiem;
     }
 
-    public void setTrangThai(Short trangThai) {
-        this.trangThai = trangThai;
+    public void setSoDiem(double soDiem) {
+        this.soDiem = soDiem;
     }
 
-    public Double getDiemGiuaKy() {
-        return diemGiuaKy;
+    public short getKhoaDiem() {
+        return khoaDiem;
     }
 
-    public void setDiemGiuaKy(Double diemGiuaKy) {
-        this.diemGiuaKy = diemGiuaKy;
+    public void setKhoaDiem(short khoaDiem) {
+        this.khoaDiem = khoaDiem;
     }
 
-    public Double getDiemCuoiKy() {
-        return diemCuoiKy;
-    }
-
-    public void setDiemCuoiKy(Double diemCuoiKy) {
-        this.diemCuoiKy = diemCuoiKy;
-    }
-
-    public Double getDiemKT1() {
-        return diemKT1;
-    }
-
-    public void setDiemKT1(Double diemKT1) {
-        this.diemKT1 = diemKT1;
-    }
-
-    public Double getDiemTK2() {
-        return diemTK2;
-    }
-
-    public void setDiemTK2(Double diemTK2) {
-        this.diemTK2 = diemTK2;
-    }
-
-    public Double getDiemTK3() {
-        return diemTK3;
-    }
-
-    public void setDiemTK3(Double diemTK3) {
-        this.diemTK3 = diemTK3;
-    }
-
-    public Double getDiemTrungBình() {
-        return diemTrungBình;
-    }
-
-    public void setDiemTrungBình(Double diemTrungBình) {
-        this.diemTrungBình = diemTrungBình;
-    }
-
-    public Monhoc getIdMonHoc() {
+    public Monhocdangky getIdMonHoc() {
         return idMonHoc;
     }
 
-    public void setIdMonHoc(Monhoc idMonHoc) {
+    public void setIdMonHoc(Monhocdangky idMonHoc) {
         this.idMonHoc = idMonHoc;
     }
-
-    public Sinhvien getIdSinhVien() {
-        return idSinhVien;
-    }
-
-    public void setIdSinhVien(Sinhvien idSinhVien) {
-        this.idSinhVien = idSinhVien;
-    }
-    
 
     @Override
     public int hashCode() {
@@ -192,20 +135,6 @@ public class Diem implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Diem[ idDiem=" + idDiem + " ]";
-    }
-
-    /**
-     * @return the khoaDiem
-     */
-    public Short getKhoaDiem() {
-        return khoaDiem;
-    }
-
-    /**
-     * @param khoaDiem the khoaDiem to set
-     */
-    public void setKhoaDiem(Short khoaDiem) {
-        this.khoaDiem = khoaDiem;
     }
     
 }

@@ -4,17 +4,15 @@
  */
 package com.av.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,10 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Monhoc.findAll", query = "SELECT m FROM Monhoc m"),
     @NamedQuery(name = "Monhoc.findByIdMonHoc", query = "SELECT m FROM Monhoc m WHERE m.idMonHoc = :idMonHoc"),
     @NamedQuery(name = "Monhoc.findByTenMonHoc", query = "SELECT m FROM Monhoc m WHERE m.tenMonHoc = :tenMonHoc"),
-    @NamedQuery(name = "Monhoc.findByHinhThucThi", query = "SELECT m FROM Monhoc m WHERE m.hinhThucThi = :hinhThucThi"),
-    @NamedQuery(name = "Monhoc.findBySoTinChi", query = "SELECT m FROM Monhoc m WHERE m.soTinChi = :soTinChi"),
-    @NamedQuery(name = "Monhoc.findByHocKy", query = "SELECT m FROM Monhoc m WHERE m.hocKy = :hocKy"),
-    @NamedQuery(name = "Monhoc.findByPhongHoc", query = "SELECT m FROM Monhoc m WHERE m.phongHoc = :phongHoc")})
+    @NamedQuery(name = "Monhoc.findBySoTinChi", query = "SELECT m FROM Monhoc m WHERE m.soTinChi = :soTinChi")})
 public class Monhoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,28 +49,10 @@ public class Monhoc implements Serializable {
     private String tenMonHoc;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "hinhThucThi")
-    private String hinhThucThi;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "soTinChi")
     private int soTinChi;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "hocKy")
-    private int hocKy;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "phongHoc")
-    private String phongHoc;
-    @JoinColumn(name = "idGiangVien", referencedColumnName = "idGiangVien")
-    @ManyToOne
-    private Giangvien idGiangVien;
-    @OneToMany(mappedBy = "idMonHoc")
-    @JsonIgnore
-    private Set<Diem> diemSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMonHoc")
+    private Set<MonhocHocky> monhocHockySet;
 
     public Monhoc() {
     }
@@ -84,13 +61,10 @@ public class Monhoc implements Serializable {
         this.idMonHoc = idMonHoc;
     }
 
-    public Monhoc(Integer idMonHoc, String tenMonHoc, String hinhThucThi, int soTinChi, int hocKy, String phongHoc) {
+    public Monhoc(Integer idMonHoc, String tenMonHoc, int soTinChi) {
         this.idMonHoc = idMonHoc;
         this.tenMonHoc = tenMonHoc;
-        this.hinhThucThi = hinhThucThi;
         this.soTinChi = soTinChi;
-        this.hocKy = hocKy;
-        this.phongHoc = phongHoc;
     }
 
     public Integer getIdMonHoc() {
@@ -109,14 +83,6 @@ public class Monhoc implements Serializable {
         this.tenMonHoc = tenMonHoc;
     }
 
-    public String getHinhThucThi() {
-        return hinhThucThi;
-    }
-
-    public void setHinhThucThi(String hinhThucThi) {
-        this.hinhThucThi = hinhThucThi;
-    }
-
     public int getSoTinChi() {
         return soTinChi;
     }
@@ -125,37 +91,13 @@ public class Monhoc implements Serializable {
         this.soTinChi = soTinChi;
     }
 
-    public int getHocKy() {
-        return hocKy;
-    }
-
-    public void setHocKy(int hocKy) {
-        this.hocKy = hocKy;
-    }
-
-    public String getPhongHoc() {
-        return phongHoc;
-    }
-
-    public void setPhongHoc(String phongHoc) {
-        this.phongHoc = phongHoc;
-    }
-
-    public Giangvien getIdGiangVien() {
-        return idGiangVien;
-    }
-
-    public void setIdGiangVien(Giangvien idGiangVien) {
-        this.idGiangVien = idGiangVien;
-    }
-
     @XmlTransient
-    public Set<Diem> getDiemSet() {
-        return diemSet;
+    public Set<MonhocHocky> getMonhocHockySet() {
+        return monhocHockySet;
     }
 
-    public void setDiemSet(Set<Diem> diemSet) {
-        this.diemSet = diemSet;
+    public void setMonhocHockySet(Set<MonhocHocky> monhocHockySet) {
+        this.monhocHockySet = monhocHockySet;
     }
 
     @Override

@@ -72,7 +72,7 @@ public class SinhVienServiceImpl implements SinhVienService {
             this.dienDanRepository.deleteCauHoiByTaiKhoan(sv.getIdTaiKhoan().getIdTaiKhoan());
             this.dienDanRepository.deleteTraloiByTaiKhoan(sv.getIdTaiKhoan().getIdTaiKhoan());
         }       
-        this.diemRepository.deleteDiemBySinhVien(idSinhVien);
+//        this.diemRepository.deleteDiemBySinhVien(idSinhVien);
         return sinhvienRepository.deleteSinhVien(idSinhVien);
     }
     @Override

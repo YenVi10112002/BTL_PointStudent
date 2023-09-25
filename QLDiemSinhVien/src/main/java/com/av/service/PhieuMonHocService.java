@@ -12,9 +12,9 @@ import java.util.Map;
  * @author FPTSHOP
  */
 public interface PhieuMonHocService {
-    boolean addPhieuMH(Map<String, PhieuMonHoc> carts);
-    PhieuMonHoc getPhieuMonHoc();
-    boolean deletePhieuMH(int idMonHoc, int idSinhVien);
+//    boolean addPhieuMH(Map<String, PhieuMonHoc> carts);
+//    PhieuMonHoc getPhieuMonHoc();
+//    boolean deletePhieuMH(int idMonHoc, int idSinhVien);
 
     
 }

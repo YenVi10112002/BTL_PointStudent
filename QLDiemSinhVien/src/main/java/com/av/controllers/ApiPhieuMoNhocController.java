@@ -40,87 +40,87 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ApiPhieuMoNhocController {
 
-    @Autowired
-    private MonHocService mhService;
-
-    @Autowired
-    private SinhVienService svService;
-    
-    @Autowired
-    private DiemService diemService;
-    @Autowired
-    private PhieuMonHocService phieuMHService;
-
-    @GetMapping("/giaovu/api/monhoc")
-    public ResponseEntity<List<Monhoc>> listMonHoc() {
-        List<Monhoc> monhocs = this.mhService.getMonHocs();
-
-        return new ResponseEntity<>(monhocs, HttpStatus.OK);
-    }
-
-    @PostMapping("/giaovu/api/phieuMH")
-    @ResponseStatus(HttpStatus.OK)
-    @CrossOrigin
-    public ResponseEntity<String> listCart(@RequestBody Map<String, PhieuMonHoc> cart) {
-        boolean success = this.phieuMHService.addPhieuMH(cart);
-        if (success == true) {
-           return new ResponseEntity<>("Đã thêm sinh viên vào lớp học", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("loi", HttpStatus.OK);
-        }
-    }
-
-    @GetMapping("/giaovu/api/cart")
-    @CrossOrigin
-    public ResponseEntity<?> dangKi(HttpSession session, Model model) {
-        Map<String, PhieuMonHoc> cart = (Map<String, PhieuMonHoc>) session.getAttribute("cart");
-
-        Map<String, Object> response = new HashMap<>();
-
-        if (cart != null) {
-            response.put("cart", cart.values());
-        } else {
-            response.put("cart", null);
-        }
-        return ResponseEntity.ok(response);
-    }
-
-    @DeleteMapping("/giaovu/api/phieuMH/delete/{idMonHoc}")
-    @ResponseStatus(HttpStatus.OK)
-    @CrossOrigin
-    public ResponseEntity<?> removeFromCart(@PathVariable(value = "idMonHoc") Integer idMonHoc, @RequestParam(value = "idSinhVien") Integer idSinhVien) {
-        this.diemService.deleteDiem(idMonHoc, idSinhVien);
-        this.phieuMHService.deletePhieuMH(idMonHoc, idSinhVien);
-        return ResponseEntity.ok().build();
-    }
-    
-    
-    @GetMapping("/giaovu/api/monhoc/{idMonHoc}")
-    @CrossOrigin
-    public ResponseEntity<Integer> cart(@RequestParam(value = "idSinhVien") Integer idSinhVien, @PathVariable(value = "idMonHoc") Integer id, HttpSession session
-    ) {
-        String errMsg = "";
-        Map<Integer, PhieuMonHoc> cart = (Map<Integer, PhieuMonHoc>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new HashMap<>();
-        }
-        if (cart.containsKey(id) == true) {
-            errMsg = "Môn học đã tồn tại trong giỏ hàng";
-        } else {
-            Monhoc mh = this.mhService.getMonHocById(id);
-            Sinhvien sv = this.svService.getSinhVienById(idSinhVien);
-            PhieuMonHoc c = new PhieuMonHoc();
-            c.setIdMonHoc(mh.getIdMonHoc());
-            c.setTenMonHoc(mh.getTenMonHoc());
-            c.setPhongHoc(mh.getPhongHoc());
-            c.setDem(1);
-            c.setIdSinhVien(sv.getIdSinhVien());
-            cart.put(id, c);
-        }
-        session.setAttribute("cart", cart);
-
-        
-        return new ResponseEntity<>(Utils.countCart(cart), HttpStatus.OK);
-//        System.out.printf("=== Cart = %d\n", Utils.countCart(cart));
-    }
+//    @Autowired
+//    private MonHocService mhService;
+//
+//    @Autowired
+//    private SinhVienService svService;
+//    
+//    @Autowired
+//    private DiemService diemService;
+//    @Autowired
+//    private PhieuMonHocService phieuMHService;
+//
+//    @GetMapping("/giaovu/api/monhoc")
+//    public ResponseEntity<List<Monhoc>> listMonHoc() {
+//        List<Monhoc> monhocs = this.mhService.getMonHocs();
+//
+//        return new ResponseEntity<>(monhocs, HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/giaovu/api/phieuMH")
+//    @ResponseStatus(HttpStatus.OK)
+//    @CrossOrigin
+//    public ResponseEntity<String> listCart(@RequestBody Map<String, PhieuMonHoc> cart) {
+//        boolean success = this.phieuMHService.addPhieuMH(cart);
+//        if (success == true) {
+//           return new ResponseEntity<>("Đã thêm sinh viên vào lớp học", HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>("loi", HttpStatus.OK);
+//        }
+//    }
+//
+//    @GetMapping("/giaovu/api/cart")
+//    @CrossOrigin
+//    public ResponseEntity<?> dangKi(HttpSession session, Model model) {
+//        Map<String, PhieuMonHoc> cart = (Map<String, PhieuMonHoc>) session.getAttribute("cart");
+//
+//        Map<String, Object> response = new HashMap<>();
+//
+//        if (cart != null) {
+//            response.put("cart", cart.values());
+//        } else {
+//            response.put("cart", null);
+//        }
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    @DeleteMapping("/giaovu/api/phieuMH/delete/{idMonHoc}")
+//    @ResponseStatus(HttpStatus.OK)
+//    @CrossOrigin
+//    public ResponseEntity<?> removeFromCart(@PathVariable(value = "idMonHoc") Integer idMonHoc, @RequestParam(value = "idSinhVien") Integer idSinhVien) {
+//        this.diemService.deleteDiem(idMonHoc, idSinhVien);
+//        this.phieuMHService.deletePhieuMH(idMonHoc, idSinhVien);
+//        return ResponseEntity.ok().build();
+//    }
+//    
+//    
+//    @GetMapping("/giaovu/api/monhoc/{idMonHoc}")
+//    @CrossOrigin
+//    public ResponseEntity<Integer> cart(@RequestParam(value = "idSinhVien") Integer idSinhVien, @PathVariable(value = "idMonHoc") Integer id, HttpSession session
+//    ) {
+//        String errMsg = "";
+//        Map<Integer, PhieuMonHoc> cart = (Map<Integer, PhieuMonHoc>) session.getAttribute("cart");
+//        if (cart == null) {
+//            cart = new HashMap<>();
+//        }
+//        if (cart.containsKey(id) == true) {
+//            errMsg = "Môn học đã tồn tại trong giỏ hàng";
+//        } else {
+//            Monhoc mh = this.mhService.getMonHocById(id);
+//            Sinhvien sv = this.svService.getSinhVienById(idSinhVien);
+//            PhieuMonHoc c = new PhieuMonHoc();
+//            c.setIdMonHoc(mh.getIdMonHoc());
+//            c.setTenMonHoc(mh.getTenMonHoc());
+//            c.setPhongHoc(mh.getPhongHoc());
+//            c.setDem(1);
+//            c.setIdSinhVien(sv.getIdSinhVien());
+//            cart.put(id, c);
+//        }
+//        session.setAttribute("cart", cart);
+//
+//        
+//        return new ResponseEntity<>(Utils.countCart(cart), HttpStatus.OK);
+////        System.out.printf("=== Cart = %d\n", Utils.countCart(cart));
+//    }
 }

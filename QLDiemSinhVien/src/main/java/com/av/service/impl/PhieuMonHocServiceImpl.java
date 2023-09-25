@@ -19,24 +19,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class PhieuMonHocServiceImpl implements PhieuMonHocService{
     
-    @Autowired
-    private PhieuMonHocRepository phieuMHRepo;
-
-    @Override
-    public boolean addPhieuMH(Map<String, PhieuMonHoc> carts) {
-        return this.phieuMHRepo.addPhieuMH(carts);
-    }
-
-    @Override
-    public PhieuMonHoc getPhieuMonHoc() {
-        return this.phieuMHRepo.getPhieuMonHoc();
-    }
-
-    @Override
-    public boolean deletePhieuMH(int idMonHoc, int idSinhVien) {
-        PhieuMonHoc pmh = this.phieuMHRepo.getPhieuMonHocByIdMh(idMonHoc, idSinhVien);
-        return this.phieuMHRepo.deletePhieuMH(pmh);
-    }
+//    @Autowired
+//    private PhieuMonHocRepository phieuMHRepo;
+//
+//    @Override
+//    public boolean addPhieuMH(Map<String, PhieuMonHoc> carts) {
+//        return this.phieuMHRepo.addPhieuMH(carts);
+//    }
+//
+//    @Override
+//    public PhieuMonHoc getPhieuMonHoc() {
+//        return this.phieuMHRepo.getPhieuMonHoc();
+//    }
+//
+//    @Override
+//    public boolean deletePhieuMH(int idMonHoc, int idSinhVien) {
+//        PhieuMonHoc pmh = this.phieuMHRepo.getPhieuMonHocByIdMh(idMonHoc, idSinhVien);
+//        return this.phieuMHRepo.deletePhieuMH(pmh);
+//    }
 
     
 }
