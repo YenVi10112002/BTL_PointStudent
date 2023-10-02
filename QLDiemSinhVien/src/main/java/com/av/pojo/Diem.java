@@ -4,8 +4,10 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,7 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Diem.findAll", query = "SELECT d FROM Diem d"),
     @NamedQuery(name = "Diem.findByIdDiem", query = "SELECT d FROM Diem d WHERE d.idDiem = :idDiem"),
-    @NamedQuery(name = "Diem.findByTenDiem", query = "SELECT d FROM Diem d WHERE d.tenDiem = :tenDiem"),
     @NamedQuery(name = "Diem.findBySoDiem", query = "SELECT d FROM Diem d WHERE d.soDiem = :soDiem"),
     @NamedQuery(name = "Diem.findByKhoaDiem", query = "SELECT d FROM Diem d WHERE d.khoaDiem = :khoaDiem")})
 public class Diem implements Serializable {
@@ -41,11 +43,10 @@ public class Diem implements Serializable {
     @Basic(optional = false)
     @Column(name = "idDiem")
     private Integer idDiem;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "tenDiem")
-    private String tenDiem;
+
+    @JoinColumn(name = "tenDiem", referencedColumnName = "idLoaiDiem")
+    @ManyToOne
+    private Loaidiem tenDiem;
     @Basic(optional = false)
     @NotNull
     @Column(name = "soDiem")
@@ -56,6 +57,7 @@ public class Diem implements Serializable {
     private short khoaDiem;
     @JoinColumn(name = "idMonHoc", referencedColumnName = "idMonHocDangKy")
     @ManyToOne(optional = false)
+    
     private Monhocdangky idMonHoc;
 
     public Diem() {
@@ -65,9 +67,8 @@ public class Diem implements Serializable {
         this.idDiem = idDiem;
     }
 
-    public Diem(Integer idDiem, String tenDiem, double soDiem, short khoaDiem) {
+    public Diem(Integer idDiem, double soDiem, short khoaDiem) {
         this.idDiem = idDiem;
-        this.tenDiem = tenDiem;
         this.soDiem = soDiem;
         this.khoaDiem = khoaDiem;
     }
@@ -80,13 +81,7 @@ public class Diem implements Serializable {
         this.idDiem = idDiem;
     }
 
-    public String getTenDiem() {
-        return tenDiem;
-    }
 
-    public void setTenDiem(String tenDiem) {
-        this.tenDiem = tenDiem;
-    }
 
     public double getSoDiem() {
         return soDiem;
@@ -135,6 +130,20 @@ public class Diem implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Diem[ idDiem=" + idDiem + " ]";
+    }
+
+    /**
+     * @return the tenDiem
+     */
+    public Loaidiem getTenDiem() {
+        return tenDiem;
+    }
+
+    /**
+     * @param tenDiem the tenDiem to set
+     */
+    public void setTenDiem(Loaidiem tenDiem) {
+        this.tenDiem = tenDiem;
     }
     
 }

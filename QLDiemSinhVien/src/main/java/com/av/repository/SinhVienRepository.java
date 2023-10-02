@@ -6,7 +6,9 @@ package com.av.repository;
 
 import com.av.pojo.Cauhoidiendang;
 import com.av.pojo.Diem;
+import com.av.pojo.DiemMonHoc;
 import com.av.pojo.Lophoc;
+import com.av.pojo.Monhocdangky;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
@@ -24,7 +26,7 @@ public interface SinhVienRepository {
     boolean addOrUpdateSinhVien(Sinhvien sv);
     Sinhvien getSinhVienById(int idSinhVien);
     boolean deleteSinhVien(int idSinhVien);
-     List<Object> getSinhvienByMonHoc(Map<String, String> params);
+     List<DiemMonHoc> getSinhvienByMonHoc(Map<String, String> params);
      
      Long countSinhVien();
     

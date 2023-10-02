@@ -5,9 +5,6 @@
 package com.av.repository.impl;
 
 import com.av.pojo.Cauhoidiendang;
-import com.av.pojo.Giangvien;
-import com.av.pojo.Sinhvien;
-import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +18,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
-
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;

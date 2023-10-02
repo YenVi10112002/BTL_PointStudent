@@ -6,10 +6,14 @@ package com.av.repository.impl;
 
 import com.av.pojo.Cauhoidiendang;
 import com.av.pojo.Diem;
+import com.av.pojo.DiemMonHoc;
 import com.av.pojo.Lophoc;
+import com.av.pojo.MonhocHocky;
+import com.av.pojo.Monhocdangky;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.pojo.Traloidiendan;
+import com.av.repository.DiemRepository;
 import com.av.repository.DienDanRepository;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -50,11 +54,11 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
     private LocalSessionFactoryBean factory;
 
     @Autowired
+    private DiemRepository diemRepository;
+    @Autowired
     private TaiKhoanRepository tkRepo;
     @Autowired
     private Environment Env;
-    
-    
 
     @Override
     public Sinhvien getSinhVien(int idTaiKhoan) {
@@ -95,7 +99,7 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         q.where(predicates.toArray(Predicate[]::new));
 
         Query query = s.createQuery(q);
-        
+
         if (params != null) {
             String p = params.get("page");
             if (p != null && !p.isEmpty()) {
@@ -175,25 +179,23 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
     @Override
 
-    public List<Object> getSinhvienByMonHoc(Map<String, String> params) {
+    public List<DiemMonHoc> getSinhvienByMonHoc(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
 
         Root rSinhVien = q.from(Sinhvien.class);
-        Root rDiem = q.from(Diem.class);
-
+        Root rDiem = q.from(Monhocdangky.class);
+        Root rMonHoc = q.from(MonhocHocky.class);
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
 
             String idMonHoc = params.get("monHocId");
             if (idMonHoc != null) {
-                predicates.add(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
+                predicates.add(b.equal(rMonHoc.get("idMonHocHocKy"), Integer.parseInt(idMonHoc)));
+                predicates.add(b.equal(rDiem.get("idMonHoc"), rMonHoc.get("idMonHocHocKy")));
             }
-//            String idSinhVien = params.get("idSinhVien");
-//            if (idSinhVien != null) {
-//                predicates.add(b.equal(rDiem.get("idSinhVien"), Integer.parseInt(idSinhVien)));
-//            }
+
             String tenSinhVien = params.get("tenSinhVien");
             if (tenSinhVien != null) {
                 try {
@@ -204,15 +206,30 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
                     predicates.add(b.like(rSinhVien.get("hoTen"), String.format("%%%s%%", tenSinhVien)));
                 }
             }
-            q.groupBy(rDiem.get("idDiem"));
-            q.select(rDiem).where(predicates.toArray(new Predicate[0]));
-            Query query = s.createQuery(q);
-            return query.getResultList();
 
+            q.multiselect(rDiem);
+            q.where(predicates.toArray(new Predicate[0]));
+            q.distinct(true);
+            Query query = s.createQuery(q);
+            List<Monhocdangky> monHocList = query.getResultList();
+            List<DiemMonHoc> monHocDiemList = new ArrayList<>();
+
+            for (Monhocdangky monHoc : monHocList) {
+                DiemMonHoc monHocDiem = new DiemMonHoc(monHoc);
+                // Lấy danh sách điểm cho môn học cụ thể
+                List<Diem> diemList = this.diemRepository.getListDiemByIdMonHocDangKy(monHoc.getIdMonHocDangKy());
+                // Thêm điểm vào danh sách MonHocDiem
+                for (Diem diem : diemList) {
+                    monHocDiem.addDiem(diem); // Diem.getDiem() là phương thức lấy giá trị điểm
+                }
+                // Thêm MonHocDiem vào danh sách chung
+                monHocDiemList.add(monHocDiem);
+            }
+            return monHocDiemList;
         }
         return null;
     }
-    
+
     // dem sinh vien
     @Override
     public Long countSinhVien() {
@@ -228,10 +245,7 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         return countSV;
     }
 
-    
-    
     //update 26/9 danh sach sinh vien theo ma lop
-    
     @Override
     public List<Sinhvien> getSinhVienByIdLop(int idLop) {
         Session s = this.factory.getObject().getCurrentSession();

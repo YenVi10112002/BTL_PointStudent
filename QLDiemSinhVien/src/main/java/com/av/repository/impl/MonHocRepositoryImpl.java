@@ -7,6 +7,7 @@ package com.av.repository.impl;
 import com.av.pojo.Diem;
 import com.av.pojo.Giangvien;
 import com.av.pojo.Monhoc;
+import com.av.pojo.MonhocHocky;
 import com.av.pojo.Monhocdangky;
 import com.av.repository.MonHocRepository;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class MonHocRepositoryImpl implements MonHocRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
 
-        Root rMonHoc = q.from(Monhoc.class);
+        Root rMonHoc = q.from(MonhocHocky.class);
         Root rGiangVien = q.from(Giangvien.class);
 
         if (params != null) {
@@ -106,7 +107,7 @@ public class MonHocRepositoryImpl implements MonHocRepository {
                 predicates.add(b.equal(rMonHoc.get("idGiangVien"), rGiangVien.get("idGiangVien")));
             }
             q.select(rMonHoc).where(predicates.toArray(Predicate[]::new));
-            q.groupBy(rMonHoc.get("idMonHoc"));
+            q.groupBy(rMonHoc.get("idMonHocHocKy"));
             Query query = s.createQuery(q);
             return query.getResultList();
         }

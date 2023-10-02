@@ -4,7 +4,9 @@
  */
 package com.av.controllers;
 
+import com.av.pojo.DiemMonHoc;
 import com.av.pojo.Monhoc;
+import com.av.pojo.Monhocdangky;
 import com.av.repository.SinhVienRepository;
 import com.av.service.MonHocService;
 import java.util.List;
@@ -37,17 +39,16 @@ public class ApiMonHocController {
     public void delete(@PathVariable(value = "id") int id) {
         this.mhService.deleteMonHoc(id);
     }
-    
+
     @GetMapping("/api/monhocgiangvien/")
     @CrossOrigin
     public ResponseEntity<List<Monhoc>> listMHSV(@RequestParam Map<String, String> params){
         return new ResponseEntity<>(this.mhService.getMonHocByGiangVien(params), HttpStatus.OK);
     }
-    
-    
+       
     @GetMapping("/api/monhocsinhvien/")
     @CrossOrigin
-    public ResponseEntity<List<Object>> listSVMH(@RequestParam Map<String, String> params){
+    public ResponseEntity<List<DiemMonHoc>> listSVMH(@RequestParam Map<String, String> params){
         return new ResponseEntity<>(this.svService.getSinhvienByMonHoc(params), HttpStatus.OK);
     }
     

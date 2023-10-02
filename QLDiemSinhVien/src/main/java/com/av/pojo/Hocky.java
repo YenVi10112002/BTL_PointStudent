@@ -4,6 +4,7 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -76,6 +77,7 @@ public class Hocky implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayHetHan;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idHocky")
+    @JsonIgnore
     private Set<MonhocHocky> monhocHockySet;
     @JoinColumn(name = "idLop", referencedColumnName = "idLopHoc")
     @ManyToOne(optional = false)
