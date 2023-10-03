@@ -16,6 +16,7 @@ com\av\service\impl\DiemServiceImpl.class
 com\av\pojo\Traloidiendan.class
 com\av\service\GiaoVuService.class
 com\av\service\impl\GiangVienServiceImpl.class
+com\av\controllers\KhoaHocController.class
 com\av\pojo\Monhocdangky.class
 com\av\pojo\Diem.class
 com\av\repository\DiemRepository.class

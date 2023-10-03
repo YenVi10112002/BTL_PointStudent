@@ -1,7 +1,7 @@
 <%-- 
-    Document   : base
-    Created on : Aug 9, 2023, 10:38:44 PM
-    Author     : FPTSHOP
+Document   : base
+Created on : Aug 9, 2023, 10:38:44 PM
+Author     : FPTSHOP
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -33,27 +33,94 @@
 <style>
     body {
         font-family: initial;
+        background: #F0F8FF;
+        text-shadow: none;
+    }
+    /**Thanh menu**/
+    .menu-1 li{
+        list-style-type: none;
+
+    }
+    .menu-1 li a{
+        text-decoration: none;
+        padding: 5px;
+        color: black;
+    }
+    ul.menu-dady li{
+        position: relative;
+    }
+    ul.menu-dady li ul.menu-1{
+        display: none;
+        position: absolute;
+        width: 160px;
+        background: white;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        border-radius: 6px;
+    }
+
+    ul.menu-1 li{
+        position: relative
+    }
+    ul.menu-1 li ul.menu-2{
+        display: none;
+        position: absolute;
+        width: 182px;
+    }
+    ul.navbar-nav ul.menu-1 {
+        display: none;
+    }
+    ul.navbar-nav li:hover ul.menu-1{
+        display: block;
+        z-index: 10;
+        padding: 5px;
+    }
+    ul.menu-1 ul.menu-2{
+        display: none
+    }
+    ul.menu-1 li:hover ul.menu-2{
+        display: block;
+        padding: 5px;
+        margin-left: 154px;
+        background: white;
+        border-radius: 7px;
+        margin-top: -24px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     }
     .input-button-tktk{
         margin-left: auto;
     }
-    .btn-xoavacn {
+    .btn-xoavacn-gv{
         border: 1px solid black;
         padding: 5px;
+        height: 30px;
+        width: 31px;
+        color: black;
+        text-decoration: none;
+        border-radius: 5px
+    }
+    .btn-xoavacn {
+        border: 1px solid black;
+        width: 31px;
         color: black;
         text-decoration: none;
         border-radius: 5px
     }
     .bg-cn {
-        background-color: LightSkyBlue;
-        display: inline-block;
-        text-align: center;
+        padding: 6px;
+        margin-right: 7px;
     }
     .bg-xoa {
-        background-color: #FF6A6A;
+        padding: 1px;
+    }
+    .bg-add-gv{
         display: inline-block;
-        width: 50px;
+        width: 144px;
+        height: 37px;
         text-align: center;
+        background-color: #006df0;
+        margin-left: auto;
+        color: white;
+        border-radius: 4px
     }
     .bg-add {
         display: inline-block;
@@ -61,9 +128,13 @@
         text-align: center;
         background-color: #66FF99;
     }
-    h1.text-center {
+    h1.text {
         margin-top: 10px;
-        margin-bottom: 20px
+        margin-bottom: 20px;
+    }
+    .title-gv {
+        display: flex;
+        align-items: center;
     }
     .form-addSV{
         max-width: 600px;
@@ -115,10 +186,10 @@
         text-align: center;
     }
     .nav-tk{
-        margin: 0px 220px;
+        margin: 12px 0;
         display: flex;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-        background: #E0FFFF;
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+        background: #ffffff;
         height: 59px;
         padding: 13px;
         font-size: 18px;
@@ -139,7 +210,8 @@
     }
     .table-sv{
         box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
-        margin-top: 50px;
+        margin-top: 19px;
+        background: white;
         padding: 20px 40px 25px;
     }
     .display-add-MhSV{
@@ -382,6 +454,31 @@
         -moz-box-shadow: -3px -3px 5px 0px #666;
         -webkit-box-shadow: -3px -3px 5px 0px #666;
         box-shadow: -3px -3px 5px 0px #666;
+    }
+    .table {
+        font-size: 15px;
+    }
+    .search{
+        width: 300px;
+        background: rgba(255,255,255,.1);
+        border-radius: 30px 30px 30px 30px;
+        border: 1px solid #ececec;
+        display: flex;
+    }
+    .search-input{
+        border: none;
+        outline: none;
+        background: none;
+        padding: 15px 20px;
+        color: black;
+    }
+    .search-button {
+        background: none;
+        border: none;
+        outline: none;
+    }
+    .pagination{
+        justify-content: center;
     }
 </style>
 

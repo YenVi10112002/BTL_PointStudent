@@ -8,6 +8,7 @@ import com.av.pojo.Giangvien;
 import com.av.pojo.Loaitaikhoan;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
+import com.av.repository.GiangvienRepository;
 import com.av.repository.SinhVienRepository;
 import com.av.repository.TaiKhoanRepository;
 import java.util.ArrayList;
@@ -23,7 +24,10 @@ import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,11 +41,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
     @Autowired
+    private JavaMailSender emailSender;
+
+    @Autowired
     private LocalSessionFactoryBean factory;
 
     @Autowired
     private BCryptPasswordEncoder passEncoder;
-    
+
+    @Autowired
+    private GiangvienRepository gvRepo;
+
     @Autowired
     private SinhVienRepository svRepo;
 
@@ -57,6 +67,7 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
             return null;
         }
     }
+
     // Sua
     @Override
     public Taikhoan getTaiKhoan(int idTaiKhoan) {
@@ -104,8 +115,10 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         return false;
     }
 
+    // Sửa gửi mail cho giảng viên
     @Override
     public boolean addAcountGV(Taikhoan t) {
+        SimpleMailMessage message = new SimpleMailMessage();
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
 
@@ -127,7 +140,10 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
                 if (t.getIdTaiKhoan() == null && gv != null) {
                     s.save(t);
                     gv.setIdTaiKhoan(t);
-
+                    message.setTo(gv.getEmail().toString());
+                    message.setSubject("Thong bao tai khoan");
+                    message.setText("Ten tai khoan: " + gv.getIdTaiKhoan().getTenTaiKhoan() + "\nMat khau: " + gv.getIdTaiKhoan().getXacNhanMk());
+                    emailSender.send(message);
                 }
                 return true;
             } else {
@@ -223,17 +239,18 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
         return false;
     }
+
     //Sua
     @Override
     public Taikhoan thayDoiMatKhau(Taikhoan a) {
         Session s = this.factory.getObject().getCurrentSession();
-        if(a != null){
+        if (a != null) {
             s.update(a);
         }
-        
+
         return a;
     }
-    
+
     // update xoa 
 //    @Override
 //    public boolean deleteTaiKhoanBySinhVien(int idSinhVien) {
@@ -264,7 +281,6 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 //        }else
 //            return null;
 //    }
-    
     //update xoa 
     @Override
     public boolean deleteTK(Taikhoan tk) {
