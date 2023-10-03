@@ -5,6 +5,8 @@
 package com.av.service;
 
 import com.av.pojo.Diem;
+import com.av.pojo.DiemMonHoc;
+import com.av.pojo.Monhocdangky;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,29 +20,31 @@ public interface DiemService {
    
 
     double getDiemTrungBinh2(Map<String, String> params);
+
+    double getDiemTrungBinhHe4(Map<String, String> params);
 //
-//    double getDiemTrungBinhHe4(Map<String, String> params);
 //
 //
+    List<Object> getListDiemTrungBinh(Map<String, String> params);
 //
-    List<Object> getListDiemTrungBinh2(Map<String, String> params);
+    List<DiemMonHoc> getListDiem2(Map<String, String> params);
 //
-//    List<Object> getListDiem2(Map<String, String> params);
+    DiemMonHoc addDiem(Map<String, String> params);
 //
-//    Diem addDiem(Diem diem);
-//
-//    String getDiemByCSV(Map<String, String> params, MultipartFile file);
+    String setDiemByCSV(Map<String, String> params, MultipartFile file);
 //
 //    Diem getDiemByIdMonHoc(int idMonHoc, int idSinhVien);
 //
-//    Diem getDiemByIdDiem(Map<String, String> params);
+    DiemMonHoc getDiemByIdDiem(Map<String, String> params);
 //
-//    List<Diem> getDiemByidGiangVien(Map<String, String> params);
+    List<Monhocdangky> getDiemByidGiangVien(Map<String, String> params);
 //
-//    boolean khoaDiem(Map<String, String> params);
+    boolean khoaDiem(Map<String, String> params);
 //    
 //    boolean deleteDiem(int idMonHoc, int idSinhVien);
     
+    List<Monhocdangky> getListMonHocDangKy(Map<String, String> params);
+    List<Diem> getListDiemByIdMonHocDangKy(int id);
     
     
     

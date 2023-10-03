@@ -4,7 +4,9 @@
  */
 package com.av.service.impl;
 
+import com.av.pojo.DiemMonHoc;
 import com.av.pojo.Lophoc;
+import com.av.pojo.Monhocdangky;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
 import com.av.repository.DiemRepository;
@@ -76,7 +78,7 @@ public class SinhVienServiceImpl implements SinhVienService {
         return sinhvienRepository.deleteSinhVien(idSinhVien);
     }
     @Override
-    public List<Object> getSinhvienByMonHoc(Map<String, String> params) {
+    public List<DiemMonHoc> getSinhvienByMonHoc(Map<String, String> params) {
         return sinhvienRepository.getSinhvienByMonHoc(params);
     }
     

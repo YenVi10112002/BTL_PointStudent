@@ -4,6 +4,7 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -62,17 +63,22 @@ public class Taikhoan implements Serializable {
     @Column(name = "image")
     private String image;
     @OneToMany(mappedBy = "idTaiKhoan")
+    @JsonIgnore
     private Set<Traloidiendan> traloidiendanSet;
     @JoinColumn(name = "ChucVu", referencedColumnName = "idloaitaikhoan")
     @ManyToOne
     private Loaitaikhoan chucVu;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTaiKhoan")
+    @JsonIgnore
     private Set<Cauhoidiendang> cauhoidiendangSet;
     @OneToOne(mappedBy = "idTaiKhoan")
+    @JsonIgnore
     private Giangvien giangvien;
     @OneToOne(mappedBy = "idTaiKhoan")
+    @JsonIgnore
     private Giaovu giaovu;
     @OneToOne(mappedBy = "idTaiKhoan")
+    @JsonIgnore
     private Sinhvien sinhvien;
     @Transient
     private String xacNhanMk;

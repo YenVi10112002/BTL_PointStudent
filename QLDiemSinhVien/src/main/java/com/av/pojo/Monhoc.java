@@ -4,6 +4,7 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -52,6 +53,7 @@ public class Monhoc implements Serializable {
     @Column(name = "soTinChi")
     private int soTinChi;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMonHoc")
+    @JsonIgnore
     private Set<MonhocHocky> monhocHockySet;
 
     public Monhoc() {

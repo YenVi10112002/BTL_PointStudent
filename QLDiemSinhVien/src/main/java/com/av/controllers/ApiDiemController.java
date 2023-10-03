@@ -5,6 +5,8 @@
 package com.av.controllers;
 
 import com.av.pojo.Diem;
+import com.av.pojo.DiemMonHoc;
+import com.av.pojo.Monhocdangky;
 import com.av.service.DiemService;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,7 @@ public class ApiDiemController {
     @RequestMapping("/DSDiemSVHocKy/")
     @CrossOrigin
     public ResponseEntity<List<Object>> list(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.diemService.getListDiemTrungBinh2(params), HttpStatus.OK);
+        return new ResponseEntity<>(this.diemService.getListDiemTrungBinh(params), HttpStatus.OK);
     }
 //
     @RequestMapping("/TrungBinhDiem/")
@@ -43,55 +45,55 @@ public class ApiDiemController {
     public ResponseEntity<Double> DiemtrungbinhSv(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.diemService.getDiemTrungBinh2(params), HttpStatus.OK);
     }
+
+    @RequestMapping("/TrungBinhDiemHe4/")
+    @CrossOrigin
+    public ResponseEntity<Double> DiemtrungbinhSvHe4(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.diemService.getDiemTrungBinhHe4(params), HttpStatus.OK);
+    }
 //
-//    @RequestMapping("/TrungBinhDiemHe4/")
-//    @CrossOrigin
-//    public ResponseEntity<Double> DiemtrungbinhSvHe4(@RequestParam Map<String, String> params) {
-//        return new ResponseEntity<>(this.diemService.getDiemTrungBinhHe4(params), HttpStatus.OK);
-//    }
+    @RequestMapping("/DanhSachDiem/")
+    @CrossOrigin
+    public ResponseEntity<List<DiemMonHoc>> DanhSachDiem(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.diemService.getListDiem2(params), HttpStatus.OK);
+    }
+
+    @PostMapping("/add-diem/")
+    @CrossOrigin
+    public ResponseEntity<String> addTraLoi(@RequestParam Map<String, String> params) {
+        this.diemService.addDiem(params);
+//       
+        return new ResponseEntity<>("Successfull", HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/add-List-diem/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin
+    public ResponseEntity<String> listDiem(@RequestParam Map<String, String> params, @RequestPart MultipartFile file) {
+        this.diemService.setDiemByCSV(params, file);
+        return new ResponseEntity<>(this.diemService.setDiemByCSV(params, file), HttpStatus.OK);
+    }
 //
-//    @RequestMapping("/DanhSachDiem/")
-//    @CrossOrigin
-//    public ResponseEntity<List<Object>> DanhSachDiem(@RequestParam Map<String, String> params) {
-//        return new ResponseEntity<>(this.diemService.getListDiem2(params), HttpStatus.OK);
-//    }
-//
-//    @PostMapping("/add-diem/")
-//    @CrossOrigin
-//    public ResponseEntity<String> addTraLoi(@RequestBody Diem diem) {
-//        this.diemService.addDiem(diem);
-////       
-//        return new ResponseEntity<>("Successfull", HttpStatus.OK);
-//    }
-//
-//    @PostMapping(path = "/add-List-diem/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
-//            produces = {MediaType.APPLICATION_JSON_VALUE})
-//    @CrossOrigin
-//    public ResponseEntity<String> listDiem(@RequestParam Map<String, String> params, @RequestPart MultipartFile file) {
-//        this.diemService.getDiemByCSV(params, file);
-//        return new ResponseEntity<>(this.diemService.getDiemByCSV(params, file), HttpStatus.OK);
-//    }
-//
-//    @PostMapping("/diem-idDiem/")
-//    @CrossOrigin
-//    public ResponseEntity<Diem> diemId(@RequestParam Map<String, String> params) {
-//        return new ResponseEntity<>(this.diemService.getDiemByIdDiem(params), HttpStatus.OK);
-//    }
-//     @PostMapping("/diemSV-idSV/")
-//    @CrossOrigin
-//    public ResponseEntity<List<Diem>> DiemSingVienByIdGV(@RequestParam Map<String, String> params) {
-//        return new ResponseEntity<>(this.diemService.getDiemByidGiangVien(params), HttpStatus.OK);
-//    }
-//    
-//    @PostMapping("/KhoaDiem/")
-//    @CrossOrigin
-//    public ResponseEntity<String> KhoaDiemByIdMonHoc(@RequestParam Map<String, String> params) {
-//        if(this.diemService.khoaDiem(params)){
-//            return new ResponseEntity<>("Thành Công", HttpStatus.OK);
-//            
-//        }
-//        return new ResponseEntity<>("Lỗi", HttpStatus.OK);
-//    }
+    @PostMapping("/diem-idDiem/")
+    @CrossOrigin
+    public ResponseEntity<DiemMonHoc> diemId(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.diemService.getDiemByIdDiem(params), HttpStatus.OK);
+    }
+     @PostMapping("/diemSV-idSV/")
+    @CrossOrigin
+    public ResponseEntity<List<Monhocdangky>> DiemSingVienByIdGV(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.diemService.getDiemByidGiangVien(params), HttpStatus.OK);
+    }
+    
+    @PostMapping("/KhoaDiem/")
+    @CrossOrigin
+    public ResponseEntity<String> KhoaDiemByIdMonHoc(@RequestParam Map<String, String> params) {
+        if(this.diemService.khoaDiem(params)){
+            return new ResponseEntity<>("Thành Công", HttpStatus.OK);
+            
+        }
+        return new ResponseEntity<>("Lỗi", HttpStatus.OK);
+    }
     
     
 }

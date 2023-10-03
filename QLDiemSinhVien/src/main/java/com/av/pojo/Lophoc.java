@@ -4,6 +4,7 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -52,6 +53,7 @@ public class Lophoc implements Serializable {
     @ManyToOne(optional = false)
     private Khoa idKhoaHoc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLop")
+    @JsonIgnore
     private Set<Hocky> hockySet;
     @JoinColumn(name = "idHeDaoTao", referencedColumnName = "idhedaotao")
     @ManyToOne(optional = false)
@@ -60,6 +62,7 @@ public class Lophoc implements Serializable {
     @ManyToOne(optional = false)
     private Nganhdaotao idNganh;
     @OneToMany(mappedBy = "maLop")
+    @JsonIgnore
     private Set<Sinhvien> sinhvienSet;
 
     public Lophoc() {

@@ -4,6 +4,7 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -47,6 +48,7 @@ public class Khoadaotao implements Serializable {
     @Column(name = "tenKhoaDaoTao")
     private String tenKhoaDaoTao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idKhoaDaoTao")
+    @JsonIgnore
     private Set<Nganhdaotao> nganhdaotaoSet;
 
     public Khoadaotao() {
