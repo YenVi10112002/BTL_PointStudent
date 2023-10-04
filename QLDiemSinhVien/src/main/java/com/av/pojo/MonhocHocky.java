@@ -71,7 +71,6 @@ public class MonhocHocky implements Serializable {
     private Giangvien idGiangVien;
     @JoinColumn(name = "idHocky", referencedColumnName = "idHocKy")
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Hocky idHocky;
     @JoinColumn(name = "idMonHoc", referencedColumnName = "idMonHoc")
     @ManyToOne(optional = false)

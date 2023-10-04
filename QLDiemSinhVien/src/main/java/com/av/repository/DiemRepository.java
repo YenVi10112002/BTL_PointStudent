@@ -25,7 +25,8 @@ public interface DiemRepository {
 
     List<Object> getListDiemTrungBinh(Map<String, String> params);
 
-    List<DiemMonHoc> getListDiem2(Map<String, String> params);
+    List<DiemMonHoc> getListDiemDangHoc(Map<String, String> params);
+    List<DiemMonHoc> getListDiemDaHoc(Map<String, String> params);
 //        
 
     Diem addDiem(Monhocdangky monhoc, List<Diem> diem, DiemMonHoc diem1);

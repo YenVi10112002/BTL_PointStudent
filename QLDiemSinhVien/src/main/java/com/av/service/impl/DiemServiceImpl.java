@@ -69,9 +69,14 @@ public class DiemServiceImpl implements DiemService {
 //
 
     @Override
-    public List<DiemMonHoc> getListDiem2(Map<String, String> params) {
-        return diemRepository.getListDiem2(params);
+    public List<DiemMonHoc> getListDiemDangHoc(Map<String, String> params) {
+        return diemRepository.getListDiemDangHoc(params);
     }
+    @Override
+    public List<DiemMonHoc> getListDiemDaHoc(Map<String, String> params) {
+       return this.diemRepository.getListDiemDaHoc(params);
+    }
+
 
     @Override
     public DiemMonHoc addDiem(Map<String, String> params) {
@@ -251,4 +256,5 @@ public class DiemServiceImpl implements DiemService {
         return this.diemRepository.getListDiemByIdMonHocDangKy(id);
     }
 
+    
 }

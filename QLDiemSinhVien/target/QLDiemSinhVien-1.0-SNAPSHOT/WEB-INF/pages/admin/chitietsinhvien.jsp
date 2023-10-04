@@ -70,7 +70,6 @@
     </div>
 </div>
 
-
 <style>
     .container-info-stundent {
         max-width: 1000px;

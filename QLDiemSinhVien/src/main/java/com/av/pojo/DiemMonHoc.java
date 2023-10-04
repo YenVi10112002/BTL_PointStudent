@@ -30,11 +30,19 @@ public class DiemMonHoc implements Serializable {
     private int DiemKT2 = -1;
     private int DiemKT3 = -1;
     private int DiemTB = -1;
+    private short khoaMon;
+    private short trangThai;
+    private String lopHoc;
+    private String xepLoai;
     private String hocKy;
     private int hocKySinhVien;
 
     public DiemMonHoc(Monhocdangky monHoc) {
+        this.lopHoc = monHoc.getIdMonHoc().getIdHocky().getIdLop().getTenLopHoc();
         this.monHoc = monHoc;
+        this.khoaMon = monHoc.getKhoaMon();
+        this.trangThai = monHoc.getTrangThai();
+        this.xepLoai = monHoc.getXepLoai();
         this.idMonHocDangKy = monHoc.getIdMonHocDangKy();
         this.hocKySinhVien = monHoc.getIdMonHoc().getIdHocky().getIdHocKy();
         this.hocKy = monHoc.getIdMonHoc().getIdHocky().getTenHocKy();

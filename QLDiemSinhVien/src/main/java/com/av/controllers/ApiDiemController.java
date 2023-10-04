@@ -55,9 +55,14 @@ public class ApiDiemController {
     @RequestMapping("/DanhSachDiem/")
     @CrossOrigin
     public ResponseEntity<List<DiemMonHoc>> DanhSachDiem(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.diemService.getListDiem2(params), HttpStatus.OK);
+        return new ResponseEntity<>(this.diemService.getListDiemDangHoc(params), HttpStatus.OK);
     }
 
+    @RequestMapping("/DanhSachDiemDaHoc/")
+    @CrossOrigin
+    public ResponseEntity<List<DiemMonHoc>> DanhSachDiemDaHoc(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.diemService.getListDiemDaHoc(params), HttpStatus.OK);
+    }
     @PostMapping("/add-diem/")
     @CrossOrigin
     public ResponseEntity<String> addTraLoi(@RequestParam Map<String, String> params) {

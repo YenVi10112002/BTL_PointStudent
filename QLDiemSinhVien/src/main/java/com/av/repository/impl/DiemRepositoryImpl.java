@@ -47,12 +47,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Repository
 @Transactional
 public class DiemRepositoryImpl implements DiemRepository {
-    
+
     @Autowired
     private LocalSessionFactoryBean factory;
     @Autowired
     private JavaMailSender emailSender;
-    
+
     @Override
     public List<Object> getListDiemTrungBinh(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -78,7 +78,7 @@ public class DiemRepositoryImpl implements DiemRepository {
 //                .groupBy(rMonHocHocKy.get("idMonHocHocKy").get("idHocKY"));
 
         Query query = session.createQuery(q);
-        
+
         try {
             return query.getResultList();
         } catch (NoResultException | NonUniqueResultException ex) {
@@ -86,7 +86,7 @@ public class DiemRepositoryImpl implements DiemRepository {
             return Collections.emptyList();
         }
     }
-    
+
     @Override
     public double getDiemTrungBinh2(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -101,9 +101,9 @@ public class DiemRepositoryImpl implements DiemRepository {
         predicates.add(b.equal(rDiem.get("tenDiem"), 6));
         q.select(b.avg(rDiem.get("soDiem")))
                 .where(predicates.toArray(Predicate[]::new));
-        
+
         Query query = s.createQuery(q);
-        
+
         DecimalFormat decimalFormat = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
         try {
             Double averageValue = (Double) query.getSingleResult();
@@ -120,7 +120,7 @@ public class DiemRepositoryImpl implements DiemRepository {
             return 0.0;
         }
     }
-    
+
     @Override
     public double getDiemTrungBinhHe4(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -135,9 +135,9 @@ public class DiemRepositoryImpl implements DiemRepository {
         predicates.add(b.equal(rDiem.get("tenDiem"), 6));
         q.select(b.avg(rDiem.get("soDiem")))
                 .where(predicates.toArray(Predicate[]::new));
-        
+
         Query query = s.createQuery(q);
-        
+
         DecimalFormat decimalFormat = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
         try {
             Double averageValue = (Double) query.getSingleResult();
@@ -158,9 +158,9 @@ public class DiemRepositoryImpl implements DiemRepository {
 //
 
     @Override
-    public List<DiemMonHoc> getListDiem2(Map<String, String> params) {
+    public List<DiemMonHoc> getListDiemDangHoc(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
-        
+
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Diem> q = b.createQuery(Diem.class);
         Root<Diem> rDiem = q.from(Diem.class);
@@ -168,34 +168,70 @@ public class DiemRepositoryImpl implements DiemRepository {
         String sinhvienId = params.get("SinhVienId");
         List<Monhocdangky> monHocList = this.getListMonHocDangKy(params);
         List<DiemMonHoc> monHocDiemList = new ArrayList<>();
-        
+
         for (Monhocdangky monHoc : monHocList) {
-            DiemMonHoc monHocDiem = new DiemMonHoc(monHoc);
-            // Lấy danh sách điểm cho môn học cụ thể
-            List<Diem> diemList = this.getListDiemByIdMonHocDangKy(monHoc.getIdMonHocDangKy());
-            // Thêm điểm vào danh sách MonHocDiem
-            for (Diem diem : diemList) {
-                monHocDiem.addDiem(diem); // Diem.getDiem() là phương thức lấy giá trị điểm
+            if (monHoc.getKhoaMon() == 0) {
+                DiemMonHoc monHocDiem = new DiemMonHoc(monHoc);
+                // Lấy danh sách điểm cho môn học cụ thể
+                List<Diem> diemList = this.getListDiemByIdMonHocDangKy(monHoc.getIdMonHocDangKy());
+                // Thêm điểm vào danh sách MonHocDiem
+                for (Diem diem : diemList) {
+                    monHocDiem.addDiem(diem); // Diem.getDiem() là phương thức lấy giá trị điểm
+                }
+                // Thêm MonHocDiem vào danh sách chung
+                monHocDiemList.add(monHocDiem);
             }
-            // Thêm MonHocDiem vào danh sách chung
-            monHocDiemList.add(monHocDiem);
         }
         try {
             Collections.sort(monHocDiemList, new DiemMonHocComparator());
             return monHocDiemList;
         } catch (NoResultException | NonUniqueResultException ex) {
-            
+
             ex.printStackTrace();
             return Collections.emptyList();
         }
-        
+
+    }
+    
+     @Override
+    public List<DiemMonHoc> getListDiemDaHoc(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Diem> q = b.createQuery(Diem.class);
+        List<Monhocdangky> monHocList = this.getListMonHocDangKy(params);
+        List<DiemMonHoc> monHocDiemList = new ArrayList<>();
+
+        for (Monhocdangky monHoc : monHocList) {
+            if (monHoc.getKhoaMon() == 1) {
+                DiemMonHoc monHocDiem = new DiemMonHoc(monHoc);
+                // Lấy danh sách điểm cho môn học cụ thể
+                List<Diem> diemList = this.getListDiemByIdMonHocDangKy(monHoc.getIdMonHocDangKy());
+                // Thêm điểm vào danh sách MonHocDiem
+                for (Diem diem : diemList) {
+                    monHocDiem.addDiem(diem); // Diem.getDiem() là phương thức lấy giá trị điểm
+                }
+                // Thêm MonHocDiem vào danh sách chung
+                monHocDiemList.add(monHocDiem);
+            }
+
+        }
+        try {
+            Collections.sort(monHocDiemList, new DiemMonHocComparator());
+            return monHocDiemList;
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return Collections.emptyList();
+        }
+
     }
 //
 
     @Override
     public Diem addDiem(Monhocdangky monhoc, List<Diem> diem, DiemMonHoc diemMonHoc) {
         Session session = this.factory.getObject().getCurrentSession();
-        
+
         Loaidiem loaiDiemKt1 = this.getLoaiDiemKT1();
         Loaidiem loaiDiemKt2 = this.getLoaiDiemKT2();
         Loaidiem loaiDiemKt3 = this.getLoaiDiemKT3();
@@ -210,61 +246,61 @@ public class DiemRepositoryImpl implements DiemRepository {
             session.delete(diemm);
             diem.remove(diemm);
         }
-        
+
         if (diemMonHoc.getDiemKT2() == -1) {
-            
+
             Diem diemTk1 = new Diem();
             diemTk1.setIdMonHoc(monhoc);
             diemTk1.setTenDiem(loaiDiemKt1);
             diemTk1.setSoDiem(diemMonHoc.getDiemKT1());
             diemTk1.setKhoaDiem(khoaDiem);
             session.save(diemTk1);
-            
+
         } else if (diemMonHoc.getDiemKT3() == -1) {
-            
+
             Diem diemTk1 = new Diem();
             diemTk1.setIdMonHoc(monhoc);
             diemTk1.setTenDiem(loaiDiemKt1);
             diemTk1.setSoDiem(diemMonHoc.getDiemKT1());
             diemTk1.setKhoaDiem(khoaDiem);
             session.save(diemTk1);
-            
+
             Diem diemTk2 = new Diem();
             diemTk2.setIdMonHoc(monhoc);
             diemTk2.setTenDiem(loaiDiemKt2);
             diemTk2.setSoDiem(diemMonHoc.getDiemKT2());
             diemTk2.setKhoaDiem(khoaDiem);
             session.save(diemTk2);
-            
+
         } else if (diemMonHoc.getDiemKT3() != -1) {
-            
+
             Diem diemTk1 = new Diem();
             diemTk1.setIdMonHoc(monhoc);
             diemTk1.setTenDiem(loaiDiemKt1);
             diemTk1.setSoDiem(diemMonHoc.getDiemKT1());
             diemTk1.setKhoaDiem(khoaDiem);
             session.save(diemTk1);
-            
+
             Diem diemTk2 = new Diem();
             diemTk2.setIdMonHoc(monhoc);
             diemTk2.setTenDiem(loaiDiemKt2);
             diemTk2.setSoDiem(diemMonHoc.getDiemKT2());
             diemTk2.setKhoaDiem(khoaDiem);
             session.save(diemTk2);
-            
+
             Diem diemTk3 = new Diem();
             diemTk3.setIdMonHoc(monhoc);
             diemTk3.setTenDiem(loaiDiemKt3);
             diemTk3.setSoDiem(diemMonHoc.getDiemKT3());
             diemTk3.setKhoaDiem(khoaDiem);
             session.save(diemTk3);
-            
+
         }
         session.update(monhoc);
         for (Diem diemm : diem) {
             session.update(diemm);
         }
-        
+
         return null;
     }
 //
@@ -283,7 +319,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         Query query = session.createQuery(q);
         return (Monhocdangky) query.getSingleResult();
     }
-    
+
     @Override
     public List<Diem> setDiemByCSV(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -291,7 +327,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Diem> q = b.createQuery(Diem.class);
         Root<Diem> rDiem = q.from(Diem.class);
-        
+
         q.select(rDiem)
                 .where(b.equal(rDiem.get("idMonHoc"), Integer.parseInt(idMonHoc)));
         Query query = session.createQuery(q);
@@ -339,7 +375,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         Query query = session.createQuery(q);
         return (Monhocdangky) query.getSingleResult();
     }
-    
+
     @Override
     public List<Monhocdangky> getDiemByidGiangVien(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -350,7 +386,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         Root rMonHoc = q.from(MonhocHocky.class);
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
-            
+
             String giangVien = params.get("idGiangVien");
             if (giangVien != null) {
                 predicates.add(b.equal(rMonHoc.get("idGiangVien"), Integer.parseInt(giangVien)));
@@ -362,12 +398,12 @@ public class DiemRepositoryImpl implements DiemRepository {
                     int parsedIdSinhVien = Integer.parseInt(tenSinhVien);
                     predicates.add(b.equal(rDiem.get("idSinhVien"), parsedIdSinhVien));
                 } catch (NumberFormatException e) {
-                    
+
                     predicates.add(b.equal(rDiem.get("idSinhVien"), rSinhVien.get("idSinhVien")));
                     predicates.add(b.like(rSinhVien.get("hoTen"), String.format("%%%s%%", tenSinhVien)));
                 }
             }
-            
+
             q.groupBy(rDiem.get("idMonHocDangKy"));
             q.select(rDiem).where(predicates.toArray(new Predicate[0]));
             Query query = s.createQuery(q);
@@ -375,7 +411,7 @@ public class DiemRepositoryImpl implements DiemRepository {
         }
         return null;
     }
-    
+
     @Override
     public boolean khoaDiem(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -434,13 +470,13 @@ public class DiemRepositoryImpl implements DiemRepository {
         try {
             return query.getResultList();
         } catch (NoResultException | NonUniqueResultException ex) {
-            
+
             ex.printStackTrace();
             return Collections.emptyList();
         }
-        
+
     }
-    
+
     @Override
     public List<Monhocdangky> getListMonHocDangKy(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -456,12 +492,12 @@ public class DiemRepositoryImpl implements DiemRepository {
         try {
             return query.getResultList();
         } catch (NoResultException | NonUniqueResultException ex) {
-            
+
             ex.printStackTrace();
             return Collections.emptyList();
         }
     }
-    
+
     @Override
     public Loaidiem getLoaiDiemKT1() {
         Session session = this.factory.getObject().getCurrentSession();
@@ -476,15 +512,15 @@ public class DiemRepositoryImpl implements DiemRepository {
         try {
             return (Loaidiem) query.getSingleResult();
         } catch (NoResultException | NonUniqueResultException ex) {
-            
+
             ex.printStackTrace();
             return null;
         }
     }
-    
+
     @Override
     public Loaidiem getLoaiDiemKT2() {
-        
+
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Loaidiem[]> q = b.createQuery(Loaidiem[].class);
@@ -497,15 +533,15 @@ public class DiemRepositoryImpl implements DiemRepository {
         try {
             return (Loaidiem) query.getSingleResult();
         } catch (NoResultException | NonUniqueResultException ex) {
-            
+
             ex.printStackTrace();
             return null;
         }
     }
-    
+
     @Override
     public Loaidiem getLoaiDiemKT3() {
-        
+
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Loaidiem[]> q = b.createQuery(Loaidiem[].class);
@@ -518,17 +554,17 @@ public class DiemRepositoryImpl implements DiemRepository {
         try {
             return (Loaidiem) query.getSingleResult();
         } catch (NoResultException | NonUniqueResultException ex) {
-            
+
             ex.printStackTrace();
             return null;
         }
     }
-    
+
     @Override
     public DiemMonHoc getDiemMonHocByIdDiem(int id) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
-        
+
         Monhocdangky monhoc = this.getMonHocDangKyById(id);
         DiemMonHoc monHocDiem = new DiemMonHoc(monhoc);
         // Lấy danh sách điểm cho môn học cụ thể
@@ -537,7 +573,9 @@ public class DiemRepositoryImpl implements DiemRepository {
         for (Diem diem : diemList) {
             monHocDiem.addDiem(diem); // Diem.getDiem() là phương thức lấy giá trị điểm
         }
-        
+
         return monHocDiem;
     }
+
+   
 }
