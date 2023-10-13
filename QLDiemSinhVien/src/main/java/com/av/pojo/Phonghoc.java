@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,6 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Phonghoc.findByTenPhongHoc", query = "SELECT p FROM Phonghoc p WHERE p.tenPhongHoc = :tenPhongHoc")})
 public class Phonghoc implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +50,9 @@ public class Phonghoc implements Serializable {
     private String tenPhongHoc;
     @OneToMany(mappedBy = "phongHoc")
     @JsonIgnore
-    private Set<MonhocHocky> monhochockySet;
+
+    private Set<MonhocHocky> monhocHockySet;
+
     public Phonghoc() {
     }
 
@@ -101,18 +106,16 @@ public class Phonghoc implements Serializable {
         return "com.av.pojo.Phonghoc[ idPhongHoc=" + idPhongHoc + " ]";
     }
 
-    /**
-     * @return the monhochockySet
-     */
-    public Set<MonhocHocky> getMonhochockySet() {
-        return monhochockySet;
+
+
+    @XmlTransient
+    public Set<MonhocHocky> getMonhocHockySet() {
+        return monhocHockySet;
     }
 
-    /**
-     * @param monhochockySet the monhochockySet to set
-     */
-    public void setMonhochockySet(Set<MonhocHocky> monhochockySet) {
-        this.monhochockySet = monhochockySet;
+    public void setMonhocHockySet(Set<MonhocHocky> monhocHockySet) {
+        this.monhocHockySet = monhocHockySet;
+
     }
     
 }

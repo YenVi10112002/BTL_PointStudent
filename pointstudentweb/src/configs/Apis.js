@@ -12,6 +12,7 @@ export const endpoints = {
     "DiemTrungBinhHe10":`${SERVER_CONTEXT}/api/TrungBinhDiem/`,
     "DiemTrungBinhHe4":`${SERVER_CONTEXT}/api/TrungBinhDiemHe4/`,
     "DSDiem":`${SERVER_CONTEXT}/api/DanhSachDiem/`,
+    "DSDiemDaHoc":`${SERVER_CONTEXT}/api/DanhSachDiemDaHoc/`,
     "DSMonHocById":`${SERVER_CONTEXT}/api/monhocsinhvien/`,
     "signup":`${SERVER_CONTEXT}/api/users/`,
     "changePassword":`${SERVER_CONTEXT}/api/change-password/`,
@@ -28,6 +29,18 @@ export const endpoints = {
     "getdiemById":`${SERVER_CONTEXT}/api/diem-idDiem/`,
     "getSinhVienByIdOrTen":`${SERVER_CONTEXT}/api/diemSV-idSV/`,
     "khoaDiem":`${SERVER_CONTEXT}/api/KhoaDiem/`,
+    "listMonHocDangKi":`${SERVER_CONTEXT}/api/monhochocky/`,
+    "listMonHocSVDangKy":`${SERVER_CONTEXT}/api/monhocSVdangky/`,
+    "dangKyMonHoc":`${SERVER_CONTEXT}/api/dangkymonhoc/`,
+    "huyDangKyMonHoc":`${SERVER_CONTEXT}/api/huydangkymonhoc/`,
+    "DSLopHoc":`${SERVER_CONTEXT}/api/dslophoc/`,
+    "sendCode":`${SERVER_CONTEXT}/api/send-code/`,
+    "DSMHChuaDay":`${SERVER_CONTEXT}/api/monhocgiangvienchuaday/`,
+    "DSMHDaDay":`${SERVER_CONTEXT}/api/monhocgiangviendaday/`,
+    "getSinhVienById":`${SERVER_CONTEXT}/api/SinhVien-Id/`,
+    "thanhToanHocPhi":`${SERVER_CONTEXT}/api/create_payment/`,
+    "xacnhanthanhtoan":`${SERVER_CONTEXT}/api/queryTransactionStatus/`,
+    
 }
 
 export const AuthApis = () => {

@@ -32,12 +32,12 @@ const Login = () => {
         if (data.chucVu.tenloaitaikhoan == "ROLE_SV") {
           let sinhvien = await AuthApis().get(endpoints['current-sinhvien']);
           cookie.save("sinhvien", sinhvien.data);
-          nav("/home")
+          
         }
         else {
           let giangvien = await AuthApis().get(endpoints['current-giangvien']);
           cookie.save("giangvien", giangvien.data);
-          nav("/giangvien/home")
+          
         }
         dispatch({
           "type": "login",
@@ -87,7 +87,7 @@ const Login = () => {
               <Button id="submit" type="submit">
                 Đăng Nhập
               </Button>
-             
+
 
             </Form.Group>
             {success ? <Alert variant="danger">Sai tên tài khoản hoặc mật khẩu</Alert> : <div></div>}

@@ -20,9 +20,6 @@ const HomeGV = () => {
     }
     loadMonHoc();
   })
-
-
-
   return (
     <>
       <div class="contend">
@@ -30,8 +27,8 @@ const HomeGV = () => {
 
         <div class="gv-monhoc-giaovien">
           {monHoc.map(mh => {
-            let h = `/giangvien/nhapdiem?monHocId=${mh.idMonHoc}`;
-            return (<div class="gv-items-monhoc-giaovien" key={mh.idMonHoc}>
+            let h = `/giangvien/nhapdiem?monHocId=${mh.idMonHocHocKy}`;
+            return (<div class="gv-items-monhoc-giaovien" key={mh.idMonHocHocKy}>
               <Link to={h}>
                 <div class="gv-item-monhoc-giaovien">
                   <img
@@ -41,7 +38,7 @@ const HomeGV = () => {
                   />
                 </div>
                 <div class="gv-item-monhoc-giaovien-text">
-                  {mh.tenMonHoc}
+                  {mh.idMonHoc.tenMonHoc} - {mh.idHocky.idLop.tenLopHoc}
                 </div>
               </Link>
             </div>)

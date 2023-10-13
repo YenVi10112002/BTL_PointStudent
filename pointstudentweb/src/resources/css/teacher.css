@@ -283,3 +283,54 @@ a{
 
 }
 
+.student-info-ad{
+    position: relative;
+    margin: 40px ;
+    width: 400px;
+    padding: 20px 30px;
+    border-radius: 5px;
+    border: #000000 solid;
+}
+
+/* CSS cho Form.Control của chọn tệp */
+.custom-file-input {
+    cursor: pointer; /* Biểu tượng con trỏ tay khi di chuyển qua nút */
+    padding: 5px; /* Khoảng cách xung quanh phần input */
+    border: 1px solid #ced4da; /* Viền xung quanh input */
+    border-radius: 5px; /* Góc bo tròn */
+    width: 250px;
+  }
+  
+  /* Định dạng văn bản cho tên tệp đã chọn */
+  .custom-file-label::after {
+    content: "Chọn tệp"; /* Chữ mặc định hiển thị trước khi chọn tệp */
+  }
+  
+  /* Định dạng văn bản cho tên tệp đã chọn sau khi đã chọn tệp */
+  .custom-file-label[data-browse]:after {
+    content: "Thay đổi tệp"; /* Hiển thị khi đã chọn tệp */
+  }
+  
+  /* Thay đổi màu nền và màu chữ khi hover qua input */
+  .custom-file-input:hover {
+    background-color: #e9ecef; /* Màu nền khi hover */
+  }
+  
+  /* Thay đổi màu viền khi focus vào input */
+  .custom-file-input:focus {
+    border-color: #4e9cff; /* Màu viền khi focus */
+    box-shadow: none; /* Loại bỏ shadow */
+  }
+  
+  /* Ẩn mũi tên mặc định của input type="file" */
+  .custom-file-input::-webkit-file-upload-button {
+    display: none;
+  }
+  
+  /* Định dạng văn bản cho tên tệp đã chọn sau khi đã chọn tệp (cho Safari) */
+  .custom-file-input::-webkit-file-upload-button:active {
+    background-color: transparent;
+    border: 0;
+  }
+
+

@@ -7,6 +7,9 @@ package com.av.repository.impl;
 import com.av.pojo.PhieuMonHoc;
 import com.av.pojo.Diem;
 import com.av.pojo.Monhoc;
+import com.av.pojo.MonhocHocky;
+import com.av.repository.GiangvienRepository;
+import com.av.repository.HocKyRepository;
 import com.av.repository.MonHocRepository;
 import com.av.repository.PhieuMonHocRepository;
 import com.av.repository.SinhVienRepository;
@@ -35,14 +38,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PhieuMonHocRepositoryImpl implements PhieuMonHocRepository {
 
-//    @Autowired
-//    private LocalSessionFactoryBean factory;
+    @Autowired
+    private LocalSessionFactoryBean factory;
 //
 //    @Autowired
 //    private SinhVienRepository svRepository;
 //
-//    @Autowired
-//    private MonHocRepository mhRepository;
+    @Autowired
+    private MonHocRepository mhRepository;
+
+    @Autowired
+    private GiangvienRepository gvReposiory;
+
+    @Autowired
+    private HocKyRepository hkRepository;
 //
 //    @Override
 //    @Transactional(propagation = Propagation.REQUIRED)
@@ -121,5 +130,98 @@ public class PhieuMonHocRepositoryImpl implements PhieuMonHocRepository {
 //        Query query = s.createQuery(q);
 //        return (PhieuMonHoc) query.getSingleResult();
 //    }
+
+    @Override
+    public boolean addPhieuMHHK(MonhocHocky mh) {
+        Session s = this.factory.getObject().getCurrentSession();
+//        
+        try {
+            if (mh.getIdMonHocHocKy() == null) {
+                s.save(mh);
+            }
+            return true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public List<MonhocHocky> getMonhocByHockys(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<MonhocHocky> q = b.createQuery(MonhocHocky.class);
+
+        Root<MonhocHocky> r = q.from(MonhocHocky.class);
+        q.select(r).where(b.equal(r.get("idHocky").get("idHocKy"), id));
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+
+    @Override
+    public boolean updatePhieuMHHK(MonhocHocky mh) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            if (mh.getIdMonHocHocKy() != null) {
+                s.update(mh);
+            }
+            return true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public MonhocHocky getMonhocHocky(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<MonhocHocky> q = b.createQuery(MonhocHocky.class);
+        
+        Root<MonhocHocky> r = q.from(MonhocHocky.class);
+        q.select(r).where(b.equal(r.get("idMonHocHocKy"), id));
+        Query query = s.createQuery(q);
+        return (MonhocHocky) query.getSingleResult();
+    }
+
+    @Override
+    public boolean deleteMHHK(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        MonhocHocky mh = this.getMonhocHocky(id);
+        try {
+            s.delete(mh);
+            return true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+    @Override
+    public Long countMonHocHKByIdHK(int idHK) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+
+        Root r = q.from(MonhocHocky.class);
+        q.select(b.count(r)).where(b.equal(r.get("idHocky").get("idHocKy"), idHK));
+
+        long countMHHK = session.createQuery(q).uniqueResult();
+
+        return countMHHK;
+    }
+    @Override
+    public Long countMonHocHKByIdPH(int idPH) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+
+        Root r = q.from(MonhocHocky.class);
+        q.select(b.count(r)).where(b.equal(r.get("phongHoc").get("idPhongHoc"), idPH));
+
+        long countMHHK = session.createQuery(q).uniqueResult();
+
+        return countMHHK;
+    }
 
 }

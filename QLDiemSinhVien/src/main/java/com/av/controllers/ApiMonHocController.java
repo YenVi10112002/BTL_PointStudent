@@ -9,10 +9,9 @@ import com.av.pojo.Lophoc;
 import com.av.pojo.Monhoc;
 import com.av.pojo.MonhocHocky;
 import com.av.pojo.Monhocdangky;
-import com.av.repository.DiemRepository;
-import com.av.repository.SinhVienRepository;
-import com.av.service.DaoTaoService;
+
 import com.av.service.DiemService;
+import com.av.service.LopHocService;
 import com.av.service.MonHocService;
 import com.av.service.SinhVienService;
 import java.util.List;
@@ -45,7 +44,7 @@ public class ApiMonHocController {
     @Autowired
     private DiemService diemService;
     @Autowired
-    private DaoTaoService daotaoService;
+    private LopHocService daotaoService;
     @DeleteMapping("/giaovu/monhoc/add/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") int id) {
@@ -105,9 +104,9 @@ public class ApiMonHocController {
     
     @GetMapping("/api/dslophoc/")
     @CrossOrigin
-    public ResponseEntity<List<Lophoc>> DSLopHoc(){
+    public ResponseEntity<List<Lophoc>> DSLopHoc(@RequestParam Map<String, String> params){
 
-       return new ResponseEntity<>(this.daotaoService.listLopHoc(), HttpStatus.OK);
+       return new ResponseEntity<>(this.daotaoService.listLopHoc(params), HttpStatus.OK);
     }
     
 }

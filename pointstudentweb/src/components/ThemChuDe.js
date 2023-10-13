@@ -30,13 +30,18 @@ const Themchude = () => {
 
     const addCauHoi = (evt) => {
         evt.preventDefault();
+        const currentDate = new Date();
+        
+        const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+        const formattedTime = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
         const process = async () => {
             try {
                 let cauhoiid = q.get("cauhoiId");
                 let res = await AuthApis().post(endpoints['themCauHoi'], {
                     "noiDungCauHoi": noiDung,
                     "idTaiKhoan": user.idTaiKhoan,
-                    "idCauHoiDienDan": cauhoiid
+                    "idCauHoiDienDan": cauhoiid,
+                    "ngayTao": `${formattedDate} ${formattedTime}`
                 })
             } catch (ex) {
                 console.error(ex);

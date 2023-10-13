@@ -9,10 +9,7 @@ const MyUserReducer = (currentState, action) => {
             cookie.remove("user");
             cookie.remove("sinhvien");
             cookie.remove("giangvien");
-            cookie.remove("user_chat_id");
             return null;
-        case "logout_chat":
-            cookie.remove("user_chat_id");
         
     }
     return currentState;

@@ -31,6 +31,8 @@ import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 /**
@@ -39,16 +41,42 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:configs.properties")
 public class MonHocRepositoryImpl implements MonHocRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
 
+    @Autowired
+    private Environment Env;
+
     @Override
-    public List<Monhoc> getMonHocs() {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Monhoc");
-        return q.getResultList();
+    public List<Monhoc> getMonHocs(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Monhoc> q = b.createQuery(Monhoc.class);
+        Root root = q.from(Monhoc.class);
+        q.select(root);
+        List<Predicate> predicates = new ArrayList<>();
+        String ten = params.get("tenMH");
+        if (ten != null && !ten.isEmpty()) {
+            predicates.add(b.like(root.get("tenMonHoc"), String.format("%%%s%%", ten)));
+        }
+        q.where(predicates.toArray(Predicate[]::new));
+
+        Query query = session.createQuery(q);
+
+        if (params != null) {
+            String p = params.get("pageMH");
+            if (p != null && !p.isEmpty()) {
+                int page = Integer.parseInt(p);
+                int pageSize = Integer.parseInt(this.Env.getProperty("PAGE_SIZE"));
+                query.setMaxResults(pageSize);
+                query.setFirstResult((page - 1) * pageSize);
+            }
+        }
+        return query.getResultList();
     }
 
     @Override
@@ -188,7 +216,7 @@ public class MonHocRepositoryImpl implements MonHocRepository {
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Long> q = b.createQuery(Long.class);
 
-        Root r = q.from(Monhoc.class);
+        Root r = q.from(MonhocHocky.class);
         q.select(b.count(r)).where(b.equal(r.get("idGiangVien").get("idGiangVien"), idGiangVien));
 
         long countMonHoc = session.createQuery(q).uniqueResult();
@@ -276,13 +304,13 @@ public class MonHocRepositoryImpl implements MonHocRepository {
             predicates.add(b.equal(rMonHocHocKy.get("idMonHocHocKy"), rMonHocDangKy.get("idMonHoc")));
             predicates.add(b.equal(rMonHocDangKy.get("idSinhVien"), Integer.parseInt(idSinhVien)));
         }
-        
+
         Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
         predicates.add(b.and(
                 b.lessThanOrEqualTo(rMonHocHocKy.get("idHocky").get("ngayDangKy"), currentDate),
                 b.greaterThanOrEqualTo(rMonHocHocKy.get("idHocky").get("ngayKetThuc"), currentDate)
         ));
-        
+
         q.select(rMonHocDangKy).where(predicates.toArray(Predicate[]::new));
         q.distinct(true);
         Query query = s.createQuery(q);
@@ -320,18 +348,33 @@ public class MonHocRepositoryImpl implements MonHocRepository {
     }
 
     @Override
-    public boolean thanhToanHocPhi(Map<String, String> params){
+    public boolean thanhToanHocPhi(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
         List<Monhocdangky> monHocs = this.getMonHocSinhVienDangKy(params);
-        if(!monHocs.isEmpty() && monHocs !=null){
+        if (!monHocs.isEmpty() && monHocs != null) {
             short thanhToan = 1;
-            for(Monhocdangky monhoc : monHocs){
+            for (Monhocdangky monhoc : monHocs) {
                 monhoc.setThanhToan(thanhToan);
                 s.update(monhoc);
             }
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Long countMonHoc() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+
+        Root r = q.from(Monhoc.class);
+        q.select(b.count(r));
+
+        long countMH = s.createQuery(q).uniqueResult();
+
+        return countMH;
+
     }
 
 }

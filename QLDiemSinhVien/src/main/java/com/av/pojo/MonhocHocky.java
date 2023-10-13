@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -44,7 +45,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class MonhocHocky implements Serializable {
 
 
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +52,7 @@ public class MonhocHocky implements Serializable {
     @Column(name = "idMonHoc_HocKy")
     private Integer idMonHocHocKy;
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Column(name = "soLuong")
     private int soLuong;
     @Basic(optional = false)
@@ -60,11 +60,12 @@ public class MonhocHocky implements Serializable {
     private int soLuongConLai;
     @Basic(optional = false)
     @NotNull
+
     @Column(name = "ngayBatDau")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayBatDau;
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Column(name = "ngayKetThuc")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayKetThuc;
@@ -83,6 +84,19 @@ public class MonhocHocky implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMonHoc")
     @JsonIgnore
     private Set<Monhocdangky> monhocdangkySet;
+    @Transient
+    private Monhoc[] listMonhocs;
+    @Transient
+    private Date[] listDateBatDau;
+    @Transient
+    private Date[] listDateKetThuc;
+    @Transient
+    private Integer[] listSoLuong;
+    @Transient
+    private Giangvien[] listGiangviens;
+    @Transient
+    private Phonghoc[] listPhonghocs;
+    
 
     public MonhocHocky() {
     }
@@ -188,6 +202,7 @@ public class MonhocHocky implements Serializable {
         return "com.av.pojo.MonhocHocky[ idMonHocHocKy=" + idMonHocHocKy + " ]";
     }
 
+
     /**
      * @return the soLuongConLai
      */
@@ -200,6 +215,64 @@ public class MonhocHocky implements Serializable {
      */
     public void setSoLuongConLai(int soLuongConLai) {
         this.soLuongConLai = soLuongConLai;
+
+    }
+
+    /**
+     * @return the listDateBatDau
+     */
+    public Date[] getListDateBatDau() {
+        return listDateBatDau;
+    }
+
+    /**
+     * @param listDateBatDau the listDateBatDau to set
+     */
+    public void setListDateBatDau(Date[] listDateBatDau) {
+        this.listDateBatDau = listDateBatDau;
+    }
+
+    /**
+     * @return the listDateKetThuc
+     */
+    public Date[] getListDateKetThuc() {
+        return listDateKetThuc;
+    }
+
+    /**
+     * @param listDateKetThuc the listDateKetThuc to set
+     */
+    public void setListDateKetThuc(Date[] listDateKetThuc) {
+        this.listDateKetThuc = listDateKetThuc;
+    }
+
+    /**
+     * @return the listSoLuong
+     */
+    public Integer[] getListSoLuong() {
+        return listSoLuong;
+    }
+
+    /**
+     * @param listSoLuong the listSoLuong to set
+     */
+    public void setListSoLuong(Integer[] listSoLuong) {
+        this.listSoLuong = listSoLuong;
+    }
+
+    /**
+     * @return the listGiangviens
+     */
+    public Giangvien[] getListGiangviens() {
+        return listGiangviens;
+    }
+
+    /**
+     * @param listGiangviens the listGiangviens to set
+     */
+    public void setListGiangviens(Giangvien[] listGiangviens) {
+        this.listGiangviens = listGiangviens;
+
     }
 
     /**
@@ -217,8 +290,38 @@ public class MonhocHocky implements Serializable {
     }
 
     /**
+
      * @param phongHoc the phongHoc to set
      */
 
+
+//     * @return the lisPhonghocs
+//     */
+    public Phonghoc[] getListPhonghocs() {
+        return listPhonghocs;
+    }
+
+    /**
+     * @param lisPhonghocs the lisPhonghocs to set
+     */
+    public void setListPhonghocs(Phonghoc[] lisPhonghocs) {
+        this.listPhonghocs = lisPhonghocs;
+    }
+
+    /**
+     * @return the listMonhocs
+     */
+    public Monhoc[] getListMonhocs() {
+        return listMonhocs;
+    }
+
+    /**
+     * @param listMonhocs the listMonhocs to set
+     */
+    public void setListMonhocs(Monhoc[] listMonhocs) {
+        this.listMonhocs = listMonhocs;
+    }
+
+    
 
 }

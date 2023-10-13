@@ -28,8 +28,13 @@ import ThayDoiMatKhauGV from "./components/GiangVien/ThayDoiMatKhauGV";
 import ThongTinTaiKhoanGV from "./components/GiangVien/ThongTinTaiKhoaGV";
 import NhapDiemSinhVien from "./components/GiangVien/NhapDiemSinhVien";
 import TimSinhVien from "./components/GiangVien/TimSinhVien";
-import LoginChat from "./components/Chat/loginChat";
-import ChatFireBase from "./components/Chat/ChatFireBase";
+import DanhSachMonDaHoc from "./components/DanhSachMonDaHoc";
+import ChiTietSinhVien from "./components/GiangVien/ChiTietSinhVien";
+import DangKyMonHoc from "./components/DangKyMonHoc";
+import DanhSachMonChuaDay from "./components/GiangVien/DanhSachMonChuaDay";
+import DanhSachSinhVien from "./components/GiangVien/DanhSachSinhVien";
+import DanhSachMonDaKhoa from "./components/GiangVien/DanhSachMonHocDaKhoa";
+
 
 export const MyUserConText = createContext();
 
@@ -46,21 +51,22 @@ function App() {
           <BrowserRouter>
             <HeaderStudent />
             <Routes>
+
               <Route path="/home" element={<Home />} />
               <Route path="/diendan" element={<DienDan />} />
               <Route path="/traloidiendan" element={<TraLoiDienDan />} />
               <Route path="/themcauhoi" element={<Themchude />} />
               <Route path="/xemdiem" element={<XemDiem />} />
               <Route path="/thaydoimatkhau" element={<ThayDoiMatKhau />} />
-              <Route path="/thongtin" element={<Thongtintaikhoan/>} />
-              <Route path="/chat" element={<LoginChat />} />
-              <Route path="/chatTrucTuyen" element={<ChatFireBase />} />
+              <Route path="/thongtin" element={<Thongtintaikhoan />} />
+              <Route path="/danhsachmon" element={<DanhSachMonDaHoc />} />
+              <Route path="/dangkymonhoc" element={<DangKyMonHoc />} />
             </Routes>
           </BrowserRouter>
         </MyUserConText.Provider>
       );
     }
-    else if (user.chucVu.tenloaitaikhoan === "ROLE_GV"){
+    else if (user.chucVu.tenloaitaikhoan === "ROLE_GV") {
       return (
         <MyUserConText.Provider value={[user, dispatch, giangvien, dispatchgv]}>
           <BrowserRouter>
@@ -72,9 +78,14 @@ function App() {
               <Route path="/giangvien/themchude" element={<ThemChuDeGV />} />
               <Route path="/giangvien/traloidiendan" element={<TraLoiDienDanGV />} />
               <Route path="/giangvien/thaydoimatkhau" element={<ThayDoiMatKhauGV />} />
-              <Route path="/giangvien/thongtintaikhoan"element={<ThongTinTaiKhoanGV />}/>
-              <Route path="/giangvien/nhapdiemsinhvien"element={<NhapDiemSinhVien />}/>
-              <Route path="/giangvien/timsinhvien"element={<TimSinhVien />}/>
+              <Route path="/giangvien/thongtintaikhoan" element={<ThongTinTaiKhoanGV />} />
+              <Route path="/giangvien/nhapdiemsinhvien" element={<NhapDiemSinhVien />} />
+              <Route path="/giangvien/timsinhvien" element={<TimSinhVien />} />
+              <Route path="/giangvien/chitietsinhvien" element={<ChiTietSinhVien />} />
+              <Route path="/giangvien/danhsachmonchuanbi" element={<DanhSachMonChuaDay />} />
+              <Route path="/giangvien/danhsachsinhvien" element={<DanhSachSinhVien />} />
+              <Route path="/giangvien/danhmonhocdakhoa" element={<DanhSachMonDaKhoa />} />
+              
             </Routes>
           </BrowserRouter>
         </MyUserConText.Provider>

@@ -18,44 +18,29 @@ const NhapDiemSinhVien = () => {
     const [user, dispatch, giangvien, dispatch2] = useContext(MyUserConText);
     const [diem1, setDiem1] = useState([]);
     const [diem, setDiem] = useState({
-        "idDiem": idDiem,
-        "diemGiuaKy": '',
-        "diemCuoiKy": '',
-        "diemKT1": '',
-        "diemTK2": '',
-        "diemTK3": '',
+        "idMonHocDangKy": idDiem,
+        "DiemGK": '',
+        "DiemCK": '',
+        "DiemKT1": '',
+        "DiemKT2": '',
+        "DiemKT3": '',
     });
     const addCotDiem1 = () => {
         setShowCotDiem1(!showCotDiem1);
-        if (showCotDiem1 === true) {
-            setShowCotDiem2(false);
-            setShowCotDiem3(false);
-        }
         const updatedDiem = { ...diem };
-        updatedDiem.diemKT1 = '';
-        updatedDiem.diemTK2 = '';
-        updatedDiem.diemTK3 = '';
+        updatedDiem.DiemKT1 = '';
         setDiem(updatedDiem);
-
     };
     const addCotDiem2 = () => {
-        if (showCotDiem1) {
-            setShowCotDiem2(!showCotDiem2);
-        }
-        if (showCotDiem2 === false) {
-            setShowCotDiem3(false);
-        }
+        setShowCotDiem2(!showCotDiem2);
         const updatedDiem = { ...diem };
-        updatedDiem.diemTK2 = '';
-        updatedDiem.diemTK3 = '';
+        updatedDiem.DiemKT2 = '';
         setDiem(updatedDiem);
     };
     const addCotDiem3 = () => {
-        if (showCotDiem2 && showCotDiem1) {
-            setShowCotDiem3(!showCotDiem3);
-        }
+        setShowCotDiem3(!showCotDiem3);
         const updatedDiem = { ...diem };
-        updatedDiem.diemTK3 = '';
+        updatedDiem.DiemKT3 = '';
         setDiem(updatedDiem);
     };
 
@@ -66,28 +51,27 @@ const NhapDiemSinhVien = () => {
                 let e = endpoints['getdiemById'];
                 idDiem = q.get("idDiem");
                 if (idDiem !== null) {
-                    e = `${e}?idDiem=${idDiem}`;
+                    e = `${e}?idMonHocDangKy=${idDiem}`;
                     let res = await AuthApis().post(e);
                     setDiem1(res.data);
                     const updatedDiem = { ...diem };
-                    updatedDiem.diemKT1 = res.data.diemKT1;
-                    
-                    updatedDiem.diemTK2 = res.data.diemTK2;
-                    updatedDiem.diemTK3 = res.data.diemTK3;
-                    updatedDiem.diemGiuaKy = res.data.diemGiuaKy;
-                    updatedDiem.diemCuoiKy = res.data.diemCuoiKy;
+                    updatedDiem.DiemKT1 = res.data.diemKT1;
+                    updatedDiem.DiemKT2 = res.data.diemKT2;
+                    updatedDiem.DiemKT3 = res.data.diemKT3;
+                    updatedDiem.DiemGK = res.data.diemGK;
+                    updatedDiem.DiemCK = res.data.diemCK;
                     setDiem(updatedDiem);
-                    if(res.data.diemKT1!==null){
+
+                    if (res.data.diemKT1 !== -1.0) {
                         setShowCotDiem1(true);
                     }
-                    if(res.data.diemTK2!==null){
+                    if (res.data.diemKT2 !== -1.0) {
                         setShowCotDiem2(true);
                     }
-                    if(res.data.diemTK3!==null){
+                    if (res.data.diemKT3 !==-1.0) {
                         setShowCotDiem3(true);
                     }
                 }
-                console.log(diem1)
             } catch (ex) {
                 console.error(ex);
             }
@@ -101,13 +85,13 @@ const NhapDiemSinhVien = () => {
     const addDiem = (evt) => {
         setSuccess(false);
 
-
         evt.preventDefault();
         const process = async () => {
-            // let formData = new FormData();
-            // for (let field in diem)
-            //     formData.append(field, diem[field]);
-            let res = await AuthApis().post(endpoints['addDiem'], diem);
+            let form = new FormData();
+            for (let field in diem)
+
+                form.append(field, diem[field]);
+            let res = await AuthApis().post(endpoints['addDiem'], form);
             setLoading(true);
             if (res.status === 200) {
                 nav(`/giangvien/nhapdiem?monHocId=${idMonHoc}`);
@@ -136,23 +120,23 @@ const NhapDiemSinhVien = () => {
                     <div class="form-themcauhoi-diendan">
                         <Link to={h} className="close-traloi-diendan ">Đóng </Link>
                         <h5><i class="fa-solid fa-user icon-padding mb-3"></i>Nhập điểm sinh viên</h5>
-                        
+
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label htmlFor="diemCK">Điểm Giữa Kỳ<span class="text-danger">*</span></Form.Label>
-                            <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.diemGiuaKy}
-                                onChange={e => change(e, "diemGiuaKy")} placeholder="Điểm Giữa Kỳ" />
+                            <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.DiemGK}
+                                onChange={e => change(e, "DiemGK")} placeholder="Điểm Giữa Kỳ" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label htmlFor="diemCK">Điểm Cuối Kỳ<span class="text-danger">*</span></Form.Label>
-                            <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.diemCuoiKy}
-                                onChange={e => change(e, "diemCuoiKy")} placeholder="Điểm cuối Kỳ" />
+                            <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.DiemCK}
+                                onChange={e => change(e, "DiemCK")} placeholder="Điểm cuối Kỳ" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <div className="row">
                                 <div className="col">
                                     {showCotDiem1 ? <><Form.Label htmlFor="diemCK">Điểm Khác 1</Form.Label>
-                                        <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.diemKT1}
-                                            onChange={e => change(e, "diemKT1")} placeholder="Điểm Khác 1" /></> : <></>}
+                                        <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.DiemKT1}
+                                            onChange={e => change(e, "DiemKT1")} placeholder="Điểm Khác 1" /></> : <></>}
                                 </div>
                                 <div className="col">
                                     <Button className="btn-themdiem-add" onClick={addCotDiem1}>{showCotDiem1 ? "-" : "+"}</Button>
@@ -165,11 +149,11 @@ const NhapDiemSinhVien = () => {
                             <div className="row">
                                 <div className="col">
                                     {showCotDiem2 ? <><Form.Label htmlFor="diemCK">Điểm Khác 2</Form.Label>
-                                        <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.diemTK2}
-                                            onChange={e => change(e, "diemTK2")} placeholder="Điểm Khác 2" /></> : <></>}
+                                        <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.DiemKT2}
+                                            onChange={e => change(e, "DiemKT2")} placeholder="Điểm Khác 2" /></> : <></>}
                                 </div>
                                 <div className="col">
-                                    {showCotDiem1 ? <Button className="btn-themdiem-add" onClick={addCotDiem2}>{showCotDiem2 ? "-" : "+"}</Button> : <></>}
+                                    <Button className="btn-themdiem-add" onClick={addCotDiem2}>{showCotDiem2 ? "-" : "+"}</Button> : <></>
                                 </div>
                             </div>
 
@@ -181,11 +165,11 @@ const NhapDiemSinhVien = () => {
                             <div className="row">
                                 <div className="col">
                                     {showCotDiem3 ? <><Form.Label htmlFor="diemCK">Điểm Khác 3</Form.Label>
-                                        <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.diemTK3}
-                                            onChange={e => change(e, "diemTK3")} placeholder="Điểm Khác 3" /></> : <></>}
+                                        <Form.Control type="number" min="0" max="10" step="0.1" required value={diem.DiemKT3}
+                                            onChange={e => change(e, "DiemKT3")} placeholder="Điểm Khác 3" /></> : <></>}
                                 </div>
                                 <div className="col">
-                                    {showCotDiem1 && showCotDiem2 ? <Button className="btn-themdiem-add" onClick={addCotDiem3}>{showCotDiem3 ? "-" : "+"}</Button> : <></>}
+                                    <Button className="btn-themdiem-add" onClick={addCotDiem3}>{showCotDiem3 ? "-" : "+"}</Button> : <></>
                                 </div>
                             </div>
                         </Form.Group>

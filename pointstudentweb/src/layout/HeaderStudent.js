@@ -22,7 +22,8 @@ const HeaderStudent = () => {
                 <Link to="/home" class="menu-item"><i class="fa-solid fa-house icon-padding"></i>Tổng Quan</Link>
                 <Link class="menu-item" to="/diendan"><i class="fa-solid fa-message icon-padding"></i>Diễn Đàn</Link>
                 <Link class="menu-item" to="/xemdiem"><i class="fa-solid fa-gift icon-padding"></i>Xem Điểm</Link>
-                <Link class="menu-item" to="/chat"><i class="fa-brands fa-rocketchat icon-padding"></i>Chat</Link>
+                <Link class="menu-item" to="/danhsachmon"><i class="fa-solid fa-check icon-padding"></i>Danh Sách Môn</Link>
+                <Link class="menu-item" to="/dangkymonhoc"><i class="fa-solid fa-graduation-cap icon-padding"></i>Dăng Ký Môn Học</Link>
             </div>
             <div class="menu-items">
                 <p class="text-menu">Thông Tin tài Khoản</p>

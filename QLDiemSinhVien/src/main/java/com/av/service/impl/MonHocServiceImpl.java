@@ -25,8 +25,8 @@ public class MonHocServiceImpl  implements MonHocService{
     private MonHocRepository mhRepository;
 
     @Override
-    public List<Monhoc> getMonHocs() {
-        return this.mhRepository.getMonHocs();
+    public List<Monhoc> getMonHocs(Map<String, String> params) {
+        return this.mhRepository.getMonHocs(params);
     }
 
     @Override
@@ -84,4 +84,9 @@ public class MonHocServiceImpl  implements MonHocService{
         return this.mhRepository.thanhToanHocPhi(params);
     }
    
+    @Override
+    public Long countMonHoc() {
+        return this.mhRepository.countMonHoc();
+    }
+    
 }

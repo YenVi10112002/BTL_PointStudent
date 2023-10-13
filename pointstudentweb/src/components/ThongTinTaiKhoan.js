@@ -95,11 +95,11 @@ const Thongtintaikhoan = () => {
                     </div>
                     <div class="info-user-texts">
                         <span class="info-user-text">Khóa Học</span>
-                        <span class="info-user-text2">2020-2024</span>
+                        <span class="info-user-text2">{sinhvien.maLop.idKhoaHoc.tenKhoa}</span>
                     </div>
                     <div class="info-user-texts">
-                        <span class="info-user-text">Hệ Đào Tạo</span>
-                        <span class="info-user-text2">{sinhvien.heDaoTao}</span>
+                        <span class="info-user-text">Chuyên Ngành</span>
+                        <span class="info-user-text2">{sinhvien.maLop.idNganh.tenNganhDaoTao}</span>
                     </div>
                     <div class="info-user-texts">
                         <span class="info-user-text">Lớp Học</span>

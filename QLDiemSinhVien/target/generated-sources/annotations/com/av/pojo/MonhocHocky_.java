@@ -11,7 +11,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-10-14T04:16:35")
+@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-10-14T04:54:25")
 @StaticMetamodel(MonhocHocky.class)
 public class MonhocHocky_ { 
 
@@ -22,8 +22,8 @@ public class MonhocHocky_ {
     public static volatile SingularAttribute<MonhocHocky, Monhoc> idMonHoc;
     public static volatile SetAttribute<MonhocHocky, Monhocdangky> monhocdangkySet;
     public static volatile SingularAttribute<MonhocHocky, Integer> soLuongConLai;
-    public static volatile SingularAttribute<MonhocHocky, Integer> soLuong;
     public static volatile SingularAttribute<MonhocHocky, Date> ngayKetThuc;
+    public static volatile SingularAttribute<MonhocHocky, Integer> soLuong;
     public static volatile SingularAttribute<MonhocHocky, Phonghoc> phongHoc;
 
 }

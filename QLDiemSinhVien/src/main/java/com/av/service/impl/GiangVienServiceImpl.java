@@ -13,6 +13,7 @@ import com.av.repository.MonHocRepository;
 import com.av.repository.TaiKhoanRepository;
 import com.av.service.GiangVienService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +37,8 @@ public class GiangVienServiceImpl implements GiangVienService {
     private DienDanRepository dienDanRepository;
 
     @Override
-    public List<Giangvien> getGiangviens() {
-        return this.giangVienRepository.getGiangviens();
+    public List<Giangvien> getGiangviens(Map<String, String> params) {
+        return this.giangVienRepository.getGiangviens(params);
     }
 
     @Override
@@ -65,6 +66,12 @@ public class GiangVienServiceImpl implements GiangVienService {
     @Override
     public Giangvien getGiangVienByIdTaiKhoan(int idTaiKhoan) {
         return this.giangVienRepository.getGiangVienByIdTaiKhoan(idTaiKhoan);
+    }
+
+
+    @Override
+    public long countGiangVien() {
+        return this.giangVienRepository.countGiangVien();
     }
 
 

@@ -51,11 +51,7 @@ public class SinhVienServiceImpl implements SinhVienService {
     public List<Sinhvien> getSinhviens(Map<String, String> params) {
         return sinhvienRepository.getSinhviens(params);
     }
-    @Override
-    public List<Lophoc> getLopHocs() {
-        return sinhvienRepository.getLopHocs();
-    }
-
+    // di chuyen lay danh sach lop hoc qua class lop hoc
     @Override
     public boolean addOrUpdateSinhVien(Sinhvien sv) {
         return sinhvienRepository.addOrUpdateSinhVien(sv);

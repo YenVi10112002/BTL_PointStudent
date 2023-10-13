@@ -9,15 +9,15 @@ import PDFGenerator from "../../layout/PDFGenerator";
 const CTMonHoc = () => {
     const [user, dispatch, giangvien, dispatchsv] = useContext(MyUserConText);
     const [DSSinhVien, setDSSinhVien] = useState([]);
-    const [DSSinhVienCheck, setDSSinhVienCheck] = useState([]);
     const [q] = useSearchParams();
     const fileDiem = useRef();
     const [loading, setLoading] = useState(false);
     const [kw, setKw] = useState("");
     const [pass, setPass] = useState(true);
-    const [chot, setChot] = useState(true);
-    const [checkTB, setCheckTB] = useState(false);
-    const [success, setSuccess] = useState();
+    const [success, setSuccess] = useState(false);
+    const [thanhCong, setThanhCong] = useState(false);
+    const [checkCSV, setCheckCSV] = useState(false);
+    const [ChotDiem, setChotDiem] = useState(false);
     const [checkKhoaDiem, setCheckKhoaDiem] = useState(true);
     let monHocId = q.get("monHocId");
     let nav = useNavigate();
@@ -25,9 +25,8 @@ const CTMonHoc = () => {
         "idMonHoc": ""
     });
     useEffect(() => {
-        setChot(false)
-        setSuccess(false)
-       
+        setChotDiem(false);
+        setSuccess(false);
         const loadSv = async () => {
             try {
                 let e = endpoints['DSSinhVienByMonHoc'];
@@ -41,40 +40,32 @@ const CTMonHoc = () => {
                 if (monHocId !== null) {
                     if (tenSinhVien !== null) {
                         e = `${e}?monHocId=${monHocId}&tenSinhVien=${tenSinhVien}`;
-                        let res = await AuthApis().get(e);
+                        let res = await AuthApis().post(e);
                         setDSSinhVien(res.data);
                         setCheckKhoaDiem(false)
                     }
                     else {
                         e = `${e}?monHocId=${monHocId}`;
-                        let res = await AuthApis().get(e);
+                        let res = await AuthApis().post(e);
                         setDSSinhVien(res.data);
                         const data = res.data;
-                        const hasKhoaDiemZero = data.some(sinhvien => sinhvien.khoaDiem === 1);
-                        
-                        if(hasKhoaDiemZero){
+                        const hasKhoaDiemZero = data.some(sinhvien => sinhvien.khoaMon === 1);
+
+                        if (hasKhoaDiemZero) {
                             setCheckKhoaDiem(false);
                         }
-
-                        
                     }
-                    //Kiểm tra xem các cột điểm đã khóa hay chưa
-                    
-                    
-                }
 
+                }
             } catch (ex) {
                 console.error(ex);
             }
-            
-            
         }
-
         loadSv();
-        
-        
-        
-    }, [q, chot, success]);
+
+
+
+    }, [q, ChotDiem, success]);
 
 
     ///tìm kiếm sinhvien
@@ -87,9 +78,13 @@ const CTMonHoc = () => {
     const updateDiem = (evt) => {
         evt.preventDefault();
         setPass(true);
+        setThanhCong(false);
         // setSuccess(false);
 
 
+        function isCSVFile(file) {
+            return file.name.endsWith('.csv');
+        }
         const process = async () => {
             let form = new FormData();
 
@@ -102,39 +97,26 @@ const CTMonHoc = () => {
             let res = await AuthApis().post(endpoints['addListDiem'], form);
         }
         if (fileDiem.current.files.length > 0) {
-            process();
-            setLoading(false);
-            setSuccess(true);
+            
+            if (isCSVFile(fileDiem.current.files[0])) {
+                process();
+                setLoading(false);
+                setSuccess(true);
+                setThanhCong(true);
+            } else {
+                setCheckCSV(true);
+            }
         }
         else {
             setPass(false);
         }
+
     }
 
     ///chốt điểm sinh viên
     const chotDiem = (evt) => {
         evt.preventDefault();
-        setCheckTB(false);
         //kiểm tra xem điểm đã nhập chưa
-        const check = async () => {
-            try {
-                let e = endpoints['DSSinhVienByMonHoc'];
-                if (monHocId !== null) {
-                    e = `${e}?idMonHoc=${monHocId}`;
-                    let res = await AuthApis().get(e);
-                    setDSSinhVienCheck(res.data);
-                    for (let sinhvien in DSSinhVienCheck) {
-                        if (sinhvien.diemTrungBinh === null) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-            } catch (ex) {
-                console.error(ex);
-            }
-        }
-
         const process = async () => {
             let e = endpoints['khoaDiem'];
             if (monHocId !== null) {
@@ -145,12 +127,9 @@ const CTMonHoc = () => {
 
         }
         const confirmed = window.confirm("Bạn có chắc muốn khóa điểm?");
-        if (check && confirmed) {
+        if (confirmed) {
             process();
-            setChot(true);
-        }
-        else {
-            setCheckTB(true);
+            setChotDiem(true);
         }
 
     }
@@ -181,7 +160,7 @@ const CTMonHoc = () => {
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
-                                        {user.hoten}</a>
+                                        {giangvien.hoTen}</a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
                                         <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>
@@ -203,7 +182,7 @@ const CTMonHoc = () => {
                                         <th>Họ và tên</th>
                                         <th>Điểm KT 1</th>
                                         <th>Điểm KT 2</th>
-                                        <th>Điểm JT 3</th>
+                                        <th>Điểm KT 3</th>
                                         <th>Điểm Giữa Kỳ</th>
                                         <th>Điểm Cuối Kỳ</th>
                                         <th>Điểm Trung Bình</th>
@@ -212,38 +191,37 @@ const CTMonHoc = () => {
                                 </thead>
                                 <tbody>
                                     {DSSinhVien.map(sv => {
-                                        let h = `/giangvien/nhapdiemsinhvien?idDiem=${sv.idDiem}&idMonHoc=${sv.idMonHoc.idMonHoc}`;
+                                        let h = `/giangvien/nhapdiemsinhvien?idDiem=${sv.idMonHocDangKy}&idMonHoc=${monHocId}`;
                                         return (
-                                            <tr key={sv.idDiem}>
-                                                <td>{sv.idSinhVien.idSinhVien}</td>
-                                                <td>{sv.idSinhVien.hoTen}</td>
-                                                {sv.diemKT1 === null ? <td>Chưa có</td> : <td>{sv.diemKT1}</td>}
-                                                {sv.diemTK2 === null ? <td>Chưa có</td> : <td>{sv.diemTK2}</td>}
-                                                {sv.diemTK2 === null ? <td>Chưa có</td> : <td>{sv.diemTK2}</td>}
-                                                <td>{sv.diemGiuaKy}</td>
-                                                <td>{sv.diemCuoiKy}</td>
-                                                <td>{sv.diemTrungBình}</td>
-                                                {sv.khoaDiem === 1 ? <div class="btn btn-secondary mt-2">Đã khóa</div> : <Link to={h} className="btn btn-secondary mt-2">Nhập Điểm</Link>}
-
+                                            <tr key={sv.idMonHocDangKy}>
+                                                <td>{sv.monHoc.idSinhVien.idSinhVien}</td>
+                                                <td>{sv.monHoc.idSinhVien.hoTen}</td>
+                                                {sv.diemKT1 !== -1 ? <td>{parseFloat(sv.diemKT1).toFixed(2)}</td> : <td>-</td>}
+                                                {sv.diemKT2 !== -1 ? <td>{parseFloat(sv.diemKT2).toFixed(2)}</td> : <td>-</td>}
+                                                {sv.diemKT3 !== -1 ? <td>{parseFloat(sv.diemKT3).toFixed(2)}</td> : <td>-</td>}
+                                                {sv.diemGK !== -1 ? <td>{parseFloat(sv.diemGK).toFixed(2)}</td> : <td>-</td>}
+                                                {sv.diemCK !== -1 ? <td>{parseFloat(sv.diemCK).toFixed(2)}</td> : <td>-</td>}
+                                                {sv.diemTB !== -1 ? <td>{parseFloat(sv.diemTB).toFixed(2)}</td> : <td>0</td>}
+                                                {sv.monHoc.khoaMon === 1 ? <div class="btn btn-secondary mt-2">Đã khóa</div> : <Link to={h} className="btn btn-secondary mt-2">Nhập Điểm</Link>}
                                             </tr>
                                         )
                                     })}
-
                                 </tbody>
                             </table>
                             {DSSinhVien.length === 0 ? <Alert variant="secondary" className="mt-3">Không có sinh viên</Alert> : <></>}
                         </div>
-                        {DSSinhVien.length !== 0 && checkKhoaDiem ? <><Link onClick={chotDiem} className="btn btn-secondary mt-2 mb-5 ">Chốt Điểm</Link><PDFGenerator data={DSSinhVien} /></> : <></>}
-                        {checkTB === true ? <Alert variant="danger" className="mt-3">Thất bại do điểm chưa hoàn thành !!!</Alert> : <div></div>}
+                        {DSSinhVien.length !== 0 && checkKhoaDiem ? <><Link onClick={chotDiem} className="btn btn-secondary mt-2 mb-5 ">Chốt Điểm</Link></> : <></>}
+                        <PDFGenerator data={DSSinhVien} />
                         {DSSinhVien.length !== 0 && checkKhoaDiem ? <Form onSubmit={updateDiem}>
                             <Form.Group className="mb-3">
                                 <Form.Label>Chọn File Điểm</Form.Label>
-                                <Form.Control type="file" ref={fileDiem} />
+                                <Form.Control type="file" ref={fileDiem} className="custom-file-input" />
                             </Form.Group>
                             <div class="form-group">
                                 {loading === true ? <MySpinner /> : <Button class="btn btn-danger mt-2" type="submit">Thêm Điểm </Button>}
-                                {success === true ? <Alert variant="secondary" className="mt-3">Cập nhập điểm thành công !!!</Alert> : <div></div>}
+                                {thanhCong === true ? <Alert variant="secondary" className="mt-3">Cập nhập điểm thành công !!!</Alert> : <div></div>}
                                 {pass === false ? <Alert variant="danger" className="mt-3">Vui lòng chọn file điểm</Alert> : <div></div>}
+                                {checkCSV === true ? <Alert variant="danger" className="mt-3">Vui lòng chọn định dạng file .CSV</Alert> : <div></div>}
                             </div>
                         </Form> : <></>}
                     </div>

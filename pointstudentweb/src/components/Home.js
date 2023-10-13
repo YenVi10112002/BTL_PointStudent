@@ -39,11 +39,12 @@ const Home = () => {
                 <h4 >Tổng quan</h4>
                 <h6 class="text-header-tong ">Tổng Hợp Nhanh Các Thông Tin </h6>
                 <div class="container mt-3">
-                    <h2 class="name-text"> Phạm Hoàng Ân</h2>
-                    <p class="text-header-tong">Tổng Hợp Điểm & Xếp Loại Học Tập</p>
+                    <h2 class="name-text"> {sinhvien.hoTen}</h2>
+                    <p class="text-header-tong-1">Tổng Hợp Điểm & Xếp Loại Học Tập</p>
                     <table class="table">
                         <thead>
                             <tr>
+
                                 <th>Điểm Hệ 10</th>
                                 <th>Điểm Hệ 4</th>
                                 <th>Xếp Loại</th>
@@ -76,7 +77,7 @@ const Home = () => {
             </div>
             <div class=" point-ky">
                 <div class="container mt-3">
-                    <p class="text-header-tong">Tổng Hợp Điểm Của Từng Học Kỳ</p>
+                    <p class="text-header-tong-1">Tổng Hợp Điểm Của Từng Học Kỳ</p>
                     <table class="table">
                         <thead>
                             <tr>

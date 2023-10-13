@@ -21,13 +21,12 @@ const ThemChuDeGV = () => {
             }
             let res = await AuthApis().get(ch);
             setcauhoi(res.data);
-            const currentDate = new Date();
-            console.log(currentDate);
             setNoiDung(res.data.noiDungCauHoi)
 
         }
         loadcauhoi();
     }, [q])
+
 
 
     const addCauHoi = (evt) => {

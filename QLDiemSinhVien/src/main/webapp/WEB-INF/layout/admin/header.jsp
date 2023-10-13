@@ -23,7 +23,7 @@
                         <li >
                             <a class=""   href="#">Loại tài khoản</a>
                             <ul class="menu-2">
-                                <li><a class="" href="#">Danh sách loại tài khoản</a></li>
+                                <li><a class="" href="<c:url value="/giaovu/loaitaikhoan"/>">Danh sách loại tài khoản</a></li>
                                 <li><a class="" href="#">Thêm loại tài khoản</a></li>
                             </ul>
 
@@ -55,6 +55,9 @@
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="<c:url value="/giaovu/khoahoc"/>">Khóa Học</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="<c:url value="/giaovu/hedaotao"/>">Hệ đào tạo</a>
                 </li>
                 <li class="nav-item dropdown last-item">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-user" style="color: #f2f2f2;"></i>Chào ${giaovu.tenGiaoVu}</a>

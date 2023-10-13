@@ -1,5 +1,6 @@
-import { MyUserConText } from "../../App";
+
 import { useContext, useEffect, useState } from "react";
+import { MyUserConText } from "../../App";
 
 
 const Header = () => {
@@ -15,7 +16,7 @@ const Header = () => {
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
-                                {user.tenTaiKhoan}</a>
+                                {sinhvien.hoTen}</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
                                 <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-key icon-padding"></i>Thay Đổi Mật Khẩu</a></li>

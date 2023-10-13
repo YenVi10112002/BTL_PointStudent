@@ -74,7 +74,7 @@ const TraLoiDienDanGV = () => {
                 <div class="form-traloi-diendan">
                     <div key={cauhoi.idCauHoiDienDan}>
                       
-                        <h5><i class="fa-solid fa-user icon-padding"></i> </h5>
+                        <h5><i class="fa-solid fa-user icon-padding"></i> {cauhoi.idTaiKhoan.tenTaiKhoan} </h5>
                         <p class="content-question-day"><i class="fa-solid fa-calendar-days icon-padding"></i>{cauhoi.ngayTao}</p>
                         <p class="content-question-noidung">{cauhoi.noiDungCauHoi}</p>  
                     </div>

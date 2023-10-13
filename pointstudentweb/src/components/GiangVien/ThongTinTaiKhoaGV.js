@@ -4,6 +4,7 @@ import { useContext, useRef, useState } from "react";
 import MySpinner from "../../layout/MySpinner";
 import { AuthApis, endpoints } from "../../configs/Apis";
 import Header from "../../layout/giangVien/Header";
+import cookie from "react-cookies";
 
 const ThongTinTaiKhoanGV = () => {
     const [user, dispatch, giangvien, dispatchgv] = useContext(MyUserConText);
@@ -36,6 +37,7 @@ const ThongTinTaiKhoanGV = () => {
 
             setLoading(true)
             let res = await AuthApis().post(endpoints['udateImage'], form);
+                      
         }
         if (avatar.current.files.length > 0) {
             process();

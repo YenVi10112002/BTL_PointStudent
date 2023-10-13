@@ -29,6 +29,8 @@ import org.eclipse.persistence.annotations.Array;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -43,6 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:configs.properties")
 public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
     @Autowired
@@ -59,7 +62,10 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
     @Autowired
     private SinhVienRepository svRepo;
-
+    
+    @Autowired
+    private Environment Env;
+    
     @Override
     public Taikhoan updateImg(Taikhoan s) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -167,10 +173,31 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
     }
 
     @Override
-    public List<Taikhoan> getTaiKhoan() {
+    public List<Taikhoan> getTaiKhoan(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Taikhoan");
-        return q.getResultList();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Taikhoan> q = b.createQuery(Taikhoan.class);
+        Root root = q.from(Taikhoan.class);
+        q.select(root);
+        List<Predicate> predicates = new ArrayList<>();
+        String ten = params.get("tenTK");
+        if (ten != null && !ten.isEmpty()) {
+            predicates.add(b.like(root.get("tenTaiKhoan"), String.format("%%%s%%", ten)));
+        }
+        q.where(predicates.toArray(Predicate[]::new));
+
+        Query query = s.createQuery(q);
+
+        if (params != null) {
+            String p = params.get("pageTK");
+            if (p != null && !p.isEmpty()) {
+                int page = Integer.parseInt(p);
+                int pageSize = Integer.parseInt(this.Env.getProperty("PAGE_SIZE"));
+                query.setMaxResults(pageSize);
+                query.setFirstResult((page - 1) * pageSize);
+            }
+        }
+        return query.getResultList();
     }
 
     @Override
@@ -344,5 +371,89 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         } catch (HibernateException ex) {
             return false;
         }
+    }
+
+    public List<Loaitaikhoan> getLoaitaikhoans(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Loaitaikhoan> q = b.createQuery(Loaitaikhoan.class);
+        Root root = q.from(Loaitaikhoan.class);
+        q.select(root);
+        List<Predicate> predicates = new ArrayList<>();
+        String tenSV = params.get("tenLTK");
+        if (tenSV != null && !tenSV.isEmpty()) {
+            predicates.add(b.like(root.get("tenloaitaikhoan"), String.format("%%%s%%", tenSV)));
+        }
+        q.where(predicates.toArray(Predicate[]::new));
+
+        Query query = s.createQuery(q);
+
+        if (params != null) {
+            String p = params.get("pageLTK");
+            if (p != null && !p.isEmpty()) {
+                int page = Integer.parseInt(p);
+                int pageSize = Integer.parseInt(this.Env.getProperty("PAGE_SIZE"));
+                query.setMaxResults(pageSize);
+                query.setFirstResult((page - 1) * pageSize);
+            }
+        }
+        return query.getResultList();
+    }
+
+    @Override
+    public Loaitaikhoan getLoaiTaiKhoanById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Loaitaikhoan> q = b.createQuery(Loaitaikhoan.class);
+
+        Root<Loaitaikhoan> root = q.from(Loaitaikhoan.class);
+        q.select(root);
+        q.where(b.equal(root.get("idloaitaikhoan"), id));
+        Query query = session.createQuery(q);
+        try {
+            return (Loaitaikhoan) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean addOrUpdateLoaiTK(Loaitaikhoan ltk) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            if (ltk.getIdloaitaikhoan() != null) {
+                s.update(ltk);
+            }else{
+                s.save(ltk);
+            }
+            return true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public long countTaiKhoan() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+        Root r = q.from(Taikhoan.class);
+        q.select(b.count(r));
+        long countTK = s.createQuery(q).uniqueResult();
+        return countTK;
+    }
+
+    @Override
+    public long countLoaiTK() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+        Root r = q.from(Loaitaikhoan.class);
+        q.select(b.count(r));
+        long countLTK = s.createQuery(q).uniqueResult();
+        return countLTK;
     }
 }

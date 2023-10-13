@@ -6,6 +6,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const PDFGenerator = ({ data }) => {
   const createPDF = (TenMonHoc) => {
+
     const documentDefinition = {
       content: [
         {
@@ -14,27 +15,29 @@ const PDFGenerator = ({ data }) => {
         },
         {
           table: {
-            headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            headerRows: 2,
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
             body: [
               [
-                'Mã số sinh viên',
+                'ID sinh viên',
                 'Họ và tên',
-                'Điểm Kiểm Tra 1',
-                'Điểm Kiểm Tra 2',
-                'Điểm Kiểm Tra 3',
+                'Điểm 1',
+                'Điểm 2',
+                'Điểm 3',
                 'Điểm Giữa Kỳ',
                 'Điểm Cuối Kỳ',
+                'Điểm Trung Bình',
                 'Tình Trạng',
               ],
               ...data.map((sv) => [
-                sv.idSinhVien.idSinhVien,
-                sv.idSinhVien.hoTen,
-                sv.diemKT1 === null ? 'Chưa có' : sv.diemKT1,
-                sv.diemTK2 === null ? 'Chưa có' : sv.diemTK2,
-                sv.diemTK3 === null ? 'Chưa có' : sv.diemTK3,
-                sv.diemGiuaKy,
-                sv.diemCuoiKy,
+                sv.monHoc.idSinhVien.idSinhVien,
+                sv.monHoc.idSinhVien.hoTen,
+                sv.diemKT1 !== -1 ? parseFloat(sv.diemKT1).toFixed(2) : '-',
+                sv.diemKT2 !== -1 ? parseFloat(sv.diemKT2).toFixed(2) : '-',
+                sv.diemKT3 !== -1 ? parseFloat(sv.diemKT3).toFixed(2) : '-',
+                sv.diemGK !== -1 ? parseFloat(sv.diemGK).toFixed(2) : '-',
+                sv.diemCK !== -1 ? parseFloat(sv.diemCK).toFixed(2) : '-',
+                sv.diemTB !== -1 ? parseFloat(sv.diemTB).toFixed(2) : '0',
                 sv.trangThai === 1 ? 'Đậu' : 'Rớt',
               ]),
             ],
@@ -55,7 +58,7 @@ const PDFGenerator = ({ data }) => {
   };
 
   return (
-    <button onClick={() =>createPDF(data.length > 0 ? data[0].idMonHoc.tenMonHoc : "")} className="btn btn-secondary mt-2 mb-5 btn-creat-pdf">
+    <button onClick={() =>createPDF(data.length > 0 ? data[0].tenMonHoc : "Tên")} className="btn btn-secondary mt-2 mb-5 btn-creat-pdf">
       Xuất File PDF
     </button>
   );

@@ -15,14 +15,18 @@ import java.util.Map;
  * @author FPTSHOP
  */
 public interface MonHocService {
-    List<Monhoc> getMonHocs();
+    List<Monhoc> getMonHocs(Map<String, String> params);
     boolean addOrUpdateMonHoc(Monhoc mh);
     Monhoc getMonHocById(int id);
     boolean deleteMonHoc(int id);
+
     List<MonhocHocky> getMonHocByGiangVien(Map<String, String> params);
     
     List<MonhocHocky> getMonHocByGiangVienChuaDay(Map<String, String> params);
     List<MonhocHocky> getMonHocByGiangVienDaDay(Map<String, String> params);
+
+    Long countMonHoc();
+
     List<Monhoc> getMonHocByIdSinhVien(int idSinhvien);
     List<Monhoc> getMonHocByIdSinhVienDangHoc(int idSinhvien);
     

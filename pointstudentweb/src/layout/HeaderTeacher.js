@@ -27,11 +27,11 @@ const HeaderTeacher = () => {
           <Link class="menu-item" to="/giangvien/diendan">
             <i class="fa-solid fa-message gv-icon-padding"></i>Diễn Đàn
           </Link>
-          <a class="menu-item" href="#">
-            <i class="fa-solid fa-gift gv-icon-padding"></i>Danh Sách Môn
-          </a>
-          <Link class="menu-item" to="/giangvien/home">
-            <i class="fa-solid fa-gift gv-icon-padding"></i>Nhập Điểm
+          <Link class="menu-item" to="/giangvien/danhsachmonchuanbi">
+            <i class="fa-solid fa-gift gv-icon-padding"></i>Môn Sắp Giảng Dạy
+          </Link>
+          <Link class="menu-item" to="/giangvien/danhmonhocdakhoa">
+            <i class="fa-solid fa-gift gv-icon-padding"></i>Môn Đã Qua
           </Link>
         </div>
         <div class="menu-items">

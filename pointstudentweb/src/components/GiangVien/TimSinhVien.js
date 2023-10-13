@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { MyUserConText } from "../../App";
 import { AuthApis, endpoints } from "../../configs/Apis";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import Header from "../../layout/giangVien/Header";
 
@@ -35,6 +35,8 @@ const TimSinhVien = () => {
         loadSv();
     }, [q]);
 
+    
+
 return (
     <>
         <div class="contend">
@@ -42,7 +44,7 @@ return (
             <Header />
             <div class=" point-ky">
                 <div class="container mt-3 " >
-                    <p class="text-header-tong">Danh Sách Sinh Viên Của Bạn</p>
+                    <p class="text-header-tong-1">Danh Sách Sinh Viên Của Bạn</p>
                     <div >
                         <table class="table" >
                             <thead>
@@ -50,28 +52,21 @@ return (
                                     <th>Mã sinh viên</th>
                                     <th>Họ và tên</th>
                                     <th>Môn Học</th>
-                                    <th>Mã Môn Học</th>
-                                    <th>Điểm KT 1</th>
-                                    <th>Điểm KT 2</th>
-                                    <th>Điểm KT 3</th>
-                                    <th>Điểm Giữa Kỳ</th>
-                                    <th>Điểm Cuối Kỳ</th>
-
+                                    <th>Lớp/Nhóm</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {DSSinhVien.map(sv => {
+                                    let h =`/giangvien/chitietsinhvien/?idSinhVien=${sv.idSinhVien.idSinhVien}`;
                                     return (
-                                        <tr key={sv.idDiem}>
+                                        <tr key={sv.idMonHocDangKy}>
                                             <td>{sv.idSinhVien.idSinhVien}</td>
                                             <td>{sv.idSinhVien.hoTen}</td>
-                                            <td>{sv.idMonHoc.tenMonHoc}</td>
-                                            <td>{sv.idMonHoc.idMonHoc}</td>
-                                            {sv.diemKT1 === null ? <td>Chưa có</td> : <td>{sv.diemKT1}</td>}
-                                            {sv.diemTK2 === null ? <td>Chưa có</td> : <td>{sv.diemTK2}</td>}
-                                            {sv.diemTK2 === null ? <td>Chưa có</td> : <td>{sv.diemTK2}</td>}
-                                            <td>{sv.diemGiuaKy}</td>
-                                            <td>{sv.diemCuoiKy}</td>
+                                            <td>{sv.idMonHoc.idMonHoc.tenMonHoc}</td>
+                                            <td>{sv.idMonHoc.idHocky.idLop.tenLopHoc}</td>
+                                            
+                                            <td><Link to={h}><button type="button" class="btn btn-info" >Chi Tiết</button></Link></td>
                                         </tr>
                                     )
                                 })}

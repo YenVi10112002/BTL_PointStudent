@@ -6,14 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:url value="/giaovu/sinhvien" var="action"/>
-<div class="nav-tk">
-    <form class="input-button-tk" action="${action}">
-        <input  type="text" name="tensv" placeholder="Nhập tên muốn tìm...."/>
-        <button type="submit">Tìm kiếm</button>
-    </form>
-</div >
-<div class="table-sv">
+<div class="table-sv table-border">
     <h1 class="text-center">Danh sách sinh viên lớp ${lop.tenLopHoc}</h1>
 
     <table class="table ">
@@ -46,22 +39,13 @@
                     <td>${sv.soDienThoai}</td>
                     <td>${sv.email}</td>
                     <td>
-                        <a href="<c:url value="/giaovu/sinhvien/${sv.idSinhVien}"/>" class="btn-xoavacn bg-cn"> Chi tiết </a>
+                        <a href="<c:url value="/giaovu/sinhvien/${sv.idSinhVien}"/>" class="btn btn-success"> Chi tiết </a>
                     </td>
                     
                     
                 </tr>
             </c:forEach>
         </tbody>
-    </table>
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>
-            <c:forEach begin="1" end="${counter}" var="i">
-                <c:url value="/giaovu/sinhvien" var="pageAction">
-                    <c:param name="page" value="${i}"/>
-                </c:url>
-            <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
-            </c:forEach>
-    </ul> 
+    </table> 
 </div>   
 

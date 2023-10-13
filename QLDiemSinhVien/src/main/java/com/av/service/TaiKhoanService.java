@@ -23,7 +23,7 @@ public interface TaiKhoanService extends UserDetailsService {
    Taikhoan getTaiKhoan(int idTaiKhoan);
    boolean addAcount(Taikhoan t);
     boolean addAcountGV(Taikhoan t);
-    List<Taikhoan> getTaiKhoan();
+    List<Taikhoan> getTaiKhoan(Map<String, String> params);
     Loaitaikhoan getChucVu(int id);
     Taikhoan getUserByUsername(String username);
     UserDetails getLoggedInUserDetails(Authentication authentication);
@@ -34,6 +34,12 @@ public interface TaiKhoanService extends UserDetailsService {
     Taikhoan thayDoiMatKhauAD(Taikhoan user);
     
     boolean sendCode(String email);
-    
+
+    List<Loaitaikhoan> getLoaitaikhoans(Map<String, String> params);
+    Loaitaikhoan getLoaiTaiKhoanById(int id);
+    boolean addOrUpdateLoaiTK(Loaitaikhoan ltk);
+    long countTaiKhoan();
+    long countLoaiTK();
+
 }
 
