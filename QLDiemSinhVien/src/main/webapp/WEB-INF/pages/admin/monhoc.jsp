@@ -7,9 +7,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:url value="/giaovu/monhoc" var="action"/>
 <div class="nav-tk">
     <form class="search" action="${action}">
-        <input class="search-input"  type="text" name="tensv" placeholder="Search...."/>
+        <input class="search-input"  type="text" name="tenMH" placeholder="Search...."/>
         <button class="search-button"><i class="fa-solid fa-magnifying-glass" style="color: #b7b7b8;"></i></button>
     </form>
 </div >
@@ -31,7 +32,7 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${monhoc}" var="mh">
+            <c:forEach items="${monhocc}" var="mh">
                 <tr>
                     <td>${mh.idMonHoc}</td>
                     <td>${mh.tenMonHoc}</td>
@@ -47,15 +48,15 @@
     </table>
     <div class="pagination-div">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>
+            <!--<li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>-->
                 <c:forEach begin="1" end="${counter}" var="i">
-                    <c:url value="/giaovu/sinhvien" var="pageAction">
-                        <c:param name="page" value="${i}"/>
+                    <c:url value="/giaovu/monhoc" var="pageAction">
+                        <c:param name="pageMH" value="${i}"/>
                     </c:url>
                 <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
                 </c:forEach>
         </ul>
     </div>
 </div>
-    
+
 <script src="<c:url value="/js/main.js" />"></script>

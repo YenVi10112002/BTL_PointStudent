@@ -4,7 +4,9 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,6 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Phonghoc.findByTenPhongHoc", query = "SELECT p FROM Phonghoc p WHERE p.tenPhongHoc = :tenPhongHoc")})
 public class Phonghoc implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +48,9 @@ public class Phonghoc implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tenPhongHoc")
     private String tenPhongHoc;
+    @OneToMany(mappedBy = "phongHoc")
+    @JsonIgnore
+    private Set<MonhocHocky> monhocHockySet;
 
     public Phonghoc() {
     }
@@ -94,6 +103,15 @@ public class Phonghoc implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Phonghoc[ idPhongHoc=" + idPhongHoc + " ]";
+    }
+
+    @XmlTransient
+    public Set<MonhocHocky> getMonhocHockySet() {
+        return monhocHockySet;
+    }
+
+    public void setMonhocHockySet(Set<MonhocHocky> monhocHockySet) {
+        this.monhocHockySet = monhocHockySet;
     }
     
 }

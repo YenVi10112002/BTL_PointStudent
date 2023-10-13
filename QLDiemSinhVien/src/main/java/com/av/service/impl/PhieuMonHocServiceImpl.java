@@ -4,10 +4,12 @@
  */
 package com.av.service.impl;
 
+import com.av.pojo.MonhocHocky;
 import com.av.pojo.PhieuMonHoc;
 import com.av.repository.MonHocRepository;
 import com.av.repository.PhieuMonHocRepository;
 import com.av.service.PhieuMonHocService;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PhieuMonHocServiceImpl implements PhieuMonHocService{
     
-//    @Autowired
-//    private PhieuMonHocRepository phieuMHRepo;
+    @Autowired
+    private PhieuMonHocRepository phieuMHRepo;
 //
 //    @Override
 //    public boolean addPhieuMH(Map<String, PhieuMonHoc> carts) {
@@ -38,5 +40,42 @@ public class PhieuMonHocServiceImpl implements PhieuMonHocService{
 //        return this.phieuMHRepo.deletePhieuMH(pmh);
 //    }
 
+    @Override
+    public boolean addPhieuMHHK(MonhocHocky mh) {
+        for(int i=0; i < mh.getListMonhocs().length; i++){
+            MonhocHocky mhmoi = new MonhocHocky();
+            mhmoi.setIdHocky(mh.getIdHocky());
+            mhmoi.setIdMonHoc(mh.getListMonhocs()[i]);
+            mhmoi.setSoLuong(mh.getListSoLuong()[i]);
+            mhmoi.setNgayBatDau(mh.getListDateBatDau()[i]);
+            mhmoi.setNgayKetThuc(mh.getListDateKetThuc()[i]);
+            mhmoi.setIdGiangVien(mh.getListGiangviens()[i]);
+            if(this.phieuMHRepo.addPhieuMHHK(mhmoi)==false)
+                return false;  
+            }
+            
+        return true;
+    }
+
+    @Override
+    public List<MonhocHocky> getMonhocByHockys(int id) {
+        return this.phieuMHRepo.getMonhocByHockys(id);
+    }
+
+    @Override
+    public boolean updatePhieuMHHK(MonhocHocky mh) {
+        return this.phieuMHRepo.updatePhieuMHHK(mh);
+    }
+
+    @Override
+    public MonhocHocky getMonhocHocky(int id) {
+        return this.phieuMHRepo.getMonhocHocky(id);
+    }
+
+    @Override
+    public boolean deleteMHHK(int id) {
+        return this.phieuMHRepo.deleteMHHK(id);
+    }
+    
     
 }

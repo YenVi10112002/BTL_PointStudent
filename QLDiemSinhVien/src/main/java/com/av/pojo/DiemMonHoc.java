@@ -37,7 +37,7 @@ public class DiemMonHoc implements Serializable {
         this.monHoc = monHoc;
         this.idMonHocDangKy = monHoc.getIdMonHocDangKy();
         this.hocKySinhVien = monHoc.getIdMonHoc().getIdHocky().getIdHocKy();
-        this.hocKy = monHoc.getIdMonHoc().getIdHocky().getTenHocKy();
+        this.hocKy = monHoc.getIdMonHoc().getIdHocky().getTenHocKy().getTenHocKy();
         this.tenMonHoc = monHoc.getIdMonHoc().getIdMonHoc().getTenMonHoc();
     }
 

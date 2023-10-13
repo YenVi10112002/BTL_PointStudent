@@ -20,7 +20,7 @@ public interface TaiKhoanRepository {
     Taikhoan getTaiKhoan(int idTaiKhoan);
     boolean addAcount(Taikhoan t);
     boolean addAcountGV(Taikhoan t);
-    List<Taikhoan> getTaiKhoan();
+    List<Taikhoan> getTaiKhoan(Map<String, String> params);
     Loaitaikhoan getChucVu(int id);
     Taikhoan getUserByUsername(String username);
     boolean authUser(String username, String password);
@@ -30,5 +30,9 @@ public interface TaiKhoanRepository {
 //    Taikhoan getTaikhoanBySinhVien(int idSinhVien);
 //    boolean deleteTaiKhoanBySinhVien(int idSinhVien);
     boolean deleteTK(Taikhoan tk);
-    
+    List<Loaitaikhoan> getLoaitaikhoans(Map<String, String> params);
+    Loaitaikhoan getLoaiTaiKhoanById(int id);
+    boolean addOrUpdateLoaiTK(Loaitaikhoan ltk);
+    long countTaiKhoan();
+    long countLoaiTK();
 }

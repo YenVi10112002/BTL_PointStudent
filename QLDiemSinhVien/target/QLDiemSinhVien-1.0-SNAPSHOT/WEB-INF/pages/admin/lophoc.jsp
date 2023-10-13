@@ -6,10 +6,10 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:url value="/giaovu/sinhvien" var="action"/>
+<c:url value="/giaovu/lophoc" var="action"/>
 <div class="nav-tk">
     <form class="search" action="${action}">
-        <input class="search-input"  type="text" name="tensv" placeholder="Search...."/>
+        <input class="search-input"  type="text" name="tenLH" placeholder="Search...."/>
         <button class="search-button"><i class="fa-solid fa-magnifying-glass" style="color: #b7b7b8;"></i></button>
     </form>
         
@@ -17,7 +17,7 @@
 <div class="table-sv">
     <div class="title-gv">
         <h1 class="text-center">Danh sách lớp học</h1>
-        <a href="#" class="btn-xoavacn-gv bg-add-gv"> Thêm Lớp Học</a>
+        <a href="<c:url value="/giaovu/lophoc/add"/>" class="btn-xoavacn-gv bg-add-gv"> Thêm Lớp Học</a>
     </div>
     <table class="table " >
         <thead>
@@ -32,7 +32,7 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${listLopHoc}" var="lop">
+            <c:forEach items="${lophoc}" var="lop">
                 <c:url value="/giaovu/lophoc/${lop.idLopHoc}" var="dsSinhVien"/>
                 <tr>
                     <td>${lop.idLopHoc}</td>
@@ -41,8 +41,9 @@
                     <td>${lop.idNganh.tenNganhDaoTao}</td>
                     <td>${lop.idKhoaHoc.tenKhoa}</td>
                     <td>
-                        <a href="#" class="btn-xoavacn-gv bg-cn"><i class="fa-regular fa-pen-to-square"></i> </a>
-                        <button class="btn-xoavacn-gv bg-xoa"><i class="fa-regular fa-trash-can"></i></button>
+                        <c:url value="/giaovu/lophoc/add/${lop.idLopHoc}" var="api"/>
+                        <a href="${api}" class="btn-xoavacn-gv bg-cn"><i class="fa-regular fa-pen-to-square"></i> </a>
+                        <button onclick="deleteSinhVien('${api}')" class="btn-xoavacn-gv bg-xoa"><i class="fa-regular fa-trash-can"></i></button>
                     </td>
                     <td>
                         <a href="${dsSinhVien}"class="a-tk" > Xem danh sách</a>
@@ -53,10 +54,10 @@
     </table>
     <div class="pagination-div">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>
+            <!--<li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>-->
                 <c:forEach begin="1" end="${counter}" var="i">
-                    <c:url value="/giaovu/sinhvien" var="pageAction">
-                        <c:param name="page" value="${i}"/>
+                    <c:url value="/giaovu/lophoc" var="pageAction">
+                        <c:param name="pageLH" value="${i}"/>
                     </c:url>
                 <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
                 </c:forEach>

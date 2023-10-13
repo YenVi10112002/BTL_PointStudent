@@ -13,6 +13,7 @@ import com.av.repository.MonHocRepository;
 import com.av.repository.TaiKhoanRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
@@ -23,6 +24,8 @@ import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -34,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:configs.properties")
 public class GiangvienRepositoryImpl implements GiangvienRepository {
 
     @Autowired
@@ -44,16 +48,35 @@ public class GiangvienRepositoryImpl implements GiangvienRepository {
     
     @Autowired
     private MonHocRepository mhRepo;
+    
+    @Autowired
+    private Environment Env;
     @Override
-    public List<Giangvien> getGiangviens() {
+    public List<Giangvien> getGiangviens(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
 
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Giangvien> q = b.createQuery(Giangvien.class);
         Root root = q.from(Giangvien.class);
         q.select(root);
+        List<Predicate> predicates = new ArrayList<>();
+        String tenSV = params.get("tenGV");
+        if (tenSV != null && !tenSV.isEmpty()) {
+            predicates.add(b.like(root.get("hoTen"), String.format("%%%s%%", tenSV)));
+        }
+        q.where(predicates.toArray(Predicate[]::new));
+
         Query query = session.createQuery(q);
 
+        if (params != null) {
+            String p = params.get("pageGV");
+            if (p != null && !p.isEmpty()) {
+                int page = Integer.parseInt(p);
+                int pageSize = Integer.parseInt(this.Env.getProperty("PAGE_SIZE"));
+                query.setMaxResults(pageSize);
+                query.setFirstResult((page - 1) * pageSize);
+            }
+        }
         return query.getResultList();
     }
 
@@ -152,5 +175,20 @@ public class GiangvienRepositoryImpl implements GiangvienRepository {
 //            return null;
 //        }
 //    }
+    
+    //Dem giang vien de phan trang
+    @Override
+    public long countGiangVien() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+
+        Root r = q.from(Giangvien.class);
+        q.select(b.count(r));
+
+        long countGV = s.createQuery(q).uniqueResult();
+
+        return countGV;
+    }
 
 }

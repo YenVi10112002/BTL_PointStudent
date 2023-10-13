@@ -111,13 +111,7 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         }
         return query.getResultList();
     }
-
-    @Override
-    public List<Lophoc> getLopHocs() {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Lophoc");
-        return q.getResultList();
-    }
+    // di chuyen lay danh sach lop hoc qua class lop hoc
 
     @Override
     public boolean addOrUpdateSinhVien(Sinhvien sv) {
@@ -260,6 +254,20 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         q.where(predicates.toArray(new Predicate[0]));
         Query query = s.createQuery(q);
         return query.getResultList();
+    }
+
+    @Override
+    public Long countSinhVienByIdLop(int idLop) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+
+        Root r = q.from(Sinhvien.class);
+        q.select(b.count(r)).where(b.equal(r.get("maLop").get("idLopHoc"), idLop));
+
+        long countMonHoc = session.createQuery(q).uniqueResult();
+
+        return countMonHoc;
     }
 
 }

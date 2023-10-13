@@ -38,7 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Hocky.findAll", query = "SELECT h FROM Hocky h"),
     @NamedQuery(name = "Hocky.findByIdHocKy", query = "SELECT h FROM Hocky h WHERE h.idHocKy = :idHocKy"),
-    @NamedQuery(name = "Hocky.findByTenHocKy", query = "SELECT h FROM Hocky h WHERE h.tenHocKy = :tenHocKy"),
     @NamedQuery(name = "Hocky.findByNgayBatDau", query = "SELECT h FROM Hocky h WHERE h.ngayBatDau = :ngayBatDau"),
     @NamedQuery(name = "Hocky.findByNgayKetThuc", query = "SELECT h FROM Hocky h WHERE h.ngayKetThuc = :ngayKetThuc"),
     @NamedQuery(name = "Hocky.findByNgayDangKy", query = "SELECT h FROM Hocky h WHERE h.ngayDangKy = :ngayDangKy"),
@@ -51,11 +50,9 @@ public class Hocky implements Serializable {
     @Basic(optional = false)
     @Column(name = "idHocKy")
     private Integer idHocKy;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "tenHocKy")
-    private String tenHocKy;
+    @JoinColumn(name = "tenHocKy", referencedColumnName = "idLoaiHocKy")
+    @ManyToOne
+    private Loaihocky tenHocKy;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ngayBatDau")
@@ -90,9 +87,8 @@ public class Hocky implements Serializable {
         this.idHocKy = idHocKy;
     }
 
-    public Hocky(Integer idHocKy, String tenHocKy, Date ngayBatDau, Date ngayKetThuc, Date ngayDangKy, Date ngayHetHan) {
+    public Hocky(Integer idHocKy, Date ngayBatDau, Date ngayKetThuc, Date ngayDangKy, Date ngayHetHan) {
         this.idHocKy = idHocKy;
-        this.tenHocKy = tenHocKy;
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
         this.ngayDangKy = ngayDangKy;
@@ -107,13 +103,7 @@ public class Hocky implements Serializable {
         this.idHocKy = idHocKy;
     }
 
-    public String getTenHocKy() {
-        return tenHocKy;
-    }
-
-    public void setTenHocKy(String tenHocKy) {
-        this.tenHocKy = tenHocKy;
-    }
+    
 
     public Date getNgayBatDau() {
         return ngayBatDau;
@@ -187,6 +177,20 @@ public class Hocky implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Hocky[ idHocKy=" + idHocKy + " ]";
+    }
+
+    /**
+     * @return the tenHocKy
+     */
+    public Loaihocky getTenHocKy() {
+        return tenHocKy;
+    }
+
+    /**
+     * @param tenHocKy the tenHocKy to set
+     */
+    public void setTenHocKy(Loaihocky tenHocKy) {
+        this.tenHocKy = tenHocKy;
     }
     
 }

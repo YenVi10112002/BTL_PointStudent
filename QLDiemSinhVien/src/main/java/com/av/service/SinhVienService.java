@@ -21,7 +21,7 @@ import java.util.Map;
 public interface SinhVienService {
     Sinhvien getSinhvien(int idTaiKhoan);
     List<Sinhvien> getSinhviens(Map<String, String> params);
-    List<Lophoc> getLopHocs();
+    // di chuyen lay danh sach lop hoc qua class lop hoc
     boolean addOrUpdateSinhVien(Sinhvien sv );
     Sinhvien getSinhVienById(int idSinhVien);
     boolean deleteSinhVien(int idSinhVien);

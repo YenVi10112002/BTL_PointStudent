@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:url value="/giaovu/sinhvien" var="action"/>
 <div class="nav-tk">
     <form class="search" action="${action}">
@@ -34,11 +35,13 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${sinhvien}" var="sv">
+            <c:forEach items="${sinhvienn}" var="sv">
                 <tr>
                     <td>${sv.idSinhVien}</td>
                     <td>${sv.hoTen}</td>
-                    <td>${sv.ngaySinh}</td>
+                    <td>
+                        <fmt:formatDate value="${sv.ngaySinh}" pattern="dd-MM-yyyy" />
+                    </td>
                     <td>${sv.diaChi}</td>
                     <td><c:choose>
                             <c:when test="${sv.gioiTinh == 0}">Nữ</c:when>
@@ -61,7 +64,6 @@
     </table>
     <div class="pagination-div">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>
                 <c:forEach begin="1" end="${counter}" var="i">
                     <c:url value="/giaovu/sinhvien" var="pageAction">
                         <c:param name="page" value="${i}"/>

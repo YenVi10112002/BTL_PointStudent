@@ -128,4 +128,59 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content"
                        value="/WEB-INF/pages/admin/hocki.jsp" />
     </definition>
+    <definition name="hedaotao" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Quản lý hệ đào tạo" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/hedaotao.jsp" />
+    </definition>
+    <definition name="addlophoc" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Quản lý lớp học" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/addLH.jsp" />
+    </definition>
+    <definition name="addhocki" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Quản lý học kỳ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/addHK.jsp" />
+    </definition>
+    <definition name="addkhoadt" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Quản lý Khoa đào tạo" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/addKDT.jsp" />
+    </definition>
+    <definition name="addphonghoc" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Quản lý phòng học" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/addPH.jsp" />
+    </definition>
+    <definition name="addkhoahoc" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Quản lý khóa học" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/addKH.jsp" />
+    </definition>
+    <definition name="addhedaotao" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Quản lý hệ đào tạo"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/addHDT.jsp" />
+    </definition>
+    <definition name="loaitaikhoan" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Danh sách loại tài khoản"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/loaiTaiKhoan.jsp" />
+    </definition>
+    <definition name="phieuhocki" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Đăng kí môn học"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/dangKiMonHocHocKi.jsp" />
+    </definition>
+    <definition name="listmonhochk" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Danh sách môn học"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/listMonHocHocKi.jsp" />
+    </definition>
+    <definition name="updateMHHK" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Cập nhật môn học"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/updateMHHK.jsp" />
+    </definition>
 </tiles-definitions>

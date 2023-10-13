@@ -4,17 +4,14 @@ import com.av.pojo.Giangvien;
 import com.av.pojo.Hocky;
 import com.av.pojo.Monhoc;
 import com.av.pojo.Monhocdangky;
+import com.av.pojo.Phonghoc;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-<<<<<<< HEAD
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-09-28T11:19:39")
-=======
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-10-02T01:23:50")
->>>>>>> d25f930757f7259ce4c3fd2bf99e12079d727004
+@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2023-10-13T23:58:12")
 @StaticMetamodel(MonhocHocky.class)
 public class MonhocHocky_ { 
 
@@ -24,8 +21,8 @@ public class MonhocHocky_ {
     public static volatile SingularAttribute<MonhocHocky, Date> ngayBatDau;
     public static volatile SingularAttribute<MonhocHocky, Monhoc> idMonHoc;
     public static volatile SetAttribute<MonhocHocky, Monhocdangky> monhocdangkySet;
-    public static volatile SingularAttribute<MonhocHocky, Integer> phongHoc;
-    public static volatile SingularAttribute<MonhocHocky, Integer> soLuong;
     public static volatile SingularAttribute<MonhocHocky, Date> ngayKetThuc;
+    public static volatile SingularAttribute<MonhocHocky, Integer> soLuong;
+    public static volatile SingularAttribute<MonhocHocky, Phonghoc> phongHoc;
 
 }

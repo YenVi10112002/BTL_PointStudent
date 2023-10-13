@@ -199,14 +199,12 @@ Author     : FPTSHOP
     }
     a.a-tk{
         box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
-        width: 140px;
-        height: 32px;
         text-decoration: none;
         background: #1E90FF;
         color: white;
         border-radius: 3px;
         text-align: center;
-        padding: 3px;
+        padding: 6px;
     }
     .table-sv{
         box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
@@ -462,7 +460,7 @@ Author     : FPTSHOP
         width: 300px;
         background: rgba(255,255,255,.1);
         border-radius: 30px 30px 30px 30px;
-        border: 1px solid #ececec;
+        border: 1px solid #707070;
         display: flex;
     }
     .search-input{
@@ -479,6 +477,71 @@ Author     : FPTSHOP
     }
     .pagination{
         justify-content: center;
+    }
+    .table-form{
+        display: flex
+    }
+    .form-addltk{
+        background: white;
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+        padding: 39px;
+        width: 340px;
+        margin: 19px 32px 19px 11px;
+    }
+    .table-ltk{
+        width: 1000px;
+    }
+    .info-hk{
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        padding: 18px;
+        display: flex;
+        background: white;
+        margin-bottom: 10px;
+        margin-top: 10px;
+
+    }
+    .table-info-mh{
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        padding: 20px;
+        background: white;
+    }
+    .form-selector{
+        height: 28px;
+        padding: 5px;
+    }
+    .label-info-mh{
+        border: 1px solid black;
+        padding: 5px;
+        font-size: 18px;
+        margin-left: 10px;
+        border-radius: 10px;
+    }
+    .btn-mhhk{
+        border: none;
+        width: 80px;
+        padding: 6px;
+        font-size: 20px;
+        font-weight: 600;
+        background: #006df0;
+        color: white;
+        border-radius: 10px
+    }
+    .btn-hk{
+        margin-left: auto;
+    }
+    .form-hk{
+        width: 387px;
+        margin-left: 17px;
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+        background: white;
+        margin-top: 19px;
+        padding: 15px;
+    }
+    .table-form-mhhk{
+        display: flex;
+    }
+    .table-border{
+        border-radius: 30px 
     }
 </style>
 

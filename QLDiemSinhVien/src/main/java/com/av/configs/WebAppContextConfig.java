@@ -6,8 +6,14 @@ package com.av.configs;
 
 import com.av.formatter.CauHoiFormatter;
 import com.av.formatter.GiangVienFormatter;
+import com.av.formatter.HeDaoTaoFormatter;
+import com.av.formatter.HocKiFormatter;
+import com.av.formatter.KhoaHocFormatter;
+import com.av.formatter.LoaiHocKyFormatter;
 import com.av.formatter.LopHocFormatter;
 import com.av.formatter.MonHocFormatter;
+import com.av.formatter.NghanhDaoTaoFormatter;
+import com.av.formatter.PhongHocFormatter;
 import com.av.formatter.SinhVienFormatter;
 import com.av.formatter.TaiKhoanFormatter;
 import com.cloudinary.Cloudinary;
@@ -59,6 +65,12 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new GiangVienFormatter());
         registry.addFormatter(new MonHocFormatter());
         registry.addFormatter(new SinhVienFormatter());
+        registry.addFormatter(new NghanhDaoTaoFormatter());
+        registry.addFormatter(new KhoaHocFormatter());
+        registry.addFormatter(new HeDaoTaoFormatter());
+        registry.addFormatter(new LoaiHocKyFormatter());
+        registry.addFormatter(new HocKiFormatter());
+        registry.addFormatter(new PhongHocFormatter());
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

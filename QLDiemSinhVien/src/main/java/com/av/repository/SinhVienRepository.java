@@ -22,7 +22,7 @@ import java.util.Map;
 public interface SinhVienRepository {
     Sinhvien getSinhVien(int idTaiKhoan);   
     List<Sinhvien> getSinhviens(Map<String, String> params);
-    List<Lophoc> getLopHocs();
+    // di chuyen lay danh sach lop hoc qua class lop hoc
     boolean addOrUpdateSinhVien(Sinhvien sv);
     Sinhvien getSinhVienById(int idSinhVien);
     boolean deleteSinhVien(int idSinhVien);
@@ -30,6 +30,8 @@ public interface SinhVienRepository {
      Long countSinhVien();
      //update 26/9 danh sach sinh vien theo ma lop
      List<Sinhvien> getSinhVienByIdLop(int idLop);
+     // update 11/10
+     Long countSinhVienByIdLop(int idLop);
    
 
 }

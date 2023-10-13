@@ -7,29 +7,29 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="table-sv">
-    <h1 class="text-center">Danh sách sinh viên</h1>
+    <div class="title-gv">
+        <h1 class="text-center">Danh sách khóa học</h1>
+        <a href="<c:url value="/giaovu/khoahoc/add"/>" class="btn-xoavacn-gv bg-add-gv"> Thêm Khóa </a>
+    </div>
+    
 
-    <table class="table " id="customers">
+    <table class="table " >
         <thead>
             <tr>
                 <th>Mã Khóa</th>
                 <th>Tên khóa</th>
-                <th>Thời gian bắt đầu</th>
-                <th>Thời gian kết thúc</th>
-                <th><a href="#" class="btn-xoavacn bg-add"> Thêm Khóa</a></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${khoahoc}" var="kh">
+            <c:forEach items="${khoa}" var="kh">
                 <tr>
                     <td>${kh.idkhoa}</td>
                     <td>${kh.tenKhoa}</td>
-                    <td>1-10-2023</td>
-                    <td>31-12-2023</td>
                     <td>
-                        
-                        <a href="#" class="btn-xoavacn bg-cn"> Cập nhật </a>
-                        <button class="btn-xoavacn bg-xoa ">Xóa</button>
+                        <c:url value="/giaovu/khoahoc/add/${kh.idkhoa}" var="api"/>
+                        <a href="${api}" class="btn-xoavacn-gv bg-cn"><i class="fa-regular fa-pen-to-square"></i> </a>
+                        <button onclick="deleteSinhVien('${api}')" class="btn-xoavacn bg-xoa-gv "><i class="fa-regular fa-trash-can"></i></button>
                         
                     </td>
                 </tr>
@@ -38,10 +38,9 @@
     </table>
     <div class="pagination-div">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>
                 <c:forEach begin="1" end="${counter}" var="i">
-                    <c:url value="/giaovu/sinhvien" var="pageAction">
-                        <c:param name="page" value="${i}"/>
+                    <c:url value="/giaovu/khoahoc" var="pageAction">
+                        <c:param name="pageKH" value="${i}"/>
                     </c:url>
                 <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
                 </c:forEach>

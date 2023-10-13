@@ -14,13 +14,13 @@ import java.util.Map;
  * @author FPTSHOP
  */
 public interface MonHocRepository {
-    List<Monhoc> getMonHocs();
+    List<Monhoc> getMonHocs(Map<String, String> params);
     boolean addOrUpdateMonHoc(Monhoc mh);
     Monhoc getMonHocById(int id);
     boolean deleteMonHoc(int id);
     List<Monhoc> getMonHocByGiangVien(Map<String, String> params);
     Long CountMonHocInGV(int idGiangVien);
-    
+    Long countMonHoc();
     
     //Start
     List<Monhoc> getMonHocByIdSinhVien(int idSinhvien);

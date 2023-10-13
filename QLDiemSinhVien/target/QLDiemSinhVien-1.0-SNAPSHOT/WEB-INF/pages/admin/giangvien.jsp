@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:url value="/giaovu/giangvien" var="action"/>
 <c:if test="${errMsg != null}">
     <div class="alert alert-secondary">
         <strong>${errMsg}</strong> 
@@ -14,7 +16,7 @@
 </c:if>
 <div class="nav-tk">
     <form class="search" action="${action}">
-        <input class="search-input"  type="text" name="tensv" placeholder="Search...."/>
+        <input class="search-input"  type="text" name="tenGV" placeholder="Search...."/>
         <button class="search-button"><i class="fa-solid fa-magnifying-glass" style="color: #b7b7b8;"></i></button>
     </form>
 </div >
@@ -35,18 +37,24 @@
                 <th>Địa chỉ</th>
                 <th>Số điện thoại</th>
                 <th>
-
-
                 </th>
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${giangvien}" var="gv">
+            <c:forEach items="${giangvienn}" var="gv">
                 <tr>
                     <td>${gv.idGiangVien}</td>
                     <td>${gv.hoTen}</td>
-                    <td>${gv.ngaySinh}</td>
-                    <td>${gv.gioiTinh}</td>
+                    <td>
+                        <fmt:formatDate value="${gv.ngaySinh}" pattern="dd-MM-yyyy" />
+                    </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${gv.gioiTinh == 0}">Nữ</c:when>
+                            <c:when test="${gv.gioiTinh == 1}">Nam</c:when>
+                            <c:otherwise>Giới tính không xác định</c:otherwise>
+                        </c:choose>
+                    </td>
                     <td>${gv.email}</td>
                     <td>${gv.diaChi}</td>
                     <td>${gv.soDienThoai}</td>
@@ -61,10 +69,9 @@
     </table>
     <div class="pagination-div">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>
                 <c:forEach begin="1" end="${counter}" var="i">
-                    <c:url value="/giaovu/sinhvien" var="pageAction">
-                        <c:param name="page" value="${i}"/>
+                    <c:url value="/giaovu/giangvien" var="pageAction">
+                        <c:param name="pageGV" value="${i}"/>
                     </c:url>
                 <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
                 </c:forEach>

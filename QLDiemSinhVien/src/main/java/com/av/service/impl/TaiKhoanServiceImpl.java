@@ -86,8 +86,8 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     }
 
     @Override
-    public List<Taikhoan> getTaiKhoan() {
-        return this.taikhoanRepository.getTaiKhoan();
+    public List<Taikhoan> getTaiKhoan(Map<String, String> params) {
+        return this.taikhoanRepository.getTaiKhoan(params);
     }
 
     @Override
@@ -161,4 +161,29 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         return user;
     }
 
+    @Override
+    public List<Loaitaikhoan> getLoaitaikhoans(Map<String, String> params) {
+        return this.taikhoanRepository.getLoaitaikhoans(params);
+    }
+
+    @Override
+    public Loaitaikhoan getLoaiTaiKhoanById(int id) {
+        return this.taikhoanRepository.getLoaiTaiKhoanById(id);
+    }
+
+    @Override
+    public boolean addOrUpdateLoaiTK(Loaitaikhoan ltk) {
+        return this.taikhoanRepository.addOrUpdateLoaiTK(ltk);
+    }
+
+    @Override
+    public long countTaiKhoan() {
+        return this.taikhoanRepository.countTaiKhoan();
+    }
+
+    @Override
+    public long countLoaiTK() {
+        return this.taikhoanRepository.countLoaiTK();
+    }
+    
 }
