@@ -7,6 +7,7 @@ package com.av.repository;
 import com.av.pojo.Diem;
 import com.av.pojo.DiemMonHoc;
 import com.av.pojo.Loaidiem;
+import com.av.pojo.MonhocHocky;
 import com.av.pojo.Monhocdangky;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,9 @@ public interface DiemRepository {
     Loaidiem getLoaiDiemKT2();
 
     Loaidiem getLoaiDiemKT3();
+    Loaidiem getLoaiDiemGK();
+    Loaidiem getLoaiDiemCK();
+    Loaidiem getLoaiDiemTB();
 
     DiemMonHoc getDiemMonHocByIdDiem(int id);
 
@@ -55,5 +59,8 @@ public interface DiemRepository {
     List<Diem> getListDiemByIdMonHocDangKy(int id);
 
     List<Monhocdangky> getListMonHocDangKy(Map<String, String> params);
+    
+    Monhocdangky dangKyMonHoc(Monhocdangky monHoc, MonhocHocky monHocHocKy);
+    Monhocdangky huyDangKy(Monhocdangky monHoc);
 
 }

@@ -4,9 +4,11 @@
  */
 package com.av.service.impl;
 
+import com.av.pojo.Giangvien;
 import com.av.pojo.Loaitaikhoan;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
+import com.av.repository.GiangvienRepository;
 import com.av.repository.TaiKhoanRepository;
 import com.av.service.TaiKhoanService;
 import com.cloudinary.Cloudinary;
@@ -19,8 +21,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -46,8 +49,8 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Override
     public Taikhoan updateImg(Map<String, String> params, MultipartFile avatar) {
-        Taikhoan tk = this.getTaiKhoan(Integer.parseInt(params.get("idTaiKhoan")) );
-        
+        Taikhoan tk = this.getTaiKhoan(Integer.parseInt(params.get("idTaiKhoan")));
+
         if (!avatar.isEmpty()) {
             try {
                 Map r = this.cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
@@ -59,19 +62,21 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         Taikhoan user = this.taikhoanRepository.updateImg(tk);
         return user;
     }
+
     @Override
     public Taikhoan getTaiKhoan(int idTaiKhoan) {
         return taikhoanRepository.getTaiKhoan(idTaiKhoan);
     }
-    
+
     @Override
     public boolean addAcount(Taikhoan t) {
         String pass = t.getMatKhau();
         t.setMatKhau(this.passwordEncoder.encode(pass));
         t.setChucVu(this.getChucVu(3));
-        
+
         return taikhoanRepository.addAcount(t);
     }
+
     @Override
     public boolean addAcountGV(Taikhoan t) {
         String pass = t.getMatKhau();
@@ -89,19 +94,20 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     public Loaitaikhoan getChucVu(int id) {
         return this.taikhoanRepository.getChucVu(id);
     }
-    
+
     @Override
     public Taikhoan getUserByUsername(String username) {
-       return this.taikhoanRepository.getUserByUsername(username);
+        return this.taikhoanRepository.getUserByUsername(username);
     }
 
     // Dang Nhap
     @Override
     public UserDetails loadUserByUsername(String tenTK) throws UsernameNotFoundException {
         Taikhoan taikhoans = this.getUserByUsername(tenTK);
-        if(taikhoans == null)
+        if (taikhoans == null) {
             throw new UsernameNotFoundException("Tài khoản không tồn tại!!!");
-        
+        }
+
         Set<GrantedAuthority> auth = new HashSet<>();
         auth.add(new SimpleGrantedAuthority(taikhoans.getChucVu().getTenloaitaikhoan()));
         return new org.springframework.security.core.userdetails.User(taikhoans.getTenTaiKhoan(), taikhoans.getMatKhau(), auth);
@@ -115,30 +121,31 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     @Override
     public boolean addUser(Map<String, String> params) {
         Taikhoan u = new Taikhoan();
+        String maXN = params.get("maXacNhan");
         u.setTenTaiKhoan(params.get("tenTaiKhoan"));
         u.setMatKhau(this.passwordEncoder.encode(params.get("matKhau")));
         u.setChucVu(this.taikhoanRepository.getChucVu(3));
-        if(taikhoanRepository.kiemTraTaiKhoan(u)){
-            this.taikhoanRepository.addUser(u);
-            return true;
-        }
-        return false;
+        u.setMaXacNhan(Integer.parseInt(maXN));
+        
+        return this.taikhoanRepository.addUser(u);
     }
+
     @Override
     public UserDetails getLoggedInUserDetails(Authentication authentication) {
         // Trả về thông tin UserDetails của người dùng đã đăng nhập thành công
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userDetails;
     }
+
     @Override
-    public int GetIdTaiKhoan(UserDetails userDetails){
+    public int GetIdTaiKhoan(UserDetails userDetails) {
         Taikhoan taikhoans = this.getUserByUsername(userDetails.getUsername());
-       
+
         return taikhoans.getIdTaiKhoan();
     }
 
     @Override
-    public Taikhoan thayDoiMatKhau( Map<String, String> params) {
+    public Taikhoan thayDoiMatKhau(Map<String, String> params) {
         Taikhoan tk = this.taikhoanRepository.getUserByUsername(params.get("tenTaiKhoan").toString());
         tk.setMatKhau(this.passwordEncoder.encode(params.get("matKhauMoi")));
         this.taikhoanRepository.thayDoiMatKhau(tk);
@@ -153,6 +160,9 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         return user;
     }
 
-    
-    
+    @Override
+    public boolean sendCode(String email) {
+        return this.taikhoanRepository.sendCode(email);
+    }
+
 }

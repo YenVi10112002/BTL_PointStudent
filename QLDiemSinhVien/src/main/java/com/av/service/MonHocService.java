@@ -5,6 +5,8 @@
 package com.av.service;
 
 import com.av.pojo.Monhoc;
+import com.av.pojo.MonhocHocky;
+import com.av.pojo.Monhocdangky;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +19,17 @@ public interface MonHocService {
     boolean addOrUpdateMonHoc(Monhoc mh);
     Monhoc getMonHocById(int id);
     boolean deleteMonHoc(int id);
-    List<Monhoc> getMonHocByGiangVien(Map<String, String> params);
+    List<MonhocHocky> getMonHocByGiangVien(Map<String, String> params);
     
+    List<MonhocHocky> getMonHocByGiangVienChuaDay(Map<String, String> params);
+    List<MonhocHocky> getMonHocByGiangVienDaDay(Map<String, String> params);
     List<Monhoc> getMonHocByIdSinhVien(int idSinhvien);
     List<Monhoc> getMonHocByIdSinhVienDangHoc(int idSinhvien);
+    
+    List<MonhocHocky> getMonHocHocKy(Map<String, String> params);
+     List<Monhocdangky> getMonHocSinhVienDangKy(Map<String, String> params);
+     
+     boolean thanhToanHocPhi(Map<String, String> params);
+     
+    
 }

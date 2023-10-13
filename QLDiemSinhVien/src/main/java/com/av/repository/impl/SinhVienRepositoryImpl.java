@@ -139,19 +139,24 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
 
     @Override
     public Sinhvien getSinhVienById(int idSinhVien) {
-
-        Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
+       Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
 
         Root<Sinhvien> root = q.from(Sinhvien.class);
         q.select(root);
-
         List<Predicate> predicates = new ArrayList<>();
+
         predicates.add(b.equal(root.get("idSinhVien"), idSinhVien));
         q.where(predicates.toArray(new Predicate[0]));
-        Query query = s.createQuery(q);
-        return (Sinhvien) query.getSingleResult();
+        Query query = session.createQuery(q);
+        try {
+            return (Sinhvien) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
 
     }
 
@@ -259,7 +264,41 @@ public class SinhVienRepositoryImpl implements SinhVienRepository {
         predicates.add(b.equal(root.get("maLop"), idLop));
         q.where(predicates.toArray(new Predicate[0]));
         Query query = s.createQuery(q);
-        return query.getResultList();
+        try {
+            List<Sinhvien> sinhVien = query.getResultList();
+            if (sinhVien.isEmpty()) {
+                return null;
+            } else {
+                // Process the non-empty lopHoc list here if needed
+                return sinhVien;
+            }
+        } catch (NoResultException | NonUniqueResultException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Object getSinhVienByIdAPI(int idSinhVien) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object> q = b.createQuery(Object.class);
+
+        Root<Sinhvien> root = q.from(Sinhvien.class);
+        q.multiselect(root.get("hoTen"), root.get("idSinhVien"), root.get("ngaySinh"), 
+                root.get("maLop").get("tenLopHoc"), root.get("maLop").get("idNganh").get("tenNganhDaoTao"), root.get("diaChi"), root.get("email"));
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(b.equal(root.get("idSinhVien"), idSinhVien));
+        q.where(predicates.toArray(new Predicate[0]));
+        Query query = session.createQuery(q);
+        try {
+            return (Object) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
     }
 
 }

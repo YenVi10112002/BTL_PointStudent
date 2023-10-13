@@ -4,7 +4,9 @@
  */
 package com.av.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,7 +45,9 @@ public class Phonghoc implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tenPhongHoc")
     private String tenPhongHoc;
-
+    @OneToMany(mappedBy = "phongHoc")
+    @JsonIgnore
+    private Set<MonhocHocky> monhochockySet;
     public Phonghoc() {
     }
 
@@ -94,6 +99,20 @@ public class Phonghoc implements Serializable {
     @Override
     public String toString() {
         return "com.av.pojo.Phonghoc[ idPhongHoc=" + idPhongHoc + " ]";
+    }
+
+    /**
+     * @return the monhochockySet
+     */
+    public Set<MonhocHocky> getMonhochockySet() {
+        return monhochockySet;
+    }
+
+    /**
+     * @param monhochockySet the monhochockySet to set
+     */
+    public void setMonhochockySet(Set<MonhocHocky> monhochockySet) {
+        this.monhochockySet = monhochockySet;
     }
     
 }

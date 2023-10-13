@@ -108,5 +108,24 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content"
                        value="/WEB-INF/pages/admin/chitietsinhvien.jsp" />
     </definition>
-    
+    <definition name="khoahoc" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Khóa học sinh viên " />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/khoahoc.jsp" />
+    </definition>
+    <definition name="khoadaotao" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Khoa đào tạo sinh viên " />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/khoadaotao.jsp" />
+    </definition>
+    <definition name="phonghoc" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Quản lý phòng học" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/phonghoc.jsp" />
+    </definition>
+    <definition name="hocky" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Quản lý học kỳ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/admin/hocki.jsp" />
+    </definition>
 </tiles-definitions>

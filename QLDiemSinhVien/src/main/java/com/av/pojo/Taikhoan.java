@@ -88,6 +88,10 @@ public class Taikhoan implements Serializable {
     private Giangvien giangvien1;
 
     @Transient
+    private int maXacNhan;
+    
+    @Transient
+    @JsonIgnore
     private MultipartFile file;
     public Taikhoan() {
     }
@@ -254,6 +258,7 @@ public class Taikhoan implements Serializable {
     /**
      * @return the file
      */
+    
     public MultipartFile getFile() {
         return file;
     }
@@ -263,6 +268,20 @@ public class Taikhoan implements Serializable {
      */
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    /**
+     * @return the maXacNhan
+     */
+    public int getMaXacNhan() {
+        return maXacNhan;
+    }
+
+    /**
+     * @param maXacNhan the maXacNhan to set
+     */
+    public void setMaXacNhan(int maXacNhan) {
+        this.maXacNhan = maXacNhan;
     }
     
 }

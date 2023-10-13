@@ -10,7 +10,16 @@
 <c:url value="/giaovu/giangvien/add" var="action"/>   
 <div class="roww">
     <div class="margin-auto form-login  form-addSV">
-        <h1 class="text-center">Thêm Giảng Viên</h1>
+        <h1 class="text-center">
+            <c:choose>
+                <c:when test="${giangvienn.idGiangVien != null}">
+                    Cập nhật giảng viên 
+                </c:when>
+                <c:otherwise>
+                    Thêm giảng viên
+                </c:otherwise>
+            </c:choose>
+        </h1>
         <div class="text-form-addSV">
             <form:form  modelAttribute="giangvienn" method="post" action="${action}">
                 <form:hidden path="idGiangVien" />
@@ -44,7 +53,16 @@
                     <label for="email">Email</label>
                 </div>
                 <div class="btn-form-addsv">
-                    <button class="btn input-form-addsv" type="submit">Thêm Giảng viên</button>
+                    <button class="btn input-form-addsv" type="submit">
+                        <c:choose>
+                            <c:when test="${giangvienn.idGiangVien != null}">
+                                Cập nhật giảng viên 
+                            </c:when>
+                            <c:otherwise>
+                                Thêm giảng viên
+                            </c:otherwise>
+                        </c:choose>
+                    </button>
                 </div>
             </form:form>
         </div>

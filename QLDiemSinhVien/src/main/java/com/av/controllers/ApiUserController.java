@@ -69,11 +69,11 @@ public class ApiUserController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin
     public ResponseEntity<String> addUser(@RequestParam Map<String, String> params) {
-        if(this.tkService.addUser(params)) {
-            return new ResponseEntity<>("Successfull", HttpStatus.CREATED);
+        if (this.tkService.addUser(params)) {
+            return new ResponseEntity<>("Successfull", HttpStatus.OK);
         }
-        return new ResponseEntity<>("error", HttpStatus.OK);
-        
+        return new ResponseEntity<>("error", HttpStatus.CREATED);
+
     }
 
     @PostMapping("/change-password/")
@@ -119,5 +119,22 @@ public class ApiUserController {
         Taikhoan u = this.tkService.getUserByUsername(user.getName());
         Giangvien gv = this.gvService.getGiangVienByIdTaiKhoan(u.getIdTaiKhoan());
         return new ResponseEntity<>(gv, HttpStatus.OK);
+    }
+
+    @PostMapping("/send-code/")
+    @CrossOrigin
+    public ResponseEntity<String> sendCode(@RequestParam Map<String, String> params) {
+        if (this.tkService.sendCode(params.get("email"))) {
+            return new ResponseEntity<>("sucessful", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("fail", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/SinhVien-Id/")
+    @CrossOrigin
+    public ResponseEntity<Object> getSVBYID(@RequestParam Map<String, String> params) {
+        String idSinhVien = params.get("idSinhVien");
+
+        return new ResponseEntity<>(this.sinhvienService.getSinhVienByIdAPI(Integer.parseInt(idSinhVien)), HttpStatus.OK);
     }
 }

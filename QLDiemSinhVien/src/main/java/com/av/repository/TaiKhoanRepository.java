@@ -31,4 +31,7 @@ public interface TaiKhoanRepository {
 //    boolean deleteTaiKhoanBySinhVien(int idSinhVien);
     boolean deleteTK(Taikhoan tk);
     
+    boolean sendCode(String email);
+    
+    
 }

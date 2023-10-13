@@ -38,12 +38,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MonhocHocky.findAll", query = "SELECT m FROM MonhocHocky m"),
     @NamedQuery(name = "MonhocHocky.findByIdMonHocHocKy", query = "SELECT m FROM MonhocHocky m WHERE m.idMonHocHocKy = :idMonHocHocKy"),
     @NamedQuery(name = "MonhocHocky.findBySoLuong", query = "SELECT m FROM MonhocHocky m WHERE m.soLuong = :soLuong"),
+    @NamedQuery(name = "MonhocHocky.findBySoLuongConLai", query = "SELECT m FROM MonhocHocky m WHERE m.soLuongConLai = :soLuongConLai"),
     @NamedQuery(name = "MonhocHocky.findByNgayBatDau", query = "SELECT m FROM MonhocHocky m WHERE m.ngayBatDau = :ngayBatDau"),
     @NamedQuery(name = "MonhocHocky.findByNgayKetThuc", query = "SELECT m FROM MonhocHocky m WHERE m.ngayKetThuc = :ngayKetThuc")})
 public class MonhocHocky implements Serializable {
 
-    @Column(name = "phongHoc")
-    private Integer phongHoc;
+
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +56,9 @@ public class MonhocHocky implements Serializable {
     @Column(name = "soLuong")
     private int soLuong;
     @Basic(optional = false)
+    @Column(name = "soLuongConLai")
+    private int soLuongConLai;
+    @Basic(optional = false)
     @NotNull
     @Column(name = "ngayBatDau")
     @Temporal(TemporalType.TIMESTAMP)
@@ -67,7 +70,6 @@ public class MonhocHocky implements Serializable {
     private Date ngayKetThuc;
     @JoinColumn(name = "idGiangVien", referencedColumnName = "idGiangVien")
     @ManyToOne
-    @JsonIgnore
     private Giangvien idGiangVien;
     @JoinColumn(name = "idHocky", referencedColumnName = "idHocKy")
     @ManyToOne(optional = false)
@@ -75,6 +77,9 @@ public class MonhocHocky implements Serializable {
     @JoinColumn(name = "idMonHoc", referencedColumnName = "idMonHoc")
     @ManyToOne(optional = false)
     private Monhoc idMonHoc;
+    @JoinColumn(name = "phongHoc", referencedColumnName = "idPhongHoc")
+    @ManyToOne
+    private Phonghoc phongHoc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMonHoc")
     @JsonIgnore
     private Set<Monhocdangky> monhocdangkySet;
@@ -183,12 +188,37 @@ public class MonhocHocky implements Serializable {
         return "com.av.pojo.MonhocHocky[ idMonHocHocKy=" + idMonHocHocKy + " ]";
     }
 
-    public Integer getPhongHoc() {
+    /**
+     * @return the soLuongConLai
+     */
+    public int getSoLuongConLai() {
+        return soLuongConLai;
+    }
+
+    /**
+     * @param soLuongConLai the soLuongConLai to set
+     */
+    public void setSoLuongConLai(int soLuongConLai) {
+        this.soLuongConLai = soLuongConLai;
+    }
+
+    /**
+     * @return the phongHoc
+     */
+    public Phonghoc getPhongHoc() {
         return phongHoc;
     }
 
-    public void setPhongHoc(Integer phongHoc) {
+    /**
+     * @param phongHoc the phongHoc to set
+     */
+    public void setPhongHoc(Phonghoc phongHoc) {
         this.phongHoc = phongHoc;
     }
+
+    /**
+     * @param phongHoc the phongHoc to set
+     */
+
 
 }

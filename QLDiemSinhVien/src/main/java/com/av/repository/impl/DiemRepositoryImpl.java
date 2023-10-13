@@ -8,11 +8,11 @@ import com.av.pojo.Diem;
 import com.av.pojo.DiemMonHoc;
 import com.av.pojo.DiemMonHocComparator;
 import com.av.pojo.Loaidiem;
-import com.av.pojo.Monhoc;
 import com.av.pojo.MonhocHocky;
 import com.av.pojo.Monhocdangky;
 import com.av.pojo.Sinhvien;
 import com.av.repository.DiemRepository;
+import com.av.repository.MonHocRepository;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -30,7 +30,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -38,7 +37,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -52,6 +50,8 @@ public class DiemRepositoryImpl implements DiemRepository {
     private LocalSessionFactoryBean factory;
     @Autowired
     private JavaMailSender emailSender;
+    @Autowired
+    private MonHocRepository monHocRepository;
 
     @Override
     public List<Object> getListDiemTrungBinh(Map<String, String> params) {
@@ -192,8 +192,8 @@ public class DiemRepositoryImpl implements DiemRepository {
         }
 
     }
-    
-     @Override
+
+    @Override
     public List<DiemMonHoc> getListDiemDaHoc(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
 
@@ -247,23 +247,15 @@ public class DiemRepositoryImpl implements DiemRepository {
             diem.remove(diemm);
         }
 
-        if (diemMonHoc.getDiemKT2() == -1) {
-
+        if (diemMonHoc.getDiemKT1() != -1) {
             Diem diemTk1 = new Diem();
             diemTk1.setIdMonHoc(monhoc);
             diemTk1.setTenDiem(loaiDiemKt1);
             diemTk1.setSoDiem(diemMonHoc.getDiemKT1());
             diemTk1.setKhoaDiem(khoaDiem);
             session.save(diemTk1);
-
-        } else if (diemMonHoc.getDiemKT3() == -1) {
-
-            Diem diemTk1 = new Diem();
-            diemTk1.setIdMonHoc(monhoc);
-            diemTk1.setTenDiem(loaiDiemKt1);
-            diemTk1.setSoDiem(diemMonHoc.getDiemKT1());
-            diemTk1.setKhoaDiem(khoaDiem);
-            session.save(diemTk1);
+        }
+        if (diemMonHoc.getDiemKT2() != -1) {
 
             Diem diemTk2 = new Diem();
             diemTk2.setIdMonHoc(monhoc);
@@ -271,30 +263,14 @@ public class DiemRepositoryImpl implements DiemRepository {
             diemTk2.setSoDiem(diemMonHoc.getDiemKT2());
             diemTk2.setKhoaDiem(khoaDiem);
             session.save(diemTk2);
-
-        } else if (diemMonHoc.getDiemKT3() != -1) {
-
-            Diem diemTk1 = new Diem();
-            diemTk1.setIdMonHoc(monhoc);
-            diemTk1.setTenDiem(loaiDiemKt1);
-            diemTk1.setSoDiem(diemMonHoc.getDiemKT1());
-            diemTk1.setKhoaDiem(khoaDiem);
-            session.save(diemTk1);
-
-            Diem diemTk2 = new Diem();
-            diemTk2.setIdMonHoc(monhoc);
-            diemTk2.setTenDiem(loaiDiemKt2);
-            diemTk2.setSoDiem(diemMonHoc.getDiemKT2());
-            diemTk2.setKhoaDiem(khoaDiem);
-            session.save(diemTk2);
-
+        }
+        if (diemMonHoc.getDiemKT3() != -1) {
             Diem diemTk3 = new Diem();
             diemTk3.setIdMonHoc(monhoc);
             diemTk3.setTenDiem(loaiDiemKt3);
             diemTk3.setSoDiem(diemMonHoc.getDiemKT3());
             diemTk3.setKhoaDiem(khoaDiem);
             session.save(diemTk3);
-
         }
         session.update(monhoc);
         for (Diem diemm : diem) {
@@ -317,7 +293,21 @@ public class DiemRepositoryImpl implements DiemRepository {
         q.select(b.array(rDiem))
                 .where(predicates.toArray(Predicate[]::new));
         Query query = session.createQuery(q);
-        return (Monhocdangky) query.getSingleResult();
+
+        try {
+            Monhocdangky diem = (Monhocdangky) query.getSingleResult();
+
+            // Kiểm tra nếu kết quả trả về là null
+            if (diem == null) {
+                // Không tìm thấy bản ghi nào thỏa mãn điều kiện tìm kiếm
+                return null;
+            }
+
+            return diem;
+        } catch (NoResultException | NonUniqueResultException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -434,10 +424,11 @@ public class DiemRepositoryImpl implements DiemRepository {
                     s.update(diem);
                 }
                 monhoc.setKhoaMon(khoaDiem);
-                message.setTo(monhoc.getIdSinhVien().getEmail().toString());
-                message.setSubject("Thong bao diem");
-                message.setText("Diem cua mon " + monhoc.getIdMonHoc().getIdMonHoc().getTenMonHoc().toString() + " co ma mon " + monhoc.getIdMonHoc().getIdMonHoc().toString() + " Đã có");
-                emailSender.send(message);
+                s.update(monhoc);
+//                message.setTo(monhoc.getIdSinhVien().getEmail().toString());
+//                message.setSubject("Thong bao diem");
+//                message.setText("Diem cua mon " + monhoc.getIdMonHoc().getIdMonHoc().getTenMonHoc().toString() + " co ma mon " + monhoc.getIdMonHoc().getIdMonHoc().toString() + " Đã có");
+//                emailSender.send(message);
             }
             return true;
         }
@@ -561,6 +552,66 @@ public class DiemRepositoryImpl implements DiemRepository {
     }
 
     @Override
+    public Loaidiem getLoaiDiemGK() {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Loaidiem[]> q = b.createQuery(Loaidiem[].class);
+        Root rDiem = q.from(Loaidiem.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(rDiem.get("idLoaiDiem"), 1));
+        q.select(rDiem)
+                .where(predicates.toArray(Predicate[]::new));
+        Query query = session.createQuery(q);
+        try {
+            return (Loaidiem) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Loaidiem getLoaiDiemCK() {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Loaidiem[]> q = b.createQuery(Loaidiem[].class);
+        Root rDiem = q.from(Loaidiem.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(rDiem.get("idLoaiDiem"), 2));
+        q.select(rDiem)
+                .where(predicates.toArray(Predicate[]::new));
+        Query query = session.createQuery(q);
+        try {
+            return (Loaidiem) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Loaidiem getLoaiDiemTB() {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Loaidiem[]> q = b.createQuery(Loaidiem[].class);
+        Root rDiem = q.from(Loaidiem.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(rDiem.get("idLoaiDiem"), 6));
+        q.select(rDiem)
+                .where(predicates.toArray(Predicate[]::new));
+        Query query = session.createQuery(q);
+        try {
+            return (Loaidiem) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public DiemMonHoc getDiemMonHocByIdDiem(int id) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
@@ -577,5 +628,52 @@ public class DiemRepositoryImpl implements DiemRepository {
         return monHocDiem;
     }
 
-   
+    @Override
+    public Monhocdangky dangKyMonHoc(Monhocdangky monHoc, MonhocHocky monHocHocKy) {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        Loaidiem LoaiGK = this.getLoaiDiemGK();
+        Loaidiem LoaiCK = this.getLoaiDiemCK();
+        Loaidiem LoaiTB = this.getLoaiDiemTB();
+        Diem GK = new Diem();
+        Short a = 0;
+        GK.setIdMonHoc(monHoc);
+        GK.setKhoaDiem(a);
+        GK.setTenDiem(LoaiGK);
+
+        Diem CK = new Diem();
+        CK.setKhoaDiem(a);
+        CK.setIdMonHoc(monHoc);
+        CK.setTenDiem(LoaiCK);
+
+        Diem TB = new Diem();
+        TB.setIdMonHoc(monHoc);
+        TB.setKhoaDiem(a);
+        TB.setTenDiem(LoaiTB);
+        TB.setSoDiem(0);
+
+        session.save(monHoc);
+        session.save(GK);
+        session.save(CK);
+        session.save(TB);
+        session.update(monHocHocKy);
+        return null;
+    }
+
+    @Override
+    public Monhocdangky huyDangKy(Monhocdangky monHoc) {
+        Session session = this.factory.getObject().getCurrentSession();         
+        List<Diem> Diems = this.getListDiemByIdMonHocDangKy(monHoc.getIdMonHocDangKy());
+        Monhocdangky monHoctest = this.getMonHocDangKyById(monHoc.getIdMonHocDangKy());
+        MonhocHocky monHocHocKy = this.monHocRepository.getMonHocHocKyDate(monHoc.getIdMonHoc().getIdMonHocHocKy());
+        int soLuong = monHocHocKy.getSoLuongConLai() + 1;
+        monHocHocKy.setSoLuongConLai(soLuong);
+        for (Diem diem : Diems) {
+            session.delete(diem);
+        }       
+        session.delete(monHoctest);
+        session.update(monHocHocKy);
+        return null;
+    }
+
 }

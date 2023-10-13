@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Monhocdangky.findByIdMonHocDangKy", query = "SELECT m FROM Monhocdangky m WHERE m.idMonHocDangKy = :idMonHocDangKy"),
     @NamedQuery(name = "Monhocdangky.findByXepLoai", query = "SELECT m FROM Monhocdangky m WHERE m.xepLoai = :xepLoai"),
     @NamedQuery(name = "Monhocdangky.findByKhoaMon", query = "SELECT m FROM Monhocdangky m WHERE m.khoaMon = :khoaMon"),
+    @NamedQuery(name = "Monhocdangky.findByThanhToan", query = "SELECT m FROM Monhocdangky m WHERE m.thanhToan = :thanhToan"),
     @NamedQuery(name = "Monhocdangky.findByTrangThai", query = "SELECT m FROM Monhocdangky m WHERE m.trangThai = :trangThai")})
 public class Monhocdangky implements Serializable {
 
@@ -50,6 +51,8 @@ public class Monhocdangky implements Serializable {
     private String xepLoai;
     @Column(name = "khoaMon")
     private Short khoaMon;
+    @Column(name = "thanhToan")
+    private Short thanhToan;
     @Column(name = "trangThai")
     private Short trangThai;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMonHoc")
@@ -155,6 +158,20 @@ public class Monhocdangky implements Serializable {
      */
     public void setKhoaMon(Short khoaMon) {
         this.khoaMon = khoaMon;
+    }
+
+    /**
+     * @return the thanhToan
+     */
+    public Short getThanhToan() {
+        return thanhToan;
+    }
+
+    /**
+     * @param thanhToan the thanhToan to set
+     */
+    public void setThanhToan(Short thanhToan) {
+        this.thanhToan = thanhToan;
     }
     
 }

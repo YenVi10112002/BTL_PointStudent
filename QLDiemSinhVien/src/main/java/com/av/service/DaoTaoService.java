@@ -15,4 +15,11 @@ import java.util.List;
 public interface DaoTaoService {
     List<Lophoc> listLopHoc();
      Lophoc getLopById(int idLop);
+     
+     
+     ////delete
+     Boolean deleteHeDaoTao(int id);
+    Boolean deleteKhoaHoc(int idKhoa);
+    Boolean deleteKhoaDaoTao(int id);
+    Boolean deleteLopHoc(int idLop);
 }

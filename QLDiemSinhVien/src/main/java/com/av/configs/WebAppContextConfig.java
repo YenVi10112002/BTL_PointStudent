@@ -60,6 +60,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new MonHocFormatter());
         registry.addFormatter(new SinhVienFormatter());
     }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
@@ -73,6 +74,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 //
 //        return r;
 //    }
+
     @Bean
     public SimpleDateFormat simpleDateFormat() {
         return new SimpleDateFormat("yyyy-MM-dd");
@@ -96,8 +98,9 @@ public class WebAppContextConfig implements WebMvcConfigurer {
                         "secure", true));
         return cloudinary;
     }
-    @Bean 
-    public JavaMailSender javaMailSender(){
+
+    @Bean
+    public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
@@ -108,8 +111,9 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         properties.put("mail.smtp.starttls.enable", "true");
         mailSender.setJavaMailProperties(properties);
 
-        return mailSender;  
-    
+        return mailSender;
+
     }
+
 
 }

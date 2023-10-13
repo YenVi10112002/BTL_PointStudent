@@ -5,17 +5,24 @@
 package com.av.repository.impl;
 
 import com.av.pojo.Diem;
+import com.av.pojo.DiemMonHocComparator;
 import com.av.pojo.Giangvien;
 import com.av.pojo.Monhoc;
 import com.av.pojo.MonhocHocky;
 import com.av.pojo.Monhocdangky;
 import com.av.repository.MonHocRepository;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -90,8 +97,9 @@ public class MonHocRepositoryImpl implements MonHocRepository {
         }
     }
 
+    //Lay danh sach mon hoc dang giang day
     @Override
-    public List<Monhoc> getMonHocByGiangVien(Map<String, String> params) {
+    public List<MonhocHocky> getMonHocByGiangVien(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
@@ -106,6 +114,11 @@ public class MonHocRepositoryImpl implements MonHocRepository {
                 predicates.add(b.equal(rGiangVien.get("idTaiKhoan"), Integer.parseInt(idTaiKhoan)));
                 predicates.add(b.equal(rMonHoc.get("idGiangVien"), rGiangVien.get("idGiangVien")));
             }
+            Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            predicates.add(b.and(
+                    b.lessThanOrEqualTo(rMonHoc.get("idHocky").get("ngayBatDau"), currentDate),
+                    b.greaterThanOrEqualTo(rMonHoc.get("idHocky").get("ngayKetThuc"), currentDate)
+            ));
             q.select(rMonHoc).where(predicates.toArray(Predicate[]::new));
             q.groupBy(rMonHoc.get("idMonHocHocKy"));
             Query query = s.createQuery(q);
@@ -113,6 +126,59 @@ public class MonHocRepositoryImpl implements MonHocRepository {
         }
         return null;
 
+    }
+
+    @Override
+    public List<MonhocHocky> getMonHocByGiangVienChuaDay(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root rMonHoc = q.from(MonhocHocky.class);
+        Root rGiangVien = q.from(Giangvien.class);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            String idTaiKhoan = params.get("taiKhoanId");
+            if (idTaiKhoan != null) {
+                predicates.add(b.equal(rGiangVien.get("idTaiKhoan"), Integer.parseInt(idTaiKhoan)));
+                predicates.add(b.equal(rMonHoc.get("idGiangVien"), rGiangVien.get("idGiangVien")));
+            }
+            Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            predicates.add(
+                    b.greaterThan(rMonHoc.get("idHocky").get("ngayBatDau"), currentDate)
+            );
+            q.select(rMonHoc).where(predicates.toArray(Predicate[]::new));
+            q.groupBy(rMonHoc.get("idMonHocHocKy"));
+            Query query = s.createQuery(q);
+            return query.getResultList();
+        }
+        return null;
+    }
+
+    @Override
+    public List<MonhocHocky> getMonHocByGiangVienDaDay(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+
+        Root rMonHoc = q.from(MonhocHocky.class);
+        Root rGiangVien = q.from(Giangvien.class);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            String idTaiKhoan = params.get("taiKhoanId");
+            if (idTaiKhoan != null) {
+                predicates.add(b.equal(rGiangVien.get("idTaiKhoan"), Integer.parseInt(idTaiKhoan)));
+                predicates.add(b.equal(rMonHoc.get("idGiangVien"), rGiangVien.get("idGiangVien")));
+            }
+            Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            predicates.add(b.lessThan(rMonHoc.get("idHocky").get("ngayKetThuc"), currentDate));
+            q.select(rMonHoc).where(predicates.toArray(Predicate[]::new));
+            q.groupBy(rMonHoc.get("idMonHocHocKy"));
+            Query query = s.createQuery(q);
+            return query.getResultList();
+        }
+        return null;
     }
 
     //Update
@@ -162,6 +228,110 @@ public class MonHocRepositoryImpl implements MonHocRepository {
         q.select(rMonHoc).where(predicates.toArray(Predicate[]::new));
         Query query = s.createQuery(q);
         return query.getResultList();
+    }
+
+    @Override
+    public List<MonhocHocky> getMonHocHocKy(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        String idLopHoc = params.get("idLopHoc");
+        String tenMonHoc = params.get("tenMonHoc");
+        Root rMonHocHocKy = q.from(MonhocHocky.class);
+        List<Predicate> predicates = new ArrayList<>();
+        if (idLopHoc != null) {
+            predicates.add(b.equal(rMonHocHocKy.get("idHocky").get("idLop"), Integer.parseInt(idLopHoc)));
+        }
+        if (tenMonHoc != null) {
+            predicates.add(b.like(rMonHocHocKy.get("idMonHoc").get("tenMonHoc"), String.format("%%%s%%", tenMonHoc)));
+        }
+
+        Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        predicates.add(b.and(
+                b.lessThanOrEqualTo(rMonHocHocKy.get("idHocky").get("ngayDangKy"), currentDate),
+                b.greaterThanOrEqualTo(rMonHocHocKy.get("idHocky").get("ngayHetHan"), currentDate)
+        ));
+
+        q.select(rMonHocHocKy).where(predicates.toArray(Predicate[]::new));
+        Query query = s.createQuery(q);
+        try {
+            return query.getResultList();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<Monhocdangky> getMonHocSinhVienDangKy(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        String idSinhVien = params.get("idSinhVien");
+        Root rMonHocHocKy = q.from(MonhocHocky.class);
+        Root rMonHocDangKy = q.from(Monhocdangky.class);
+        List<Predicate> predicates = new ArrayList<>();
+        if (idSinhVien != null) {
+            predicates.add(b.equal(rMonHocHocKy.get("idMonHocHocKy"), rMonHocDangKy.get("idMonHoc")));
+            predicates.add(b.equal(rMonHocDangKy.get("idSinhVien"), Integer.parseInt(idSinhVien)));
+        }
+        
+        Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        predicates.add(b.and(
+                b.lessThanOrEqualTo(rMonHocHocKy.get("idHocky").get("ngayDangKy"), currentDate),
+                b.greaterThanOrEqualTo(rMonHocHocKy.get("idHocky").get("ngayKetThuc"), currentDate)
+        ));
+        
+        q.select(rMonHocDangKy).where(predicates.toArray(Predicate[]::new));
+        q.distinct(true);
+        Query query = s.createQuery(q);
+        try {
+            return query.getResultList();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public MonhocHocky getMonHocHocKyDate(int idMonHoc) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root rMonHocHocKy = q.from(MonhocHocky.class);
+        List<Predicate> predicates = new ArrayList<>();
+        Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        predicates.add(b.equal(rMonHocHocKy.get("idMonHocHocKy"), idMonHoc));
+        predicates.add(b.and(
+                b.lessThanOrEqualTo(rMonHocHocKy.get("idHocky").get("ngayDangKy"), currentDate),
+                b.greaterThanOrEqualTo(rMonHocHocKy.get("idHocky").get("ngayHetHan"), currentDate)
+        ));
+        q.select(rMonHocHocKy).where(predicates.toArray(Predicate[]::new));
+        Query query = s.createQuery(q);
+        try {
+            return (MonhocHocky) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean thanhToanHocPhi(Map<String, String> params){
+        Session s = this.factory.getObject().getCurrentSession();
+        List<Monhocdangky> monHocs = this.getMonHocSinhVienDangKy(params);
+        if(!monHocs.isEmpty() && monHocs !=null){
+            short thanhToan = 1;
+            for(Monhocdangky monhoc : monHocs){
+                monhoc.setThanhToan(thanhToan);
+                s.update(monhoc);
+            }
+            return true;
+        }
+        return false;
     }
 
 }

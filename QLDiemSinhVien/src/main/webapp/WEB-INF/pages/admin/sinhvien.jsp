@@ -8,15 +8,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:url value="/giaovu/sinhvien" var="action"/>
 <div class="nav-tk">
-    <form class="input-button-tk" action="${action}">
-        <input  type="text" name="tensv" placeholder="Nhập tên muốn tìm...."/>
-        <button type="submit">Tìm kiếm</button>
+    <form class="search" action="${action}">
+        <input class="search-input"  type="text" name="tensv" placeholder="Search...."/>
+        <button class="search-button"><i class="fa-solid fa-magnifying-glass" style="color: #b7b7b8;"></i></button>
     </form>
 </div >
 <div class="table-sv">
-    <h1 class="text-center">Danh sách sinh viên</h1>
+    <div class="title-gv">
+        <h1 class="text-center">Danh sách sinh viên</h1>
+        <a href="<c:url value="/giaovu/sinhvien/add"/>" class="btn-xoavacn-gv bg-add-gv"> Thêm sinh viên</a>
+    </div>
 
-    <table class="table " id="customers">
+
+    <table class="table " >
         <thead>
             <tr>
                 <th>Mã số sinh viên</th>
@@ -26,7 +30,7 @@
                 <th>Giới tính</th>
                 <th>Số điện thoại</th>
                 <th>Email</th>
-                <th><a href="<c:url value="/giaovu/sinhvien/add"/>" class="btn-xoavacn bg-add"> Thêm sinh viên</a></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -45,24 +49,27 @@
                     <td>${sv.soDienThoai}</td>
                     <td>${sv.email}</td>
                     <td>
-                        
-                        <a href="<c:url value="/giaovu/sinhvien/${sv.idSinhVien}"/>" class="btn-xoavacn bg-cn"> Chi tiết </a>
                         <c:url value="/giaovu/sinhvien/add/${sv.idSinhVien}" var="api" />
-                        <button class="btn-xoavacn bg-xoa " onclick="deleteSinhVien('${api}')">Xóa</button>
+                        <a href="${api}" class="btn-xoavacn-gv bg-cn"><i class="fa-regular fa-pen-to-square"></i></a>
                         
+                        <button class="btn-xoavacn-gv bg-xoa " onclick="deleteSinhVien('${api}')"><i class="fa-regular fa-trash-can"></i></button>
+
                     </td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>
-            <c:forEach begin="1" end="${counter}" var="i">
-                <c:url value="/giaovu/sinhvien" var="pageAction">
-                    <c:param name="page" value="${i}"/>
-                </c:url>
-            <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
-            </c:forEach>
-    </ul> 
+    <div class="pagination-div">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="${action}">Tất cả</a></li>
+                <c:forEach begin="1" end="${counter}" var="i">
+                    <c:url value="/giaovu/sinhvien" var="pageAction">
+                        <c:param name="page" value="${i}"/>
+                    </c:url>
+                <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
+                </c:forEach>
+        </ul>
+    </div>
+
 </div>   
 

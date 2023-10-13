@@ -33,5 +33,23 @@ public class DaoTaoServiceImpl implements DaoTaoService{
     public Lophoc getLopById(int idLop) {
         return this.daoTao.getLopById(idLop);
     }
-    
+
+    ////delete
+    @Override
+    public Boolean deleteHeDaoTao(int id) {
+        return this.daoTao.deleteHeDaoTao(id);
+    }
+    @Override
+    public Boolean deleteKhoaDaoTao(int id) {
+        return this.daoTao.deleteKhoaDaoTao(id);
+    }
+    @Override
+    public Boolean deleteLopHoc(int idLop) {
+        return this.daoTao.deleteLopHoc(idLop);
+    }
+    @Override
+    public Boolean deleteKhoaHoc(int idKhoa) {
+        return this.daoTao.deleteKhoaHoc(idKhoa);
+    }
+       
 }

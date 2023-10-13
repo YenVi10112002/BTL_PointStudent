@@ -24,6 +24,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -83,6 +84,9 @@ public class Sinhvien implements Serializable {
     @JsonIgnore
     private Taikhoan idTaiKhoan;
 
+    @Transient
+    private int maXacNhan;
+    
     public Sinhvien() {
     }
 
@@ -194,6 +198,20 @@ public class Sinhvien implements Serializable {
 
     public void setMonhocdangkySet(Set<Monhocdangky> monhocdangkySet) {
         this.monhocdangkySet = monhocdangkySet;
+    }
+
+    /**
+     * @return the maXacNhan
+     */
+    public int getMaXacNhan() {
+        return maXacNhan;
+    }
+
+    /**
+     * @param maXacNhan the maXacNhan to set
+     */
+    public void setMaXacNhan(int maXacNhan) {
+        this.maXacNhan = maXacNhan;
     }
 
 }

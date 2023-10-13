@@ -53,5 +53,9 @@ public interface DiemService {
     List<Monhocdangky> getListMonHocDangKy(Map<String, String> params);
 
     List<Diem> getListDiemByIdMonHocDangKy(int id);
+    
+    Boolean dangKyMonHoc(Monhocdangky monHoc,Map<String, String> params);
+    
+    Boolean huyDangKy( Map<String, String> params);
 
 }

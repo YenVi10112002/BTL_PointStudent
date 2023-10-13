@@ -33,5 +33,7 @@ public interface TaiKhoanService extends UserDetailsService {
     Taikhoan thayDoiMatKhau(Map<String, String> params);
     Taikhoan thayDoiMatKhauAD(Taikhoan user);
     
+    boolean sendCode(String email);
+    
 }
 

@@ -65,6 +65,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/api/**");
         http.authorizeRequests().antMatchers("/api/login/").permitAll();
         http.authorizeRequests().antMatchers("/api/users/").permitAll();
+        http.authorizeRequests().antMatchers("/api/send-code/").permitAll();
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_GV') or hasRole('ROLE_SV')")

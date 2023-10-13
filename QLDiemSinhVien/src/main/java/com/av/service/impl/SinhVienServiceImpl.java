@@ -95,4 +95,9 @@ public class SinhVienServiceImpl implements SinhVienService {
     public List<Sinhvien> getSinhVienByIdLop(int idLop) {
       return this.sinhvienRepository.getSinhVienByIdLop(idLop);
     }
+
+    @Override
+    public Object getSinhVienByIdAPI(int idSinhVien) {
+        return this.sinhvienRepository.getSinhVienByIdAPI(idSinhVien);
+    }
 }

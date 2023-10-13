@@ -25,13 +25,12 @@ public interface SinhVienRepository {
     List<Lophoc> getLopHocs();
     boolean addOrUpdateSinhVien(Sinhvien sv);
     Sinhvien getSinhVienById(int idSinhVien);
+    Object getSinhVienByIdAPI(int idSinhVien);
+    
     boolean deleteSinhVien(int idSinhVien);
      List<DiemMonHoc> getSinhvienByMonHoc(Map<String, String> params);
-     
      Long countSinhVien();
-    
      //update 26/9 danh sach sinh vien theo ma lop
-     
      List<Sinhvien> getSinhVienByIdLop(int idLop);
    
 

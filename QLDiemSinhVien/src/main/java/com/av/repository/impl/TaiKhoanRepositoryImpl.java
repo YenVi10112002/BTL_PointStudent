@@ -8,11 +8,14 @@ import com.av.pojo.Giangvien;
 import com.av.pojo.Loaitaikhoan;
 import com.av.pojo.Sinhvien;
 import com.av.pojo.Taikhoan;
+import com.av.repository.GiangvienRepository;
 import com.av.repository.SinhVienRepository;
 import com.av.repository.TaiKhoanRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
@@ -20,10 +23,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpSession;
+import static jdk.internal.joptsimple.internal.Messages.message;
+import org.eclipse.persistence.annotations.Array;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,11 +46,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
     @Autowired
+    private JavaMailSender emailSender;
+
+    @Autowired
     private LocalSessionFactoryBean factory;
 
     @Autowired
     private BCryptPasswordEncoder passEncoder;
-    
+
+    @Autowired
+    private GiangvienRepository gvRepo;
+
     @Autowired
     private SinhVienRepository svRepo;
 
@@ -57,6 +72,7 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
             return null;
         }
     }
+
     // Sua
     @Override
     public Taikhoan getTaiKhoan(int idTaiKhoan) {
@@ -86,8 +102,11 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
         Root<Sinhvien> root = q.from(Sinhvien.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(root.get("email"), t.getTenTaiKhoan()));
+        predicates.add(b.equal(root.get("maXacNhan"), t.getMaXacNhan()));
         q.select(root)
-                .where(b.equal(root.get("email"), t.getTenTaiKhoan()));
+                .where(predicates.toArray(Predicate[]::new));
         Query query = s.createQuery(q);
         try {
             Sinhvien p = (Sinhvien) query.getSingleResult();
@@ -97,15 +116,19 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
                 s.update(p);
                 return true;
             }
+        } catch (NoResultException ex) {
+            // Không tìm thấy kết quả
+            return false;
         } catch (HibernateException ex) {
             System.err.println(ex.getMessage());
-
         }
         return false;
     }
 
+    // Sửa gửi mail cho giảng viên
     @Override
     public boolean addAcountGV(Taikhoan t) {
+        SimpleMailMessage message = new SimpleMailMessage();
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
 
@@ -127,7 +150,10 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
                 if (t.getIdTaiKhoan() == null && gv != null) {
                     s.save(t);
                     gv.setIdTaiKhoan(t);
-
+                    message.setTo(gv.getEmail().toString());
+                    message.setSubject("Thong bao tai khoan");
+                    message.setText("Ten tai khoan: " + gv.getIdTaiKhoan().getTenTaiKhoan() + "\nMat khau: " + gv.getIdTaiKhoan().getXacNhanMk());
+                    emailSender.send(message);
                 }
                 return true;
             } else {
@@ -175,21 +201,25 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
         Root<Sinhvien> root = q.from(Sinhvien.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.equal(root.get("email"), u.getTenTaiKhoan()));
         q.select(root)
-                .where(b.equal(root.get("email"), u.getTenTaiKhoan()));
+                .where(predicates.toArray(Predicate[]::new));
 
         Query query = s.createQuery(q);
-
         try {
             Sinhvien p = (Sinhvien) query.getSingleResult();
 
-            if (p.getIdTaiKhoan() == null && p.getEmail() != null) {
+            if (p.getIdTaiKhoan() == null && p.getEmail() != null && p.getMaXacNhan() == u.getMaXacNhan()) {
                 s.save(u);
                 p.setIdTaiKhoan(u);
                 s.update(p);
                 return true;
             }
 
+            return false;
+        } catch (NoResultException ex) {
+            // Không tìm thấy kết quả
             return false;
         } catch (HibernateException ex) {
             return false;
@@ -223,17 +253,18 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
         return false;
     }
+
     //Sua
     @Override
     public Taikhoan thayDoiMatKhau(Taikhoan a) {
         Session s = this.factory.getObject().getCurrentSession();
-        if(a != null){
+        if (a != null) {
             s.update(a);
         }
-        
+
         return a;
     }
-    
+
     // update xoa 
 //    @Override
 //    public boolean deleteTaiKhoanBySinhVien(int idSinhVien) {
@@ -264,7 +295,6 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 //        }else
 //            return null;
 //    }
-    
     //update xoa 
     @Override
     public boolean deleteTK(Taikhoan tk) {
@@ -280,5 +310,39 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
             return false;
         }
 
+    }
+
+    @Override
+    public boolean sendCode(String email) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Sinhvien> q = b.createQuery(Sinhvien.class);
+        Root<Sinhvien> root = q.from(Sinhvien.class);
+        q.select(root)
+                .where(b.equal(root.get("email"), email));
+        Query query = s.createQuery(q);
+        try {
+            Sinhvien p = (Sinhvien) query.getSingleResult();
+            SimpleMailMessage message = new SimpleMailMessage();
+//            HttpSession session = request.getSession();
+
+            if (p.getIdTaiKhoan() == null && p.getEmail() != null) {
+                Random random = new Random();
+                int confirmationCode = 100_000 + random.nextInt(900_000);
+                p.setMaXacNhan(confirmationCode);
+                message.setTo(email.toString());
+                message.setSubject("Ma Xac Nhan");
+                message.setText("Ma xac nhan cua ban la: " + confirmationCode);
+                emailSender.send(message);
+                return true;
+            }
+
+            return false;
+        } catch (NoResultException ex) {
+            // Không tìm thấy kết quả
+            return false;
+        } catch (HibernateException ex) {
+            return false;
+        }
     }
 }

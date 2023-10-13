@@ -7,8 +7,10 @@ package com.av.service.impl;
 import com.av.pojo.Diem;
 import com.av.pojo.DiemMonHoc;
 import com.av.pojo.Loaidiem;
+import com.av.pojo.MonhocHocky;
 import com.av.pojo.Monhocdangky;
 import com.av.repository.DiemRepository;
+import com.av.repository.MonHocRepository;
 import com.av.service.DiemService;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
@@ -45,6 +47,8 @@ public class DiemServiceImpl implements DiemService {
 
     @Autowired
     private DiemRepository diemRepository;
+    @Autowired
+    private MonHocRepository monHocRepository;
 //
 //
 //
@@ -72,66 +76,87 @@ public class DiemServiceImpl implements DiemService {
     public List<DiemMonHoc> getListDiemDangHoc(Map<String, String> params) {
         return diemRepository.getListDiemDangHoc(params);
     }
+
     @Override
     public List<DiemMonHoc> getListDiemDaHoc(Map<String, String> params) {
-       return this.diemRepository.getListDiemDaHoc(params);
+        return this.diemRepository.getListDiemDaHoc(params);
     }
-
 
     @Override
     public DiemMonHoc addDiem(Map<String, String> params) {
         int idMonHocDangKy = Integer.parseInt(params.get("idMonHocDangKy"));
-        int DiemGK = Integer.parseInt(params.get("DiemGK"));
-        int DiemCK = Integer.parseInt(params.get("DiemCK"));
-        int DiemKT1 = Integer.parseInt(params.get("DiemKT1"));
-        int DiemKT2 = Integer.parseInt(params.get("DiemKT2"));
-        int DiemKT3 = Integer.parseInt(params.get("DiemKT3"));
+        Double DiemGK = Double.parseDouble(params.get("DiemGK"));
+        Double DiemCK =  Double.parseDouble(params.get("DiemCK"));
+        String KT1 = params.get("DiemKT1");
+        String KT2 = params.get("DiemKT2");
+        String KT3 = params.get("DiemKT3");
+        Double DiemKT1 = -1.0, DiemKT2 = -1.0, DiemKT3 = -1.0;
+        if (!KT1.isEmpty()) {
+            DiemKT1 =  Double.parseDouble(KT1);
+        }
+        if (!KT2.isEmpty()) {
+            DiemKT2 =  Double.parseDouble(KT2);
+        }
+        if (!KT3.isEmpty()) {
+            DiemKT3 =  Double.parseDouble(KT3);
+        }
         DiemMonHoc diem1 = new DiemMonHoc(idMonHocDangKy, DiemGK, DiemCK, DiemKT1, DiemKT2, DiemKT3);
         Monhocdangky monhoc = this.diemRepository.getMonHocDangKyById(idMonHocDangKy);
         List<Diem> diem = this.diemRepository.getListDiemByIdMonHocDangKy(idMonHocDangKy);
-        Double diemTB = 0.0;
-        String xepLoai;
-        Short trangThai;
-        if (diem1.getDiemKT1() == -1) {
-            diemTB = (diem1.getDiemGK() + diem1.getDiemCK()) * 0.5;
-        } else if (diem1.getDiemKT2() == -1) {
-            diemTB = (diem1.getDiemGK() * 0.4 + diem1.getDiemKT1() * 0.1 + diem1.getDiemCK() * 0.5);
-        } else if (diem1.getDiemKT3() == -1) {
-            diemTB = (diem1.getDiemGK() * 0.3 + diem1.getDiemKT1() * 0.1 + diem1.getDiemKT2() * 0.1 + diem1.getDiemCK() * 0.5);
-        } else {
-            diemTB = (diem1.getDiemGK() * 0.2 + (diem1.getDiemKT1() + diem1.getDiemKT2() + diem1.getDiemKT3()) * 0.1 + diem1.getDiemCK() * 0.5);
-        }
-        // Tính trạng thái dựa trên điểm trung bình
-        DecimalFormat decimalFormat = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
-        diemTB = Double.valueOf(decimalFormat.format(diemTB));
-        if (diemTB >= 5) {
-            trangThai = 1;
-        } else {
-            trangThai = 0;
-        }
-        if (diemTB >= 9) {
-            xepLoai = "Giỏi";
-        } else if (diemTB >= 6.5) {
-            xepLoai = "Khá";
-        } else if (diemTB >= 5) {
-            xepLoai = "Trung Bình";
-        } else {
-            xepLoai = "Yếu";
-        }
-        for (Diem diemm : diem) {
-            if (diemm.getTenDiem().getIdLoaiDiem() == 6) {
-                diemm.setSoDiem(diemTB);
-            } else if (diemm.getTenDiem().getIdLoaiDiem() == 1) {
-                diemm.setSoDiem(diem1.getDiemGK());
-            } else if (diemm.getTenDiem().getIdLoaiDiem() == 2) {
-                diemm.setSoDiem(diem1.getDiemCK());
-            }
-        }
-        monhoc.setTrangThai(trangThai);
-        monhoc.setXepLoai(xepLoai);
+        if (monhoc.getKhoaMon() == 0) {
+            Double diemTB = 0.0;
+            Double heSoGK = 0.5;
+            Double diemKT = 0.0;
+            String xepLoai;
+            Short trangThai;
 
-        this.diemRepository.addDiem(monhoc, diem, diem1);
-        return diem1;
+            if (diem1.getDiemKT1() >= 0) {
+                heSoGK -= 0.1;
+                diemKT = diemKT + diem1.getDiemKT1();
+            }
+            if (diem1.getDiemKT2() >= 0) {
+                heSoGK -= 0.1;
+                diemKT = diemKT + diem1.getDiemKT2();
+            }
+            if (diem1.getDiemKT3() >= 0) {
+                heSoGK -= 0.1;
+                diemKT = diemKT + diem1.getDiemKT3();
+            }
+            diemTB = (diem1.getDiemGK() * heSoGK) + (diemKT * 0.1) + (diem1.getDiemCK() * 0.5);
+            // Tính trạng thái dựa trên điểm trung bình
+            DecimalFormat decimalFormat = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
+            diemTB = Double.valueOf(decimalFormat.format(diemTB));
+            if (diemTB >= 5) {
+                trangThai = 1;
+            } else {
+                trangThai = 0;
+            }
+            if (diemTB >= 9) {
+                xepLoai = "Giỏi";
+            } else if (diemTB >= 6.5) {
+                xepLoai = "Khá";
+            } else if (diemTB >= 5) {
+                xepLoai = "Trung Bình";
+            } else {
+                xepLoai = "Yếu";
+            }
+            for (Diem diemm : diem) {
+                if (diemm.getTenDiem().getIdLoaiDiem() == 6) {
+                    diemm.setSoDiem(diemTB);
+                } else if (diemm.getTenDiem().getIdLoaiDiem() == 1) {
+                    diemm.setSoDiem(diem1.getDiemGK());
+                } else if (diemm.getTenDiem().getIdLoaiDiem() == 2) {
+                    diemm.setSoDiem(diem1.getDiemCK());
+                }
+            }
+            monhoc.setTrangThai(trangThai);
+            monhoc.setXepLoai(xepLoai);
+
+            this.diemRepository.addDiem(monhoc, diem, diem1);
+            return diem1;
+        }
+        return null;
+
     }
 
     @Override
@@ -147,21 +172,21 @@ public class DiemServiceImpl implements DiemService {
                     String diemKT1 = record.get("diemTK1");
                     String diemKT2 = record.get("diemTK2");
                     String diemKT3 = record.get("diemTK3");
-                    int DiemTK1 = Integer.parseInt(diemKT1);
-                    int DiemTK2 = Integer.parseInt(diemKT2);
-                    int DiemTK3 = Integer.parseInt(diemKT3);
+                    Double DiemTK1 = Double.parseDouble(diemKT1);
+                    Double DiemTK2 = Double.parseDouble(diemKT2);
+                    Double DiemTK3 = Double.parseDouble(diemKT3);
                     if (diemKT1 == null) {
-                        DiemTK1 = -1;
+                        DiemTK1 = -1.0;
                     }
                     if (diemKT2 == null) {
-                        DiemTK2 = -1;
+                        DiemTK2 = -1.0;
                     }
                     if (diemKT3 == null) {
-                        DiemTK3 = -1;
+                        DiemTK3 = -1.0;
                     }
                     Monhocdangky monHoc = this.diemRepository.getDiemByIdMonHoc(Integer.parseInt(idMonHoc), Integer.parseInt(idSinhVien));
-                    if (monHoc != null) {
-                        DiemMonHoc diem1 = new DiemMonHoc(monHoc.getIdMonHocDangKy(), Integer.parseInt(diemGiuaKy), Integer.parseInt(diemCuoiKy), DiemTK1, DiemTK2, DiemTK3);
+                    if (monHoc != null && monHoc.getKhoaMon() == 0) {
+                        DiemMonHoc diem1 = new DiemMonHoc(monHoc.getIdMonHocDangKy(), Double.parseDouble(diemGiuaKy), Double.parseDouble(diemCuoiKy), DiemTK1, DiemTK2, DiemTK3);
                         List<Diem> diem = this.diemRepository.getListDiemByIdMonHocDangKy(monHoc.getIdMonHocDangKy());
                         Double diemTB = 0.0;
                         String xepLoai;
@@ -223,7 +248,6 @@ public class DiemServiceImpl implements DiemService {
 //
 //        return this.diemRepository.getDiemByIdMonHoc(idMonHoc, idSinhVien);
 //    }
-
     @Override
     public DiemMonHoc getDiemByIdDiem(Map<String, String> params) {
         String idDiem = params.get("idMonHocDangKy");
@@ -236,6 +260,7 @@ public class DiemServiceImpl implements DiemService {
         return this.diemRepository.getDiemByidGiangVien(params);
     }
 //
+
     @Override
     public boolean khoaDiem(Map<String, String> params) {
         return this.diemRepository.khoaDiem(params);
@@ -256,5 +281,42 @@ public class DiemServiceImpl implements DiemService {
         return this.diemRepository.getListDiemByIdMonHocDangKy(id);
     }
 
-    
+    @Override
+    public Boolean dangKyMonHoc(Monhocdangky monHoc, Map<String, String> params) {
+        int IdMonHoc = Integer.parseInt(params.get("IdMonHoc"));
+        int IdSinhVien = Integer.parseInt(params.get("IdSinhVien"));
+        Monhocdangky monHocDK = this.diemRepository.getDiemByIdMonHoc(IdMonHoc, IdSinhVien);
+        MonhocHocky monHocHocKy = this.monHocRepository.getMonHocHocKyDate(IdMonHoc);
+        if (monHocHocKy == null || monHocHocKy.getSoLuongConLai() <= 0) {
+            return false;
+        }
+        if (monHocDK != null) {
+            return false;
+        }
+        int soLuong = monHocHocKy.getSoLuongConLai() - 1;
+        monHocHocKy.setSoLuongConLai(soLuong);
+        Short a = 0;
+        monHoc.setKhoaMon(a);
+        monHoc.setTrangThai(a);
+        this.diemRepository.dangKyMonHoc(monHoc, monHocHocKy);
+        return true;
+
+    }
+
+    @Override
+    public Boolean huyDangKy(Map<String, String> params) {
+        int IdMonHoc = Integer.parseInt(params.get("IdMonHoc"));
+        int IdSinhVien = Integer.parseInt(params.get("IdSinhVien"));
+        Monhocdangky monHocDK = this.diemRepository.getDiemByIdMonHoc(IdMonHoc, IdSinhVien);
+        MonhocHocky monHocHocKy = this.monHocRepository.getMonHocHocKyDate(IdMonHoc);
+        if (monHocHocKy == null) {
+            return false;
+        }
+        if (monHocDK != null) {
+
+            this.diemRepository.huyDangKy(monHocDK);
+            return true;
+        }
+        return false;
+    }
 }

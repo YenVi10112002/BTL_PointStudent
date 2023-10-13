@@ -5,6 +5,8 @@
 package com.av.service.impl;
 
 import com.av.pojo.Monhoc;
+import com.av.pojo.MonhocHocky;
+import com.av.pojo.Monhocdangky;
 import com.av.repository.MonHocRepository;
 import com.av.service.MonHocService;
 import java.util.List;
@@ -43,7 +45,7 @@ public class MonHocServiceImpl  implements MonHocService{
     }
 
     @Override
-    public List<Monhoc> getMonHocByGiangVien(Map<String, String> params) {
+    public List<MonhocHocky> getMonHocByGiangVien(Map<String, String> params) {
         return this.mhRepository.getMonHocByGiangVien(params);
     }
 
@@ -56,5 +58,30 @@ public class MonHocServiceImpl  implements MonHocService{
     public List<Monhoc> getMonHocByIdSinhVienDangHoc(int idSinhvien) {
         return this.mhRepository.getMonHocByIdSinhVienDangHoc(idSinhvien);
     }
-    
+
+    @Override
+    public List<MonhocHocky> getMonHocHocKy(Map<String, String> params) {
+        return this.mhRepository.getMonHocHocKy(params);
+    }
+
+    @Override
+    public List<Monhocdangky> getMonHocSinhVienDangKy(Map<String, String> params) {
+        return this.mhRepository.getMonHocSinhVienDangKy(params);
+    }
+
+    @Override
+    public List<MonhocHocky> getMonHocByGiangVienChuaDay(Map<String, String> params) {
+        return this.mhRepository.getMonHocByGiangVienChuaDay(params);
+    }
+
+    @Override
+    public List<MonhocHocky> getMonHocByGiangVienDaDay(Map<String, String> params) {
+        return this.mhRepository.getMonHocByGiangVienDaDay(params);
+    }
+
+    @Override
+    public boolean thanhToanHocPhi(Map<String, String> params) {
+        return this.mhRepository.thanhToanHocPhi(params);
+    }
+   
 }

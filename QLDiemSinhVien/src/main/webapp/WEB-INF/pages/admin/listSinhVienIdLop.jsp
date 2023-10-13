@@ -14,9 +14,9 @@
     </form>
 </div >
 <div class="table-sv">
-    <h1 class="text-center">Danh sách sinh viên lớp ${lop.tenLop}</h1>
+    <h1 class="text-center">Danh sách sinh viên lớp ${lop.tenLopHoc}</h1>
 
-    <table class="table " id="customers">
+    <table class="table ">
         <thead>
             <tr>
                 <th>Mã số sinh viên</th>
