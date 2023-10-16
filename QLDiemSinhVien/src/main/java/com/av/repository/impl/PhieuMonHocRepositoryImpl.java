@@ -137,6 +137,7 @@ public class PhieuMonHocRepositoryImpl implements PhieuMonHocRepository {
 //        
         try {
             if (mh.getIdMonHocHocKy() == null) {
+                mh.setSoLuongConLai(mh.getSoLuong());
                 s.save(mh);
             }
             return true;

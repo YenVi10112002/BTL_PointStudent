@@ -40,7 +40,7 @@
                     <td>
                         <c:url value="/giaovu/monhoc/add/${mh.idMonHoc}" var="api"/>
                         <a href="${api}"class="btn-xoavacn-gv" ><i class="fa-regular fa-pen-to-square"></i></a>
-                        <button onclick="deleteSinhVien('${api}')"  class="btn-xoavacn-gv"><i class="fa-regular fa-trash-can"></i></button>
+                        <button onclick="deleteMonHoc('${api}')"  class="btn-xoavacn-gv"><i class="fa-regular fa-trash-can"></i></button>
                     </td>   
                 </tr>
             </c:forEach>

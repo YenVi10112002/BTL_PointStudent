@@ -50,7 +50,7 @@
                 </form>
             </div >
             <div class="btn-hk">
-                <button onclick="luu()" id="luuButton" class="btn-mhhk" type="submit">Lưu</button>
+                <button onclick="luu()"  class="btn-mhhk" type="submit">Lưu</button>
             </div>
         </div>
         <table class="table">
@@ -87,38 +87,38 @@
                             <td>
                                 <form:select class="form-selector" name="class" path="listPhonghocs" id="selectPhonghoc" required="true">
                                     <c:forEach items="${phonghoc}" var="ph">
-                            <option value="${ph.idPhongHoc}">${ph.tenPhongHoc}</option>
-                        </c:forEach>
-                    </form:select>
-                    </td>
-                    <td>
-                        <form:select class="form-selector" name="class" path="listGiangviens"  required="true">
-                            <c:forEach items="${giangvien}" var="gv">
-                            <option value="${gv.idGiangVien}">${gv.hoTen}</option>
-                        </c:forEach>
-                    </form:select>
+                                        <option value="${ph.idPhongHoc}">${ph.tenPhongHoc}</option>
+                                    </c:forEach>
+                                </form:select>
+                            </td>
+                            <td>
+                                <form:select class="form-selector" name="class" path="listGiangviens"  required="true">
+                                    <c:forEach items="${giangvien}" var="gv">
+                                    <option value="${gv.idGiangVien}">${gv.hoTen}</option>
+                                </c:forEach>
+                            </form:select>
 
-                    </td>
+                            </td>
 
-                    <td> 
-                        <%--<form:checkbox  path="listMonhocs" value="${mh}"/>--%>
-                        <c:set var="elementExists" value="false" />
-                        <c:forEach var="item" items="${mondachon}">
-                            <c:if test="${item.idMonHoc.idMonHoc == mh.idMonHoc}">
-                                <c:set var="elementExists" value="true" />
-                            </c:if>
-                        </c:forEach>
-                        <c:choose>
-                            <c:when test="${elementExists eq false}">
-                                <form:checkbox class="form-checkbox" name="myCheckbox" path="listMonhocs" value="${mh}"/>
-                            </c:when>
-                            <c:otherwise>
-                                <input type="checkbox"  name="myCheckbox" value="someValue" style="margin: 0 20px;" checked="true" disabled="disabled">
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    </tr>
-                </c:forEach>
+                            <td> 
+                                <%--<form:checkbox  path="listMonhocs" value="${mh}"/>--%>
+                                <c:set var="elementExists" value="false" />
+                                <c:forEach var="item" items="${mondachon}">
+                                    <c:if test="${item.idMonHoc.idMonHoc == mh.idMonHoc}">
+                                        <c:set var="elementExists" value="true" />
+                                    </c:if>
+                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${elementExists eq false}">
+                                        <form:checkbox class="form-checkbox" name="myCheckbox" path="listMonhocs" value="${mh}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="checkbox"  name="myCheckbox" value="someValue" style="margin: 0 20px;" checked="true" disabled="disabled">
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
             </form:form>
             </tbody>
         </table>
@@ -132,31 +132,11 @@
     }
     function luu() {
         // Get all the input and select elements in the form
-        var formElements = document.querySelectorAll('.form-selector, .');
-
-        // Flag to track if all required fields are filled
-        var allFieldsFilled = true;
-
-        // Loop through each form element
-        formElements.forEach(function (element) {
-            if (element.required && element.value.trim() === '') {
-                allFieldsFilled = false;
-                // You can display a message or highlight the field here
-                // For simplicity, this example displays an alert message.
-                alert("Vui lòng điền đầy đủ thông tin.");
-            }
-        });
-
-        // If all required fields are filled, submit the form
-        if (allFieldsFilled) {
-            document.getElementById('form').submit();
-        }
+        document.getElementById('form').submit();
+       
     }
-    // Attach the click event to the "Lưu" button
-    document.getElementById('luuButton').addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-        luu(); // Call your validation function
-    });
+
+   
     $(document).ready(function () {
         $('#selectPhonghoc').on('change', function () {
             var selectedValue = $(this).val();

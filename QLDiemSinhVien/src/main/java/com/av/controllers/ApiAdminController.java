@@ -9,6 +9,7 @@ import com.av.service.HeDaoTaoService;
 import com.av.service.HocKyService;
 import com.av.service.KhoaDaoTaoService;
 import com.av.service.LopHocService;
+import com.av.service.MonHocService;
 import com.av.service.PhieuMonHocService;
 import com.av.service.SinhVienService;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +48,19 @@ public class ApiAdminController {
     
     @Autowired
     private PhieuMonHocService phieuMHService;
+    
+    @Autowired
+    private MonHocService mhService;
+    
+    @DeleteMapping("/giaovu/monhoc/add/{id}")
+    public void delete(@PathVariable(value = "id") int id, HttpServletResponse response) {
+        boolean success = this.mhService.deleteMonHoc(id);
+        if (success) {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT); // Thiết lập trạng thái NO_CONTENT (204)
+        } else {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // Thiết lập trạng thái INTERNAL_SERVER_ERROR (500)
+        }
+    }
     
     @DeleteMapping("/giaovu/hocki/chitiethocki/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

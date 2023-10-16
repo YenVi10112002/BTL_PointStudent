@@ -56,7 +56,7 @@
                     <td>
                         <c:url value="/giaovu/hocky/add/${hk.idHocKy}" var="api"/>
                         <a href="${api}"class="btn-xoavacn-gv bg-cn " alt="Cập nhật"> <i class="fa-regular fa-pen-to-square"></i></a>
-                        <button onclick="deleteSinhVien('${api}')" alt="Xóa" class="btn-xoavacn-gv bg-xoa"><i class="fa-regular fa-trash-can"></i></button>
+                        <button onclick="deleteHocKi('${api}')" alt="Xóa" class="btn-xoavacn-gv bg-xoa"><i class="fa-regular fa-trash-can"></i></button>
                     </td>
                     <td>
                         <a href="<c:url value="/giaovu/hocki/addMH/${hk.idHocKy}"/>" class="a-tk">Cấp môn học</a>

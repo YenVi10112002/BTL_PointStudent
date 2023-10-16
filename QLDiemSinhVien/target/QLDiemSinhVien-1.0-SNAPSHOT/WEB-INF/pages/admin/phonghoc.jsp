@@ -29,7 +29,7 @@
                     <td>
                         <c:url value="/giaovu/phonghoc/add/${ph.idPhongHoc}" var="api"/>
                         <a href="${api}" class="btn-xoavacn-gv bg-cn"><i class="fa-regular fa-pen-to-square"></i> </a>
-                        <button onclick="deleteSinhVien('${api}')"  class="btn-xoavacn-gv bg-xoa "><i class="fa-regular fa-trash-can"></i></button>
+                        <button onclick="deletePhongHoc('${api}')"  class="btn-xoavacn-gv bg-xoa "><i class="fa-regular fa-trash-can"></i></button>
                     </td>
                 </tr>
             </c:forEach>

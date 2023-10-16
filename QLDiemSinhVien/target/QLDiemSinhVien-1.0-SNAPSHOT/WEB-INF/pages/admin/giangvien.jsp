@@ -61,7 +61,7 @@
                     <td>
                         <c:url value="/giaovu/giangvien/add/${gv.idGiangVien}" var="api"/>
                         <a href="${api}"class="btn-xoavacn-gv bg-cn " alt="Cập nhật"> <i class="fa-regular fa-pen-to-square"></i></a>
-                        <button onclick="deleteSinhVien('${api}')" alt="Xóa" class="btn-xoavacn-gv bg-xoa"><i class="fa-regular fa-trash-can"></i></button>
+                        <button onclick="deleteGiangVien('${api}')" alt="Xóa" class="btn-xoavacn-gv bg-xoa"><i class="fa-regular fa-trash-can"></i></button>
                     </td>
                 </tr>   
             </c:forEach>

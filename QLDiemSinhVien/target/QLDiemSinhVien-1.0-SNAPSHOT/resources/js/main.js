@@ -5,13 +5,105 @@ function deleteSinhVien(path) {
         }).then(res => {
             if (res.status === 204)
                 location.reload();
+        });
+    }
+}
+function deleteGiangVien(path) {
+    if (confirm("Bạn chắc chắn xóa không?") === true) {
+        fetch(path, {
+            method: "delete"
+        }).then(res => {
+            if (res.status === 204)
+                location.reload();
             else
                 alert("Xóa không thành công vì giang viên vẫn đang dạy một số môn !!!");
         });
     }
 }
-
-
+function deleteMonHoc(path) {
+    if (confirm("Bạn chắc chắn xóa không?") === true) {
+        fetch(path, {
+            method: "delete"
+        }).then(res => {
+            if (res.status === 204)
+                location.reload();
+            else
+                alert("Xóa môn học không được vì môn còn đang học ");
+        });
+    }
+}
+function deleteLopHoc(path) {
+    if (confirm("Bạn chắc chắn xóa không?") === true) {
+        fetch(path, {
+            method: "delete"
+        }).then(res => {
+            if (res.status === 204)
+                location.reload();
+            else
+                alert("Xóa thất bại vì lớp học còn đang học");
+        });
+    }
+}
+function deleteHocKi(path) {
+    if (confirm("Bạn chắc chắn xóa không?") === true) {
+        fetch(path, {
+            method: "delete"
+        }).then(res => {
+            if (res.status === 204)
+                location.reload();
+            else
+                alert("Xóa thất bại vì học kì còn đang học");
+        });
+    }
+}
+function deleteKhoaDaoTao(path) {
+    if (confirm("Bạn chắc chắn xóa không?") === true) {
+        fetch(path, {
+            method: "delete"
+        }).then(res => {
+            if (res.status === 204)
+                location.reload();
+            else
+                alert("Xóa thất bại vì khoa còn nghành đang học");
+        });
+    }
+}
+function deleteKhoaHoc(path) {
+    if (confirm("Bạn chắc chắn xóa không?") === true) {
+        fetch(path, {
+            method: "delete"
+        }).then(res => {
+            if (res.status === 204)
+                location.reload();
+            else
+                alert("Xóa thất bại vi khóa học này còn sinh viên đang học");
+        });
+    }
+}
+function deletePhongHoc(path) {
+    if (confirm("Bạn chắc chắn xóa không?") === true) {
+        fetch(path, {
+            method: "delete"
+        }).then(res => {
+            if (res.status === 204)
+                location.reload();
+            else
+                alert("Xóa thất bại vì phòng học có lớp đang học");
+        });
+    }
+}
+function deleteHeDaoTao(path) {
+    if (confirm("Bạn chắc chắn xóa không?") === true) {
+        fetch(path, {
+            method: "delete"
+        }).then(res => {
+            if (res.status === 204)
+                location.reload();
+            else
+                alert("Xóa thất bại vì hệ đào tạo còn sinh viên đang học");
+        });
+    }
+}
 //function addToCart(idMonHoc) {
 //    const idSinhVien = document.getElementById("idSinhVien").textContent
 //    fetch(`/QLDiemSinhVien/giaovu/api/monhoc/${idMonHoc}?idSinhVien=${idSinhVien}`).then(res => {

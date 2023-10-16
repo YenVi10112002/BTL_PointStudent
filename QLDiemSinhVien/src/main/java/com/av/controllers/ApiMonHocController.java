@@ -45,11 +45,7 @@ public class ApiMonHocController {
     private DiemService diemService;
     @Autowired
     private LopHocService daotaoService;
-    @DeleteMapping("/giaovu/monhoc/add/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "id") int id) {
-        this.mhService.deleteMonHoc(id);
-    }
+    
 
     @GetMapping("/api/monhocgiangvien/")
     @CrossOrigin
