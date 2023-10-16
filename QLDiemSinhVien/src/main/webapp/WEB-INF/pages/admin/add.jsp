@@ -54,9 +54,9 @@
                 </div>
                 <div class="form-floating mt-3 mb-3">
                     <form:select class="form-select" id="class" name="class" path="maLop">
-                        <c:forEach items="${lophoc}" var="lh">
+                        <c:forEach items="${listLopHoc}" var="lh">
                             <c:choose>
-                                <c:when test="${lh.idLopHoc == sinhvien.maLop.idLopHoc}">
+                                <c:when test="${lh.idLopHoc == sinhvienn.maLop.idLopHoc}">
                                     <option value="${lh.idLopHoc}" selected>${lh.tenLopHoc}</option>
                                 </c:when>
                                 <c:otherwise>

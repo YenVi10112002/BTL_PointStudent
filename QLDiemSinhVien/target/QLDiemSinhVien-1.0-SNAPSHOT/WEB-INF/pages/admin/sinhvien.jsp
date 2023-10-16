@@ -35,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${sinhvienn}" var="sv">
+            <c:forEach items="${sinhviens}" var="sv">
                 <tr>
                     <td>${sv.idSinhVien}</td>
                     <td>${sv.hoTen}</td>

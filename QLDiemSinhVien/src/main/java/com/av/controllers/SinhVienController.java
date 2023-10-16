@@ -114,8 +114,8 @@ public class SinhVienController {
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, totalRecords);
 
-            List<Sinhvien> mhsForCurrentPage = sinhvienList.subList(start, end);
-            model.addAttribute("sinhvienn", mhsForCurrentPage);
+        List<Sinhvien> mhsForCurrentPage = sinhvienList.subList(start, end);
+        model.addAttribute("sinhviens", mhsForCurrentPage);
 
         model.addAttribute("counter", Math.ceil(count * 1.0 / pageSize));
         return "dssinhvien";

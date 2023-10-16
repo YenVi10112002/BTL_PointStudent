@@ -35,9 +35,9 @@ const Header = () => {
                         <li class="nav-item gv-user-name-img ">
                         {user.image === null ? <a class="nav-link dark-color" href="#"><i class="fa-solid fa-user icon-padding" ></i></a> : <div class="info-user-image-3" ><img class="img-user-avatar-header" src={user.image} alt="Ảnh đại diện" /></div>}
                         </li>
-                       
+                        {giangvien === null ? <></> : <>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
+                            <a className="nav-link dropdown-toggle dark-color" href="#" role="button" data-bs-toggle="dropdown">Chào,
                                 {giangvien.hoTen}</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item dark-color " href="#"><i class="fa-solid fa-user icon-padding"></i>Thông Tin Tài Khoản</a></li>
@@ -45,6 +45,7 @@ const Header = () => {
                                 <li><a class="dropdown-item dark-color" href="#"><i class="fa-solid fa-right-to-bracket icon-padding"></i>Đăng Xuất</a></li>
                             </ul>
                         </li>
+                        </>}
                     </ul>
                 </div>
             </div>

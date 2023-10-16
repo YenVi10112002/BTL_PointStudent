@@ -108,15 +108,9 @@ public class LopHocController {
         // Trích xuất danh sách môn học cho trang hiện tại
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, totalRecords);
-        if (start < totalRecords) {
-            // Nếu danh sách không rỗng, thực hiện subList
-            List<Lophoc> mhsForCurrentPage = lophocList.subList(start, end);
-            model.addAttribute("lophoc", mhsForCurrentPage);
-        } else {
-            // Nếu danh sách rỗng (không có kết quả), hiển thị trang 1
-            List<Lophoc> mhsForCurrentPage = lophocList.subList(0, Math.min(pageSize, totalRecords));
-            model.addAttribute("lophoc", mhsForCurrentPage);
-        }
+
+        List<Lophoc> mhsForCurrentPage = lophocList.subList(start, end);
+        model.addAttribute("lophocc", mhsForCurrentPage);
         model.addAttribute("counter", Math.ceil(count * 1.0 / pageSize));
 
         return "lophoc";

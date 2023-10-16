@@ -66,7 +66,7 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${loaitaikhoann}" var="ltk">
+                <c:forEach items="${loaitaikhoans}" var="ltk">
                     <tr>
                         <td>${ltk.idloaitaikhoan}</td>
                         <td>${ltk.tenloaitaikhoan}</td>

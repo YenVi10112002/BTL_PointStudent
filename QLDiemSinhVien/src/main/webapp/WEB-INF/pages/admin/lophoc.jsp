@@ -32,7 +32,7 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${lophoc}" var="lop">
+            <c:forEach items="${lophocc}" var="lop">
                 <c:url value="/giaovu/lophoc/${lop.idLopHoc}" var="dsSinhVien"/>
                 <tr>
                     <td>${lop.idLopHoc}</td>

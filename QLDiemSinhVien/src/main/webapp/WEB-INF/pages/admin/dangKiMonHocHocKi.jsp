@@ -50,7 +50,7 @@
                 </form>
             </div >
             <div class="btn-hk">
-                <button onclick="luu()" class="btn-mhhk" type="submit">Lưu</button>
+                <button onclick="luu()" id="luuButton" class="btn-mhhk" type="submit">Lưu</button>
             </div>
         </div>
         <table class="table">
@@ -131,8 +131,32 @@
         document.forms[0].submit();
     }
     function luu() {
-        document.getElementById("form").submit();
+        // Get all the input and select elements in the form
+        var formElements = document.querySelectorAll('.form-selector, .');
+
+        // Flag to track if all required fields are filled
+        var allFieldsFilled = true;
+
+        // Loop through each form element
+        formElements.forEach(function (element) {
+            if (element.required && element.value.trim() === '') {
+                allFieldsFilled = false;
+                // You can display a message or highlight the field here
+                // For simplicity, this example displays an alert message.
+                alert("Vui lòng điền đầy đủ thông tin.");
+            }
+        });
+
+        // If all required fields are filled, submit the form
+        if (allFieldsFilled) {
+            document.getElementById('form').submit();
+        }
     }
+    // Attach the click event to the "Lưu" button
+    document.getElementById('luuButton').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+        luu(); // Call your validation function
+    });
     $(document).ready(function () {
         $('#selectPhonghoc').on('change', function () {
             var selectedValue = $(this).val();

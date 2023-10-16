@@ -77,7 +77,6 @@ public class Sinhvien implements Serializable {
     private String email;
     @JoinColumn(name = "maLop", referencedColumnName = "idLopHoc")
     @ManyToOne
-    
     private Lophoc maLop;
     @JoinColumn(name = "idTaiKhoan", referencedColumnName = "idTaiKhoan")
     @OneToOne

@@ -37,7 +37,6 @@ const Login = () => {
         else {
           let giangvien = await AuthApis().get(endpoints['current-giangvien']);
           cookie.save("giangvien", giangvien.data);
-          
         }
         dispatch({
           "type": "login",

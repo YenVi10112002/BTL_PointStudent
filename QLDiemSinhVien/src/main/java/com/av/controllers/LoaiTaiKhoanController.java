@@ -87,7 +87,7 @@ public class LoaiTaiKhoanController {
         int end = Math.min(start + pageSize, totalRecords);
 
         List<Loaitaikhoan> mhsForCurrentPage = ltkList.subList(start, end);
-        model.addAttribute("loaitaikhoann", mhsForCurrentPage);
+        model.addAttribute("loaitaikhoans", mhsForCurrentPage);
 
         model.addAttribute("counter", Math.ceil(count * 1.0 / pageSize));
         return "loaitaikhoan";
